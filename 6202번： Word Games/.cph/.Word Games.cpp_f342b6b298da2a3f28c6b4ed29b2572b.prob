@@ -1,0 +1,1 @@
+{"name":"Local: Word Games","url":"/home/monika/Documents/problems/6202번： Word Games/Word Games.cpp","tests":[{"id":1726977998184,"input":"4 49891\nIAFR","output":"AIR\nFAIR\nFAR\nFIR\nIF"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/monika/Documents/problems/6202번： Word Games/Word Games.cpp","group":"local","local":true}

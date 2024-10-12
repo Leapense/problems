@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "ostream": "cpp",
+        "iomanip": "cpp"
+    },
+    "python.REPL.enableREPLSmartSend": false
+}

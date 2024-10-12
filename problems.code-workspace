@@ -1,0 +1,36 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"BOJ.extension": "py",
+		"BOJ.author": "cjhool",
+		"files.associations": {
+			"ostream": "cpp",
+			"array": "cpp",
+			"bit": "cpp",
+			"*.tcc": "cpp",
+			"charconv": "cpp",
+			"compare": "cpp",
+			"concepts": "cpp",
+			"cstdlib": "cpp",
+			"string": "cpp",
+			"exception": "cpp",
+			"algorithm": "cpp",
+			"functional": "cpp",
+			"optional": "cpp",
+			"random": "cpp",
+			"string_view": "cpp",
+			"type_traits": "cpp",
+			"format": "cpp",
+			"iosfwd": "cpp",
+			"iostream": "cpp",
+			"istream": "cpp",
+			"limits": "cpp",
+			"span": "cpp",
+			"streambuf": "cpp"
+		}
+	}
+}

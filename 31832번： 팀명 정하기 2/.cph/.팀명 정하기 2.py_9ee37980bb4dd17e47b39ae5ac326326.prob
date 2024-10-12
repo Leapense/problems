@@ -1,0 +1,1 @@
+{"name":"Local: 팀명 정하기 2","url":"/home/monika/Documents/problems/31832번： 팀명 정하기 2/팀명 정하기 2.py","tests":[{"id":1724574894465,"input":"5\n109928\nTOOLARGE\n111010\nTooLongTextInBaekjoon\n10-10","output":"10-10"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/monika/Documents/problems/31832번： 팀명 정하기 2/팀명 정하기 2.py","group":"local","local":true}
