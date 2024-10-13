@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <base href="https://www.acmicpc.net"> <!-- base url 설정 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+  <title>Робот</title>
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/problem-font.css?version=20230101">
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20230101">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; margin: 0; }
+    h1, h2, h3 { margin-top: 30px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+    
+        code { background-color: #2e2e2e; padding: 2px 4px; border-radius: 4px; }
+        pre {
+          background-color: #2e2e2e;
+          color: white;
+          font-size: 14px;
+        }
+      
+    .problem-section { margin-bottom: 30px; }
+    .problem-text p { margin: 0; }
+    .problem-text a { color: #007bff; }
+    .problem-io { margin-top: 20px; }
+    .problem-io h3 { font-size: 20px; }
+    .sample-container {
+      display: flex;
+      gap: 16px; /* 예제와 예제 사이의 간격 설정 (원하는 크기로 조정) */
+    }
+    .sample-box {
+      flex: 1; /* 박스가 꽉 차도록 설정 */
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    function updateTheme() {
+      const theme = {"theme":2};
+      vscode.postMessage(theme);
+    }            
+    function getLocalResourceUri(resourcePath) {
+      const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, resourcePath));
+      const srcUri = panel.webview.asWebviewUri(onDiskPath);
+      return srcUri;
+    }
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['$begin:math:text$','\$end:math:text$']]}
+    });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <h1 style="display:inline">
+    Робот
+  </h1>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <h3 style="display:inline">
+  </h3>
+  <br>
+  <table>
+    <thead><tr><th style="width:16%;">시간 제한</th><th style="width:16%;">메모리 제한</th><th style="width:17%;">제출</th><th style="width:17%;">정답</th><th style="width:17%;">맞힌 사람</th><th style="width:17%;">정답 비율</th></tr></thead><tbody><tr><td>2 초 </td><td>512 MB</td><td>41</td><td>27</td><td>17</td><td>60.714%</td></tr></tbody>
+  </table>
+  <section id="description" class="problem-section">
+    <div class="headline">
+      <h2>문제</h2>
+    </div>
+    <div id="problem_description" class="problem-text">
+      
+<p>Компания &lt;&lt;Филипп индастриз&gt;&gt; отправила на Марс новый робот-марсоход. Целью робота является исследование поверхности Марса.</p>
+
+<p>Для исследования Марса робот будет перемещаться по поверхности планеты на север и на юг вдоль прямой. Программа робота состоит из $n$ команд, каждая из которых описывается целым числом $a_i$. Каждое число $a_i$ задаёт количество шагов, которое необходимо сделать роботу. Если $a_i &gt; 0$, то робот совершает $|a_i|$ шагов на север, если $a_i &lt; 0$, то $|a_i|$ шагов на юг. Робот исполняет команды последовательно, начиная с первой.</p>
+
+<p>Однако по пути на Марс робот подвергся космическому излучению и его программа могла повредиться. Запустив процедуру тестирования памяти, ученые выяснили, что в программу было внесено от 0 до $k$ ошибок следующего вида: число $a_i$ оказалось заменено на $-a_i$. Тем не менее, приземлившись на Марс, робот выполнил свою, возможно поврежденную, программу.</p>
+
+<p>Теперь для организации спасения робота ученые хотят выяснить, насколько далеко от точки, в которой он начал выполнение программы, робот мог оказаться в результате. Помогите им это выяснить.</p>
+
+
+    </div>
+  </section>
+
+  <section id="input" class="problem-section">
+    <div class="headline">
+      <h2>입력</h2>
+    </div>
+    <div id="problem_input" class="problem-text">
+      
+<p>В первой строке входного файла находятся два числа $n$, $k$ ($1 \le k \le n \le 10^5$) --- количество чисел в программе робота и максимальное количество ошибок.</p>
+
+<p>Во второй строке входного файла находятся $n$ чисел $a_i$ ($-10^4 \le a_i \le 10^4$, $a_i \ne 0$) --- программа робота.</p>
+
+
+    </div>
+  </section>
+
+  <section id="output" class="problem-section">
+    <div class="headline">
+      <h2>출력</h2>
+    </div>
+    <div id="problem_output" class="problem-text">
+      
+<p>В единственной строке выходного файла выведите максимальное расстояние в шагах, на которое мог удалиться робот, выполнив все команды и совершив не более $k$ ошибок.</p>
+
+
+    </div>
+  </section>
+
+  <div id="limit" class="problem-section hidden"></div>
+
+  <section id="sample-IOs" class="problem-section">
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 1</h2>
+          <pre class="sampledata">4 1
+1 2 -1 -3
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 1</h2>
+          <pre class="sampledata">5
+</pre>
+        </div>
+      </div>
+      
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 2</h2>
+          <pre class="sampledata">7 2
+5 -3 7 9 -2 -8 -1
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 2</h2>
+          <pre class="sampledata">29
+</pre>
+        </div>
+      </div>
+      
+    
+  </section>
+
+  
+    <section id="hint" class="problem-section">
+      <div class="headline">
+        <h2>힌트</h2>
+      </div>
+      <div id="problem_hint" class="problem-text">
+        
+				<p>В первом примере робот мог, например, выполнить программу $1, 2, -1, 3$ и в результате удалиться на 5 шагов на север.</p>
+
+				
+      </div>
+    </section>
+    
+
+  
+    <section id="source" class="problem-section">
+      <div id="source" class="problem-text">
+        <div class="headline"><h2>출처</h2></div><p><a href="/category/2">Olympiad</a>&nbsp;&gt;&nbsp;<a href="/category/500">Russian Olympiad in Informatics</a>&nbsp;&gt;&nbsp;<a href="/category/501">Russia High School Programming Contest</a>&nbsp;&gt;&nbsp;<a href="/category/detail/2302">Russia High School Programming Contest 2015</a>&nbsp;G번</p>
+      </div>
+    </section>
+</body>
+</html>
