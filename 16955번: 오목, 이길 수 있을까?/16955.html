@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <base href="https://www.acmicpc.net"> <!-- base url 설정 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+  <title>오목, 이길 수 있을까?</title>
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/problem-font.css?version=20230101">
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20230101">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; margin: 0; }
+    h1, h2, h3 { margin-top: 30px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+    
+        code { background-color: #2e2e2e; padding: 2px 4px; border-radius: 4px; }
+        pre {
+          background-color: #2e2e2e;
+          color: white;
+          font-size: 14px;
+        }
+      
+    .problem-section { margin-bottom: 30px; }
+    .problem-text p { margin: 0; }
+    .problem-text a { color: #007bff; }
+    .problem-io { margin-top: 20px; }
+    .problem-io h3 { font-size: 20px; }
+    .sample-container {
+      display: flex;
+      gap: 16px; /* 예제와 예제 사이의 간격 설정 (원하는 크기로 조정) */
+    }
+    .sample-box {
+      flex: 1; /* 박스가 꽉 차도록 설정 */
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    function updateTheme() {
+      const theme = {"theme":2};
+      vscode.postMessage(theme);
+    }            
+    function getLocalResourceUri(resourcePath) {
+      const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, resourcePath));
+      const srcUri = panel.webview.asWebviewUri(onDiskPath);
+      return srcUri;
+    }
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['$begin:math:text$','\$end:math:text$']]}
+    });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <h1 style="display:inline">
+    오목, 이길 수 있을까?
+  </h1>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <h3 style="display:inline">
+  </h3>
+  <br>
+  <table>
+    <thead><tr><th style="width:16%;">시간 제한</th><th style="width:16%;">메모리 제한</th><th style="width:17%;">제출</th><th style="width:17%;">정답</th><th style="width:17%;">맞힌 사람</th><th style="width:17%;">정답 비율</th></tr></thead><tbody><tr><td>2 초 </td><td>512 MB</td><td>1640</td><td>525</td><td>436</td><td>31.054%</td></tr></tbody>
+  </table>
+  <section id="description" class="problem-section">
+    <div class="headline">
+      <h2>문제</h2>
+    </div>
+    <div id="problem_description" class="problem-text">
+      
+<p>구사과와 큐브러버는 10×10 크기의 바둑판에서 오목을 하고 있다. 턴은 구사과가 먼저 갖는다. 바둑판의 상태가 주어진다. 구사과가 턴을 한 번 더 가졌을 때, 이길 수 있는지 구하는 프로그램을 작성하시오.</p>
+
+<p>오목에서 승리했다는 것은 자신의 돌이 5개 이상 연속한다는 것이다. 연속은 가로, 세로, 대각선 방향 모두 가능하다.</p>
+
+
+    </div>
+  </section>
+
+  <section id="input" class="problem-section">
+    <div class="headline">
+      <h2>입력</h2>
+    </div>
+    <div id="problem_input" class="problem-text">
+      
+<p>총 10개의 줄에 바둑판의 상태가 주어진다. '<code>.</code>'는 빈 칸, '<code>X</code>'는 구사과의 돌, '<code>O</code>'는 큐브러버의 돌이다.</p>
+
+<p>입력으로 주어지는 바둑판에서 구사과의 돌의 개수와 큐브러버의 돌의 개수는 항상 일치하며, 아직 승자가 정해지지 않은 상태만 입력으로 주어진다.</p>
+
+
+    </div>
+  </section>
+
+  <section id="output" class="problem-section">
+    <div class="headline">
+      <h2>출력</h2>
+    </div>
+    <div id="problem_output" class="problem-text">
+      
+<p>구사과가 턴을 한 번 가져서 이길 수 있으면 1, 없으면 0을 출력한다.</p>
+
+
+    </div>
+  </section>
+
+  <div id="limit" class="problem-section hidden"></div>
+
+  <section id="sample-IOs" class="problem-section">
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 1</h2>
+          <pre class="sampledata">XX.XX.....
+.....OOOO.
+..........
+..........
+..........
+..........
+..........
+..........
+..........
+..........
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 1</h2>
+          <pre class="sampledata">1
+</pre>
+        </div>
+      </div>
+      
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 2</h2>
+          <pre class="sampledata">XXOXX.....
+OO.O......
+..........
+..........
+..........
+..........
+..........
+..........
+..........
+..........
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 2</h2>
+          <pre class="sampledata">0
+</pre>
+        </div>
+      </div>
+      
+    
+  </section>
+
+  <div id="hint" class="problem-section hidden"></div>
+
+  
+    <section id="source" class="problem-section">
+      <div id="source" class="problem-text">
+        <div class="headline"><h2>출처</h2></div><ul><li>문제를 번역한 사람:&nbsp;<a href="/user/baekjoon">baekjoon</a></li></ul>
+      </div>
+    </section>
+</body>
+</html>
