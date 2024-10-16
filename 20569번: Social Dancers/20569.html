@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <base href="https://www.acmicpc.net"> <!-- base url 설정 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+  <title>Social Dancers</title>
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/problem-font.css?version=20230101">
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20230101">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; margin: 0; }
+    h1, h2, h3 { margin-top: 30px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+    
+        code { background-color: #2e2e2e; padding: 2px 4px; border-radius: 4px; }
+        pre {
+          background-color: #2e2e2e;
+          color: white;
+          font-size: 14px;
+        }
+      
+    .problem-section { margin-bottom: 30px; }
+    .problem-text p { margin: 0; }
+    .problem-text a { color: #007bff; }
+    .problem-io { margin-top: 20px; }
+    .problem-io h3 { font-size: 20px; }
+    .sample-container {
+      display: flex;
+      gap: 16px; /* 예제와 예제 사이의 간격 설정 (원하는 크기로 조정) */
+    }
+    .sample-box {
+      flex: 1; /* 박스가 꽉 차도록 설정 */
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    function updateTheme() {
+      const theme = {"theme":2};
+      vscode.postMessage(theme);
+    }            
+    function getLocalResourceUri(resourcePath) {
+      const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, resourcePath));
+      const srcUri = panel.webview.asWebviewUri(onDiskPath);
+      return srcUri;
+    }
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['$begin:math:text$','\$end:math:text$']]}
+    });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <h1 style="display:inline">
+    Social Dancers
+  </h1>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <h3 style="display:inline">
+  </h3>
+  <br>
+  <table>
+    <thead><tr><th style="width:16%;">시간 제한</th><th style="width:16%;">메모리 제한</th><th style="width:17%;">제출</th><th style="width:17%;">정답</th><th style="width:17%;">맞힌 사람</th><th style="width:17%;">정답 비율</th></tr></thead><tbody><tr><td>2 초 </td><td>1024 MB</td><td>103</td><td>32</td><td>19</td><td>25.000%</td></tr></tbody>
+  </table>
+  <section id="description" class="problem-section">
+    <div class="headline">
+      <h2>문제</h2>
+    </div>
+    <div id="problem_description" class="problem-text">
+      
+<p>Community social dance classes are a great way to meet new people. A typical introductory social dance class covers a variety of dance styles, but they all have some basic structural elements in common. Most social dances are set up for two people: one lead and one follow.</p>
+
+<p>The local social dance club teaches three types of dances to its students: swing, country, and bachata. At the final dance of the semester, each student knows some subset of these three dances. To keep the students on their toes, the instructors play songs from all three styles. The students are well trained, so they know immediately what kind of dance they should do depending on the song played.</p>
+
+<p>When a lead asks a follow to dance, they compare which dances they know. There are three possibilities for what a lead-follow pair does when a song comes on:</p>
+
+<ol>
+<li>Both people know how to dance to this song. They dance.</li>
+<li>Neither person knows how to dance to this song. They sit out and have a nice conversation.</li>
+<li>Exactly one person knows how to dance to this song. The person who does not turns bright red, gets embarrassed and flustered, and runs out of the dance hall, tripping over a cable on their way out, knocking over a candle, which sets the dance hall on fire.</li>
+</ol>
+
+<p>The third case may be a bit of an exaggeration, but the students refuse to pair up if it's a possibility that exactly one of them knows how to dance to a song.</p>
+
+<p>After the students pair up, the school plays $M$ songs. Not all students are required to pair up. Some may sit out and be fire monitors. Each song is chosen uniformly and independently at random to be swing, country or bachata.</p>
+
+<p>The students collectively want to do as many dances as possible. The total number of dances is the sum of the number of lead-follow pairs who dance to each song. Assuming the students pair up optimally and the dance styles of the songs are chosen independently at random, what is the expected number of dances that occur over the course of the night?</p>
+
+
+    </div>
+  </section>
+
+  <section id="input" class="problem-section">
+    <div class="headline">
+      <h2>입력</h2>
+    </div>
+    <div id="problem_input" class="problem-text">
+      
+<p>The first line of input contains three integers $L$, $F$ and $M$, the number of leads, the number of follows, and the number of songs the dance hall plays. $L + F \leq 10^5$, $1 \leq M \leq 10^{12}$. Following are $L$ lines, one for each lead. Each line starts with an integer $k (1 \leq k \leq 3)$, the number of dances that lead knows, followed by the names of those dances. Each dance name is one of "swing", "country" or "bachata". Each dance style appears at most once for a given dancer. Then $F$ lines follow, describing the follows in the same format.</p>
+
+
+    </div>
+  </section>
+
+  <section id="output" class="problem-section">
+    <div class="headline">
+      <h2>출력</h2>
+    </div>
+    <div id="problem_output" class="problem-text">
+      
+<p>Output a single real number, the expected number of dances that happen. Your answer is considered correct if its absolute or relative error is at most $10^{-5}$.</p>
+
+
+    </div>
+  </section>
+
+  <div id="limit" class="problem-section hidden"></div>
+
+  <section id="sample-IOs" class="problem-section">
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 1</h2>
+          <pre class="sampledata">1 1 1
+1 swing
+1 swing
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 1</h2>
+          <pre class="sampledata">0.333333333333333
+</pre>
+        </div>
+      </div>
+      
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 2</h2>
+          <pre class="sampledata">2 2 2
+2 swing bachata
+1 country
+1 country
+2 bachata swing
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 2</h2>
+          <pre class="sampledata">2.000000000000000
+</pre>
+        </div>
+      </div>
+      
+    
+  </section>
+
+  <div id="hint" class="problem-section hidden"></div>
+
+  
+    <section id="source" class="problem-section">
+      <div id="source" class="problem-text">
+        <div class="headline"><h2>출처</h2></div><p><a href="https://creativecommons.org/licenses/by-sa/3.0/"><img src="https://licensebuttons.net/l/by-sa/3.0/88x31.png"></a></p>
+<p><a href="/category/5">University</a>&nbsp;&gt;&nbsp;<a href="/category/508">UT Invitational Programming Contest</a>&nbsp;&gt;&nbsp;<a href="/category/detail/2382">UT Invitational Programming Contest 2019</a>&nbsp;E번</p><ul><li>문제를 만든 사람:&nbsp;Arnav Sastry, Ethan Arnold</li></ul>
+      </div>
+    </section>
+</body>
+</html>
