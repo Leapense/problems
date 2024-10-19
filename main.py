@@ -1,20 +1,47 @@
-"""
-You are given a 2D integer array edges representing an undirected graph having n nodes, where edges[i] = [ui, vi] denotes an edge between nodes ui and vi.
+def read_input(filename):
+    with open(filename, 'r') as file:
+        N = int(file.readline().strip())
+        image = []
+        for _ in range(N):
+            row = list(map(int, file.readline().strip().split()))
+            image.append(row)
+    return N, image
 
-Construct a 2D grid that satisfies these conditions:
+def write_output(filename, operations):
+    with open(filename, 'w') as file:
+        file.write(f"{len(operations)}\n")
+        for op in operations:
+            file.write(f"{op[0]} {op[1]} {op[2]} {op[3]}\n")
 
-- The grid contains all nodes from 0 to n - 1 in its cells, with each node appearing exactly once.
-- Two nodes should be in adjacent grid cells (horizontally or vertically) if and only if there is an edge between them in edges.
+def find_xor_operations(N, image):
+    operations = []
+    toggled = [[0] * N for _ in range(N)]
+    
+    def toggle(L, R, T, B):
+        for r in range(T, B):
+            for c in range(L, R):
+                toggled[r][c] ^= 1
 
-It is guaranteed that edges can form a 2D grid that satisfies the conditions.
+    for r in range(N):
+        for c in range(N):
+            if image[r][c] != toggled[r][c]:
+                L, R, T, B = c, c, r, r
+                while R < N and image[T][R] != toggled[T][R]:
+                    R += 1
+                while B < N and all(image[B][k] != toggled[B][k] for k in range(L, R)):
+                    B += 1
+                operations.append((L, R, T, B))
+                toggle(L, R, T, B)
 
-Return a 2D integer array satisfying the conditions above. If there are multiple solutions, return any of them.
-"""
+    return operations
 
-n = int(input())
-edges = []
+def main():
+    for i in range(2, 3):
+        input_filename = f"xor{i}.in"
+        output_filename = f"xor{i}.out"
+        N, image = read_input(input_filename)
+        operations = find_xor_operations(N, image)
+        write_output(output_filename, operations)
 
-for _ in range(n):
-    x, y = map(int, input().strip().split())
-    edges.append([x, y])
-
+if __name__ == "__main__":
+    main()
