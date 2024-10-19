@@ -36,7 +36,7 @@ def find_xor_operations(N, image):
     return operations
 
 def main():
-    for i in range(2, 3):
+    for i in range(6, 7):
         input_filename = f"xor{i}.in"
         output_filename = f"xor{i}.out"
         N, image = read_input(input_filename)
