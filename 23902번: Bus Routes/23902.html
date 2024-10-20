@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <base href="https://www.acmicpc.net"> <!-- base url 설정 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+  <title>Bus Routes</title>
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/problem-font.css?version=20230101">
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20230101">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; margin: 0; }
+    h1, h2, h3 { margin-top: 30px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+    
+        code { background-color: #2e2e2e; padding: 2px 4px; border-radius: 4px; }
+        pre {
+          background-color: #2e2e2e;
+          color: white;
+          font-size: 14px;
+        }
+      
+    .problem-section { margin-bottom: 30px; }
+    .problem-text p { margin: 0; }
+    .problem-text a { color: #007bff; }
+    .problem-io { margin-top: 20px; }
+    .problem-io h3 { font-size: 20px; }
+    .sample-container {
+      display: flex;
+      gap: 16px; /* 예제와 예제 사이의 간격 설정 (원하는 크기로 조정) */
+    }
+    .sample-box {
+      flex: 1; /* 박스가 꽉 차도록 설정 */
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    function updateTheme() {
+      const theme = {"theme":2};
+      vscode.postMessage(theme);
+    }            
+    function getLocalResourceUri(resourcePath) {
+      const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, resourcePath));
+      const srcUri = panel.webview.asWebviewUri(onDiskPath);
+      return srcUri;
+    }
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['$begin:math:text$','\$end:math:text$']]}
+    });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <h1 style="display:inline">
+    Bus Routes
+  </h1>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <h3 style="display:inline">
+  </h3>
+  <br>
+  <table>
+    <thead><tr><th style="width:16%;">시간 제한</th><th style="width:16%;">메모리 제한</th><th style="width:17%;">제출</th><th style="width:17%;">정답</th><th style="width:17%;">맞힌 사람</th><th style="width:17%;">정답 비율</th></tr></thead><tbody><tr><td>10 초 (추가 시간 없음) </td><td>1024 MB</td><td>43</td><td>31</td><td>27</td><td>69.231%</td></tr></tbody>
+  </table>
+  <section id="description" class="problem-section">
+    <div class="headline">
+      <h2>문제</h2>
+    </div>
+    <div id="problem_description" class="problem-text">
+      
+<p>Bucket is planning to make a very long journey across the countryside by bus. Her journey consists of&nbsp;<b>N</b>&nbsp;bus routes, numbered from 1 to&nbsp;<b>N</b>&nbsp;in the order she must take them. The buses themselves are very fast, but do not run often. The i-th bus route only runs every&nbsp;<b>X<sub>i</sub></b>&nbsp;days.</p>
+
+<p>More specifically, she can only take the i-th bus on day&nbsp;<b>X<sub>i</sub></b>, 2<b>X<sub>i</sub></b>, 3<b>X<sub>i</sub></b>&nbsp;and so on. Since the buses are very fast, she can take multiple buses on the same day.</p>
+
+<p>Bucket must finish her journey by day&nbsp;<b>D</b>, but she would like to start the journey as late as possible. What is the latest day she could take the first bus, and still finish her journey by day&nbsp;<b>D</b>?</p>
+
+<p>It is guaranteed that it is possible for Bucket to finish her journey by day&nbsp;<b>D</b>.</p>
+
+
+    </div>
+  </section>
+
+  <section id="input" class="problem-section">
+    <div class="headline">
+      <h2>입력</h2>
+    </div>
+    <div id="problem_input" class="problem-text">
+      
+<p>The first line of the input gives the number of test cases,&nbsp;<b>T</b>.&nbsp;<b>T</b>&nbsp;test cases follow. Each test case begins with a line containing the two integers&nbsp;<b>N</b>&nbsp;and&nbsp;<b>D</b>. Then, another line follows containing&nbsp;<b>N</b>&nbsp;integers, the i-th one is&nbsp;<b>X<sub>i</sub></b>.</p>
+
+
+    </div>
+  </section>
+
+  <section id="output" class="problem-section">
+    <div class="headline">
+      <h2>출력</h2>
+    </div>
+    <div id="problem_output" class="problem-text">
+      
+<p>For each test case, output one line containing&nbsp;<code>Case #x: y</code>, where&nbsp;<code>x</code>&nbsp;is the test case number (starting from 1) and&nbsp;<code>y</code>&nbsp;is the latest day she could take the first bus, and still finish her journey by day&nbsp;<b>D</b>.</p>
+
+
+    </div>
+  </section>
+
+  
+    <section id="limit" class="problem-section">
+      <div class="headline">
+        <h2>제한</h2>
+      </div>
+      <div id="problem_limit" class="problem-text">
+        
+			<ul>
+	<li>1 ≤&nbsp;<b>T</b>&nbsp;≤ 100.</li>
+	<li>1 ≤&nbsp;<b>X<sub>i</sub></b>&nbsp;≤&nbsp;<b>D</b>.</li>
+	<li>1 ≤&nbsp;<b>N</b>&nbsp;≤ 1000.</li>
+	<li>It is guaranteed that it is possible for Bucket to finish her journey by day&nbsp;<b>D</b>.</li>
+</ul>
+			
+      </div>
+    </section>
+    
+
+  <section id="sample-IOs" class="problem-section">
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 1</h2>
+          <pre class="sampledata">3
+3 10
+3 7 2
+4 100
+11 10 5 50
+1 1
+1
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 1</h2>
+          <pre class="sampledata">Case #1: 6
+Case #2: 99
+Case #3: 1
+</pre>
+        </div>
+      </div>
+      
+    
+  </section>
+
+  
+    <section id="hint" class="problem-section">
+      <div class="headline">
+        <h2>힌트</h2>
+      </div>
+      <div id="problem_hint" class="problem-text">
+        
+				<p>In Sample Case #1, there are&nbsp;<b>N</b>&nbsp;= 3 bus routes and Bucket must arrive by day&nbsp;<b>D</b>&nbsp;= 10. She could:</p>
+
+<ul>
+	<li>Take the 1st bus on day 6 (<b>X<sub>1</sub></b>&nbsp;= 3),</li>
+	<li>Take the 2nd bus on day 7 (<b>X<sub>2</sub></b>&nbsp;= 7) and</li>
+	<li>Take the 3rd bus on day 8 (<b>X<sub>3</sub></b>&nbsp;= 2).</li>
+</ul>
+
+<p>In Sample Case #2, there are&nbsp;<b>N</b>&nbsp;= 4 bus routes and Bucket must arrive by day&nbsp;<b>D</b>&nbsp;= 100. She could:</p>
+
+<ul>
+	<li>Take the 1st bus on day 99 (<b>X<sub>1</sub></b>&nbsp;= 11),</li>
+	<li>Take the 2nd bus on day 100 (<b>X<sub>2</sub></b>&nbsp;= 10),</li>
+	<li>Take the 3rd bus on day 100 (<b>X<sub>3</sub></b>&nbsp;= 5) and</li>
+	<li>Take the 4th bus on day 100 (<b>X<sub>4</sub></b>&nbsp;= 50),</li>
+</ul>
+
+<p>In Sample Case #3, there is&nbsp;<b>N</b>&nbsp;= 1 bus route and Bucket must arrive by day&nbsp;<b>D</b>&nbsp;= 1. She could:</p>
+
+<ul>
+	<li>Take the 1st bus on day 1 (<b>X<sub>1</sub></b>&nbsp;= 1).</li>
+</ul>
+
+				
+      </div>
+    </section>
+    
+
+  
+    <section id="source" class="problem-section">
+      <div id="source" class="problem-text">
+        <div class="headline"><h2>출처</h2></div><p><a href="/category/45">Contest</a>&nbsp;&gt;&nbsp;<a href="/category/621">Google</a>&nbsp;&gt;&nbsp;<a href="/category/577">Kick Start</a>&nbsp;&gt;&nbsp;<a href="/category/613">Google Kick Start 2020</a>&nbsp;&gt;&nbsp;<a href="/category/detail/2902">Round B</a>&nbsp;B번</p>
+      </div>
+    </section>
+</body>
+</html>

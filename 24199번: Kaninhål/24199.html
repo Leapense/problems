@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
-  <title>Organ-free Man</title>
+  <title>Kaninhål</title>
   <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/problem-font.css?version=20230101">
   <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20230101">
   <style>
@@ -59,14 +59,14 @@
 </head>
 <body>
   <h1 style="display:inline">
-    Organ-free Man
+    Kaninhål
   </h1>
   &nbsp;&nbsp;&nbsp;&nbsp;
   <h3 style="display:inline">
   </h3>
   <br>
   <table>
-    <thead><tr><th style="width:16%;">시간 제한</th><th style="width:16%;">메모리 제한</th><th style="width:17%;">제출</th><th style="width:17%;">정답</th><th style="width:17%;">맞힌 사람</th><th style="width:17%;">정답 비율</th></tr></thead><tbody><tr><td>1 초 (추가 시간 없음) </td><td>1024 MB</td><td>113</td><td>55</td><td>34</td><td>41.975%</td></tr></tbody>
+    <thead><tr><th style="width:16%;">시간 제한</th><th style="width:16%;">메모리 제한</th><th style="width:17%;">제출</th><th style="width:17%;">정답</th><th style="width:17%;">맞힌 사람</th><th style="width:17%;">정답 비율</th></tr></thead><tbody><tr><td>2 초 </td><td>1024 MB</td><td>12</td><td>11</td><td>11</td><td>91.667%</td></tr></tbody>
   </table>
   <section id="description" class="problem-section">
     <div class="headline">
@@ -74,15 +74,17 @@
     </div>
     <div id="problem_description" class="problem-text">
       
-<p>Every so often, a shipment of universal robots comes from Earth to Mars in order to help you with routine colonization tasks. The robots are called Organ-free Men (precisely OFMv5001.41.912) and each one of them is identified by a unique serial number, which is a positive integer.</p>
+<p>I den nyss avslutade tävlingen Databävern <a href="http://www.databavern.se/">(se hemsida)</a>&nbsp;fick eleverna se ett exempel på djurens märkliga samspel:</p>
 
-<p>To prevent space theft, OFMs are transported from Earth to Mars in a locked state and have to be first unlocked by a special password. The password to unlock an OFM is based on its serial number and a function f(x). The function f(x) is defined as follows:</p>
+<p>En grupp med $N$ bävrar ska gå på promenad i skogen. De går på ett led efter varandra, den ena bävern efter den andra. Men de busiga kaninerna har grävt en massa hål utefter stigen som bävrarna går på.</p>
 
-<p>If 0 ≤ x ≤ 9, then f(x) = x!, and if x &gt; 9, then f(x) = (x mod 10)! + f(⌊x/10⌋). The brackets ⌊⌋ denote the floor value of a number (e.g. ⌊2.43⌋ = 2). Exclamation mark denotes the factorial, i.e., x! = 1 × 2 × · · · × x for x &gt; 0 and 0! = 1.</p>
+<p>Hålen är tillräckligt djupa för att ett visst antal bävrar ska falla i dem. När hålet väl är fullt med bävrar kan de bakomvarande bävrarna passera ovanpå bävrarna i hålet, tills slutligen den sista bävern i raden drar upp bävrarna ur hålet, den översta först och den understa sist. Alltså, om vi har fem bävrar (5 4 3 2 1) som vandrar åt höger (nummer 1 går alltså först och nummer 5 sist i ledet), och de kommer till ett hål där tre bävrar får plats, så skulle följande hända:</p>
 
-<p>To unlock an OFM with a serial number y, you need to input smallest such non-negative integer x, so that f(x) = y holds.</p>
+<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/060274a5-c3ba-4642-a64b-ba7955c0eec1/-/preview/" style="width: 493px; height: 140px;"></p>
 
-<p>Will you manage to unlock all robots that were shipped to you?</p>
+<p style="text-align: center;">En illustration av ett kanin hål och hur bävrarna vandrar över hålet.</p>
+
+<p>Tänk dig nu att kaninerna har gjort tre hål på vägen (vardera med ett djup mellan $1$ och $N-1$). Skriv ett program som, givet hur raden ser ut efter att bävrarna passerat alla hålen, beräknar djupet för varje hål.</p>
 
 
     </div>
@@ -94,7 +96,7 @@
     </div>
     <div id="problem_input" class="problem-text">
       
-<p>The input consists of one integer y (1 ≤ y ≤ 10<sup>9</sup>), the serial number of a particular OFM.</p>
+<p>På första raden står ett heltal $N$, antalet bävrar, där $2 \leq N &lt; 10$. På andra raden står $N$ olika heltal, vardera mellan 1 och N. Dessa beskriver ordningen på bävrarna när de passerat de tre kaninhålen. Från början är ordningen $N$, $N-1$, $N-2,\ldots,1$. Observera att de vandrar åt höger, så bäver $1$ går först i ledet.</p>
 
 
     </div>
@@ -106,7 +108,7 @@
     </div>
     <div id="problem_output" class="problem-text">
       
-<p>Output a single non-negative integer x, the password to unlock the particular OFM.</p>
+<p>Tre heltal mellan $1$ och $N-1$, djupet på det första, andra respektive tredje kaninhålet. Du kan förutsätta att det finns exakt en lösning för varje givet testfall.</p>
 
 
     </div>
@@ -119,12 +121,13 @@
       <div class="sample-container">
         <div class="sample-box">
           <h2>예제 입력 1</h2>
-          <pre class="sampledata">3
+          <pre class="sampledata">5
+3 4 2 1 5
 </pre>
         </div>
         <div class="sample-box">
           <h2>예제 출력 1</h2>
-          <pre class="sampledata">12
+          <pre class="sampledata">1 1 2
 </pre>
         </div>
       </div>
@@ -133,12 +136,13 @@
       <div class="sample-container">
         <div class="sample-box">
           <h2>예제 입력 2</h2>
-          <pre class="sampledata">20
+          <pre class="sampledata">7
+3 2 1 4 6 7 5
 </pre>
         </div>
         <div class="sample-box">
           <h2>예제 출력 2</h2>
-          <pre class="sampledata">2333
+          <pre class="sampledata">5 4 4
 </pre>
         </div>
       </div>
@@ -151,7 +155,8 @@
   
     <section id="source" class="problem-section">
       <div id="source" class="problem-text">
-        <div class="headline"><h2>출처</h2></div><p><a href="/category/1">ICPC</a>&nbsp;&gt;&nbsp;<a href="/category/7">Regionals</a>&nbsp;&gt;&nbsp;<a href="/category/10">Europe</a>&nbsp;&gt;&nbsp;<a href="/category/13">Central European Regional Contest</a>&nbsp;&gt;&nbsp;<a href="/category/171">CTU Open Contest</a>&nbsp;&gt;&nbsp;<a href="/category/detail/2888">CTU Open Contest 2021</a>&nbsp;O번</p>
+        <div class="headline"><h2>출처</h2></div><p><a href="https://creativecommons.org/licenses/by-sa/3.0/"><img src="https://licensebuttons.net/l/by-sa/3.0/88x31.png"></a></p>
+<p><a href="/category/2">Olympiad</a>&nbsp;&gt;&nbsp;<a href="/category/513">Swedish Olympiad in Informatics</a>&nbsp;&gt;&nbsp;<a href="/category/632">2015</a>&nbsp;&gt;&nbsp;<a href="/category/detail/2970">Qualification</a>&nbsp;4번</p><ul><li>문제를 만든 사람:&nbsp;Pär Söderhjelm</li></ul>
       </div>
     </section>
 </body>

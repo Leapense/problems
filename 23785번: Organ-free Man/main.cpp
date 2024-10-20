@@ -9,40 +9,34 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main(){
-    int y;
-    cin >> y;
-    if(y ==0){
-        cout << 0;
-        return 0;
-    }
-    int factorial[10];
-    factorial[0]=1;
-    for(int i=1;i<=9;i++) factorial[i]=factorial[i-1]*i;
-    int max_sum = min(y, 3628800);
-    vector<bool> visited(max_sum+1, false);
-    priority_queue<pair<long long, int>, vector<pair<long long, int>>, std::greater<pair<long long, int>>> pq;
-    for(int d=1; d<=9; d++){
-        if(factorial[d] > y) continue;
-        pq.emplace((long long)d, factorial[d]);
-        visited[factorial[d]]=true;
-    }
-    while(!pq.empty()){
-        auto [x, s] = pq.top();
-        pq.pop();
-        if(s == y){
-            cout << x;
-            return 0;
-        }
-        for(int d=0; d<=9; d++){
-            long long new_x = x*10 +d;
-            int new_s = s + factorial[d];
-            if(new_s > y) continue;
-            if(!visited[new_s]){
-                pq.emplace(new_x, new_s);
-                visited[new_s]=true;
-            }
-        }
-    }
-    return 0;
+int main()
+{
+	vector<long long> fac = {1, 1};
+	for (long long i = 2; i < 10; ++i) {
+		fac.push_back(fac.back() * i);
+	}
+
+	long long N;
+	cin >> N;
+
+	if (N == 1) {
+		cout << "0" << endl;
+
+		return 0;
+	}
+
+	string res;
+	for (long long i = fac.size()-1; i >= 1; --i) {
+		long long f = fac[i];
+		while (N >= f) {
+			N -= f;
+			res += to_string(i);
+		}
+	}
+
+	reverse(res.begin(), res.end());
+
+	cout << res << "\n";
+
+	return 0;
 }
