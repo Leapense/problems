@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <base href="https://www.acmicpc.net"> <!-- base url 설정 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+  <title>Painter</title>
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/problem-font.css?version=20230101">
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20230101">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; margin: 0; }
+    h1, h2, h3 { margin-top: 30px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+    
+        code { background-color: #2e2e2e; padding: 2px 4px; border-radius: 4px; }
+        pre {
+          background-color: #2e2e2e;
+          color: white;
+          font-size: 14px;
+        }
+      
+    .problem-section { margin-bottom: 30px; }
+    .problem-text p { margin: 0; }
+    .problem-text a { color: #007bff; }
+    .problem-io { margin-top: 20px; }
+    .problem-io h3 { font-size: 20px; }
+    .sample-container {
+      display: flex;
+      gap: 16px; /* 예제와 예제 사이의 간격 설정 (원하는 크기로 조정) */
+    }
+    .sample-box {
+      flex: 1; /* 박스가 꽉 차도록 설정 */
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    function updateTheme() {
+      const theme = {"theme":2};
+      vscode.postMessage(theme);
+    }            
+    function getLocalResourceUri(resourcePath) {
+      const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, resourcePath));
+      const srcUri = panel.webview.asWebviewUri(onDiskPath);
+      return srcUri;
+    }
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['$begin:math:text$','\$end:math:text$']]}
+    });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <h1 style="display:inline">
+    Painter
+  </h1>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <h3 style="display:inline">
+  </h3>
+  <br>
+  <table>
+    <thead><tr><th style="width:16%;">시간 제한</th><th style="width:16%;">메모리 제한</th><th style="width:17%;">제출</th><th style="width:17%;">정답</th><th style="width:17%;">맞힌 사람</th><th style="width:17%;">정답 비율</th></tr></thead><tbody><tr><td>서브태스크 참고 (추가 시간 없음) </td><td>1024 MB</td><td>133</td><td>99</td><td>34</td><td>79.070%</td></tr></tbody>
+  </table>
+  <section id="description" class="problem-section">
+    <div class="headline">
+      <h2>문제</h2>
+    </div>
+    <div id="problem_description" class="problem-text">
+      
+<p>You have recently started to study how to paint, and in one of the first classes you learned about the three primary colors:&nbsp;<i>Red</i>,&nbsp;<i>Yellow</i>, and&nbsp;<i>Blue</i>. If you combine these colors, you can produce many more colors. For now, the combinations that you have studied are the following:</p>
+
+<ul>
+<li><i>Red</i>&nbsp;+&nbsp;<i>Yellow</i>&nbsp;=&nbsp;<i>Orange</i></li>
+<li><i>Red</i>&nbsp;+&nbsp;<i>Blue</i>&nbsp;=&nbsp;<i>Purple</i></li>
+<li><i>Yellow</i>&nbsp;+&nbsp;<i>Blue</i>&nbsp;=&nbsp;<i>Green</i></li>
+<li><i>Red</i>&nbsp;+&nbsp;<i>Yellow</i>&nbsp;+&nbsp;<i>Blue</i>&nbsp;=&nbsp;<i>Gray</i></li>
+</ul>
+
+<p>You still do not understand shades of colors, therefore the proportion and order of each color in the combination does not matter. For example, combining&nbsp;<i>Red</i>&nbsp;and&nbsp;<i>Yellow</i>&nbsp;produces the same result as combining&nbsp;<i>Yellow</i>&nbsp;and&nbsp;<i>Red</i>, as well as the same result as combining&nbsp;<i>Red</i>,&nbsp;<i>Yellow</i>, and&nbsp;<i>Red</i>&nbsp;again.</p>
+
+<p>To practice your skills, you want to paint a 1-dimensional painting&nbsp;$P$&nbsp;of length&nbsp;$N$. Your painting consists of&nbsp;$N$&nbsp;squares. From left to right,&nbsp;$P_i$&nbsp;represents the color of the $i-th square. Initially all squares are&nbsp;<i>Uncolored</i>, that is,&nbsp;$P_i$&nbsp;=&nbsp;<i>Uncolored</i>&nbsp;for every&nbsp;$1≤i≤N$.</p>
+
+<p>In a single stroke, you can choose one of the three primary colors and apply it to a sequence of consecutive squares. In other words, you can choose a color&nbsp;$c$&nbsp;and two integers&nbsp;$l$&nbsp;and&nbsp;$r$, such that&nbsp;$1≤l≤r≤N$, and apply color&nbsp;$c$&nbsp;to all squares&nbsp;$P_j$&nbsp;such that&nbsp;$l≤j≤r$. If the square being painted is currently&nbsp;<i>Uncolored</i>, then its color will become&nbsp;$c$. Otherwise, the color will be a combination of all the colors applied on this square so far and the new color&nbsp;$c$, as described in the list above.</p>
+
+<p>In order to save time, you want to use as few strokes as possible. Given the description of the painting that you want to paint, figure out what is the minimum number of strokes required to paint it.</p>
+
+
+    </div>
+  </section>
+
+  <section id="input" class="problem-section">
+    <div class="headline">
+      <h2>입력</h2>
+    </div>
+    <div id="problem_input" class="problem-text">
+      
+<p>The first line of the input gives the number of test cases, $T$.&nbsp;$T$&nbsp;test cases follow.</p>
+
+<p>Each test case starts with a line containing an integer&nbsp;$N$, representing the length of the painting. Then on the next line, there will be a string&nbsp;$P$&nbsp;of length&nbsp;$N$, representing the painting. The&nbsp;$i$-th character represents the color of square $P_i$, according to the following list:</p>
+
+<ul>
+<li><code>U</code>&nbsp;=&nbsp;<i>Uncolored</i></li>
+<li><code>R</code>&nbsp;=&nbsp;<i>Red</i></li>
+<li><code>Y</code>&nbsp;=&nbsp;<i>Yellow</i></li>
+<li><code>B</code>&nbsp;=&nbsp;<i>Blue</i></li>
+<li><code>O</code>&nbsp;=&nbsp;<i>Orange</i></li>
+<li><code>P</code>&nbsp;=&nbsp;<i>Purple</i></li>
+<li><code>G</code>&nbsp;=&nbsp;<i>Green</i></li>
+<li><code>A</code>&nbsp;=&nbsp;<i>Gray</i></li>
+</ul>
+
+
+    </div>
+  </section>
+
+  <section id="output" class="problem-section">
+    <div class="headline">
+      <h2>출력</h2>
+    </div>
+    <div id="problem_output" class="problem-text">
+      
+<p>For each test case, output one line containing&nbsp;<code>Case #x: y</code>, where&nbsp;$x$ is the test case number (starting from 1) and&nbsp;$y$&nbsp;is the minimum number of strokes required to paint the painting.</p>
+
+
+    </div>
+  </section>
+
+  
+    <section id="limit" class="problem-section">
+      <div class="headline">
+        <h2>제한</h2>
+      </div>
+      <div id="problem_limit" class="problem-text">
+        
+			<ul>
+	<li>$1≤T≤100$.</li>
+	<li>$1≤N≤10^5$.</li>
+</ul>
+			
+      </div>
+    </section>
+    
+
+  <section id="sample-IOs" class="problem-section">
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 1</h2>
+          <pre class="sampledata">2
+9
+YYYBBBYYY
+6
+YYGGBB
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 1</h2>
+          <pre class="sampledata">Case #1: 3
+Case #2: 2
+</pre>
+        </div>
+      </div>
+      
+								<div id="problem_sample_explain_1" class="problem-text">
+								<p>In Sample Case #1, the solution is to make&nbsp;$3$&nbsp;strokes: the first one using color&nbsp;<i>Yellow</i>&nbsp;from square&nbsp;$1$&nbsp;through&nbsp;$3$, the second one using color&nbsp;<i>Blue</i>&nbsp;from square&nbsp;$4$&nbsp;through&nbsp;$6$, and the third one using color&nbsp;<i>Yellow</i>&nbsp;from square&nbsp;$7$&nbsp;through&nbsp;$9$. Notice that this particular painting required only primary colors.</p>
+
+<p>In Sample Case #2, the solution is to make&nbsp;$2$&nbsp;strokes: the first one using color&nbsp;<i>Yellow</i>&nbsp;from square&nbsp;$1$&nbsp;through&nbsp;$4$, and the second one using color&nbsp;<i>Blue</i>&nbsp;from square&nbsp;$3$&nbsp;through&nbsp;$6$. Notice that squares&nbsp;$3$&nbsp;and&nbsp;$4$&nbsp;will be painted with both colors&nbsp;<i>Yellow</i>&nbsp;and&nbsp;<i>Blue</i>, which will result on it being&nbsp;<i>Green</i>.</p>
+
+								</div>
+							
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 2</h2>
+          <pre class="sampledata">1
+5
+ROAOR
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 2</h2>
+          <pre class="sampledata">Case #1: 3
+</pre>
+        </div>
+      </div>
+      
+								<div id="problem_sample_explain_2" class="problem-text">
+								<p>In Sample Case #3, the solution is to make&nbsp;$3$&nbsp;strokes: the first one using color&nbsp;<i>Red</i>&nbsp;from square&nbsp;$1$&nbsp;through&nbsp;$5$, the second one using color&nbsp;<i>Yellow</i>&nbsp;from square&nbsp;$2$&nbsp;through&nbsp;$4$, and the third one using color&nbsp;<i>Blue</i>&nbsp;on square&nbsp;$3$. Notice that square&nbsp;$3$&nbsp;is painted with all three primary colors, which will result in it being&nbsp;<i>Gray</i>.</p>
+
+								</div>
+							
+    
+  </section>
+
+  <div id="hint" class="problem-section hidden"></div>
+
+  
+    <section id="source" class="problem-section">
+      <div id="source" class="problem-text">
+        <div class="headline"><h2>출처</h2></div><p><a href="/category/45">Contest</a>&nbsp;&gt;&nbsp;<a href="/category/621">Google</a>&nbsp;&gt;&nbsp;<a href="/category/577">Kick Start</a>&nbsp;&gt;&nbsp;<a href="/category/578">Google Kick Start 2021</a>&nbsp;&gt;&nbsp;<a href="/category/detail/2878">Round H</a>&nbsp;B번</p>
+      </div>
+    </section>
+</body>
+</html>
