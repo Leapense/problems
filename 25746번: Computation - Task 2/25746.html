@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <base href="https://www.acmicpc.net"> <!-- base url 설정 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+  <title>Computation - Task 2</title>
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/problem-font.css?version=20230101">
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20230101">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; margin: 0; }
+    h1, h2, h3 { margin-top: 30px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+    
+        code { background-color: #2e2e2e; padding: 2px 4px; border-radius: 4px; }
+        pre {
+          background-color: #2e2e2e;
+          color: white;
+          font-size: 14px;
+        }
+      
+    .problem-section { margin-bottom: 30px; }
+    .problem-text p { margin: 0; }
+    .problem-text a { color: #007bff; }
+    .problem-io { margin-top: 20px; }
+    .problem-io h3 { font-size: 20px; }
+    .sample-container {
+      display: flex;
+      gap: 16px; /* 예제와 예제 사이의 간격 설정 (원하는 크기로 조정) */
+    }
+    .sample-box {
+      flex: 1; /* 박스가 꽉 차도록 설정 */
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    function updateTheme() {
+      const theme = {"theme":2};
+      vscode.postMessage(theme);
+    }            
+    function getLocalResourceUri(resourcePath) {
+      const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, resourcePath));
+      const srcUri = panel.webview.asWebviewUri(onDiskPath);
+      return srcUri;
+    }
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['$begin:math:text$','\$end:math:text$']]}
+    });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <h1 style="display:inline">
+    Computation - Task 2
+  </h1>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <h3 style="display:inline">
+  </h3>
+  <br>
+  <table>
+    <thead><tr><th style="width:16%;">시간 제한</th><th style="width:16%;">메모리 제한</th><th style="width:17%;">제출</th><th style="width:17%;">정답</th><th style="width:17%;">맞힌 사람</th><th style="width:17%;">정답 비율</th></tr></thead><tbody><tr><td>1 초 </td><td>1024 MB</td><td>88</td><td>56</td><td>55</td><td>67.073%</td></tr></tbody>
+  </table>
+  <section id="description" class="problem-section">
+    <div class="headline">
+      <h2>문제</h2>
+    </div>
+    <div id="problem_description" class="problem-text">
+      
+<p>Given a task, you should write a program that solves the task using the instructions below. Let $x_t$ denote the result of the $t$-th instruction. The permitted instructions, the syntax, and the result $x_t$ are given below:</p>
+
+<table class="table table-bordered">
+<tbody>
+<tr>
+<th>Name</th>
+<th>Operator</th>
+<th>Parameters</th>
+<th>Effects</th>
+</tr>
+<tr>
+<td>Input</td>
+<td><code>I</code></td>
+<td>N/A</td>
+<td>Read a real number from the terminal and make the number $x_t$</td>
+</tr>
+<tr>
+<td>Output</td>
+<td><code>O</code></td>
+<td>$i$</td>
+<td>Print $x_i$ to the terminal, and $x_t = x_i$</td>
+</tr>
+<tr>
+<td>Addition</td>
+<td><code>+</code></td>
+<td>$i \quad j$</td>
+<td>$x_t = x_i + x_j$</td>
+</tr>
+<tr>
+<td>Adding constant</td>
+<td><code>C</code></td>
+<td>$i \quad c$</td>
+<td>$x_t = x_i +c$</td>
+</tr>
+<tr>
+<td>Negate</td>
+<td><code>-</code></td>
+<td>$i$</td>
+<td>$x_t = -x_i $</td>
+</tr>
+<tr>
+<td>Left shift</td>
+<td><code>&lt;</code></td>
+<td>$i \quad k$</td>
+<td>$x_t = x_i \cdot 2^k $</td>
+</tr>
+<tr>
+<td>Right shift</td>
+<td><code>&gt;</code></td>
+<td>$i \quad k$</td>
+<td>$x_t = x_i \cdot 2^{-k} $</td>
+</tr>
+<tr>
+<td>S</td>
+<td><code>S</code></td>
+<td>$i$</td>
+<td>$x_t = s(x_i) $</td>
+</tr>
+<tr>
+<td>Comparison</td>
+<td><code>P</code></td>
+<td>$i \quad j$</td>
+<td>$x_t = \left\{ \begin{array}{ll} -1 &amp; \quad x_i &lt; x_j \\ 0 &amp; \quad x_i = x_j \\ 1 &amp; \quad x_i &gt; x_j \end{array} \right. $</td>
+</tr>
+<tr>
+<td>Max</td>
+<td><code>M</code></td>
+<td>$i \quad j$</td>
+<td>$x_t = \left\{ \begin{array}{ll} x_i &amp; \quad x_i &gt; x_j \\ x_j &amp; \quad x_i \leq x_j \\ \end{array} \right. $</td>
+</tr>
+<tr>
+<td>Multiplication</td>
+<td><code>*</code></td>
+<td>$i \quad j$</td>
+<td>$x_i = x_i \cdot x_j$</td>
+</tr>
+</tbody>
+</table>
+
+<p>Here, the definition of $s(x)$ is given below where $e = 2.718281828459045\ldots$ is the base of natural logarithm:</p>
+
+<p>$$\displaystyle s(x) = \frac{1}{1 + e^{-x}}.$$</p>
+
+<p>Notice there is a penalty for using the <code>P</code>, <code>M</code>, and <code>*</code> operators. See details below in the "grading" section.</p>
+
+<p>For each instruction, the parameters $i$ and $j$ must be smaller than the current instruction number $t$. The instructions are executed in the order, one by one.</p>
+
+<p>The operations have finite precision: in particular, <em>the results are only accurate up to 90 digits after the decimal point and the rest will be rounded</em>. Similarly, the argument $c$ to the adding constant instruction can have at most 90 digits in its decimal part.</p>
+
+<p>For left shift and right shift instructions, $k$ must be a non-negative integer not exceeding 10000.</p>
+
+<p>The ten tasks are given below:</p>
+
+<ul>
+<li>Task 1: Given $a,b$ where $|a|, |b| \leq 10^9$ and $a,b$ have at most 9 digits in their decimal parts, compute $-2a-2b$.</li>
+<li>Task 2: Given $a$ where $|a| \leq 10^9$ and $a$ has at most 9 digits in its decimal part, compute $\frac{1}{1+e^{17a}}$.</li>
+<li>Task 3: Given $a$ where $|a| \leq 10^9$ and $a$ has at most 9 digits in its decimal part, compute $ \left\{ \begin{array}{ll} -1 &amp; \quad a &lt; 0\\ 0 &amp; \quad a = 0\\ 1 &amp; \quad a &gt; 0 \end{array} \right. $.</li>
+<li>Task 4: Given $a$ where $|a| \leq 10^9$ and $a$ has at most 9 digits in its decimal part, compute the absolute value of $a$, $|a|$.</li>
+<li>Task 5: Given $a_1,\ldots,a_{32}$ where $a_1,\ldots,a_{32} \in \{0,1\}$, treat $a_1a_2 \cdots a_{32}$ as a binary number where $a_1$ is the most significant bit and $a_{32}$ is the least significant bit, compute the corresponding value (in base 10).</li>
+<li>Task 6: Given integer $a$ where $0 \leq a &lt; 2^{32}$, output 32 integers denoting $a$ in base 2 representation. The most significant bit should be printed first and the least significant bit should be printed last. If $a$ has less than 32 bits in its binary representation, add leading 0s.</li>
+<li>Task 7: Given integers $a,b$ where $0 \leq a,b &lt; 2^{32}$, compute the bitwise XOR of $a$ and $b$.</li>
+<li>Task 8: Given $a$ where $|a| \leq 10^9$ and $a$ has at most 9 digits in its decimal part, output $\frac{a}{10}$.</li>
+<li>Task 9: Given $a_1,\ldots,a_{16}$ where $|a_i| \leq 10^9$ and $a_i$ has at most 9 digits in its decimal part, print 16 real numbers representing the result of sorting $a_1,\ldots,a_{16}$ in ascending order.</li>
+<li>Task 10: Given integers $a,b,m$ where $0 \leq a,b &lt; 2^{32}$, $1 \leq m &lt; 2^{32}$, compute the remainder after dividing $a \times b$ by $m$ (i.e. compute $a \times b \bmod m$).</li>
+</ul>
+
+
+    </div>
+  </section>
+
+  <section id="input" class="problem-section">
+    <div class="headline">
+      <h2>입력</h2>
+    </div>
+    <div id="problem_input" class="problem-text">
+      
+
+
+    </div>
+  </section>
+
+  <section id="output" class="problem-section">
+    <div class="headline">
+      <h2>출력</h2>
+    </div>
+    <div id="problem_output" class="problem-text">
+      
+<p>The $i$-th line describes the $i$-th instruction: first, you should output a letter denoting the operation. Then output several (or zero) integers denoting the parameters to the operation. The operator and the parameters (and between parameters) should be separated by a single space.</p>
+
+<p>You can output at most $10^4$ lines.</p>
+
+
+    </div>
+  </section>
+
+  <div id="limit" class="problem-section hidden"></div>
+
+  <section id="sample-IOs" class="problem-section">
+    
+  </section>
+
+  <div id="hint" class="problem-section hidden"></div>
+
+  
+    <section id="source" class="problem-section">
+      <div id="source" class="problem-text">
+        <div class="headline"><h2>출처</h2></div><p><a href="/category/2">Olympiad</a>&nbsp;&gt;&nbsp;<a href="/category/303">National Olympiad in Informatics (China)</a>&nbsp;&gt;&nbsp;<a href="/category/detail/3197">NOI 2016</a>&nbsp;6-2번</p>
+      </div>
+    </section>
+</body>
+</html>
