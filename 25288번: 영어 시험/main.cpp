@@ -6,13 +6,31 @@
 //   @Test:   코드를 작성 후 "BOJ: 테스트"통해서 테스트를 해보세요.
 //=====================================================================
 
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
-            
-int main() {
-  int t;
-	cin >> t;
 
-  
-  return 0;
+int main()
+{
+	ios::sync_with_stdio(false);
+	cin.tie(nullptr);
+
+	int N;
+	cin >> N;
+
+	string S;
+	cin >> S;
+
+	sort(S.begin(), S.end());
+	long long total_length = (long long)S.size() * N;
+
+	string T;
+	T.reserve(total_length);
+
+	for(int i = 0; i < N; i++) {
+		T += S;
+	}
+
+	cout << T << "\n";
+
+	return 0;
 }
