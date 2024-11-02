@@ -1,0 +1,1 @@
+print(type(100.0) == type(100))

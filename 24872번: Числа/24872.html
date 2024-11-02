@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <base href="https://www.acmicpc.net"> <!-- base url 설정 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+  <title>Числа</title>
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/problem-font.css?version=20230101">
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20230101">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; margin: 0; }
+    h1, h2, h3 { margin-top: 30px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+    
+        code { background-color: #2e2e2e; padding: 2px 4px; border-radius: 4px; }
+        pre {
+          background-color: #2e2e2e;
+          color: white;
+          font-size: 14px;
+        }
+      
+    .problem-section { margin-bottom: 30px; }
+    .problem-text p { margin: 0; }
+    .problem-text a { color: #007bff; }
+    .problem-io { margin-top: 20px; }
+    .problem-io h3 { font-size: 20px; }
+    .sample-container {
+      display: flex;
+      gap: 16px; /* 예제와 예제 사이의 간격 설정 (원하는 크기로 조정) */
+    }
+    .sample-box {
+      flex: 1; /* 박스가 꽉 차도록 설정 */
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    function updateTheme() {
+      const theme = {"theme":2};
+      vscode.postMessage(theme);
+    }            
+    function getLocalResourceUri(resourcePath) {
+      const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, resourcePath));
+      const srcUri = panel.webview.asWebviewUri(onDiskPath);
+      return srcUri;
+    }
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['$begin:math:text$','\$end:math:text$']]}
+    });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <h1 style="display:inline">
+    Числа
+  </h1>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <h3 style="display:inline">
+  </h3>
+  <br>
+  <table>
+    <thead><tr><th style="width:16%;">시간 제한</th><th style="width:16%;">메모리 제한</th><th style="width:17%;">제출</th><th style="width:17%;">정답</th><th style="width:17%;">맞힌 사람</th><th style="width:17%;">정답 비율</th></tr></thead><tbody><tr><td>1 초 </td><td>512 MB</td><td>125</td><td>35</td><td>19</td><td>26.027%</td></tr></tbody>
+  </table>
+  <section id="description" class="problem-section">
+    <div class="headline">
+      <h2>문제</h2>
+    </div>
+    <div id="problem_description" class="problem-text">
+      
+<p>Аня любит, когда числа состоят из одинаковых цифр. Поэтому ей нравятся числа 777 или 5555, а вот число 1234 ей совсем не нравится.&nbsp;</p>
+
+<p>Иногда у Ани бывает хорошее настроение, тогда ей по прежнему нравятся все числа, состоящие из одинаковых цифр, но также нравятся числа, в которых все цифры кроме одной одинаковые, как, например, в числе 77727.&nbsp;</p>
+
+<p>У Ани есть число $x$. Аня хочет найти минимальное целое число $y \ge x$, которое ей понравится.</p>
+
+<p>Требуется написать программу, которая по заданному целому числу $x$ и информации, хорошее ли настроение у Ани, находит минимальное целое число $y \ge x$, которое нравится Ане.&nbsp;</p>
+
+
+    </div>
+  </section>
+
+  <section id="input" class="problem-section">
+    <div class="headline">
+      <h2>입력</h2>
+    </div>
+    <div id="problem_input" class="problem-text">
+      
+<p>Первая строка ввода содержит целое число $x$ ($1 \le x \le 10^{17}$, обратите внимание, что число $x$ не может быть сохранено в стандартном 32-битном типе данных, необходимо использовать 64-битный тип данных, например &lt;&lt;<code>long long</code>&gt;&gt; в C++, &lt;&lt;<code>int64</code>&gt;&gt; в Паскале).</p>
+
+<p>Вторая строка ввода содержит число $k$, равное $0$ или $1$. Значение $k = 1$ означает, что у Ани хорошее настроение, а значение $k = 0$ --- что это не так.</p>
+
+
+    </div>
+  </section>
+
+  <section id="output" class="problem-section">
+    <div class="headline">
+      <h2>출력</h2>
+    </div>
+    <div id="problem_output" class="problem-text">
+      
+<p>Следует вывести одно целое число $y$.</p>
+
+<p>Должны выполняться следующие свойства:&nbsp;</p>
+
+<ul>
+<li>$y \ge x$;</li>
+<li>если $k = 0$, то все цифры в десятичной записи числа $y$ должны совпадать;</li>
+<li>если $k = 1$, то все цифры в десятичной записи числа $y$, кроме, может быть, одной, должны совпадать.</li>
+</ul>
+
+
+    </div>
+  </section>
+
+  <div id="limit" class="problem-section hidden"></div>
+
+  <section id="sample-IOs" class="problem-section">
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 1</h2>
+          <pre class="sampledata">700
+0
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 1</h2>
+          <pre class="sampledata">777
+</pre>
+        </div>
+      </div>
+      
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 2</h2>
+          <pre class="sampledata">700
+1
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 2</h2>
+          <pre class="sampledata">700
+</pre>
+        </div>
+      </div>
+      
+    
+  </section>
+
+  <div id="hint" class="problem-section hidden"></div>
+
+  
+    <section id="source" class="problem-section">
+      <div id="source" class="problem-text">
+        <div class="headline"><h2>출처</h2></div><p><a href="/category/2">Olympiad</a>&nbsp;&gt;&nbsp;<a href="/category/500">Russian Olympiad in Informatics</a>&nbsp;&gt;&nbsp;<a href="/category/526">Russian Olympiad in Informatics Regional</a>&nbsp;&gt;&nbsp;<a href="/category/detail/3072">Russian Olympiad in Informatics Regional 2021</a>&nbsp;6번</p>
+      </div>
+    </section>
+</body>
+</html>

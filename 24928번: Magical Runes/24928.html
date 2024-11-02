@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <base href="https://www.acmicpc.net"> <!-- base url 설정 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+  <title>Magical Runes</title>
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/problem-font.css?version=20230101">
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20230101">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; margin: 0; }
+    h1, h2, h3 { margin-top: 30px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+    
+        code { background-color: #2e2e2e; padding: 2px 4px; border-radius: 4px; }
+        pre {
+          background-color: #2e2e2e;
+          color: white;
+          font-size: 14px;
+        }
+      
+    .problem-section { margin-bottom: 30px; }
+    .problem-text p { margin: 0; }
+    .problem-text a { color: #007bff; }
+    .problem-io { margin-top: 20px; }
+    .problem-io h3 { font-size: 20px; }
+    .sample-container {
+      display: flex;
+      gap: 16px; /* 예제와 예제 사이의 간격 설정 (원하는 크기로 조정) */
+    }
+    .sample-box {
+      flex: 1; /* 박스가 꽉 차도록 설정 */
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    function updateTheme() {
+      const theme = {"theme":2};
+      vscode.postMessage(theme);
+    }            
+    function getLocalResourceUri(resourcePath) {
+      const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, resourcePath));
+      const srcUri = panel.webview.asWebviewUri(onDiskPath);
+      return srcUri;
+    }
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['$begin:math:text$','\$end:math:text$']]}
+    });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <h1 style="display:inline">
+    Magical Runes
+  </h1>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <h3 style="display:inline">
+  </h3>
+  <br>
+  <table>
+    <thead><tr><th style="width:16%;">시간 제한</th><th style="width:16%;">메모리 제한</th><th style="width:17%;">제출</th><th style="width:17%;">정답</th><th style="width:17%;">맞힌 사람</th><th style="width:17%;">정답 비율</th></tr></thead><tbody><tr><td>1 초 (추가 시간 없음) </td><td>1024 MB</td><td>81</td><td>63</td><td>51</td><td>83.607%</td></tr></tbody>
+  </table>
+  <section id="description" class="problem-section">
+    <div class="headline">
+      <h2>문제</h2>
+    </div>
+    <div id="problem_description" class="problem-text">
+      
+<p>You maintain a very nice collection of magical runes. They generally come in two types, type&nbsp;<code>A</code>&nbsp;and type&nbsp;<code>B</code>.</p>
+
+<p>You have arranged your runes on a shelf to show them off. Because they are magical runes, they change each day. That is, at the start of each day the leftmost rune will switch its type (i.e. from&nbsp;<code>A</code>&nbsp;to&nbsp;<code>B</code>&nbsp;or from&nbsp;<code>B</code>&nbsp;to&nbsp;<code>A</code>, depending on its type just before the start of the day). Every other rune will only change if the type of the rune to its left changes from&nbsp;<code>B</code>&nbsp;to&nbsp;<code>A</code>.</p>
+
+<p>For example, if you have three runes initially arranged like&nbsp;<code>ABBAA</code>, then at the start of the next day only the leftmost rune will change and the sequence will look like&nbsp;<code>BBBAA</code>. After another day, the leftmost rune will change, but then the second rune from the left will change because the rune beside it changed from&nbsp;<code>B</code>&nbsp;to&nbsp;<code>A</code>. But then the third rune will also change for the same reason. And then the fourth rune will also change! That is, after the changes at the start of this day the runes will look like&nbsp;<code>AAABA</code>.</p>
+
+<p>Your task is the following. Given the initial states $S$ of an initial arrangement of runes and given a number of days&nbsp;𝐷D, you should determine the states of the runes after $D$ days have elapsed.</p>
+
+
+    </div>
+  </section>
+
+  <section id="input" class="problem-section">
+    <div class="headline">
+      <h2>입력</h2>
+    </div>
+    <div id="problem_input" class="problem-text">
+      
+<p>Input consists of a single line that first begins with a string $S$ followed by an integer $D$. The length of $S$ will be between&nbsp;$1$&nbsp;and&nbsp;$30$&nbsp;(inclusive) and $S$ will consist only of characters&nbsp;<code>A</code>&nbsp;and&nbsp;<code>B</code>. The value&nbsp;$D$&nbsp;satisfies&nbsp;$0≤D&lt;2^{30}$.</p>
+
+<p>Finally, you are also guaranteed that the rightmost rune does not change from&nbsp;<code>B</code>&nbsp;to&nbsp;<code>A</code>&nbsp;at the start of any of the&nbsp;$D$&nbsp;days that you are to consider.</p>
+
+
+    </div>
+  </section>
+
+  <section id="output" class="problem-section">
+    <div class="headline">
+      <h2>출력</h2>
+    </div>
+    <div id="problem_output" class="problem-text">
+      
+<p>Display a single string showing the states of the runes after $D$ days have elapsed, given they started in state $S$.</p>
+
+
+    </div>
+  </section>
+
+  <div id="limit" class="problem-section hidden"></div>
+
+  <section id="sample-IOs" class="problem-section">
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 1</h2>
+          <pre class="sampledata">ABBAA 2
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 1</h2>
+          <pre class="sampledata">AAABA
+</pre>
+        </div>
+      </div>
+      
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 2</h2>
+          <pre class="sampledata">ABAA 4
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 2</h2>
+          <pre class="sampledata">ABBA
+</pre>
+        </div>
+      </div>
+      
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 3</h2>
+          <pre class="sampledata">ABBABBABBABBABBABBABBABBABBABA 536870912
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 3</h2>
+          <pre class="sampledata">ABBABBABBABBABBABBABBABBABBABB
+</pre>
+        </div>
+      </div>
+      
+    
+  </section>
+
+  <div id="hint" class="problem-section hidden"></div>
+
+  
+    <section id="source" class="problem-section">
+      <div id="source" class="problem-text">
+        <div class="headline"><h2>출처</h2></div><p><a href="https://creativecommons.org/licenses/by-sa/3.0/"><img src="https://licensebuttons.net/l/by-sa/3.0/88x31.png"></a></p>
+<p><a href="/category/5">University</a>&nbsp;&gt;&nbsp;<a href="/category/271">University of Alberta Programming Contest</a>&nbsp;&gt;&nbsp;<a href="/category/detail/3079">UAPC 2022</a>&nbsp;F번</p><ul><li>문제를 만든 사람:&nbsp;Jiacheng Wu</li></ul>
+      </div>
+    </section>
+</body>
+</html>

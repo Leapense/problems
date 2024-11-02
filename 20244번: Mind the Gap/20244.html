@@ -1,0 +1,174 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <base href="https://www.acmicpc.net"> <!-- base url 설정 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+  <title>Mind the Gap</title>
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/problem-font.css?version=20230101">
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20230101">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; margin: 0; }
+    h1, h2, h3 { margin-top: 30px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+    
+        code { background-color: #2e2e2e; padding: 2px 4px; border-radius: 4px; }
+        pre {
+          background-color: #2e2e2e;
+          color: white;
+          font-size: 14px;
+        }
+      
+    .problem-section { margin-bottom: 30px; }
+    .problem-text p { margin: 0; }
+    .problem-text a { color: #007bff; }
+    .problem-io { margin-top: 20px; }
+    .problem-io h3 { font-size: 20px; }
+    .sample-container {
+      display: flex;
+      gap: 16px; /* 예제와 예제 사이의 간격 설정 (원하는 크기로 조정) */
+    }
+    .sample-box {
+      flex: 1; /* 박스가 꽉 차도록 설정 */
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    function updateTheme() {
+      const theme = {"theme":2};
+      vscode.postMessage(theme);
+    }            
+    function getLocalResourceUri(resourcePath) {
+      const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, resourcePath));
+      const srcUri = panel.webview.asWebviewUri(onDiskPath);
+      return srcUri;
+    }
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['$begin:math:text$','\$end:math:text$']]}
+    });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <h1 style="display:inline">
+    Mind the Gap
+  </h1>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <h3 style="display:inline">
+  </h3>
+  <br>
+  <table>
+    <thead><tr><th style="width:16%;">시간 제한</th><th style="width:16%;">메모리 제한</th><th style="width:17%;">제출</th><th style="width:17%;">정답</th><th style="width:17%;">맞힌 사람</th><th style="width:17%;">정답 비율</th></tr></thead><tbody><tr><td>2 초 </td><td>512 MB</td><td>76</td><td>38</td><td>33</td><td>55.932%</td></tr></tbody>
+  </table>
+  <section id="description" class="problem-section">
+    <div class="headline">
+      <h2>문제</h2>
+    </div>
+    <div id="problem_description" class="problem-text">
+      
+<p>Mika is playing the Mind game with her friends.&nbsp;</p>
+
+<p>The game is played with cards, a single integer value is written on each card. All values written on the cards are distinct. Players keep playing cards, building a single pile of cards on the table. Initially the pile contains a single card with integer $0$ on it. Each player is given a single card with a value from $1$ to $10^9$. Then players start playing the cards in any order. When a player plays a card, they place it on the top of the pile. The goal is to play all the cards in such a way that the card values increase from the bottom to the top. If any player didn't play their card or the pile is not increasing, the players lose, otherwise they win. No communication between players is allowed after the cards are distributed.</p>
+
+<p>Mika and her friends came up with a strategy. They agree on a single integer $d$ before the game. During the game, if a player's card value is $x$, and the top value of the pile is $y$, such that $x - y \le d$, then the player plays their card. If $x - y &gt; d$, the player doesn't play their card. If several players play their cards at the same time, these cards might be placed on the top of the pile in any order, and this order is not controlled by the players.</p>
+
+<p>You are given the card values that are going to be distributed to the players. Your task is to find an integer $d$ for the players' strategy that guarantees them a win.</p>
+
+
+    </div>
+  </section>
+
+  <section id="input" class="problem-section">
+    <div class="headline">
+      <h2>입력</h2>
+    </div>
+    <div id="problem_input" class="problem-text">
+      
+<p>The first line contains an integer $n$ --- the number of players playing the Mind game ($3 \le n \le 100\,000$).</p>
+
+<p>The second line contains $n$ integers --- the card values distributed to the players.</p>
+
+<p>All given card values are distinct, positive and don't exceed $10^9$.</p>
+
+
+    </div>
+  </section>
+
+  <section id="output" class="problem-section">
+    <div class="headline">
+      <h2>출력</h2>
+    </div>
+    <div id="problem_output" class="problem-text">
+      
+<p>Print a single integer $d$ that Mika and her friends should use to guarantee a win in the game using their strategy. If no such $d$ exists, print $0$. If several values of $d$ exist, print any of them.</p>
+
+
+    </div>
+  </section>
+
+  <div id="limit" class="problem-section hidden"></div>
+
+  <section id="sample-IOs" class="problem-section">
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 1</h2>
+          <pre class="sampledata">5
+5 13 2 10 8
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 1</h2>
+          <pre class="sampledata">4
+</pre>
+        </div>
+      </div>
+      
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 2</h2>
+          <pre class="sampledata">5
+4 13 2 8 7
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 2</h2>
+          <pre class="sampledata">0
+</pre>
+        </div>
+      </div>
+      
+    
+  </section>
+
+  
+    <section id="hint" class="problem-section">
+      <div class="headline">
+        <h2>힌트</h2>
+      </div>
+      <div id="problem_hint" class="problem-text">
+        
+				<p>In the first example $d = 3$ would also be a correct answer.</p>
+
+				
+      </div>
+    </section>
+    
+
+  
+    <section id="source" class="problem-section">
+      <div id="source" class="problem-text">
+        <div class="headline"><h2>출처</h2></div><p><a href="/category/1">ICPC</a>&nbsp;&gt;&nbsp;<a href="/category/7">Regionals</a>&nbsp;&gt;&nbsp;<a href="/category/462">Northern Eurasia</a>&nbsp;&gt;&nbsp;<a href="/category/14">North-Western Russia Regional Contest</a>&nbsp;&gt;&nbsp;<a href="/category/detail/2348">NWRRC 2020</a>&nbsp;M번</p>
+      </div>
+    </section>
+</body>
+</html>

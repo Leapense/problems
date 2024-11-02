@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <base href="https://www.acmicpc.net"> <!-- base url 설정 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+  <title>Перевод времени</title>
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/problem-font.css?version=20230101">
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20230101">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; margin: 0; }
+    h1, h2, h3 { margin-top: 30px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+    
+        code { background-color: #2e2e2e; padding: 2px 4px; border-radius: 4px; }
+        pre {
+          background-color: #2e2e2e;
+          color: white;
+          font-size: 14px;
+        }
+      
+    .problem-section { margin-bottom: 30px; }
+    .problem-text p { margin: 0; }
+    .problem-text a { color: #007bff; }
+    .problem-io { margin-top: 20px; }
+    .problem-io h3 { font-size: 20px; }
+    .sample-container {
+      display: flex;
+      gap: 16px; /* 예제와 예제 사이의 간격 설정 (원하는 크기로 조정) */
+    }
+    .sample-box {
+      flex: 1; /* 박스가 꽉 차도록 설정 */
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    function updateTheme() {
+      const theme = {"theme":2};
+      vscode.postMessage(theme);
+    }            
+    function getLocalResourceUri(resourcePath) {
+      const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, resourcePath));
+      const srcUri = panel.webview.asWebviewUri(onDiskPath);
+      return srcUri;
+    }
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['$begin:math:text$','\$end:math:text$']]}
+    });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <h1 style="display:inline">
+    Перевод времени
+  </h1>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <h3 style="display:inline">
+  </h3>
+  <br>
+  <table>
+    <thead><tr><th style="width:16%;">시간 제한</th><th style="width:16%;">메모리 제한</th><th style="width:17%;">제출</th><th style="width:17%;">정답</th><th style="width:17%;">맞힌 사람</th><th style="width:17%;">정답 비율</th></tr></thead><tbody><tr><td>2 초 </td><td>1024 MB</td><td>43</td><td>15</td><td>13</td><td>31.707%</td></tr></tbody>
+  </table>
+  <section id="description" class="problem-section">
+    <div class="headline">
+      <h2>문제</h2>
+    </div>
+    <div id="problem_description" class="problem-text">
+      
+<p>Как известно, с целью экономии электроэнергии многие страны используют переход на так называемое <em>летнее время</em>. Перевод времени осуществляется два раза в год --- весной и осенью. Весной осуществляется переход на летнее время: часы переводятся на один час вперед. Осенью летнее время отменяется и часы переводятся на один час назад.</p>
+
+<p>Перевод времени осуществляется ночью. При переходе на летнее время через минуту после 01:59 сразу наступает 03:00. При отмене летнего времени час с 02:00 по 02:59 повторяется два раза. А именно, в день перевода, когда первый раз после 02:59 должно стать 03:00, вместо этого снова становится 02:00.&nbsp;</p>
+
+<p>Как одному из разработчиков новой операционной системы &lt;&lt;<em>Mocrosoft Widows 2006</em>&gt;&gt;, вам поручено написать фрагмент ядра операционной системы, который будет осуществлять автоматический перевод системных часов на летнее время и обратно.</p>
+
+<p>По заданным начальному моменту и информации о переводе в текущие и следующие сутки, ваша программа должна вывести показания часов в течение заданного количества минут.&nbsp;</p>
+
+
+    </div>
+  </section>
+
+  <section id="input" class="problem-section">
+    <div class="headline">
+      <h2>입력</h2>
+    </div>
+    <div id="problem_input" class="problem-text">
+      
+<p>Первая строка входного файла содержит целое число $m$ --- количество минут, которое прошло от начала текущих суток, до первого момента времени, который следует вывести. Гарантируется, что оно неотрицательно и строго меньше числа минут в текущих сутках.</p>
+
+<p>На второй строке находятся два целых числа $d_1$ и $d_2$, которые указывают, какой перевод времени осуществляется в текущие и в следующие сутки. Значение $1$ означает, что осуществляется переход на летнее время, $-1$ означает, что осуществляется отмена летнего времени, а $0$ означает, что перевода времени не осуществляется.</p>
+
+<p>На третьей строке записано число $k$ --- количество отсчетов времени, которое ваша программа должна вывести ($1 \le k \le 600$).&nbsp;</p>
+
+
+    </div>
+  </section>
+
+  <section id="output" class="problem-section">
+    <div class="headline">
+      <h2>출력</h2>
+    </div>
+    <div id="problem_output" class="problem-text">
+      
+<p>Выходной файл должен состоять из $k$ строк, $i$-я из которых должна содержать показания часов через $(i-1)$ минут после начального момента времени. Выводите время в формате &lt;&lt;<code>hh:mm</code>&gt;&gt;.</p>
+
+
+    </div>
+  </section>
+
+  <div id="limit" class="problem-section hidden"></div>
+
+  <section id="sample-IOs" class="problem-section">
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 1</h2>
+          <pre class="sampledata">118
+1 0
+4
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 1</h2>
+          <pre class="sampledata">01:58
+01:59
+03:00
+03:01
+</pre>
+        </div>
+      </div>
+      
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 2</h2>
+          <pre class="sampledata">190
+-1 1
+1
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 2</h2>
+          <pre class="sampledata">02:10
+</pre>
+        </div>
+      </div>
+      
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 3</h2>
+          <pre class="sampledata">0
+-1 0
+3
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 3</h2>
+          <pre class="sampledata">00:00
+00:01
+00:02
+</pre>
+        </div>
+      </div>
+      
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 4</h2>
+          <pre class="sampledata">1438
+0 1
+4
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 4</h2>
+          <pre class="sampledata">23:58
+23:59
+00:00
+00:01
+</pre>
+        </div>
+      </div>
+      
+    
+  </section>
+
+  <div id="hint" class="problem-section hidden"></div>
+
+  
+    <section id="source" class="problem-section">
+      <div id="source" class="problem-text">
+        <div class="headline"><h2>출처</h2></div><p><a href="/category/2">Olympiad</a>&nbsp;&gt;&nbsp;<a href="/category/500">Russian Olympiad in Informatics</a>&nbsp;&gt;&nbsp;<a href="/category/501">Russia High School Programming Contest</a>&nbsp;&gt;&nbsp;<a href="/category/detail/2500">Russia High School Programming Contest 2005</a>&nbsp;I번</p>
+      </div>
+    </section>
+</body>
+</html>

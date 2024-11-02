@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <base href="https://www.acmicpc.net"> <!-- base url 설정 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+  <title>Sequential Manufacturing</title>
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/problem-font.css?version=20230101">
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20230101">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; margin: 0; }
+    h1, h2, h3 { margin-top: 30px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+    
+        code { background-color: #2e2e2e; padding: 2px 4px; border-radius: 4px; }
+        pre {
+          background-color: #2e2e2e;
+          color: white;
+          font-size: 14px;
+        }
+      
+    .problem-section { margin-bottom: 30px; }
+    .problem-text p { margin: 0; }
+    .problem-text a { color: #007bff; }
+    .problem-io { margin-top: 20px; }
+    .problem-io h3 { font-size: 20px; }
+    .sample-container {
+      display: flex;
+      gap: 16px; /* 예제와 예제 사이의 간격 설정 (원하는 크기로 조정) */
+    }
+    .sample-box {
+      flex: 1; /* 박스가 꽉 차도록 설정 */
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    function updateTheme() {
+      const theme = {"theme":2};
+      vscode.postMessage(theme);
+    }            
+    function getLocalResourceUri(resourcePath) {
+      const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, resourcePath));
+      const srcUri = panel.webview.asWebviewUri(onDiskPath);
+      return srcUri;
+    }
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['$begin:math:text$','\$end:math:text$']]}
+    });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <h1 style="display:inline">
+    Sequential Manufacturing
+  </h1>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <h3 style="display:inline">
+  </h3>
+  <br>
+  <table>
+    <thead><tr><th style="width:16%;">시간 제한</th><th style="width:16%;">메모리 제한</th><th style="width:17%;">제출</th><th style="width:17%;">정답</th><th style="width:17%;">맞힌 사람</th><th style="width:17%;">정답 비율</th></tr></thead><tbody><tr><td>1 초 </td><td>1024 MB</td><td>49</td><td>29</td><td>18</td><td>69.231%</td></tr></tbody>
+  </table>
+  <section id="description" class="problem-section">
+    <div class="headline">
+      <h2>문제</h2>
+    </div>
+    <div id="problem_description" class="problem-text">
+      
+<p>A certain manufacturing process consists of $N$ different machines, through which raw material pass in order until it becomes the manufactured goods. The $i$'th machine takes $T_i$ seconds to process a good when input.</p>
+
+<p>A good moves automatically through the system once input into the first system. To give the system some tolerance with regards to timing, each machine $i$ has an input area where $K_i$ items waiting to be processed by that machine can be stored. This means that when machine $i$ finishes processing a good, it is either passed on immediately to machine $i + 1$ if it is free, and otherwise placed in its input area until that machine becomes free and can process the good. If a machine finishes a good, and the next machine is currently being used, and its input area is full, the system shuts down. If a machine and the one after it finish processing an item at the same time, that item does not need to be put in the input area of the second machine first.</p>
+
+<p>You just got a huge order of goods, and now wonder -- how quickly can you finish manufacturing these goods, without the system shutting down? You have an infinite supply of raw materials, and can choose at which times you put in items in machine $1$.</p>
+
+
+    </div>
+  </section>
+
+  <section id="input" class="problem-section">
+    <div class="headline">
+      <h2>입력</h2>
+    </div>
+    <div id="problem_input" class="problem-text">
+      
+<p>The first line contains the two integers $N$ ($1 \le N \le 1\,000$), the number of machines, and $P$ ($1 \le P \le 10^9$), the number of items that should be produced.</p>
+
+<p>The next line contains the processing times $T_1$, $\dots$, $T_N$ ($1 \le T_i \le 10^9$), which are all integers.</p>
+
+<p>The next line contains the sizes of the input areas $K_2$, $\dots$, $K_N$ ($1 \le K_i \le 10^9$), which are all integers. Note that the first machine does not have an input area.</p>
+
+
+    </div>
+  </section>
+
+  <section id="output" class="problem-section">
+    <div class="headline">
+      <h2>출력</h2>
+    </div>
+    <div id="problem_output" class="problem-text">
+      
+<p>Output the number of seconds it takes to manufacture all the requested items. Manufacturing is considered complete when the last item has been processed by the last machine.</p>
+
+
+    </div>
+  </section>
+
+  <div id="limit" class="problem-section hidden"></div>
+
+  <section id="sample-IOs" class="problem-section">
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 1</h2>
+          <pre class="sampledata">2 3
+1 5
+100
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 1</h2>
+          <pre class="sampledata">16
+</pre>
+        </div>
+      </div>
+      
+    
+  </section>
+
+  <div id="hint" class="problem-section hidden"></div>
+
+  
+    <section id="source" class="problem-section">
+      <div id="source" class="problem-text">
+        <div class="headline"><h2>출처</h2></div><p><a href="https://creativecommons.org/licenses/by-sa/3.0/"><img src="https://licensebuttons.net/l/by-sa/3.0/88x31.png"></a></p>
+<p><a href="/category/45">Contest</a>&nbsp;&gt;&nbsp;<a href="/category/460">Swedish Coding Cup</a>&nbsp;&gt;&nbsp;<a href="/category/detail/2404">Sandvik Challenge 2020</a>&nbsp;B번</p><ul><li>문제를 만든 사람:&nbsp;Johan Sannemo</li></ul>
+      </div>
+    </section>
+</body>
+</html>

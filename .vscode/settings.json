@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "ostream": "cpp",
+        "iomanip": "cpp"
+    },
+    "python.REPL.enableREPLSmartSend": false,
+    "editor.indentSize": "tabSize",
+    "[yaml]": {
+        "editor.tabSize": 4
+    },
+    "[dockercompose]": {
+        "editor.tabSize": 4
+    },
+    "editor.tabSize": 4,
+    "editor.tabCompletion": "on",
+    "editor.fontFamily": "'CommitMono Nerd Font Mono'"
+}

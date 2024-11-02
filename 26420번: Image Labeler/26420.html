@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <base href="https://www.acmicpc.net"> <!-- base url 설정 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+  <title>Image Labeler</title>
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/problem-font.css?version=20230101">
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20230101">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; margin: 0; }
+    h1, h2, h3 { margin-top: 30px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+    
+        code { background-color: #2e2e2e; padding: 2px 4px; border-radius: 4px; }
+        pre {
+          background-color: #2e2e2e;
+          color: white;
+          font-size: 14px;
+        }
+      
+    .problem-section { margin-bottom: 30px; }
+    .problem-text p { margin: 0; }
+    .problem-text a { color: #007bff; }
+    .problem-io { margin-top: 20px; }
+    .problem-io h3 { font-size: 20px; }
+    .sample-container {
+      display: flex;
+      gap: 16px; /* 예제와 예제 사이의 간격 설정 (원하는 크기로 조정) */
+    }
+    .sample-box {
+      flex: 1; /* 박스가 꽉 차도록 설정 */
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    function updateTheme() {
+      const theme = {"theme":2};
+      vscode.postMessage(theme);
+    }            
+    function getLocalResourceUri(resourcePath) {
+      const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, resourcePath));
+      const srcUri = panel.webview.asWebviewUri(onDiskPath);
+      return srcUri;
+    }
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['$begin:math:text$','\$end:math:text$']]}
+    });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <h1 style="display:inline">
+    Image Labeler
+  </h1>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <h3 style="display:inline">
+  </h3>
+  <br>
+  <table>
+    <thead><tr><th style="width:16%;">시간 제한</th><th style="width:16%;">메모리 제한</th><th style="width:17%;">제출</th><th style="width:17%;">정답</th><th style="width:17%;">맞힌 사람</th><th style="width:17%;">정답 비율</th></tr></thead><tbody><tr><td>서브태스크 참고 (추가 시간 없음) </td><td>1024 MB</td><td>85</td><td>52</td><td>29</td><td>69.048%</td></tr></tbody>
+  </table>
+  <section id="description" class="problem-section">
+    <div class="headline">
+      <h2>문제</h2>
+    </div>
+    <div id="problem_description" class="problem-text">
+      
+<p>Crowdsource is organizing a campaign for <a href="https://goo.gle/crowdsource-ks-imagelabeler" target="_blank">Image Labeler task </a>with participants across $\mathbf{N}$ regions. The number of participants from each of these regions are represented by $\mathbf{A_1}, \mathbf{A_2}, \dots, \mathbf{A_N}$.</p>
+
+<p>In the Image Labeler task, there are $\mathbf{M}$ categories. Crowdsource assigns participants to these categories in such a way that all participants from a region are assigned to the same category, and each category has <i>at least</i> one region assigned to it. The success metric of the campaign is measured by the sum of <a href="https://en.wikipedia.org/wiki/Median" target="_blank">medians </a>of the number of participants in each category. (Let us remind you here that the median of a list of integers is the "middle" number when those numbers are sorted from smallest to largest. When the number of integers in a list is even, we have two "middle" numbers, therefore the median is defined as the arithmetic mean (average) of the two middle values.)</p>
+
+<p>For example, imagine that we have $\mathbf{N}=3$ regions with $\mathbf{A_1}=5$, $\mathbf{A_2}=8$, and $\mathbf{A_3}=9$ participants respectively and we want to assign them to $\mathbf{M}=2$ categories. If we assign regions $2$ and $3$ to category $1$ and region $1$ to category $2$, then the success metric would be median of $\{A_2=8, A_3=9\}\ + $ median of $\{A_1=5\} = \frac{8 + 9}{2} + 5 = 8.5 + 5 = 13.5$. We can also assign regions $1$ and $2$ to category $1$ and region $3$ to category $2$. Then the success metric would be equal to the sum of the median of $\{A_1=5, A_2=8\}$ and the median of $\{A_3=9\}$, which is $\frac{5+8}{2} + 9 = 6.5 + 9 = 15.5$.</p>
+
+<p>Your task is to find the maximum possible value of the success metric that can be obtained by assigning participants in regions to the categories.</p>
+
+
+    </div>
+  </section>
+
+  <section id="input" class="problem-section">
+    <div class="headline">
+      <h2>입력</h2>
+    </div>
+    <div id="problem_input" class="problem-text">
+      
+<p>The first line of the input gives the number of test cases, $\mathbf{T}$. $\mathbf{T}$ test cases follow.</p>
+
+<p>The first line of each test case contains two integers $\mathbf{N}$ and $\mathbf{M}$: the number of regions, and the number of categories respectively.</p>
+
+<p>The next line contains $\mathbf{N}$ integers $\mathbf{A_1}, \mathbf{A_2}, \dots, \mathbf{A_N}$.</p>
+
+
+    </div>
+  </section>
+
+  <section id="output" class="problem-section">
+    <div class="headline">
+      <h2>출력</h2>
+    </div>
+    <div id="problem_output" class="problem-text">
+      
+<p>For each test case, output one line containing <code>Case #x: y</code>, where $x$ is the test case number (starting from 1) and $y$ is the maximum possible value of the success metric.</p>
+
+<p>$y$ will be considered correct if it is within an absolute or relative error of $10^{-6}$ of the correct answer. See the <a href="https://codingcompetitions.withgoogle.com/kickstart/faq#competing">FAQ</a> for an explanation of what that means, and what formats of real numbers we accept.</p>
+
+
+    </div>
+  </section>
+
+  
+    <section id="limit" class="problem-section">
+      <div class="headline">
+        <h2>제한</h2>
+      </div>
+      <div id="problem_limit" class="problem-text">
+        
+			<ul>
+	<li>$1 \le \mathbf{T} \le 100$.</li>
+	<li>$1 \le \mathbf{N} \le 10^4$.</li>
+	<li>$1 \le \mathbf{M} \le 10^4$.</li>
+	<li>$1 \le \mathbf{M} \le \mathbf{N}$.</li>
+	<li>$1 \le \mathbf{A_i} \le 10^5$, for all $i$.</li>
+</ul>
+			
+      </div>
+    </section>
+    
+
+  <section id="sample-IOs" class="problem-section">
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 1</h2>
+          <pre class="sampledata">1
+3 2
+11 24 10
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 1</h2>
+          <pre class="sampledata">Case #1: 34.5
+</pre>
+        </div>
+      </div>
+      
+								<div id="problem_sample_explain_1" class="problem-text">
+								<p>In this test, we can assign participants in regions to categories in $6$ possible ways:</p>
+
+<ul>
+	<li>Assign $\{11, 24\}$ to category $1$ and $\{10\}$ to category $2$, in which case the success metric is $\frac{11 + 24}{2} + 10 = 17.5 + 10 = 27.5$.</li>
+	<li>Assign $\{24, 10\}$ to category $1$ and $\{11\}$ to category $2$, in which case the success metric is $\frac{24 + 10}{2} + 11 = 17 + 11 = 28$.</li>
+	<li>Assign $\{11, 10\}$ to category $1$ and $\{24\}$ to category $2$, in which case the success metric is $\frac{11 + 10}{2} + 24 = 10.5 + 24 = 34.5$.</li>
+	<li>$3$ other ways, where assignments to category $1$ and $2$ are swapped, which does not alter the value of success metric.</li>
+</ul>
+
+<p>So, the maximum possible value of the success metric is $34.5$.</p>
+
+								</div>
+							
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 2</h2>
+          <pre class="sampledata">1
+5 1
+6 2 5 1 9
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 2</h2>
+          <pre class="sampledata">Case #1: 5.0
+</pre>
+        </div>
+      </div>
+      
+								<div id="problem_sample_explain_2" class="problem-text">
+								<p>In this test, there is only one category, so participants in all regions will be assigned to it. The only possible value of the success metric is the median of $\{6, 2, 5, 1, 9\}$ which is $5$.</p>
+
+								</div>
+							
+    
+  </section>
+
+  <div id="hint" class="problem-section hidden"></div>
+
+  
+    <section id="source" class="problem-section">
+      <div id="source" class="problem-text">
+        <div class="headline"><h2>출처</h2></div><p><a href="/category/45">Contest</a>&nbsp;&gt;&nbsp;<a href="/category/621">Google</a>&nbsp;&gt;&nbsp;<a href="/category/577">Kick Start</a>&nbsp;&gt;&nbsp;<a href="/category/653">Google Kick Start 2022</a>&nbsp;&gt;&nbsp;<a href="/category/detail/3283">Round D</a>&nbsp;A번</p>
+      </div>
+    </section>
+</body>
+</html>

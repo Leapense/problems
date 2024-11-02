@@ -1,0 +1,1 @@
+{"name":"Local: main","url":"/home/monika/Documents/problems/19879번: Икебана/main.cpp","tests":[{"id":1728992662542,"input":"2 2 3\n20 1\n10 1","output":"1"},{"id":1728992680343,"input":"1 1 3\n2 1","output":"-1"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/monika/Documents/problems/19879번: Икебана/main.cpp","group":"local","local":true}

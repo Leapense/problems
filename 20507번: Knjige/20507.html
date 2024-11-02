@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <base href="https://www.acmicpc.net"> <!-- base url 설정 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+  <title>Knjige</title>
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/problem-font.css?version=20230101">
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20230101">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; margin: 0; }
+    h1, h2, h3 { margin-top: 30px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+    
+        code { background-color: #2e2e2e; padding: 2px 4px; border-radius: 4px; }
+        pre {
+          background-color: #2e2e2e;
+          color: white;
+          font-size: 14px;
+        }
+      
+    .problem-section { margin-bottom: 30px; }
+    .problem-text p { margin: 0; }
+    .problem-text a { color: #007bff; }
+    .problem-io { margin-top: 20px; }
+    .problem-io h3 { font-size: 20px; }
+    .sample-container {
+      display: flex;
+      gap: 16px; /* 예제와 예제 사이의 간격 설정 (원하는 크기로 조정) */
+    }
+    .sample-box {
+      flex: 1; /* 박스가 꽉 차도록 설정 */
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    function updateTheme() {
+      const theme = {"theme":2};
+      vscode.postMessage(theme);
+    }            
+    function getLocalResourceUri(resourcePath) {
+      const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, resourcePath));
+      const srcUri = panel.webview.asWebviewUri(onDiskPath);
+      return srcUri;
+    }
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['$begin:math:text$','\$end:math:text$']]}
+    });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <h1 style="display:inline">
+    Knjige
+  </h1>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <h3 style="display:inline">
+  </h3>
+  <br>
+  <table>
+    <thead><tr><th style="width:16%;">시간 제한</th><th style="width:16%;">메모리 제한</th><th style="width:17%;">제출</th><th style="width:17%;">정답</th><th style="width:17%;">맞힌 사람</th><th style="width:17%;">정답 비율</th></tr></thead><tbody><tr><td>1 초 </td><td>512 MB</td><td>52</td><td>28</td><td>20</td><td>48.780%</td></tr></tbody>
+  </table>
+  <section id="description" class="problem-section">
+    <div class="headline">
+      <h2>문제</h2>
+    </div>
+    <div id="problem_description" class="problem-text">
+      
+<p>Tin is a very special boy. He doesn’t like a lot of things, for example he doesn’t like Barcelona, getting defeated in video games or any sort of mess...</p>
+
+<p>Today he is visiting his friend Ante to once and for all decide who is the best FIFA player. The moment he entered Ante’s apartment, he was greeted with an unpleasant surprise. Ante has two shelves on his wall side by side. The left one contains n books about the numerous accomplishments of Barcelona <strong>stacked on top of each other</strong>, and the right one is empty.</p>
+
+<p>He didn’t mind so much that Ante was reading, in his opinion, trashy books, but what bothered him much more was that the books were a total mess, that is, they weren’t sorted from thinnest to thickest. As Ante is a good friend, he immediately hurried to rearrange the books to Tin’s liking. In one move he can:</p>
+
+<ul>
+<li><strong>take a book from the top</strong> of some shelf in his left or right hand, if he is not holding some other book in that hand; or</li>
+<li><strong>put the book</strong> he is holding in some hand <strong>on top</strong> of some shelf.</li>
+</ul>
+
+<p>Ante’s strong suit is football, not rearranging books, so he asks you to find some sequence of moves, that he will then perform, so that in the end all books will be on the <strong>left shelf</strong> and sorted <strong>from thinnest to thickest</strong>, in the order <strong>from top to bottom</strong>.</p>
+
+
+    </div>
+  </section>
+
+  <section id="input" class="problem-section">
+    <div class="headline">
+      <h2>입력</h2>
+    </div>
+    <div id="problem_input" class="problem-text">
+      
+<p>The first line contains an integer n (1 ≤ n ≤ 100), the number of books on the left shelf.</p>
+
+<p>The second line contains n integers d<sub>i</sub> (1 ≤ d<sub>i</sub> ≤ 1000) that represent the thicknesses of the books, from top to bottom.</p>
+
+
+    </div>
+  </section>
+
+  <section id="output" class="problem-section">
+    <div class="headline">
+      <h2>출력</h2>
+    </div>
+    <div id="problem_output" class="problem-text">
+      
+<p>In the first line output an integer k (0 ≤ k ≤ 100 000), the number of moves in your solution.</p>
+
+<p>In the following k lines output the moves in the form INSTRUCTION HAND SHELF, where:</p>
+
+<ul>
+<li><code>INSTRUCTION</code> is the word <code>UZMI</code> (Croatian for take) if Ante should take a book from some shelf, or the word <code>STAVI</code> (Croatian for put) if he should put a book on some shelf</li>
+<li><code>HAND</code> is the letter <code>L</code> if Ante should use his left hand, or the letter <code>D</code> (Croatian word for right is desno) if he should use his right hand</li>
+<li><code>SHELF</code> is the letter <code>L</code> if this move acts on the left shelf, or the letter <code>D</code> if it acts on the right shelf.</li>
+</ul>
+
+<p>Your solution does <strong>not</strong> have to be of minimum possible length, but the number of moves must not exceed 100 000. It can be proven that for the given constraints a solution always exists.</p>
+
+
+    </div>
+  </section>
+
+  <div id="limit" class="problem-section hidden"></div>
+
+  <section id="sample-IOs" class="problem-section">
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 1</h2>
+          <pre class="sampledata">3
+2 3 1
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 1</h2>
+          <pre class="sampledata">8
+UZMI L L
+STAVI L D
+UZMI L L
+UZMI D L
+STAVI L L
+UZMI L D
+STAVI L L
+STAVI D L
+</pre>
+        </div>
+      </div>
+      
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 2</h2>
+          <pre class="sampledata">4
+1 1 2 5
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 2</h2>
+          <pre class="sampledata">0
+</pre>
+        </div>
+      </div>
+      
+    
+  </section>
+
+  
+    <section id="hint" class="problem-section">
+      <div class="headline">
+        <h2>힌트</h2>
+      </div>
+      <div id="problem_hint" class="problem-text">
+        
+				<p>Clarification of the first example:</p>
+
+<p style="text-align: center;"><img alt="" src="https://upload.acmicpc.net/92fe4bca-ee80-41da-a4fd-9d485ced4065/-/preview/" style="width: 515px; height: 540px;"></p>
+
+				
+      </div>
+    </section>
+    
+
+  
+    <section id="source" class="problem-section">
+      <div id="source" class="problem-text">
+        <div class="headline"><h2>출처</h2></div><p><a href="/category/45">Contest</a>&nbsp;&gt;&nbsp;<a href="/category/17">Croatian Open Competition in Informatics</a>&nbsp;&gt;&nbsp;<a href="/category/507">COCI 2020/2021</a>&nbsp;&gt;&nbsp;<a href="/category/detail/2371">Contest #3</a>&nbsp;1번</p>
+      </div>
+    </section>
+</body>
+</html>
