@@ -1,0 +1,194 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <base href="https://www.acmicpc.net"> <!-- base url 설정 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+  <title>Сумасшедшие транспортные налоги</title>
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/css/problem-font.css?version=20230101">
+  <link rel="stylesheet" href="https://ddo7jzca0m2vt.cloudfront.net/unify/css/custom.css?version=20230101">
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; padding: 20px; margin: 0; }
+    h1, h2, h3 { margin-top: 30px; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 24px; }
+    h3 { font-size: 20px; }
+    
+        code { background-color: #2e2e2e; padding: 2px 4px; border-radius: 4px; }
+        pre {
+          background-color: #2e2e2e;
+          color: white;
+          font-size: 14px;
+        }
+      
+    .problem-section { margin-bottom: 30px; }
+    .problem-text p { margin: 0; }
+    .problem-text a { color: #007bff; }
+    .problem-io { margin-top: 20px; }
+    .problem-io h3 { font-size: 20px; }
+    .sample-container {
+      display: flex;
+      gap: 16px; /* 예제와 예제 사이의 간격 설정 (원하는 크기로 조정) */
+    }
+    .sample-box {
+      flex: 1; /* 박스가 꽉 차도록 설정 */
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    function updateTheme() {
+      const theme = {"theme":2};
+      vscode.postMessage(theme);
+    }            
+    function getLocalResourceUri(resourcePath) {
+      const onDiskPath = vscode.Uri.file(path.join(context.extensionPath, resourcePath));
+      const srcUri = panel.webview.asWebviewUri(onDiskPath);
+      return srcUri;
+    }
+  </script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['$begin:math:text$','\$end:math:text$']]}
+    });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</head>
+<body>
+  <h1 style="display:inline">
+    Сумасшедшие транспортные налоги
+  </h1>
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <h3 style="display:inline">
+  </h3>
+  <br>
+  <table>
+    <thead><tr><th style="width:16%;">시간 제한</th><th style="width:16%;">메모리 제한</th><th style="width:17%;">제출</th><th style="width:17%;">정답</th><th style="width:17%;">맞힌 사람</th><th style="width:17%;">정답 비율</th></tr></thead><tbody><tr><td>2 초 </td><td>1024 MB</td><td>10</td><td>10</td><td>6</td><td>100.000%</td></tr></tbody>
+  </table>
+  <section id="description" class="problem-section">
+    <div class="headline">
+      <h2>문제</h2>
+    </div>
+    <div id="problem_description" class="problem-text">
+      
+<p>Артур Флек ведь когда-то был обычным человеком с обычными потребностями. Одной из них была покупка автомобиля. </p>
+
+<p>Как известно, владение автомобилем подразумевает уплату транспортного налога, и Готэм в этом отношении не является исключением. Чтобы узнать стоимость транспортного налога на автомобиль, нужно знать мощность его двигателя в лошадиных силах. Далее по таблице налоговых ставок нужно выяснить налоговую ставку на данную мощность, а затем полученная ставка умножается на мощность.</p>
+
+<p>Пример таблицы налоговых ставок:</p>
+
+<table class="table table-bordered table-center-30 td-center">
+<tbody>
+<tr>
+<td>Мощность (л.с.)</td>
+<td>Ставка</td>
+</tr>
+<tr>
+<td>0</td>
+<td>24</td>
+</tr>
+<tr>
+<td>100</td>
+<td>35</td>
+</tr>
+<tr>
+<td>150</td>
+<td>50</td>
+</tr>
+<tr>
+<td>200</td>
+<td>75</td>
+</tr>
+<tr>
+<td>250</td>
+<td>150</td>
+</tr>
+</tbody>
+</table>
+
+<p>Ставка, записанная в $i$-й строке, применяется для численных значений мощностей, которые строго больше мощности, указанной в той же строке, но при этом меньше либо равны мощности, указанной в следующей строке (если такая есть). В случае, если мощность строго больше максимальной мощности, указанной в таблице, то применяется максимальная ставка.</p>
+
+<p>В процессе выбора автомобиля Артур перебрал множество вариантов и для каждого из них он хочет знать величину транспортного налога. Помогите ему!</p>
+
+
+    </div>
+  </section>
+
+  <section id="input" class="problem-section">
+    <div class="headline">
+      <h2>입력</h2>
+    </div>
+    <div id="problem_input" class="problem-text">
+      
+<p>В первой строке дано целое число $n$ --- число строк в таблице налоговых ставок ($1 \le n \le 100\,000$).</p>
+
+<p>В следующих $n$ строках даны пары чисел $b_i$, $t_i$ --- мощность и соответствующая диапазону налоговая ставка из $i$-й строки ($0 \le b_i, t_i \le 10^9$). Гарантируется, что $b_1 = 0$, а также для любого $i$ верно: $b_i &lt; b_{i + 1}$ и $t_i \le t_{i+1}$.</p>
+
+<p>В следующей строке дано число $m$ --- число автомобилей, транспортный налог на которые хочет узнать Артур ($1 \le m \le 100\,000$).</p>
+
+<p>В $j$-й из следующих $m$ строк дано целое число $q_j$ --- мощность $j$-го автомобиля ($1 \le q_j \le 10^9$).</p>
+
+
+    </div>
+  </section>
+
+  <section id="output" class="problem-section">
+    <div class="headline">
+      <h2>출력</h2>
+    </div>
+    <div id="problem_output" class="problem-text">
+      
+<p>Для каждого варианта автомобиля, интересующего Артура, выведите величину транспортного налога на него.</p>
+
+
+    </div>
+  </section>
+
+  <div id="limit" class="problem-section hidden"></div>
+
+  <section id="sample-IOs" class="problem-section">
+    
+      <div class="sample-container">
+        <div class="sample-box">
+          <h2>예제 입력 1</h2>
+          <pre class="sampledata">5
+0 24
+100 35
+150 50
+200 75
+250 150
+5
+107
+143
+152
+170
+150
+</pre>
+        </div>
+        <div class="sample-box">
+          <h2>예제 출력 1</h2>
+          <pre class="sampledata">3745
+5005
+7600
+8500
+5250
+</pre>
+        </div>
+      </div>
+      
+    
+  </section>
+
+  <div id="hint" class="problem-section hidden"></div>
+
+  
+    <section id="source" class="problem-section">
+      <div id="source" class="problem-text">
+        <div class="headline"><h2>출처</h2></div><p><a href="/category/2">Olympiad</a>&nbsp;&gt;&nbsp;<a href="/category/500">Russian Olympiad in Informatics</a>&nbsp;&gt;&nbsp;<a href="/category/862">Internet Olympiads in Informatics</a>&nbsp;&gt;&nbsp;<a href="/category/866">2019-2020 Season</a>&nbsp;&gt;&nbsp;<a href="/category/877">October 19, 2019</a>&nbsp;&gt;&nbsp;<a href="/category/detail/3676">Basic</a>&nbsp;A번</p><p><a href="/category/2">Olympiad</a>&nbsp;&gt;&nbsp;<a href="/category/500">Russian Olympiad in Informatics</a>&nbsp;&gt;&nbsp;<a href="/category/862">Internet Olympiads in Informatics</a>&nbsp;&gt;&nbsp;<a href="/category/866">2019-2020 Season</a>&nbsp;&gt;&nbsp;<a href="/category/877">October 19, 2019</a>&nbsp;&gt;&nbsp;<a href="/category/detail/3677">Advanced</a>&nbsp;A번</p>
+      </div>
+    </section>
+</body>
+</html>
