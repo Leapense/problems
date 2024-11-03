@@ -1,0 +1,14 @@
+{
+    "name": "Безопасный пароль",
+    "title": "28890번： Безопасный пароль",
+    "problemNumber": "28890",
+    "date": "2024-11-03 09:50:50",
+    "tier": {
+        "name": "Silver IV",
+        "abb": "S",
+        "nameColor": "#435F7A",
+        "abbColor": "#435F7A",
+        "svg": "https://static.solved.ac/tier_small/7.svg",
+        "level": 7
+    }
+}
