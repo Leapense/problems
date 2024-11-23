@@ -44,4 +44,4 @@ PPPPPPPPP     CCCCCCCCC     ZZZBBBCCC     ZZZAAAZZZ</pre>
 
 ## 소스코드
 
-[소스코드 보기](국기%20인식.cpp)
+[소스코드 보기](국기%20인식.py)
