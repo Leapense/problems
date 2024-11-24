@@ -11,7 +11,7 @@ int main()
         int d = 12;
         long long sum_total = d + j;
 
-        long long Y = (sum_total - y - p) / 3;
+        long long Y = (sum_total - p - y) / 3;
 
         if (Y < 0) {
             Y = 0;
@@ -22,10 +22,9 @@ int main()
 
         long long current_sum = 3 * Y + p + y;
 
-        if (current_sum < sum_total) {
-            long long delta = sum_total - current_sum;
-            S += delta;
-        }
+        long long delta = sum_total - current_sum;
+
+        S += delta;
 
         cout << S << " " << P << " " << Y << "\n";
     }
