@@ -1,32 +1,23 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    int s, p, y, j;
+    long long s, p, y, j;
     while (cin >> s >> p >> y >> j) {
-        int d = 12;
-        long long sum_total = d + j;
+        long long Y = 2;
+        long long P = Y + p;
+        long long S = P + s;
+        long long total = S + P + Y;
+        long long d = total - j;
 
-        long long Y = (sum_total - p - y) / 3;
-
-        if (Y < 0) {
-            Y = 0;
+        while (d < 12 || d * 1.0 != (total - j)) {
+            S++;
+            total = S + P + Y;
+            d = total - j;
         }
 
-        long long P = Y + p;
-        long long S = Y + y;
-
-        long long current_sum = 3 * Y + p + y;
-
-        long long delta = sum_total - current_sum;
-
-        S += delta;
-
-        cout << S << " " << P << " " << Y << "\n";
+        cout << S << " " << P << " " << Y << endl;
     }
 
     return 0;
