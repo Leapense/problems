@@ -41,4 +41,4 @@
 
 ## 소스코드
 
-[소스코드 보기](Demerit%20Points.py)
+[소스코드 보기](Demerit%20Points.cpp)
