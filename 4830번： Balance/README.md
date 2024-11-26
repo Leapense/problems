@@ -55,4 +55,4 @@ RETURN(NTERMS,1) .. RETURN(NTERMS,NINSTRUMENTS)</pre>
 
 ## 소스코드
 
-[소스코드 보기](Balance.py)
+[소스코드 보기](Balance.cpp)
