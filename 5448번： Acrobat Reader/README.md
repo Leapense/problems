@@ -41,4 +41,4 @@
 
 ## 소스코드
 
-[소스코드 보기](Acrobat%20Reader.cpp)
+[소스코드 보기](Acrobat%20Reader.py)
