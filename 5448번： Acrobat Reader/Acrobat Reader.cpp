@@ -1,24 +1,91 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+#include <iomanip>
+#include <unordered_map>
 using namespace std;
 
-struct Point { int x, y; };
+typedef long long ll;
+typedef pair<ll, ll> pll;
 
-Point rotate_point(const Point &p, int rotation) {
-    switch(rotation) {
-        case 0:
-            return p;
-        case 90:
-            return Point{ -p.y, p.x };
-        case 180:
-            return Point{ -p.x, -p.y };
-        case 270:
-            return Point{ p.y, -p.x };
-        default:
-            return p;
+const double EPS = 1e-8;
+
+struct Point {
+    double x, y;
+    Point(double x_=0, double y_=0): x(x_), y(y_) {}
+};
+
+void read_points(int N, vector<Point>& pts) {
+    for(int i = 0; i < N; ++i) {
+        int xi, yi;
+        cin >> xi >> yi;
+        pts.emplace_back(xi, yi);
     }
 }
 
-int main() {
+void rotate_points(vector<Point>& pts, int angle) {
+    for (auto& p : pts) {
+        double x = p.x, y = p.y;
+        if(angle == 90) {
+            p.x = -y;
+            p.y = x;
+        } else if(angle == 180) {
+            p.x = -x;
+            p.y = -y;
+        } else if(angle == 270) {
+            p.x = y;
+            p.y = -x;
+        }
+    }
+}
+
+void normalize_points(vector<Point>& pts, double& scale_factor) {
+    double cx = 0, cy = 0;
+
+    for (const auto& p : pts) {
+        cx += p.x;
+        cy += p.y;
+    }
+
+    cx /= pts.size();
+    cy /= pts.size();
+
+    for (auto& p : pts) {
+        p.x -= cx;
+        p.y -= cy;
+    }
+
+    double sum_sq = 0;
+
+    for (const auto& p : pts) {
+        sum_sq += p.x*p.x + p.y*p.y;
+    }
+
+    scale_factor = sqrt(sum_sq);
+}
+
+bool compare_point_sets(vector<Point>& set1, vector<Point>& set2) {
+    const double mult = 1e6;
+
+    vector<pll> pts1, pts2;
+    for(const auto& p : set1) {
+        ll x = ll(round(p.x * mult));
+        ll y = ll(round(p.y * mult));
+        pts1.emplace_back(x, y);
+    }
+    for(const auto& p : set2) {
+        ll x = ll(round(p.x * mult));
+        ll y = ll(round(p.y * mult));
+        pts2.emplace_back(x, y);
+    }
+    sort(pts1.begin(), pts1.end());
+    sort(pts2.begin(), pts2.end());
+    return pts1 == pts2;
+}
+
+int main()
+{
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int T;
@@ -27,81 +94,34 @@ int main() {
     while(T--) {
         int N;
         cin >> N;
-        vector<Point> A(N);
+        vector<Point> pts1, pts2;
+        read_points(N, pts1);
+        read_points(N, pts2);
 
-        for(auto &p : A) cin >> p.x >> p.y;
+        bool matched = false;
+        for(int angle : {0, 90, 180, 270}) {
+            vector<Point> rotated_pts1 = pts1;
+            rotate_points(rotated_pts1, angle);
 
-        vector<Point> B(N);
+            double scale1, scale2;
+            normalize_points(rotated_pts1, scale1);
+            normalize_points(pts2, scale2);
 
-        for(auto &p : B) cin >> p.x >> p.y;
-
-        sort(B.begin(), B.end(), [&](const Point& a, const Point& b) -> bool {
-            if (a.x != b.x) return a.x < b.x;
-            return a.y < b.y;
-        });
-
-        bool match_found = false;
-        for (auto rotation : { 0, 90, 180, 270 }) {
-            vector<Point> A_rot(N);
-
-            for (int i = 0; i < N; i++) A_rot[i] = rotate_point(A[i], rotation);
-
-            if(N == 1) {
-                match_found = true;
-                break;
-            }
-            sort(A_rot.begin(), A_rot.end(), [&](const Point& a, const Point& b) -> bool {
-                if (a.x != b.x) return a.x < b.x;
-                return a.y < b.y;
-            });
-
-            double dx_A = (double)(A_rot[1].x - A_rot[0].x);
-            double dy_A = (double)(A_rot[1].y - A_rot[0].y);
-            double d_A = sqrt(dx_A * dx_A + dy_A * dy_A);
-            double dx_B = (double)(B[1].x - B[0].x);
-            double dy_B = (double)(B[1].y - B[0].y);
-            double d_B = sqrt(dx_B * dx_B + dy_B * dy_B);
-
-            if (d_A == 0) {
-                continue;
+            double s = scale2 / scale1;
+            for(auto& p : rotated_pts1) {
+                p.x *= s;
+                p.y *= s;
             }
 
-            double s = d_B / d_A;
-            double t_x = (double)B[0].x - s * (double)A_rot[0].x;
-            double t_y = (double)B[0].y - s * (double)A_rot[0].y;
-
-            vector<pair<double, double>> transformed_A(N);
-
-            for (int i = 0; i < N; i++) {
-                transformed_A[i].first = s * (double)A_rot[i].x + t_x;
-                transformed_A[i].second = s * (double)A_rot[i].y + t_y;
-            }
-
-            sort(transformed_A.begin(), transformed_A.end(), [&](const pair<double, double>& a, const pair<double, double>& b) -> bool {
-                if(abs(a.first - b.first) > 1e-6) return a.first < b.first;
-                return a.second < b.second;
-            });
-
-            bool valid = true;
-            for (int i = 0; i < N; i++) {
-                if (abs(transformed_A[i].first - (double)B[i].x) > 1e-4 || abs(transformed_A[i].second - (double)B[i].y) > 1e-4) {
-                    valid = false;
-                    break;
-                }
-            }
-
-            if (valid) {
-                match_found = true;
+            if(compare_point_sets(rotated_pts1, pts2)) {
+                cout << "okay" << endl;
+                matched = true;
                 break;
             }
         }
-
-        if (match_found) {
-            cout << "okay\n";
-        } else {
-            cout << "mismatch!\n";
+        if(!matched) {
+            cout << "mismatch!" << endl;
         }
     }
-
     return 0;
 }
