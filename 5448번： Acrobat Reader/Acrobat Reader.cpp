@@ -4,12 +4,12 @@
 #include <cmath>
 #include <iomanip>
 #include <unordered_map>
+#include <unordered_set>
+#include <set>
 using namespace std;
 
 typedef long long ll;
 typedef pair<ll, ll> pll;
-
-const double EPS = 1e-8;
 
 struct Point {
     double x, y;
@@ -25,7 +25,7 @@ void read_points(int N, vector<Point>& pts) {
 }
 
 void rotate_points(vector<Point>& pts, int angle) {
-    for (auto& p : pts) {
+    for(auto& p : pts) {
         double x = p.x, y = p.y;
         if(angle == 90) {
             p.x = -y;
@@ -37,60 +37,60 @@ void rotate_points(vector<Point>& pts, int angle) {
             p.x = y;
             p.y = -x;
         }
+        // For 0 degrees, do nothing
     }
 }
 
-void normalize_points(vector<Point>& pts, double& scale_factor) {
+void normalize_points(const vector<Point>& pts, double& scale_factor, Point& centroid, vector<Point>& normalized_pts) {
+    // Compute centroid
     double cx = 0, cy = 0;
-
-    for (const auto& p : pts) {
+    for(const auto& p : pts) {
         cx += p.x;
         cy += p.y;
     }
-
     cx /= pts.size();
     cy /= pts.size();
+    centroid.x = cx;
+    centroid.y = cy;
 
-    for (auto& p : pts) {
-        p.x -= cx;
-        p.y -= cy;
+    // Subtract centroid and store in normalized_pts
+    normalized_pts.clear();
+    for(const auto& p : pts) {
+        normalized_pts.emplace_back(p.x - cx, p.y - cy);
     }
 
+    // Compute scale factor (RMS distance)
     double sum_sq = 0;
-
-    for (const auto& p : pts) {
-        sum_sq += p.x*p.x + p.y*p.y;
+    for(const auto& p : normalized_pts) {
+        sum_sq += p.x * p.x + p.y * p.y;
     }
-
     scale_factor = sqrt(sum_sq);
 }
 
-bool compare_point_sets(vector<Point>& set1, vector<Point>& set2) {
-    const double mult = 1e6;
+bool compare_point_sets(const vector<Point>& set1, const vector<Point>& set2) {
+    const double mult = 1e8; // Increased multiplier for better precision
 
-    vector<pll> pts1, pts2;
+    multiset<pll> pts1, pts2;
+
     for(const auto& p : set1) {
         ll x = ll(round(p.x * mult));
         ll y = ll(round(p.y * mult));
-        pts1.emplace_back(x, y);
+        pts1.emplace(x, y);
     }
     for(const auto& p : set2) {
         ll x = ll(round(p.x * mult));
         ll y = ll(round(p.y * mult));
-        pts2.emplace_back(x, y);
+        pts2.emplace(x, y);
     }
-    sort(pts1.begin(), pts1.end());
-    sort(pts2.begin(), pts2.end());
+
     return pts1 == pts2;
 }
 
-int main()
-{
+int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
     int T;
     cin >> T;
-
     while(T--) {
         int N;
         cin >> N;
@@ -104,16 +104,27 @@ int main()
             rotate_points(rotated_pts1, angle);
 
             double scale1, scale2;
-            normalize_points(rotated_pts1, scale1);
-            normalize_points(pts2, scale2);
+            Point centroid1, centroid2;
+            vector<Point> norm_pts1, norm_pts2;
 
+            normalize_points(rotated_pts1, scale1, centroid1, norm_pts1);
+            normalize_points(pts2, scale2, centroid2, norm_pts2);
+
+            // Scale norm_pts1 to match scale of norm_pts2
             double s = scale2 / scale1;
-            for(auto& p : rotated_pts1) {
+            for(auto& p : norm_pts1) {
                 p.x *= s;
                 p.y *= s;
             }
 
-            if(compare_point_sets(rotated_pts1, pts2)) {
+            // Translate norm_pts1 to match centroid of pts2
+            for(auto& p : norm_pts1) {
+                p.x += centroid2.x;
+                p.y += centroid2.y;
+            }
+
+            // Now compare norm_pts1 with pts2
+            if(compare_point_sets(norm_pts1, pts2)) {
                 cout << "okay" << endl;
                 matched = true;
                 break;
