@@ -10,11 +10,13 @@ int main() {
         cin >> t;
 
         int round = 0;
+        int num_rounds_played = 0; // To count the rounds excluding Round 0
         int num_undefeated = t;
         int num_one_loss = 0;
         int num_eliminated = 0;
 
-        cout << "Round " << round << ": " << num_undefeated << " undefeated, " << num_one_loss << " one-loss, " << num_eliminated << " eliminated\n";
+        cout << "Round " << round << ": " << num_undefeated << " undefeated, "
+             << num_one_loss << " one-loss, " << num_eliminated << " eliminated\n";
 
         while (num_undefeated + num_one_loss > 1) {
             round++;
@@ -44,10 +46,12 @@ int main() {
                 num_one_loss = num_one_loss_winners + num_undefeated_losers;
             }
 
-            cout << "Round " << round << ": " << num_undefeated << " undefeated, " << num_one_loss << " one-loss, " << num_eliminated << " eliminated\n";
+            cout << "Round " << round << ": " << num_undefeated << " undefeated, "
+                 << num_one_loss << " one-loss, " << num_eliminated << " eliminated\n";
+            num_rounds_played++; // Increment rounds played excluding Round 0
         }
 
-        cout << "There are " << round << " rounds\n";
+        cout << "There are " << num_rounds_played << " rounds\n";
 
         if (n) {
             cout << endl; // Separate outputs for different test cases
