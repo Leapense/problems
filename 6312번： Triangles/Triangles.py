@@ -1,8 +1,6 @@
 import sys
 
 def main():
-    import sys
-    import sys
     lines = sys.stdin.read().splitlines()
     pointer =0
     tri =1
