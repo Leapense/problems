@@ -1,32 +1,40 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <queue>
+#include <vector>
 using namespace std;
 
-void backtrack(int num, int used, int length, vector<int> &v) {
-    if (num > 0) {
-        v.push_back(num);
-    }
-    if (length == 10) {
-        return;
-    }
-
-    for (int d = 0; d <= 9; d++) {
-        if (num == 0 && d == 0) {
-            continue;
-        }
-        if (!(used & (1 << d))) {
-            backtrack(num * 10 + d, used | (1 << d), length + 1, v);
-        }
-    }
-}
+struct Node {
+    long long num;
+    int usedDigits;
+};
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    vector<int> v;
-    backtrack(0, 0, 0, v);
+    vector<long long> repeatlessNumbers;
+    queue<Node> q;
+    for (int i = 1; i <= 9; ++i) {
+        q.push({i, 1 << i});
+        repeatlessNumbers.push_back(i);
+    }
+
+    while(repeatlessNumbers.size() < 1000000) {
+        Node curr = q.front();
+        q.pop();
+        for (int d = 0; d <= 9; ++d) {
+            if ((curr.usedDigits & (1 << d)) == 0) {
+                long long newNum = curr.num * 10 + d;
+                int newUsedDigits = curr.usedDigits | (1 << d);
+                q.push({newNum, newUsedDigits});
+                repeatlessNumbers.push_back(newNum);
+                if (repeatlessNumbers.size() == 1000000) {
+                    break;
+                }
+            }
+        }
+    }
     int n;
     while(cin >> n && n != 0) {
-        cout << v[n - 1] << "\n";
+        cout << repeatlessNumbers[n - 1] << endl;
     }
+
     return 0;
 }
