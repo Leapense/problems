@@ -1,28 +1,35 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <iostream>
+#include <vector>
 
-typedef long long ll;
+int main()
+{
+    long long n, m;
+    std::cin >> n >> m;
+    std::vector<long long> h(n);
 
-int main(){
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    ll n, m;
-    cin >> n >> m;
-    ll total = ((ll)n * (n+1)) / 2;
-    ll bad = 0;
-    ll current = 0;
-    for(ll i=0;i<n;i++){
-        ll h;
-        cin >> h;
-        if(h < m){
-            current +=1;
-        }
-        else{
-            bad += (current * (current +1))/2;
-            current =0;
+    for (long long i = 0; i < n; ++i) {
+        std::cin >> h[i];
+    }
+
+    long long total_subarrays = n * (n + 1) / 2;
+    long long total_subarrays_without = 0;
+    long long count = 0;
+
+    for (long long i = 0; i < n; ++i) {
+        if (h[i] < m) {
+            count++;
+        } else {
+            total_subarrays_without += count * (count + 1) / 2;
+            count = 0;
         }
     }
-    bad += (current * (current +1))/2;
-    ll answer = total - bad;
-    cout << answer;
+
+    if (count > 0) {
+        total_subarrays_without += count * (count + 1) / 2;
+    }
+
+    long long ans = total_subarrays - total_subarrays_without;
+    std::cout << ans << std::endl;
+
+    return 0;
 }
