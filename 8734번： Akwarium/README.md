@@ -35,4 +35,4 @@
 
 ## 소스코드
 
-[소스코드 보기](Akwarium.cpp)
+[소스코드 보기](Akwarium.py)

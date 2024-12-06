@@ -107,5 +107,5 @@
     },
     "editor.tabSize": 4,
     "editor.tabCompletion": "on",
-    "editor.fontFamily": "'SF Mono'"
+    "editor.fontFamily": "'JetBrainsMono NF'"
 }
