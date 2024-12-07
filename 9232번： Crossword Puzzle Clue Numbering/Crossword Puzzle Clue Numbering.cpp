@@ -123,4 +123,6 @@ int main(){
             cout << w.number << ".  (" << w.length << ")\n";
         }
     }
+
+    cout << "\n";
 }
