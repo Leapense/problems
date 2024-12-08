@@ -1,128 +1,73 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct Word {
-    int number;
-    int length;
-};
-
-// Function to check if a cell starts an across word
-bool starts_across(int i, int j, int r, int c, const vector<string> &grid) {
-    if (grid[i][j] == '@') return false;
-    if (j > 0 && grid[i][j-1] != '@') return false;
-    // Count letters to the right
-    int cnt = 0;
-    int k = j;
-    while (k < c && grid[i][k] != '@') {
-        cnt++;
-        k++;
-    }
-    return cnt >= 3;
-}
-
-// Function to check if a cell starts a down word
-bool starts_down(int i, int j, int r, int c, const vector<string> &grid) {
-    if (grid[i][j] == '@') return false;
-    // According to standard crossword rules, a down word starts if the cell above is black or it's the first row
-    if (i > 0 && grid[i-1][j] != '@') return false;
-    // Count letters downward
-    int cnt = 0;
-    int k = i;
-    while (k < r && grid[k][j] != '@') {
-        cnt++;
-        k++;
-    }
-    return cnt >= 3;
-}
-
-int main(){
+int main() {
     ios::sync_with_stdio(false);
-    cin.tie(0);
-    int r, c;
-    int cwnum = 1;
-    bool first = true;
-    while(cin >> r >> c){
-        if(r ==0 && c ==0) break;
-        // Read grid
-        vector<string> grid(r);
-        for(int i=0;i<r;i++) {
-            cin >> grid[i];
-            // Ensure the grid has exactly c characters
-            if(grid[i].size() < c){
-                grid[i].resize(c, '@');
-            }
-            else if(grid[i].size() > c){
-                grid[i] = grid[i].substr(0, c);
-            }
-        }
-        // Assign numbers
-        vector<vector<int>> numbering(r, vector<int>(c, 0));
-        int num =1;
-        for(int i=0;i<r;i++){
-            for(int j=0;j<c;j++){
-                if(grid[i][j] == '@') continue;
-                bool across = starts_across(i, j, r, c, grid);
-                bool down = starts_down(i, j, r, c, grid);
-                if(across || down){
-                    numbering[i][j] = num;
-                    num++;
-                }
-            }
-        }
-        // Collect Across and Down words
-        vector<Word> across_words;
-        vector<Word> down_words;
-        for(int i=0;i<r;i++){
-            for(int j=0;j<c;j++){
-                if(numbering[i][j] ==0) continue;
-                // Check for across
-                if(starts_across(i, j, r, c, grid)){
-                    // Count letters across
-                    int cnt =0;
-                    int k = j;
-                    while(k < c && grid[i][k] != '@'){
-                        cnt++;
-                        k++;
-                    }
-                    across_words.push_back(Word{numbering[i][j], cnt});
-                }
-                // Check for down
-                if(starts_down(i, j, r, c, grid)){
-                    // Count letters down
-                    int cnt =0;
-                    int k = i;
-                    while(k < r && grid[k][j] != '@'){
-                        cnt++;
-                        k++;
-                    }
-                    down_words.push_back(Word{numbering[i][j], cnt});
-                }
-            }
-        }
-        // Sort the words by their number
-        sort(across_words.begin(), across_words.end(), [&](const Word &a, const Word &b) -> bool{
-            return a.number < b.number;
-        });
-        sort(down_words.begin(), down_words.end(), [&](const Word &a, const Word &b) -> bool{
-            return a.number < b.number;
-        });
-        // Output
-        if(!first){
-            cout << "\n";
-        }
-        first = false;
-        cout << "Crossword puzzle " << cwnum++ << "\n";
-        cout << "Across\n";
-        for(auto &w: across_words){
-            cout << w.number << ".  (" << w.length << ")\n";
-        }
-        // Remove the blank line between Across and Down
-        // cout << "\n"; // 삭제
-        cout << "Down\n";
-        for(auto &w: down_words){
-            cout << w.number << ".  (" << w.length << ")\n";
-        }
-    }
+    cin.tie(nullptr);
 
-    cout << "\n";
+    int r, c;
+    int puzzleNumber = 1;
+    bool firstPuzzle = true;
+    while (true) {
+        cin >> r >> c;
+        if (!cin || (r == 0 && c == 0)) break;
+        vector<string> grid(r);
+        for (int i = 0; i < r; i++)
+            cin >> grid[i];
+
+        vector<vector<int>> number(r, vector<int>(c, 0));
+        int countNum = 1;
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                if (grid[i][j] == '@') continue;
+                bool start = false;
+                if ((j == 0 || grid[i][j - 1] == '@') && j + 1 < c && grid[i][j + 1] != '@')
+                    start = true;
+                if ((i == 0 || grid[i - 1][j] == '@') && i + 1 < r && grid[i + 1][j] != '@')
+                    start = true;
+                if (start) number[i][j] = countNum++;
+            }
+        }
+
+        vector<pair<int,int>> across;
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                if (grid[i][j] == '@') continue;
+                if ((j == 0 || grid[i][j - 1] == '@') && j + 1 < c && grid[i][j + 1] != '@') {
+                    int length = 1;
+                    int nj = j + 1;
+                    while (nj < c && grid[i][nj] != '@') { length++; nj++; }
+                    if (length >= 3) across.push_back({number[i][j], length});
+                }
+            }
+        }
+
+        vector<pair<int,int>> down;
+        for (int j = 0; j < c; j++) {
+            for (int i = 0; i < r; i++) {
+                if (grid[i][j] == '@') continue;
+                if ((i == 0 || grid[i - 1][j] == '@') && i + 1 < r && grid[i + 1][j] != '@') {
+                    int length = 1;
+                    int ni = i + 1;
+                    while (ni < r && grid[ni][j] != '@') { length++; ni++; }
+                    if (length >= 3) down.push_back({number[i][j], length});
+                }
+            }
+        }
+
+        sort(across.begin(), across.end());
+        sort(down.begin(), down.end());
+
+        if (!firstPuzzle) cout << "\n";
+        firstPuzzle = false;
+
+        cout << "Crossword puzzle " << puzzleNumber++ << "\n";
+        cout << "Across\n";
+        for (auto &it : across)
+            cout << it.first << ".  (" << it.second << ")\n";
+        cout << "Down\n";
+        for (auto &it : down)
+            cout << it.first << ".  (" << it.second << ")\n";
+    }
+    return 0;
 }
