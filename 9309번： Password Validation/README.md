@@ -49,4 +49,4 @@
 
 ## 소스코드
 
-[소스코드 보기](Password%20Validation.cpp)
+[소스코드 보기](Password%20Validation.py)
