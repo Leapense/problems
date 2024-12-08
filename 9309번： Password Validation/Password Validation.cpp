@@ -1,69 +1,88 @@
 #include <iostream>
 #include <string>
+#include <cctype>
+#include <unordered_set>
 #include <algorithm>
 using namespace std;
 
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(NULL);
-    int N; cin >> N;
-    string forbiddenWords[4] = {"password", "virginia", "cavalier", "code"};
-    while (N--) {
-        string pwd; cin >> pwd;
-        bool valid = true;
-        if ((int)pwd.size() < 9 || (int)pwd.size() > 20) {
-            cout << "Invalid Password\n";
-            continue;
-        }
-        int lowerCount=0, upperCount=0, digitCount=0, specialCount=0;
-        string specials = "!@#$%^&*.,;/?";
-        for (int i=0; i<(int)pwd.size(); i++) {
-            if (pwd[i]>='a' && pwd[i]<='z') lowerCount++;
-            else if (pwd[i]>='A' && pwd[i]<='Z') upperCount++;
-            else if (pwd[i]>='0' && pwd[i]<='9') digitCount++;
-            else if (specials.find(pwd[i])!=string::npos || pwd[i]==':') specialCount++;
-        }
-        if (lowerCount<2 || upperCount<2 || digitCount<1 || specialCount<2) {
-            cout << "Invalid Password\n";
-            continue;
-        }
-        for (int i=0; i+2<(int)pwd.size(); i++) {
-            if (pwd[i]==pwd[i+1] && pwd[i+1]==pwd[i+2]) {
-                valid = false; break;
-            }
-        }
-        if (!valid) {
-            cout << "Invalid Password\n";
-            continue;
-        }
-        string alnum;
-        for (auto &c: pwd) {
-            if ((c>='a'&&c<='z')||(c>='A'&&c<='Z')||(c>='0'&&c<='9')) {
-                alnum.push_back(tolower((unsigned char)c));
-            }
-        }
-        {
-            string rev = alnum;
-            reverse(rev.begin(), rev.end());
-            if (alnum == rev && !alnum.empty()) {
-                cout << "Invalid Password\n";
-                continue;
-            }
-        }
-        {
-            string revAlnum = alnum;
-            reverse(revAlnum.begin(), revAlnum.end());
-            for (int i=0; i<4; i++) {
-                if (alnum.find(forbiddenWords[i])!=string::npos || revAlnum.find(forbiddenWords[i])!=string::npos) {
-                    valid = false;
-                    break;
-                }
-            }
-        }
-        if (!valid) {
-            cout << "Invalid Password\n";
-            continue;
-        }
-        cout << "Valid Password\n";
+string toLowercase(const string& s) {
+    string result;
+    for (char c : s) {
+        result += tolower(c);
     }
+    return result;
+}
+
+string filterAlphanumeric(const string& s) {
+    string result;
+    for (char c : s) {
+        if (isalnum(c)) {
+            result += tolower(c);
+        }
+    }
+    return result;
+}
+
+bool isPalindrome(const string& s) {
+    int left = 0, right = s.size() - 1;
+    while (left < right) {
+        if (s[left++] != s[right--]) return false;
+    }
+    return true;
+}
+
+bool isValidPassword(const string& password) {
+    const unordered_set<string> invalidWords = {"password", "virginia", "cavalier", "code"};
+    int length = password.size();
+
+    if (length < 9 || length > 20) return false;
+
+    int lowercase = 0, uppercase = 0, digit = 0, specialChar = 0;
+
+    const string specialChars = "!@#$%^&*.,;/?";
+    for (size_t i = 0; i < length; ++i) {
+        if (islower(password[i])) lowercase++;
+        else if (isupper(password[i])) uppercase++;
+        else if (isdigit(password[i])) digit++;
+        else if (specialChars.find(password[i]) != string::npos) specialChar++;
+    }
+    if (lowercase < 2 || uppercase < 2 || digit < 1 || specialChar < 2) return false;
+
+    for (size_t i = 2; i < length; ++i) {
+        if (password[i] == password[i - 1] && password[i] == password[i - 2]) {
+            return false;
+        }
+    }
+
+    string filtered = filterAlphanumeric(password);
+    if (isPalindrome(filtered)) return false;
+
+    string lowerPassword = toLowercase(password);
+    for (const string& word : invalidWords) {
+        string lowerWord = toLowercase(word);
+        if (filtered.find(lowerWord) != string::npos || filtered.find(string(lowerWord.rbegin(), lowerWord.rend())) != string::npos) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+int main() {
+    int N;
+    cin >> N;
+    cin.ignore();
+
+    while (N--) {
+        string password;
+        getline(cin, password);
+
+        if (isValidPassword(password)) {
+            cout << "Valid Password" << endl;
+        } else {
+            cout << "Invalid Password" << endl;
+        }
+    }
+
+    return 0;
 }
