@@ -1,58 +1,44 @@
-import sys
-from collections import deque
+def number_to_coords(n):
+    if n == 1:
+        return (0, 0)
+    k = 1
+    while True:
+        S = 2 + 3 * k * (k - 1)
+        E = 1 + 3 * k * (k + 1)
+        if S <= n <= E:
+            break
+        k += 1
+    offset = n - S
+    side = offset // k
+    p = offset % k
+    directions = [(1, -1), (1, 0), (0, 1), (-1, 1), (-1, 0), (0, -1)]
+    q, r = 0, k
+    for s in range(side):
+        q += directions[s][0] * k
+        r += directions[s][1] * k
+    q += directions[side][0] * p
+    r += directions[side][1] * p
+    return (q, r)
 
-def build_num_to_coord(max_num):
-    num_to_coord = {}
-    coord_to_num = {}
-    num_to_coord[1] = (0, 0, 0)
-    coord_to_num[(0, 0, 0)] = 1
-    queue = deque([(0, 0, 0)])
-    current_num = 1
-    directions = [
-        (1, 0, -1),
-        (1, -1, 0),
-        (0, -1, 1),
-        (-1, 0, 1),
-        (-1, 1, 0),
-        (0, 1, -1)
-    ]
-    
-    while current_num < max_num:
-        current_pos = queue.popleft()
-        for d in directions:
-            neighbor = (current_pos[0] + d[0], current_pos[1] + d[1], current_pos[2] + d[2])
-            if neighbor not in coord_to_num:
-                current_num += 1
-                num_to_coord[current_num] = neighbor
-                coord_to_num[neighbor] = current_num
-                queue.append(neighbor)
-                if current_num >= max_num:
-                    break
-    return num_to_coord
-
-def hex_distance(coord1, coord2):
-    x1, y1, z1 = coord1
-    x2, y2, z2 = coord2
+def hex_distance(a, b):
+    q1, r1 = a
+    q2, r2 = b
+    x1, z1 = q1, r1
+    y1 = -x1 - z1
+    x2, z2 = q2, r2
+    y2 = -x2 - z2
     return max(abs(x1 - x2), abs(y1 - y2), abs(z1 - z2))
 
 def main():
-    input_lines = sys.stdin.read().strip().split('\n')
-    test_cases = []
-    max_num = 1
-    for line in input_lines:
+    import sys
+    for line in sys.stdin:
         a, b = map(int, line.strip().split())
-        if a ==0 and b ==0:
+        if a == 0 and b == 0:
             break
-        test_cases.append((a, b))
-        max_num = max(max_num, a, b)
-    
-    num_to_coord = build_num_to_coord(max_num)
-    
-    for a, b in test_cases:
-        coord_a = num_to_coord[a]
-        coord_b = num_to_coord[b]
+        coord_a = number_to_coords(a)
+        coord_b = number_to_coords(b)
         distance = hex_distance(coord_a, coord_b)
         print(distance)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
