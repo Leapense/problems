@@ -1,14 +1,20 @@
-#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
 
 int main()
 {
-    long long n;
-    std::cin >> n;
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    if (n % 2 == 0 && n % 4 != 0) {
-        std::cout << "CY" << std::endl;
+    ll N;
+    cin >> N;
+
+    if (N % 2 == 1) {
+        cout << "SK";
     } else {
-        std::cout << "SK" << std::endl;
+        cout << "CY";
     }
 
     return 0;
