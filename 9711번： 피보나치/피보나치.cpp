@@ -1,11 +1,32 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                      :::    :::    :::     */
-/*   Problem Number: 9711                              :+:    :+:      :+:    */
-/*                                                    +:+    +:+        +:+   */
-/*   By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+  */
-/*                                                  +#+      +#+        +#+   */
-/*   https://boj.kr/9711                           #+#        #+#      #+#    */
-/*   Solved: 2024/12/13 22:19:12 by cjhool        ###          ###   ##.kr    */
-/*                                                                            */
-/* ************************************************************************** */
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    
+    int T;
+    cin >> T;
+    for(int case_num = 1; case_num <= T; ++case_num){
+        ll P, Q;
+        cin >> P >> Q;
+        // Handle edge cases
+        if(P == 1 || P ==2){
+            ll M = 1 % Q;
+            cout << "Case #" << case_num << ": " << M << "\n";
+            continue;
+        }
+        // Initialize first two Fibonacci numbers
+        ll a = 1 % Q; // F(1)
+        ll b = 1 % Q; // F(2)
+        ll c = 0;
+        for(int i =3; i <= P; ++i){
+            c = (a + b) % Q;
+            a = b;
+            b = c;
+        }
+        cout << "Case #" << case_num << ": " << c << "\n";
+    }
+}
