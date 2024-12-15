@@ -1,56 +1,82 @@
 #include <iostream>
 #include <vector>
+#include <string>
+#include <sstream>
 #include <algorithm>
-#include <climits>
 
 using namespace std;
 
-int main()
-{
-    string startLine;
-    while (getline(cin, startLine) && startLine != "ENDOFINPUT")
-    {
-        int numBuses;
-        sscanf(startLine.c_str(), "START %d", &numBuses);
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-        vector<vector<int>> routes(numBuses);
-        for (int i = 0; i < numBuses; ++i) {
-            string routeLine;
-            getline(cin, routeLine);
+    while (true) {
+        string startLine;
+        if (!getline(cin, startLine)) break;
+        if (startLine == "ENDOFINPUT") break;
+        if (startLine.size() == 0) continue;
 
-            int routeDuration;
-            char* str = const_cast<char*>(routeLine.c_str());
+        // startLine is "START N"
+        if (startLine.substr(0, 5) != "START") continue;
+        int N;
+        {
+            stringstream ss(startLine);
+            string dummy;
+            ss >> dummy >> N;
+        }
 
-            while(sscanf(str, "%d", &routeDuration) == 1) {
-                routes[i].push_back(routeDuration);
-                while(*str && isdigit(*str)) str++;
-                while(*str && isspace(*str)) str++;
+        vector<vector<int>> buses(N);
+        for (int i = 0; i < N; i++) {
+            string line;
+            getline(cin, line);
+            stringstream ss(line);
+            int d;
+            while (ss >> d) {
+                buses[i].push_back(d);
             }
         }
 
+        string arrivalLine;
+        getline(cin, arrivalLine);
         int arrivalTime;
-        cin >> arrivalTime;
-        cin.ignore();
+        {
+            stringstream ss(arrivalLine);
+            ss >> arrivalTime;
+        }
 
-        int minWaitTime = INT_MAX;
+        string endLine;
+        getline(cin, endLine); 
 
-        for (const auto& route : routes) {
-            int currentTime = 0;
-            while (true) {
-                for (int duration : route) {
-                    currentTime += duration;
-                    if (currentTime >= arrivalTime) {
-                        minWaitTime = min(minWaitTime, currentTime - arrivalTime);
-                        goto next_bus;
-                    }
+        int minWait = 1000000000;
+        for (int i = 0; i < N; i++) {
+            const vector<int> &routes = buses[i];
+            int cycle = 0;
+            for (auto d : routes) cycle += d;
+
+            // partial sums including start=0
+            vector<int> partial;
+            partial.push_back(0);
+            int sum = 0;
+            for (auto d : routes) {
+                sum += d;
+                partial.push_back(sum);
+            }
+
+            int r = arrivalTime % cycle;
+            int waitForThisBus = 1000000000;
+            for (auto ps : partial) {
+                if (ps >= r) {
+                    int wait = ps - r;
+                    waitForThisBus = min(waitForThisBus, wait);
+                } else {
+                    int wait = (cycle - r) + ps;
+                    waitForThisBus = min(waitForThisBus, wait);
                 }
             }
-            next_bus:;
+            minWait = min(minWait, waitForThisBus);
         }
 
-        cout << minWaitTime << "\n";
-        string endLine;
-        getline(cin, endLine);
+        cout << minWait << "\n";
     }
 
     return 0;
