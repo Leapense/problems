@@ -1,43 +1,50 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
+#include <algorithm>
 using namespace std;
 
-int main()
-{
+int main() {
     ios::sync_with_stdio(false);
-    cin.tie(0);
+    cin.tie(nullptr);
+    
     int k;
     cin >> k;
     string s;
     cin >> s;
-    int n = s.size();
-    int counts[26] = {0};
-    for (int i = 0; i < k && i < n; i++)
-        counts[s[i] - 'a']++;
-    string result;
-    for (int i = 0; i < n; i++)
-    {
-        if (i < k)
-        {
-            result += s[i];
-        }
-        else
-        {
-            char most_freq = 'a';
-            int max_count = counts[0];
-            for (int j = 1; j < 26; j++)
-            {
-                if (counts[j] > max_count || (counts[j] == max_count && ('a' + j) < most_freq))
-                {
-                    max_count = counts[j];
-                    most_freq = 'a' + j;
-                }
-            }
-            int shift = most_freq - 'a' + 1;
-            char shifted = 'a' + (s[i] - 'a' + shift) % 26;
-            result += shifted;
-            counts[s[i - k] - 'a']--;
-            counts[s[i] - 'a']++;
-        }
+    
+    int n = (int)s.size();
+    if (k >= n) {
+        cout << s << "\n";
+        return 0;
     }
-    cout << result;
+    
+    int freq[26] = {0};
+    for (int i = 0; i < k; i++)
+        freq[s[i] - 'a']++;
+    
+    for (int i = 0; i < k; i++)
+        cout << s[i];
+    
+    for (int i = k; i < n; i++) {
+        int maxFreq = -1;
+        int shiftChar = 0;
+        for (int c = 0; c < 26; c++) {
+            if (freq[c] > maxFreq) {
+                maxFreq = freq[c];
+                shiftChar = c;
+            }
+        }
+        
+        int shift = shiftChar + 1;
+        int cur = s[i] - 'a';
+        cur = (cur + shift) % 26;
+        char shifted = (char)(cur + 'a');
+        cout << shifted;
+        
+        freq[s[i - k] - 'a']--;
+        freq[s[i] - 'a']++;
+    }
+    
+    cout << "\n";
+    return 0;
 }
