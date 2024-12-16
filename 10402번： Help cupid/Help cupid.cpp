@@ -1,59 +1,45 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <climits>
+
 using namespace std;
 
-int main()
-{
-    int N;
-    cin >> N;
-    vector<int> T(N);
-    for (auto &x : T) cin >> x;
+int calculate_time_difference(int tz1, int tz2) {
+    int diff = abs(tz1 - tz2);
+    return min(diff, 24 - diff);
+}
 
-    vector<int> C(25, 0);
+int main() {
+    int n;
+    cin >> n;
 
-    for (auto x : T) {
-        int shifted = x + 12;
-        C[shifted]++;
+    vector<int> timezones(n);
+    for (int i = 0; i < n; ++i) {
+        cin >> timezones[i];
     }
 
-    struct Pair {
-        int t, s, cost;
-    };
+    sort(timezones.begin(), timezones.end());
 
-    vector<Pair> pairs;
+    vector<vector<int>> dp(n, vector<int>(n, INT_MAX)); // 초기화를 INT_MAX로 수정
 
-    for (int t = 1; t <= 24; t++) {
-        for (int s = t; s <= 24; s++) {
-            int diff = abs(t - s);
-            int cost = min(diff, 24 - diff);
-            pairs.push_back(Pair{t, s, cost});
-        }
-    }
-
-    sort(pairs.begin(), pairs.end(), [&](const Pair &a, const Pair &b) -> bool {
-        if (a.cost != b.cost) return a.cost < b.cost;
-        return false;
-    });
-
-    long long total_cost = 0;
-    for (auto &p : pairs) {
-        if (p.t == p.s) {
-            long long num = C[p.t] / 2;
-            if (num > 0) {
-                total_cost += num * 1LL * p.cost;
-                C[p.t] -= num * 2;
-            }
-        }
-        else
-        {
-            long long num = min((long long)C[p.t], (long long)C[p.s]);
-            if (num > 0) {
-                total_cost += num * 1LL * p.cost;
-                C[p.t] -= num;
-                C[p.s] -= num;
+    for (int len = 2; len <= n; len += 2) {
+        for (int i = 0; i <= n - len; ++i) {
+            int j = i + len - 1;
+            if (len == 2) { // 기저 사례 처리 추가
+                dp[i][j] = calculate_time_difference(timezones[i], timezones[j]);
+            } else {
+                for (int k = i + 1; k <= j; k += 2) {
+                    int current_diff = calculate_time_difference(timezones[i], timezones[k]);
+                    int prev_diff = (k == i + 1) ? 0 : dp[i + 1][k - 1];
+                    int remaining_diff = (k == j) ? 0 : dp[k + 1][j];
+                    dp[i][j] = min(dp[i][j], current_diff + prev_diff + remaining_diff);
+                }
             }
         }
     }
-    cout << total_cost << "\n";
+
+    cout << dp[0][n - 1] << endl;
 
     return 0;
 }
