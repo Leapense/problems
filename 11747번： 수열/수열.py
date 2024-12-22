@@ -1,11 +1,13 @@
-#  **************************************************************************  #
-#                                                                              #
-#                                                       :::    :::    :::      #
-#    Problem Number: 11747                             :+:    :+:      :+:     #
-#                                                     +:+    +:+        +:+    #
-#    By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+   #
-#                                                   +#+      +#+        +#+    #
-#    https://boj.kr/11747                          #+#        #+#      #+#     #
-#    Solved: 2024/12/22 22:39:31 by cjhool        ###          ###   ##.kr     #
-#                                                                              #
-#  **************************************************************************  #
+import sys
+
+def main():
+    input = sys.stdin.read().split()
+    N = int(input[0])
+    digits = ''.join(input[1:N+1])
+    k = 0
+    while True:
+        if str(k) not in digits:
+            print(k)
+            return
+        k += 1
+main()
