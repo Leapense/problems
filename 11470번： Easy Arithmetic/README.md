@@ -41,4 +41,4 @@
 
 ## 소스코드
 
-[소스코드 보기](Easy%20Arithmetic.cpp)
+[소스코드 보기](Easy%20Arithmetic.py)
