@@ -1,117 +1,97 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main(){
-    string expr;
-    getline(cin, expr);
-    
-    // Parse the expression into operators and numbers
-    vector<char> operators;
-    vector<string> numbers;
-    int n = expr.size();
+struct Token {
+    char sign;
+    string number;
+    bool signExplicit;
+};
+
+vector<Token> parseExpression(const string &expr) {
+    vector<Token> tokens;
+
+    bool firstCharIsSign = false;
+    char currentSign = '+';
+    bool signExplicit = false;
     int i = 0;
-    bool has_initial_operator = false;
-    
-    // Determine if the expression starts with an operator
-    if(i < n && (expr[i] == '+' || expr[i] == '-')){
-        operators.push_back(expr[i]);
-        has_initial_operator = true;
-        i++;
-    }
-    else{
-        operators.push_back('+'); // Assume '+' if no initial operator
+
+    if (!expr.empty() && (expr[0] == '+' || expr[0] == '-')) {
+        currentSign = expr[0];
+        signExplicit = true;
+        firstCharIsSign = true;
+        i = 1;
     }
     
-    // Parse numbers and subsequent operators
-    while(i < n){
-        // Parse number
-        string num = "";
-        while(i < n && isdigit(expr[i])){
-            num += expr[i];
-            i++;
+    string currentTokenDigits;
+    
+    for (; i < (int)expr.size(); i++) {
+        if (expr[i] == '+' || expr[i] == '-') {
+            if (!currentTokenDigits.empty()) {
+                tokens.push_back(Token{currentSign, currentTokenDigits, signExplicit});
+            }
+            currentSign = expr[i];
+            signExplicit = true;
+            currentTokenDigits.clear();
         }
-        numbers.push_back(num);
+        else {
+            currentTokenDigits.push_back(expr[i]);
+        }
+    }
+
+    if (!currentTokenDigits.empty()) {
+        tokens.push_back(Token{currentSign, currentTokenDigits, signExplicit});
+    }
+    
+    return tokens;
+}
+
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    string expr;
+    cin >> expr;
+
+    vector<Token> tokens = parseExpression(expr);
+    
+    ostringstream out;
+    bool firstToken = true;
+    
+    for (auto &tk : tokens) {
+        char s = tk.sign;
+        const string &num = tk.number;
+        bool explicitSign = tk.signExplicit;
         
-        // Parse operator
-        if(i < n && (expr[i] == '+' || expr[i] == '-')){
-            operators.push_back(expr[i]);
-            i++;
-        }
-    }
-    
-    // Ensure operators.size() == numbers.size()
-    if(operators.size() < numbers.size()){
-        operators.insert(operators.begin(), '+');
-    }
-    
-    // Pair operators with numbers
-    vector<pair<char, string>> op_num;
-    for(int j=0; j < numbers.size(); j++){
-        op_num.emplace_back(operators[j], numbers[j]);
-    }
-    
-    // Process each operator-number pair
-    vector<pair<char, string>> new_op_num;
-    for(auto &[op, num] : op_num){
-        if(op == '+'){
-            // Do not split, keep as is
-            new_op_num.emplace_back('+', num);
-        }
-        else if(op == '-'){
-            // Try to split the number
-            if(num.size() >=2 ){
-                // Find the smallest split position where the second part does not start with '0' unless it's '0'
-                int split_pos = -1;
-                for(int s=1; s < num.size(); s++){
-                    string S2 = num.substr(s);
-                    if(S2.size() ==1 || S2[0] != '0'){
-                        split_pos = s;
-                        break;
-                    }
+        if (s == '+') {
+            if (firstToken) {
+                if (explicitSign) {
+                    out << '+' << num;
+                } else {
+                    out << num;
                 }
-                if(split_pos != -1){
-                    string S1 = num.substr(0, split_pos);
-                    string S2 = num.substr(split_pos);
-                    // Insert '-S1' and '+S2'
-                    new_op_num.emplace_back('-', S1);
-                    new_op_num.emplace_back('+', S2);
-                }
-                else{
-                    // Cannot split, keep as is
-                    new_op_num.emplace_back('-', num);
-                }
-            }
-            else{
-                // Cannot split, keep as is
-                new_op_num.emplace_back('-', num);
+            } else {
+                out << '+' << num;
             }
         }
-    }
-    
-    // Reconstruct the expression
-    string result = "";
-    for(int j=0; j < new_op_num.size(); j++){
-        char op = new_op_num[j].first;
-        string num = new_op_num[j].second;
-        if(j ==0){
-            if(has_initial_operator){
-                // Include the initial operator as it was in the original expression
-                result += op;
-            }
-            else{
-                // Omit the '+' if it was assumed
-                if(op != '+'){
-                    result += op;
+        else {
+            
+            if (!num.empty()) {
+
+                if (firstToken) {
+                    out << '-' << num[0];
+                } else {
+                    out << '-' << num[0];
                 }
-                // If op is '+', do not add it
+
+                for (int i = 1; i < (int)num.size(); i++) {
+                    out << '+' << num[i];
+                }
             }
         }
-        else{
-            // Include all other operators
-            result += op;
-        }
-        result += num;
+        
+        firstToken = false;
     }
     
-    cout << result;
+    cout << out.str() << "\n";
+    return 0;
 }
