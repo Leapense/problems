@@ -25,6 +25,30 @@ int main() {
         }
 
         vector<int> prefix(N + 1, 0);
-        for (int i = 1; i <= N; i++)
+        for (int i = 1; i <= N; i++) {
+            prefix[i] = prefix[i - 1] + binary_sequence[i - 1];
+        }
+
+        double smallest_diff = numeric_limits<double>::infinity();
+        int best_index = 0;
+
+        for (int L = 1; L <= N; L++) {
+            for (int i = 0; i <= N - L; i++) {
+                int actual_1s = prefix[i + L] - prefix[i];
+                double fraction = (double)actual_1s / L;
+                double difference = fabs(fraction - F);
+
+                if (difference < smallest_diff) {
+                    smallest_diff = difference;
+                    best_index = i;
+                } else if (difference == smallest_diff && i < best_index) {
+                    best_index = i;
+                }
+            }
+        }
+
+        cout << "Case #" << t << ": " << best_index << endl;
     }
+
+    return 0;
 }
