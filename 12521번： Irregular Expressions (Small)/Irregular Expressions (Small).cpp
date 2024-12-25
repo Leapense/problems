@@ -1,74 +1,52 @@
-#include <iostream>
-#include <string>
-#include <vector>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-// 음절로 구분하는 함수
-vector<string> splitIntoSyllables(const string& s) {
-    vector<string> syllables;
-    int n = s.length();
-    int start = 0;
-    while (start < n) {
-        int end = start + 1;
-        while (end <= n) {
-            string syllable = s.substr(start, end - start);
-            int vowelCount = 0;
-            for (char ch : syllable) {
-                if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u') {
-                    vowelCount++;
-                }
-            }
-            if (vowelCount == 1) {
-                syllables.push_back(syllable);
-                start = end;
-                break;
-            }
-            end++;
-        }
-    }
-    return syllables;
+int count_vowels(const string &s)
+{
+    int cnt = 0;
+    for (char c : s)
+        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u')
+            cnt++;
+    return cnt;
 }
 
-// 주문인지 확인하는 함수
-bool isSpell(const string& s) {
-    vector<string> syllables = splitIntoSyllables(s);
-    int n = syllables.size();
-    for (int i = 0; i < n; ++i) {
-        for (int j = i + 1; j < n; ++j) {
-            for (int k = j + 1; k < n; ++k) {
-                string startWord;
-                for (int l = i; l < j; ++l) {
-                    startWord += syllables[l];
-                }
-                string middleWord;
-                for (int l = j; l < k; ++l) {
-                    middleWord += syllables[l];
-                }
-                string endWord;
-                for (int l = k; l < n; ++l) {
-                    endWord += syllables[l];
-                }
-                if (startWord == endWord && (j - i) >= 2 && (k - j) >= 1 && (n - k) >= 2) {
-                    return true;
-                }
-            }
-        }
-    }
-    return false;
-}
-
-int main() {
+int main()
+{
     int T;
     cin >> T;
-    for (int t = 1; t <= T; ++t) {
-        string expression;
-        cin >> expression;
-        if (isSpell(expression)) {
-            cout << "Case #" << t << ": Spell!" << endl;
-        } else {
-            cout << "Case #" << t << ": Nothing." << endl;
+    for (int tc = 1; tc <= T; tc++)
+    {
+        string s;
+        cin >> s;
+        bool flag = false;
+        int N = s.length();
+        for (int i = 0; i < N && !flag; i++)
+        {
+            for (int j = i; j < N && !flag; j++)
+            {
+                string sub = s.substr(i, j - i + 1);
+                int L = sub.length();
+                for (int start_len = 1; start_len <= (L - 1) / 2 && !flag; start_len++)
+                {
+                    int end_len = start_len;
+                    int middle_len = L - 2 * start_len;
+                    if (middle_len >= 1)
+                    {
+                        string start = sub.substr(0, start_len);
+                        string end = sub.substr(L - end_len, end_len);
+                        if (start == end)
+                        {
+                            int sc_start = count_vowels(start);
+                            int sc_middle = count_vowels(sub.substr(start_len, middle_len));
+                            if (sc_start >= 2 && sc_middle >= 1)
+                            {
+                                flag = true;
+                            }
+                        }
+                    }
+                }
+            }
         }
+        cout << "Case #" << tc << ": " << (flag ? "Spell!" : "Nothing.") << '\n';
     }
-    return 0;
 }
