@@ -1,69 +1,52 @@
-#include <iostream>
-#include <cmath>
-#include <string>
-#include <sstream>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-bool isPowerOfTwo (int n) {
-    return n > 0 && (n & (n - 1)) == 0;
-}
-
-int findMinimalK (int P, int Q) {
-    if (isPowerOfTwo(Q)) {
-        return log2(Q);
-    }
-
-    return -1;
-}
-
-string fractionToBinary (int P, int Q) {
-    string binary = "";
-    double value = (double)P / Q;
-    while (value > 0 && binary.size() < 32) {
-        value *= 2;
-        if (value >= 1) {
-            binary += '1';
-            value -= 1;
-        } else {
-            binary += '0';
-        }
-    }
-
-    return binary;
+// x가 2의 거듭제곱인지(양의 정수) 판별하는 함수
+bool isPowerOfTwo(long long x) {
+    return x > 0 && (x & (x - 1)) == 0;
 }
 
 int main() {
-    int T;
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int T; 
     cin >> T;
+    for(int t = 1; t <= T; t++) {
+        string fraction;
+        cin >> fraction;  // 예: "3/4"
+        
+        // P/Q 파싱
+        int pos = fraction.find('/');
+        long long P = stoll(fraction.substr(0, pos));
+        long long Q = stoll(fraction.substr(pos + 1));
 
-    for (int test = 1; test <= T; test++) {
-        string s;
-        cin >> s;
-        int P, Q;
-        size_t slash = s.find('/');
-        P = stoi(s.substr(0, slash));
-        Q = stoi(s.substr(slash + 1));
+        // 1) 먼저 P/Q를 기약분수 형태로 만들기
+        long long g = std::gcd(P, Q);
+        P /= g;
+        Q /= g;
 
-        if (Q % P == 0) {
-            cout << "Case #" << test << ": 0" << endl;
+        // 2) Q가 2의 거듭제곱인지 확인
+        if(!isPowerOfTwo(Q)) {
+            cout << "Case #" << t << ": impossible\n";
             continue;
         }
 
-        int k = findMinimalK(P, Q);
+        // 3) 최소 세대 수 계산
+        //    2^gen * P >= Q를 만족하는 최소 gen 찾기
+        int gen = 0;
+        long long cur = P;
+        while(cur < Q) {
+            cur <<= 1; 
+            gen++;
+        }
 
-        if (k != -1) {
-            cout << "Case #" << test << ": " << k << endl;
+        // 4) 세대 수가 40을 초과하면 불가능
+        if(gen > 40) {
+            cout << "Case #" << t << ": impossible\n";
         } else {
-            string binary = fractionToBinary(P, Q);
-            if (binary.find('1') != string::npos) {
-                int pos = binary.find('1') + 1;
-                cout << "Case #" << test << ": " << pos << endl;
-            } else {
-                cout << "Case #" << test << ": impossible" << endl;
-            }
+            cout << "Case #" << t << ": " << gen << "\n";
         }
     }
-
     return 0;
 }
