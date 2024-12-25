@@ -36,7 +36,7 @@ def main():
             numbers.append(Decimal(num_str))
         num_list = []
         for num in numbers:
-            ternary = decimal_to_ternary(str(num), 24)
+            ternary = decimal_to_ternary(str(num), 20)
             first_one = ternary.find('1')
             if first_one != -1:
                 round_num = first_one + 1
@@ -46,7 +46,9 @@ def main():
         num_list.sort()
         print(f"Case #{case}:")
         for num in num_list:
-            print(f"{num[1]:.11f}".rstrip('0').rstrip('.') if '.' in f"{num[1]:.11f}" else f"{num[1]:.11f}")
+            num_str = f"{num[1]:.11f}"
+            num_str = num_str.rstrip('0').rstrip('.') if '.' in num_str else num_str
+            print(num_str)
 
 if __name__ == "__main__":
     main()
