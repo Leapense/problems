@@ -1,102 +1,68 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <sstream>
-
+#include<bits/stdc++.h>
 using namespace std;
 
-const string digitWords[10] = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"};
-const string countTerms[11] = {"", "", "double", "triple", "quadruple", "quintuple", "sextuple", "septuple", "octuple", "nonuple", "decuple"};
-
-vector<int> getGroupSizes(const string& format) {
-    vector<int> sizes;
-    stringstream ss(format);
-    string part;
-    while (getline(ss, part, '-')) {
-        sizes.push_back(stoi(part));
-    }
-    return sizes;
-}
-
-vector<string> splitIntoGroups(const string& N, const vector<int>& sizes) {
-    vector<string> groups;
-    int start = 0;
-    for (int size : sizes) {
-        groups.push_back(N.substr(start, size));
-        start += size;
-    }
-    return groups;
-}
-
-string processGroup(const string& group) {
-    vector<string> words;
-    if (group.empty()) return "";
-    char prev = group[0];
-    int count = 1;
-    for (size_t i = 1; i < group.size(); ++i) {
-        if (group[i] == prev) {
-            ++count;
-            if (count == 10) {
-                words.push_back(countTerms[10]);
-                words.push_back(digitWords[prev - '0']);
-                prev = group[i];
-                count = 1;
-            }
-        } else {
-            if (count == 1) {
-                words.push_back(digitWords[prev - '0']);
-            } else {
-                words.push_back(countTerms[count]);
-                words.push_back(digitWords[prev - '0']);
-            }
-            prev = group[i];
-            count = 1;
-        }
-    }
-    if (count == 1) {
-        words.push_back(digitWords[prev - '0']);
-    } else {
-        words.push_back(countTerms[count]);
-        words.push_back(digitWords[prev - '0']);
-    }
-    string result;
-    for (size_t i = 0; i < words.size(); ++i) {
-        result += words[i];
-        if (i != words.size() - 1) {
-            result += " ";
-        }
-    }
-    return result;
-}
-
-int main() {
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(0);
     int T;
-    cin >> T;
-    cin.ignore();
-    for (int x = 1; x <= T; ++x) {
-        string line;
-        getline(cin, line);
-        while (line.empty()) {
-            getline(cin, line);
+    cin>>T;
+    string digit_words[10] = {"zero","one","two","three","four","five","six","seven","eight","nine"};
+    string count_prefix[11];
+    count_prefix[2]="double";
+    count_prefix[3]="triple";
+    count_prefix[4]="quadruple";
+    count_prefix[5]="quintuple";
+    count_prefix[6]="sextuple";
+    count_prefix[7]="septuple";
+    count_prefix[8]="octuple";
+    count_prefix[9]="nonuple";
+    count_prefix[10]="decuple";
+    for(int tc=1; tc<=T; tc++){
+        string N, F;
+        cin>>N>>F;
+        vector<int> splits;
+        int pos=0;
+        while(pos < F.size()){
+            int dash = F.find('-', pos);
+            if(dash == string::npos){
+                splits.push_back(stoi(F.substr(pos)));
+                break;
+            }
+            splits.push_back(stoi(F.substr(pos, dash-pos)));
+            pos = dash+1;
         }
-        size_t spacePos = line.find(' ');
-        string N = line.substr(0, spacePos);
-        string F = line.substr(spacePos + 1);
-        vector<int> sizes = getGroupSizes(F);
-        vector<string> groups = splitIntoGroups(N, sizes);
-        vector<string> groupReadings;
-        for (const string& group : groups) {
-            string reading = processGroup(group);
-            groupReadings.push_back(reading);
+        vector<string> parts;
+        int start=0;
+        for(auto s:splits){
+            parts.push_back(N.substr(start, s));
+            start +=s;
         }
-        string result;
-        for (size_t i = 0; i < groupReadings.size(); ++i) {
-            result += groupReadings[i];
-            if (i != groupReadings.size() - 1) {
-                result += " ";
+        vector<string> words;
+        for(auto part:parts){
+            int n = part.size();
+            int i=0;
+            while(i<n){
+                char current = part[i];
+                int count=1;
+                while(i+count<n && part[i+count]==current && count<10){
+                    count++;
+                }
+                if(count>=2 && count<=10){
+                    words.push_back(count_prefix[count]);
+                    words.push_back(digit_words[current-'0']);
+                    i +=count;
+                }
+                else{
+                    words.push_back(digit_words[current-'0']);
+                    i++;
+                }
             }
         }
-        cout << "Case #" << x << ": " << result << endl;
+        string result = "";
+        for(int i=0;i<words.size();i++){
+            if(i>0) result += ' ';
+            result += words[i];
+        }
+        cout<<"Case #"<<tc<<": "<<result<<"\n";
     }
-    return 0;
 }
