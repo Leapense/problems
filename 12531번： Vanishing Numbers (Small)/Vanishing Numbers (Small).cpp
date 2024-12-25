@@ -1,77 +1,111 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <algorithm>
-#include <numeric>
-#include <cmath>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-// Function to compute GCD of two numbers
-long long gcd(long long a, long long b) {
-    while (b != 0) {
-        long long temp = b;
-        b = a % b;
-        a = temp;
+static const int NEVER_REMOVED = INT_MAX;
+
+int getRemovalRound(long long p, long long q) {
+    unordered_set<long long> seen;
+    seen.reserve(q);
+    seen.max_load_factor(0.7f);
+
+    for (int roundNum = 1; roundNum <= q; roundNum++) {
+        long long X = (3LL * p) / q;
+        long long R = (3LL * p) % q;
+
+        if (X == 1) {
+            return roundNum;
+        }
+
+        if (R == 0) {
+            if ((X % 3) != 0) {
+                return roundNum;
+            }
+        }
+        
+        p = R;
+        if (seen.find(p) != seen.end()) {
+            return NEVER_REMOVED;
+        }
+
+        seen.insert(p);
     }
+
+    return NEVER_REMOVED;
+}
+
+long long gcdLL(long long a, long long b) {
+    while (b != 0) {
+        long long t = a % b;
+        a = b;
+        b = t;
+    }
+
     return a;
 }
 
-// Function to determine the elimination round for a given fraction
-int find_elimination_round(long long numerator, long long denominator, int max_round = 20) {
-    numerator *= 3;
-    for (int k = 1; k <= max_round; ++k) {
-        long long digit = numerator / denominator;
-        if (digit == 1) {
-            return k;
-        } else if (digit == 2) {
-            numerator -= 2 * denominator;
-        } else if (digit == 0) {
-            // Do nothing
-        }
-        if (numerator == 0) {
-            return 1000; // Never eliminated
-        }
-        numerator *= 3;
-    }
-    return 1000; // Never eliminated if no '1' found within max_round
-}
-
 int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
     int T;
     cin >> T;
-    for (int t = 1; t <= T; ++t) {
+
+    for (int tc = 1; tc <= T; tc++) {
         int N;
         cin >> N;
-        vector<pair<int, double>> numbers;
-        for (int i = 0; i < N; ++i) {
+        vector<string> inputStrs(N);
+
+        struct NumInfo {
             string s;
-            cin >> s;
-            size_t dot_pos = s.find('.');
-            string decimal_part = s.substr(dot_pos + 1);
-            int l = decimal_part.length();
-            long long numerator = stoll(decimal_part);
-            long long denominator = 1;
-            for (int j = 0; j < l; ++j) {
-                denominator *= 10;
-            }
-            // Simplify the fraction
-            long long common = gcd(numerator, denominator);
-            numerator /= common;
-            denominator /= common;
-            // Find elimination round
-            int round = find_elimination_round(numerator, denominator);
-            // Store the number as double for sorting
-            double number = stod(s);
-            numbers.push_back({round, number});
+            int roundRemoved;
+            long long p, q;
+        };
+
+        vector<NumInfo> arr(N);
+
+        for (int i = 0; i < N; i++) {
+            cin >> inputStrs[i];
         }
-        // Sort numbers by elimination round and numerical value
-        sort(numbers.begin(), numbers.end());
-        // Output
-        cout << "Case #" << t << ":" << endl;
-        for (auto& num : numbers) {
-            cout << num.second << endl;
+
+        for (int i = 0; i < N; i++) {
+            const string &s = inputStrs[i];
+
+            assert(s.size() >= 2 && s[0] == '0' && s[1] == '.');
+            string digits = s.substr(2);
+
+            long long p = stoll(digits);
+            long long q = 1;
+
+            for (int k = 0; k < (int)digits.size(); k++) {
+                q *= 10LL;
+            }
+
+            long long g = gcdLL(p, q);
+            p /= g;
+            q /= g;
+
+            int rr = getRemovalRound(p, q);
+            arr[i] = {s, rr, p, q};
+        }
+
+        auto cmp = [&](const NumInfo &a, const NumInfo &b) {
+            if (a.roundRemoved != b.roundRemoved) {
+                return a.roundRemoved < b.roundRemoved;
+            }
+
+            __int128 lhs = ((__int128)a.p) * b.q;
+            __int128 rhs = ((__int128)b.p) * a.q;
+
+            return lhs < rhs;
+        };
+
+        sort(arr.begin(), arr.end(), cmp);
+
+        cout << "Case #" << tc << ":\n";
+        for (auto &x : arr) {
+            cout << x.s << "\n";
         }
     }
+
     return 0;
 }
