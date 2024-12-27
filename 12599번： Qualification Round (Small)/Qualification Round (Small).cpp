@@ -1,50 +1,29 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int P, C;
-int S[10];
-vector<vector<int>> subsets;
-int bestAns;
-
-void backtrack(int idx, int current, int sLeft[]) {
-    if (idx == (int)subsets.size()) {
-        bestAns = max(bestAns, current);
-        return;
-    }
-    int sumLeft = 0;
-    for (int i = 0; i < P; i++) sumLeft += sLeft[i];
-    if (current + sumLeft / C <= bestAns) return;
-    int mn = INT_MAX;
-    for (int i : subsets[idx]) mn = min(mn, sLeft[i]);
-    for (int x = mn; x >= 0; x--) {
-        for (int i : subsets[idx]) sLeft[i] -= x;
-        backtrack(idx + 1, current + x, sLeft);
-        for (int i : subsets[idx]) sLeft[i] += x;
-    }
-}
-
 int main(){
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int T;
-    cin >> T;
+    int T; cin >> T;
     for(int tc=1; tc<=T; tc++){
-        cin >> P >> C;
-        for(int i=0; i<P; i++) cin >> S[i];
-        subsets.clear();
-        for(int mask=0; mask<(1<<P); mask++){
-            int c = __builtin_popcount(mask);
-            if(c == C) {
-                vector<int> sub;
-                for(int i=0; i<P; i++){
-                    if(mask & (1<<i)) sub.push_back(i);
-                }
-                subsets.push_back(sub);
-            }
+        int P, C; cin >> P >> C;
+        vector<long long> S(P);
+        long long sumS = 0;
+        for(int i=0; i<P; i++){
+            cin >> S[i];
+            sumS += S[i];
         }
-        bestAns = 0;
-        backtrack(0, 0, S);
-        cout << "Case #" << tc << ": " << bestAns << "\n";
+        long long left = 0, right = sumS;
+        while(left < right){
+            long long mid = (left + right + 1) / 2;
+            long long cap = 0;
+            for(int i=0; i<P; i++){
+                cap += min((long long)S[i], mid);
+            }
+            if(cap >= mid * C) left = mid; 
+            else right = mid - 1;
+        }
+        cout << "Case #" << tc << ": " << left << "\n";
     }
     return 0;
 }
