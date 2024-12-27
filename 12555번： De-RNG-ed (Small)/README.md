@@ -47,4 +47,4 @@
 
 ## 소스코드
 
-[소스코드 보기](De-RNG-ed%20(Small).py)
+[소스코드 보기](De-RNG-ed%20(Small).cpp)
