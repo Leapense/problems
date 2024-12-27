@@ -1,123 +1,180 @@
-#include <iostream>
-#include <vector>
-#include <set>
-#include <cmath>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-vector<int> sieve(int n) {
-    vector<bool> is_prime(n+1, true);
-    is_prime[0] = is_prime[1] = false;
-    for (int i = 2; i * i <= n; i++) {
-        if (is_prime[i]) {
-            for (int j = i * i; j <= n; j += i) {
-                is_prime[j] = false;
+vector<int> sievePrimes(int maxN) {
+    vector<bool> isPrime(maxN+1, true);
+    isPrime[0] = false; 
+    isPrime[1] = false;
+    for (int i = 2; i * i <= maxN; i++) {
+        if (isPrime[i]) {
+            for (int j = i*i; j <= maxN; j += i) {
+                isPrime[j] = false;
             }
         }
     }
     vector<int> primes;
-    for (int i = 2; i <= n; i++) {
-        if (is_prime[i]) {
+    for (int i = 2; i <= maxN; i++) {
+        if (isPrime[i]) {
             primes.push_back(i);
         }
     }
     return primes;
 }
 
-int mod(int a, int m) {
-    a %= m;
-    if (a < 0) a += m;
-    return a;
-}
+long long modInverse(long long a, long long p) {
+    long long result = 1;
+    long long base = a % p;
+    long long exp = p - 2;
 
-int extended_gcd(int a, int b, int &x, int &y) {
-    if (b == 0) {
-        x = 1;
-        y = 0;
-        return a;
+    while (exp > 0) {
+        if (exp & 1) result = (result * base) % p;
+        base = (base * base) % p;
+        exp >>= 1;
     }
-    int x1, y1;
-    int g = extended_gcd(b, a % b, x1, y1);
-    x = y1;
-    y = x1 - (a / b) * y1;
-    return g;
+
+    return result;
 }
 
-int mod_inverse(int a, int m) {
-    int x, y;
-    int g = extended_gcd(a, m, x, y);
-    if (g != 1) {
-        return -1; // Inverse doesn't exist
-    } else {
-        return mod(x, m);
+vector<pair<long long, long long>> findAllAb(const vector<long long> &seq, long long p) {
+    int K = seq.size();
+
+    if (K < 2) {
+        return {};
     }
-}
 
-void solve() {
-    vector<int> primes = sieve(10000);
-    int T;
-    cin >> T;
-    for (int t = 1; t <= T; t++) {
-        int D, K;
-        cin >> D >> K;
-        vector<int> S(K);
-        for (int i = 0; i < K; i++) {
-            cin >> S[i];
+    long long x1 = -1, y1 = -1, x2 = -1, y2 = -1; 
+    bool foundTwoPairs = false;
+
+    for (int i = 0; i + 1 < K; i++) {
+        if (x1 == -1) {
+            x1 = seq[i];
+            y1 = seq[i + 1];
+        } else if (x2 == -1 && seq[i] != x1) {
+            x2 = seq[i];
+            y2 = seq[i + 1];
+            foundTwoPairs = true;
+            break;
+        } 
+    }
+
+    vector<pair<long long, long long>> validPairs;
+
+    bool allSame = true;
+    for (int i = 1; i < K; i++) {
+        if (seq[i] != seq[0]) {
+            allSame = false;
+            break;
         }
-        if (K == 1) {
-            cout << "Case #" << t << ": I don't know." << endl;
-            continue;
+    }
+
+    if (allSame) {
+        long long c = seq[0];
+
+        for (int A = 0; A < (int)p && A < 2; A++) {
+            long long B = ((c - (A * c) % p) % p + p) % p;
+            validPairs.push_back({A, B});
         }
-        int M = *max_element(S.begin(), S.end());
-        int P_max = pow(10, D);
-        set<int> possible_next;
-        for (int p : primes) {
-            if (p > M && p <= P_max) {
-                int diff1 = S[1] - S[0];
-                int diff2 = S[2] - S[1];
-                if (diff1 == 0) {
-                    bool valid = true;
-                    for (int i = 2; i < K; i++) {
-                        if (S[i] != S[i-1]) {
-                            valid = false;
-                            break;
-                        }
-                    }
-                    if (valid) {
-                        int B = mod(S[0], p);
-                        possible_next.insert(mod(B, p));
-                    }
-                } else {
-                    int inv = mod_inverse(diff1, p);
-                    if (inv != -1) {
-                        int A = mod(diff2 * inv, p);
-                        int B = mod(S[1] - A * S[0], p);
-                        bool valid = true;
-                        for (int i = 2; i < K; i++) {
-                            int expected = mod(A * S[i-1] + B, p);
-                            if (expected != S[i]) {
-                                valid = false;
-                                break;
-                            }
-                        }
-                        if (valid) {
-                            int next_num = mod(A * S[K-1] + B, p);
-                            possible_next.insert(next_num);
-                        }
-                    }
-                }
+        return validPairs;
+    }
+
+    if (!foundTwoPairs) {
+        x2 = -1;
+        for (int i = 0; i + 1 < K; i++) {
+            if (seq[i] != x1) {
+                x2 = seq[i];
+                y2 = seq[i + 1];
+                break;
             }
         }
-        if (possible_next.size() == 1) {
-            cout << "Case #" << t << ": " << *possible_next.begin() << endl;
-        } else {
-            cout << "Case #" << t << ": I don't know." << endl;
+
+        if (x2 == -1) {
+            return {};
         }
     }
+
+    auto invX1X2 = modInverse((x1 - x2 + p) % p, p);
+
+    long long A = (((y1 - y2) % p + p) % p) * invX1X2 % p;
+    long long B = ((y1 - (A * x1) % p) % p + p) % p;
+
+    bool consistent = true;
+    for (int i = 0; i+1 < K && consistent; i++) {
+        long long lhs = (A * seq[i] + B) % p;
+        if (lhs != seq[i+1]) {
+            consistent = false;
+        }
+    }
+    if (consistent) {
+        validPairs.push_back({A, B});
+    }
+
+    return validPairs;
 }
 
 int main() {
-    solve();
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    
+    vector<int> primes = sievePrimes(10000);
+
+    int T;
+    cin >> T;
+
+
+    for (int t = 1; t <= T; t++) {
+        int D, K;
+        cin >> D >> K;
+        vector<long long> seq(K);
+        for (int i = 0; i < K; i++) {
+            cin >> seq[i];
+        }
+
+        if (K == 1) {
+            cout << "Case #" << t << ": I don't know." << "\n";
+            continue;
+        }
+
+        unordered_set<long long> possibleNexts;
+
+        long long maxP = 1;
+        for (int i = 0; i < D; i++) {
+            maxP *= 10;
+        }
+
+        for (int primeCandidate : primes) {
+            if (primeCandidate > maxP) break;
+
+            bool validRange = true;
+            for (long long x : seq) {
+                if (x >= primeCandidate) {
+                    validRange = false;
+                    break;
+                }
+            }
+
+            if (!validRange) continue;
+
+            auto abPairs = findAllAb(seq, primeCandidate);
+
+            if (abPairs.empty()) {
+                continue;
+            }
+
+            for (auto &pr : abPairs) {
+                long long A = pr.first, B = pr.second;
+                long long nxt = (A * seq[K - 1] + B) % primeCandidate;
+                possibleNexts.insert(nxt);
+            }
+        }
+
+        if (possibleNexts.size() == 0) {
+            cout << "Case #" << t << ": I don't know." << "\n";
+        } else if (possibleNexts.size() == 1) {
+            cout << "Case #" << t << ": " << *possibleNexts.begin() << "\n";
+        } else {
+            cout << "Case #" << t << ": I don't know." << "\n";
+        }
+    }
+
     return 0;
 }
