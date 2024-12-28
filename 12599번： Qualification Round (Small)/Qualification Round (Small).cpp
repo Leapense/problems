@@ -1,29 +1,42 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main(){
+typedef long long ll;
+
+int main() {
     ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    int T; cin >> T;
-    for(int tc=1; tc<=T; tc++){
-        int P, C; cin >> P >> C;
-        vector<long long> S(P);
-        long long sumS = 0;
-        for(int i=0; i<P; i++){
-            cin >> S[i];
-            sumS += S[i];
-        }
-        long long left = 0, right = sumS;
-        while(left < right){
-            long long mid = (left + right + 1) / 2;
-            long long cap = 0;
-            for(int i=0; i<P; i++){
-                cap += min((long long)S[i], mid);
+    cin.tie(0);
+
+    int T;
+    cin >> T;
+
+    for (int tc = 1; tc <= T; tc++) {
+        int P, C;
+        cin >> P >> C;
+        vector<int> S(P);
+        for (auto &x : S) cin >> x;
+
+        int sumS = 0;
+        for (auto x : S) sumS += x;
+
+        int left = 0, right = sumS;
+        int ans = 0;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            long long total = 0;
+
+            for (auto x : S) total += min((int)x, mid);
+            if (total >= (long long)mid * C) {
+                ans = mid;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
             }
-            if(cap >= mid * C) left = mid; 
-            else right = mid - 1;
         }
-        cout << "Case #" << tc << ": " << left << "\n";
+
+        cout << "Case #" << tc << ": " << ans << "\n";
     }
+
     return 0;
 }
