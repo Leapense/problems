@@ -1,11 +1,12 @@
-#  **************************************************************************  #
-#                                                                              #
-#                                                       :::    :::    :::      #
-#    Problem Number: 13385                             :+:    :+:      :+:     #
-#                                                     +:+    +:+        +:+    #
-#    By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+   #
-#                                                   +#+      +#+        +#+    #
-#    https://boj.kr/13385                          #+#        #+#      #+#     #
-#    Solved: 2024/12/29 19:40:03 by cjhool        ###          ###   ##.kr     #
-#                                                                              #
-#  **************************************************************************  #
+def compute_L(a):
+    p, q = a[-1], 1
+    for ai in reversed(a[:-1]):
+        p, q = ai * p + q, p
+    return p
+
+M = int(input())
+for _ in range(M):
+    parts = list(map(int, input().split()))
+    r = parts[0]
+    a = parts[1:]
+    print(compute_L(a))
