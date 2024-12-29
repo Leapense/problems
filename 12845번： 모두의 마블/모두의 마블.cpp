@@ -1,11 +1,31 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                      :::    :::    :::     */
-/*   Problem Number: 12845                             :+:    :+:      :+:    */
-/*                                                    +:+    +:+        +:+   */
-/*   By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+  */
-/*                                                  +#+      +#+        +#+   */
-/*   https://boj.kr/12845                          #+#        #+#      #+#    */
-/*   Solved: 2024/12/29 12:12:49 by cjhool        ###          ###   ##.kr    */
-/*                                                                            */
-/* ************************************************************************** */
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+
+    vector<int> levels(n);
+
+    for (int i = 0; i < n; ++i) {
+        cin >> levels[i];
+    }
+
+    int max_level = *max_element(levels.begin(), levels.end());
+    long long total_gold = 0;
+    for (int level : levels) {
+        total_gold += level;
+    }
+
+    if (n == 1) {
+        cout << 0 << endl;
+    } else {
+        total_gold += max_level * (n - 2);
+        cout << total_gold << endl;
+    }
+
+    return 0;
+}
