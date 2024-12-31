@@ -1,11 +1,10 @@
-#  **************************************************************************  #
-#                                                                              #
-#                                                       :::    :::    :::      #
-#    Problem Number: 14011                             :+:    :+:      :+:     #
-#                                                     +:+    +:+        +:+    #
-#    By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+   #
-#                                                   +#+      +#+        +#+    #
-#    https://boj.kr/14011                          #+#        #+#      #+#     #
-#    Solved: 2024/12/31 16:43:45 by cjhool        ###          ###   ##.kr     #
-#                                                                              #
-#  **************************************************************************  #
+n, m = map(int, input().split())
+A = list(map(int, input().split()))
+B = list(map(int, input().split()))
+challenges = sorted([(a, b) for a, b in zip(A, B) if b - a >= 0], key=lambda x : x[0])
+current = m
+for a, b in challenges:
+    if current >= a:
+        current += b - a
+
+print(current)
