@@ -45,4 +45,4 @@
 
 ## 소스코드
 
-[소스코드 보기](Large%20Ping%20Pong%20Tournament.cpp)
+[소스코드 보기](Large%20Ping%20Pong%20Tournament.py)
