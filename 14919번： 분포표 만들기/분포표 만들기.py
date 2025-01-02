@@ -1,11 +1,17 @@
-#  **************************************************************************  #
-#                                                                              #
-#                                                       :::    :::    :::      #
-#    Problem Number: 14919                             :+:    :+:      :+:     #
-#                                                     +:+    +:+        +:+    #
-#    By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+   #
-#                                                   +#+      +#+        +#+    #
-#    https://boj.kr/14919                          #+#        #+#      #+#     #
-#    Solved: 2025/01/02 20:27:16 by cjhool        ###          ###   ##.kr     #
-#                                                                              #
-#  **************************************************************************  #
+def solve():
+    import sys
+
+    input_data = sys.stdin.read().strip().split()
+    m = int(input_data[0])
+    a_values = list(map(float, input_data[1:]))
+    counts = [0] * m
+    for a in a_values:
+        idx = int(a * m)
+        if idx == m:
+            idx = m - 1
+        counts[idx] += 1
+    
+    print(" ".join(map(str, counts)))
+
+if __name__ == '__main__':
+    solve()
