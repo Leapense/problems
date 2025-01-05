@@ -1,47 +1,17 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <cstdlib>
+
 using namespace std;
 
 int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(0);
+    int num = 0;
+    cout << 1 << endl;
+    while (cin >> num && num != 99) {
+        int r;
+        if (num % 3 == 0) r = num + 1 + rand() % 2;
+        else r = (num / 3 * 3 + 3);
+        cout << r << endl;
 
-    int total = 0;
-    int my_move = 1;
-    cout << my_move << "\n" << flush;
-    total += my_move;
-
-    while (total < 99) {
-        int opponent_move;
-
-        if (!(cin >> opponent_move)) {
-            return 0;
-        }
-
-        total += opponent_move;
-
-        if (total == 99) {
-            return 0;
-        }
-
-        int add;
-        int remainder = total % 3;
-        if (remainder == 0) {
-            add = 1;
-        } else {
-            add = 3 - remainder;
-            if (add > 2) {
-                add = 1;
-            }
-        }
-
-        if (add < 1 || add > 2) {
-            add = 1;
-        }
-
-        my_move = add;
-        cout << my_move << "\n" << flush;
-        total += my_move;
+        if (r == 99) break;
     }
-
-    return 0;
 }
