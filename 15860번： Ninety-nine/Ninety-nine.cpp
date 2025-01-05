@@ -17,6 +17,12 @@ int main() {
             return 0;
         }
 
+        total += opponent_move;
+
+        if (total == 99) {
+            return 0;
+        }
+
         int add;
         int remainder = total % 3;
         if (remainder == 0) {
