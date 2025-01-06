@@ -35,4 +35,4 @@
 
 ## 소스코드
 
-[소스코드 보기](Horsemeet.py)
+[소스코드 보기](Horsemeet.c)
