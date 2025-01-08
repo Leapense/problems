@@ -1,11 +1,25 @@
-#  **************************************************************************  #
-#                                                                              #
-#                                                       :::    :::    :::      #
-#    Problem Number: 16630                             :+:    :+:      :+:     #
-#                                                     +:+    +:+        +:+    #
-#    By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+   #
-#                                                   +#+      +#+        +#+    #
-#    https://boj.kr/16630                          #+#        #+#      #+#     #
-#    Solved: 2025/01/08 15:40:36 by cjhool        ###          ###   ##.kr     #
-#                                                                              #
-#  **************************************************************************  #
+def lexicographically_earliest_order(n, directions):
+    stack = []
+    result = []
+
+    for i in range(n):
+        if i < n - 1 and directions[i] == 'L':
+            stack.append(i + 1)
+        else:
+            stack.append(i + 1)
+            while stack:
+                result.append(stack.pop())
+    return result
+
+
+import sys
+input = sys.stdin.read
+data = input().splitlines()
+
+n = int(data[0])
+directions = data[1]
+
+result = lexicographically_earliest_order(n, directions)
+
+for num in result:
+    print(num)
