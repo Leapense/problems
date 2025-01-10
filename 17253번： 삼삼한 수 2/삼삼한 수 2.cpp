@@ -1,21 +1,28 @@
 #include <iostream>
 using namespace std;
 
-string isThreesomeNumber(long long N) {
+typedef long long ll;
+
+int main() {
+    ll N;
+    cin >> N;
+
+    if (N == 0) {
+        cout << "NO";
+        return 0;
+    }
+
     while (N > 0) {
-        if (N % 3 > 1) {
-            return "NO";
+        ll remainder = N % 3;
+        if (remainder >= 2) {
+            cout << "NO";
+            return 0;
         }
+
         N /= 3;
     }
 
-    return "YES";
-}
-
-int main() {
-    long long N;
-    cin >> N;
-    cout << isThreesomeNumber(N) << endl;
+    cout << "YES";
 
     return 0;
 }
