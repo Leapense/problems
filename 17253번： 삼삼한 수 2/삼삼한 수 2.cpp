@@ -1,11 +1,21 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                      :::    :::    :::     */
-/*   Problem Number: 17253                             :+:    :+:      :+:    */
-/*                                                    +:+    +:+        +:+   */
-/*   By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+  */
-/*                                                  +#+      +#+        +#+   */
-/*   https://boj.kr/17253                          #+#        #+#      #+#    */
-/*   Solved: 2025/01/10 13:20:12 by cjhool        ###          ###   ##.kr    */
-/*                                                                            */
-/* ************************************************************************** */
+#include <iostream>
+using namespace std;
+
+string isThreesomeNumber(long long N) {
+    while (N > 0) {
+        if (N % 3 > 1) {
+            return "NO";
+        }
+        N /= 3;
+    }
+
+    return "YES";
+}
+
+int main() {
+    long long N;
+    cin >> N;
+    cout << isThreesomeNumber(N) << endl;
+
+    return 0;
+}
