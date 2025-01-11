@@ -33,4 +33,4 @@
 
 ## 소스코드
 
-[소스코드 보기](Triangle.cpp)
+[소스코드 보기](Triangle.py)
