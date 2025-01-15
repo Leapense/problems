@@ -1,11 +1,7 @@
-#  **************************************************************************  #
-#                                                                              #
-#                                                       :::    :::    :::      #
-#    Problem Number: 33178                             :+:    :+:      :+:     #
-#                                                     +:+    +:+        +:+    #
-#    By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+   #
-#                                                   +#+      +#+        +#+    #
-#    https://boj.kr/33178                          #+#        #+#      #+#     #
-#    Solved: 2025/01/15 19:16:39 by cjhool        ###          ###   ##.kr     #
-#                                                                              #
-#  **************************************************************************  #
+def calculate_free_courses(n):
+    free_courses = n // 10
+    return free_courses
+
+
+n = int(input().strip())
+print(calculate_free_courses(n))
