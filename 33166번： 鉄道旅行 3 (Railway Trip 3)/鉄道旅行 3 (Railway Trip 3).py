@@ -1,11 +1,12 @@
-#  **************************************************************************  #
-#                                                                              #
-#                                                       :::    :::    :::      #
-#    Problem Number: 33166                             :+:    :+:      :+:     #
-#                                                     +:+    +:+        +:+    #
-#    By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+   #
-#                                                   +#+      +#+        +#+    #
-#    https://boj.kr/33166                          #+#        #+#      #+#     #
-#    Solved: 2025/01/15 19:07:04 by cjhool        ###          ###   ##.kr     #
-#                                                                              #
-#  **************************************************************************  #
+def calculate_fare():
+    P, Q = map(int, input().split())
+    A, B = map(int, input().split())
+
+    if Q <= P:
+        fare = Q * A
+    else:
+        fare = P * A + (Q - P) * B
+
+    print(fare)
+
+calculate_fare()
