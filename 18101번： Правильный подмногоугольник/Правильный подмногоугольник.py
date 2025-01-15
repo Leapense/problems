@@ -1,11 +1,13 @@
-#  **************************************************************************  #
-#                                                                              #
-#                                                       :::    :::    :::      #
-#    Problem Number: 18101                             :+:    :+:      :+:     #
-#                                                     +:+    +:+        +:+    #
-#    By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+   #
-#                                                   +#+      +#+        +#+    #
-#    https://boj.kr/18101                          #+#        #+#      #+#     #
-#    Solved: 2025/01/15 20:08:05 by cjhool        ###          ###   ##.kr     #
-#                                                                              #
-#  **************************************************************************  #
+import math
+
+def find_minimum_M(N):
+    if N < 3:
+        return N
+    max_check = int(math.isqrt(N)) + 1
+    for i in range(3, max_check, 2):
+        if N % i == 0:
+            return i
+    return N
+
+N = int(input())
+print(find_minimum_M(N))
