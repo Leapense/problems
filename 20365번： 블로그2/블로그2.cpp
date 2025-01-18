@@ -1,11 +1,28 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                      :::    :::    :::     */
-/*   Problem Number: 20365                             :+:    :+:      :+:    */
-/*                                                    +:+    +:+        +:+   */
-/*   By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+  */
-/*                                                  +#+      +#+        +#+   */
-/*   https://boj.kr/20365                          #+#        #+#      #+#    */
-/*   Solved: 2025/01/18 22:43:56 by cjhool        ###          ###   ##.kr    */
-/*                                                                            */
-/* ************************************************************************** */
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+
+    int N;
+    cin >> N;
+
+    string S;
+    cin >> S;
+
+    int R = 0, B = 0;
+    char prev = 0;
+
+    for (char c : S) {
+        if (c != prev) {
+            if (c == 'R') R++;
+            else B++;
+            prev = c;
+        }
+    }
+
+    cout << 1 + min(R, B);
+
+    return 0;
+}
