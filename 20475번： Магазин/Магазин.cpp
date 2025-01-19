@@ -1,11 +1,20 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                      :::    :::    :::     */
-/*   Problem Number: 20475                             :+:    :+:      :+:    */
-/*                                                    +:+    +:+        +:+   */
-/*   By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+  */
-/*                                                  +#+      +#+        +#+   */
-/*   https://boj.kr/20475                          #+#        #+#      #+#    */
-/*   Solved: 2025/01/19 11:14:05 by cjhool        ###          ###   ##.kr    */
-/*                                                                            */
-/* ************************************************************************** */
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n, k;
+    cin >> n >> k;
+
+    vector<int> a(n);
+    for (auto &x : a) cin >> x;
+    sort(a.begin(), a.end(), greater<int>());
+
+    long long sum = 0;
+    for (int i = 0; i < n; i++) if ((i + 1) % k != 0) sum += a[i];
+
+    cout << sum << "\n";
+    return 0;
+}
