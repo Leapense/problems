@@ -1,90 +1,112 @@
 import sys
 from collections import deque
 
-def main():
-    sys.setrecursionlimit(1 << 25)
-    m, n = map(int, sys.stdin.readline().split())
-    grid = []
-    color_positions = dict()
-    for x in range(m):
-        row = list(map(int, sys.stdin.readline().split()))
-        grid.append(row)
-        for y in range(n):
-            color = row[y]
-            if color not in color_positions:
-                color_positions[color] = []
-            color_positions[color].append((x, y))
-    rows = [deque() for _ in range(m)]
-    columns = [deque() for _ in range(n)]
-    for x in range(m):
-        for y in range(n):
-            rows[x].append(y)
-    for y in range(n):
-        for x in range(m):
-            columns[y].append(x)
-    grid_map = [[0]*n for _ in range(m)]
-    for color, positions in color_positions.items():
-        for (x, y) in positions:
-            grid_map[x][y] = color
-    removable = deque()
-    removed = set()
-    in_queue = set()
-    def is_removable(color):
-        (x1, y1), (x2, y2) = color_positions[color]
-        if color in removed:
-            return False
-        left1 = rows[x1][0] == y1
-        right1 = rows[x1][-1] == y1
-        left2 = rows[x2][0] == y2
-        right2 = rows[x2][-1] == y2
-        top1 = columns[y1][0] == x1
-        bottom1 = columns[y1][-1] == x1
-        top2 = columns[y2][0] == x2
-        bottom2 = columns[y2][-1] == x2
-        if (left1 and left2) or (right1 and right2) or (top1 and top2) or (bottom1 and bottom2):
-            return True
-        return False
-    for color in color_positions:
-        if is_removable(color):
-            removable.append(color)
-            in_queue.add(color)
-    result = []
-    while removable:
-        color = removable.popleft()
-        in_queue.discard(color)
-        if color in removed:
-            continue
-        result.append(color)
-        removed.add(color)
-        (x1, y1), (x2, y2) = color_positions[color]
-        for (x, y) in [(x1, y1), (x2, y2)]:
-            if y in rows[x]:
-                rows[x].remove(y)
-            if x in columns[y]:
-                columns[y].remove(x)
-            if rows[x]:
-                new_left = rows[x][0]
-                new_right = rows[x][-1]
-                new_color = grid_map[x][new_left]
-                if new_color not in removed and is_removable(new_color) and new_color not in in_queue:
-                    removable.append(new_color)
-                    in_queue.add(new_color)
-                new_color = grid_map[x][new_right]
-                if new_color not in removed and is_removable(new_color) and new_color not in in_queue:
-                    removable.append(new_color)
-                    in_queue.add(new_color)
-            if columns[y]:
-                new_top = columns[y][0]
-                new_bottom = columns[y][-1]
-                new_color = grid_map[new_top][y]
-                if new_color not in removed and is_removable(new_color) and new_color not in in_queue:
-                    removable.append(new_color)
-                    in_queue.add(new_color)
-                new_color = grid_map[new_bottom][y]
-                if new_color not in removed and is_removable(new_color) and new_color not in in_queue:
-                    removable.append(new_color)
-                    in_queue.add(new_color)
-    print(len(result))
-    print(' '.join(map(str, result)))
-if __name__ == "__main__":
-    main()
+input = sys.stdin.readline
+m, n = map(int, input().split())
+board = [list(map(int, input().split())) for _ in range(m)]
+mx = (m * n) // 2
+
+pos = [[] for _ in range(mx + 1)]
+for r in range(m):
+    for c in range(n):
+        pos[board[r][c]].append((r, c))
+
+removed_tile = [[False] * n for _ in range(m)]
+removed_color = [False] * (mx + 1)
+left_count = [[0] * n for _ in range(m)]
+right_count = [[0] * n for _ in range(m)]
+up_count = [[0] * n for _ in range(m)]
+down_count = [[0] * n for _ in range(m)]
+boundary_tile = [[False] * n for _ in range(m)]
+boundary_color = [False] * (mx + 1)
+in_queue = [False] * (mx + 1)
+q = deque()
+
+for r in range(m):
+    c_acc = 0
+    for c in range(n):
+        left_count[r][c] = c_acc
+        c_acc += 1
+    c_acc = 0
+    for c in range(n-1, -1, -1):
+        right_count[r][c] = c_acc
+        c_acc += 1
+
+for c in range(n):
+    r_acc = 0
+    for r in range(m):
+        up_count[r][c] = r_acc
+        r_acc += 1
+    r_acc = 0
+    for r in range(m-1, -1, -1):
+        down_count[r][c] = r_acc
+        r_acc += 1
+
+def update_boundary_tile(rr, cc):
+    if removed_tile[rr][cc]:
+        return
+    b = (left_count[rr][cc] == 0 or right_count[rr][cc] == 0 or up_count[rr][cc] == 0 or down_count[rr][cc] == 0)
+    if b != boundary_tile[rr][cc]:
+        boundary_tile[rr][cc] = b
+        if b:
+            col = board[rr][cc]
+            if not removed_color[col]:
+                p1, p2 = pos[col]
+                r1, c1 = p1
+                r2, c2 = p2
+
+                if boundary_tile[r1][c1] and boundary_tile[r2][c2]:
+                    if not boundary_color[col]:
+                        boundary_color[col] = True
+                        if not in_queue[col]:
+                            in_queue[col] = True
+                            q.append(col)
+
+for r in range(m):
+    for c in range(n):
+        update_boundary_tile(r, c)
+
+ans = []
+
+def remove_color(c):
+    removed_color[c] = True
+    p1, p2 = pos[c]
+    for (rr, cc) in (p1, p2):
+        if not removed_tile[rr][cc]:
+            remove_tile(rr, cc)
+
+def remove_tile(rr, cc):
+    removed_tile[rr][cc] = True
+    col = board[rr][cc]
+    cr = cc - 1
+    while cr >= 0 and not removed_tile[rr][cr]:
+        right_count[rr][cr] -= 1
+        update_boundary_tile(rr, cr)
+        cr -= 1
+    cr = cc + 1
+    while cr < n and not removed_tile[rr][cr]:
+        left_count[rr][cr] -= 1
+        update_boundary_tile(rr, cr)
+        cr += 1
+    rr2 = rr - 1
+    while rr2 >= 0 and not removed_tile[rr2][cc]:
+        down_count[rr2][cc] -= 1
+        update_boundary_tile(rr2, cc)
+        rr2 -= 1
+    rr2 = rr + 1
+    while rr2 < m and not removed_tile[rr2][cc]:
+        up_count[rr2][cc] -= 1
+        update_boundary_tile(rr2, cc)
+        rr2 += 1
+
+while q:
+    c = q.popleft()
+    in_queue[c] = False
+    if removed_color[c]:
+        continue
+    remove_color(c)
+    ans.append(c)
+
+print(len(ans))
+if ans:
+    print(*ans)
