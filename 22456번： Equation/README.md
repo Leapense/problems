@@ -113,4 +113,4 @@
 
 ## 소스코드
 
-[소스코드 보기](Equation.py)
+[소스코드 보기](Equation.cpp)
