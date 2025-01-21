@@ -1,48 +1,51 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int main() {
+int main()
+{
     ios::sync_with_stdio(false);
     cin.tie(0);
+    string line;
 
-    while (1) {
-        string s;
-        cin >> s;
+    while (getline(cin, line)) {
+        if (line == "0") break;
+        if (line.empty()) continue;
 
-        if (s == "0") break;
-        int plen = stoi(s);
-        int cnum, width, cspace;
-        cin >> cnum >> width >> cspace;
-
+        int plen = stoi(line);
+        getline(cin, line);
+        int cnum = stoi(line);
+        getline(cin, line);
+        int width = stoi(line);
+        getline(cin, line);
+        int cspace = stoi(line);
         vector<string> input;
-        while (cin >> ws, getline(cin, s) && s != "?") {
-            input.push_back(s);
+
+        while(getline(cin, line) && line != "?") {
+            input.push_back(line);
         }
 
         vector<string> processed;
-        for (auto &line : input) {
-            if (line.empty()) {
-                processed.push_back(string(width, '.'));
-                continue;
-            }
-            int len = line.size();
-            int start = 0;
 
-            while (start < len) {
-                string part = line.substr(start, width);
-                if (part.size() < width) {
-                    part += string(width - part.size(), '.');
+        for (auto &s : input) {
+            if (s.empty()) {
+                processed.emplace_back(string(width, '.'));
+            } else {
+                int len = s.size();
+                int start = 0;
+                while (start < len) {
+                    string part = s.substr(start, width);
+                    if (part.size() < width) {
+                        part += string(width - part.size(), '.');
+                    }
+                    processed.emplace_back(part);
+                    start += width;
                 }
-
-                processed.push_back(part);
-                start += width;
             }
         }
 
         if (!processed.empty()) {
-            int total_columns = ceil((double)processed.size() / plen);
-            int total_pages = ceil((double)total_columns / cnum);
-
+            int total_columns = (processed.size() + plen - 1) / plen;
+            int total_pages = (total_columns + cnum - 1) / cnum;
             for (int p = 0; p < total_pages; p++) {
                 for (int l = 0; l < plen; l++) {
                     string out = "";
@@ -51,7 +54,8 @@ int main() {
                         if (col < total_columns) {
                             int idx = col * plen + l;
                             if (idx < processed.size()) {
-                                out += processed[idx];
+                                string s = processed[idx];
+                                out += s;
                             } else {
                                 out += string(width, '.');
                             }
@@ -62,12 +66,12 @@ int main() {
                             out += string(cspace, '.');
                         }
                     }
-
                     cout << out << "\n";
                 }
                 cout << "#\n";
             }
         }
+
         cout << "?\n";
     }
 
