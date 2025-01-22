@@ -4,55 +4,118 @@ using namespace std;
 int main()
 {
     ios::sync_with_stdio(false);
-    cin.tie(0);
+    cin.tie(nullptr);
 
     int n;
     cin >> n;
 
-    vector<int> candidates;
+    int maxMoves = (n + 1) / 2;
+    int used = 0;
 
-    for (int i = 1; i <= n; i++)
-        candidates.push_back(i);
+    vector<pair<int, int>> notEqualPairs;
+    int refCoin = -1;
+    bool foundRef = false;
 
-    int max_moves = (n + 1) / 2;
-    int moves = 0;
+    int pairsCount = n / 2;
 
-    while (moves < max_moves && candidates.size() > 1)
+    for (int i = 0; i < pairsCount && used < maxMoves; i++)
     {
-        if (candidates.size() >= 2)
+        int c1 = 2 * i + 1;
+        int c2 = 2 * i + 2;
+        cout << "? " << c1 << " " << c2 << "\n";
+        cout.flush();
+        used++;
+
+        string res;
+        cin >> res;
+
+        if (res == "equal")
         {
-            int x = candidates[0];
-            int y = candidates[1];
-            cout << "? " << x << " " << y << "\n";
-            cout.flush();
-
-            string response;
-            cin >> response;
-            if (response == "equal")
+            if (!foundRef)
             {
-                candidates.erase(candidates.begin(), candidates.begin() + 2);
+                refCoin = c1;
+                foundRef = true;
             }
-            else
-            {
-                candidates.erase(candidates.begin() + 1);
-                candidates.erase(candidates.begin());
-            }
-
-            moves++;
         }
         else
         {
-            break;
+            notEqualPairs.push_back({c1, c2});
         }
     }
 
-    if (candidates.empty())
+    int leftover = (n % 2 == 1) ? n : -1;
+    if (leftover != -1 && used < maxMoves && foundRef)
     {
-        cout << "! 1\n";
+        cout << "? " << refCoin << " " << leftover << "\n";
+        cout.flush();
+        used++;
+
+        string res;
+        cin >> res;
+        if (res == "equal")
+        {
+            cout << "! " << leftover << "\n";
+            return 0;
+        }
+    }
+
+    if (foundRef)
+    {
+        for (auto &pp : notEqualPairs)
+        {
+            if (used >= maxMoves)
+                break;
+            cout << "? " << refCoin << " " << pp.first << "\n";
+            cout.flush();
+            used++;
+
+            string res;
+            cin >> res;
+
+            if (res != "equal")
+            {
+                cout << "! " << pp.first << "\n";
+                return 0;
+            }
+
+            if (used < maxMoves)
+            {
+                cout << "? " << refCoin << " " << pp.second << "\n";
+                cout.flush();
+                used++;
+
+                cin >> res;
+
+                if (res != "equal")
+                {
+                    cout << "! " << pp.second << "\n";
+                    return 0;
+                }
+            }
+            else
+            {
+                cout << "! " << pp.second << "\n";
+                return 0;
+            }
+        }
+
+        cout << "! " << refCoin << "\n";
+        return 0;
+    }
+
+    if (!notEqualPairs.empty())
+    {
+        cout << "! " << notEqualPairs[0].first << "\n";
+        return 0;
+    }
+
+    if (leftover != -1)
+    {
+        cout << "! " << leftover << "\n";
     }
     else
     {
-        cout << "! " << candidates[0] << "\n";
+        cout << "! 1\n";
     }
 
     return 0;
