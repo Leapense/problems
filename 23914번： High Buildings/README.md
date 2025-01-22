@@ -39,4 +39,4 @@
 
 ## 소스코드
 
-[소스코드 보기](High%20Buildings.cpp)
+[소스코드 보기](High%20Buildings.py)
