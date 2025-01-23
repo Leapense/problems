@@ -8,7 +8,7 @@ class MetalHarvestSolver:
         val = int(self.input[self.index])
         self.index += 1
         return val
-    
+
     def solve(self):
         T = self.read_int()
         for tc in range(1, T + 1):
@@ -21,12 +21,14 @@ class MetalHarvestSolver:
                 intervals.append((E, S))
             intervals.sort()
             count = 0
-            current_end = -1
+            last_deployment_end = -1
             for E, S in intervals:
-                if S >= current_end:
-                    D = max(S, E - K)
-                    current_end = D + K
-                    count += 1
+                remaining = E - max(S, last_deployment_end)
+                if remaining > 0:
+                    num_deployments = (remaining + K - 1) // K
+                    count += num_deployments
+                    last_deployment_end = max(S, last_deployment_end) + num_deployments * K
             print(f"Case #{tc}: {count}")
+
 if __name__ == "__main__":
     MetalHarvestSolver().solve()
