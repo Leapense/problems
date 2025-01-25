@@ -1,11 +1,17 @@
-#  **************************************************************************  #
-#                                                                              #
-#                                                       :::    :::    :::      #
-#    Problem Number: 24385                             :+:    :+:      :+:     #
-#                                                     +:+    +:+        +:+    #
-#    By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+   #
-#                                                   +#+      +#+        +#+    #
-#    https://boj.kr/24385                          #+#        #+#      #+#     #
-#    Solved: 2025/01/25 10:44:45 by cjhool        ###          ###   ##.kr     #
-#                                                                              #
-#  **************************************************************************  #
+import sys
+import itertools
+
+class Sport:
+    def __init__(self):
+        self.input = sys.stdin.read().strip()
+        self.sorted_input = ''.join(sorted(self.input))
+    def generate_permutations(self):
+        return [''.join(p) for p in itertools.permutations(self.sorted_input)]
+    
+    def run(self):
+        permutations = self.generate_permutations()
+        for perm in permutations:
+            print(perm)
+
+if __name__ == "__main__":
+    Sport().run()
