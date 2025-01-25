@@ -14,32 +14,36 @@ class PencilCaseBundle:
         self.solve()
         
     def solve(self):
-        left_max = [[0]*self.M for _ in range(self.N)]
-        right_max = [[0]*self.M for _ in range(self.N)]
-        up_max = [[0]*self.M for _ in range(self.N)]
-        down_max = [[0]*self.M for _ in range(self.N)]
-        for i in range(self.N):
+        N = self.N
+        M = self.M
+        H = self.H
+        grid = self.grid
+        left_max = [[0]*M for _ in range(N)]
+        right_max = [[0]*M for _ in range(N)]
+        up_max = [[0]*M for _ in range(N)]
+        down_max = [[0]*M for _ in range(N)]
+        for i in range(N):
             current_max = 0
-            for j in range(self.M):
-                current_max = max(current_max, self.grid[i][j])
+            for j in range(M):
+                current_max = max(current_max, grid[i][j])
                 left_max[i][j] = current_max
             current_max = 0
-            for j in range(self.M-1, -1, -1):
-                current_max = max(current_max, self.grid[i][j])
+            for j in range(M-1, -1, -1):
+                current_max = max(current_max, grid[i][j])
                 right_max[i][j] = current_max
-        for j in range(self.M):
+        for j in range(M):
             current_max = 0
-            for i in range(self.N):
-                current_max = max(current_max, self.grid[i][j])
+            for i in range(N):
+                current_max = max(current_max, grid[i][j])
                 up_max[i][j] = current_max
             current_max = 0
-            for i in range(self.N-1, -1, -1):
-                current_max = max(current_max, self.grid[i][j])
+            for i in range(N-1, -1, -1):
+                current_max = max(current_max, grid[i][j])
                 down_max[i][j] = current_max
         count = 0
-        for i in range(self.N):
-            for j in range(self.M):
-                if left_max[i][j] >= self.H and right_max[i][j] >= self.H and up_max[i][j] >= self.H and down_max[i][j] >= self.H:
+        for i in range(N):
+            for j in range(M):
+                if left_max[i][j] >= H and right_max[i][j] >= H and up_max[i][j] >= H and down_max[i][j] >= H:
                     count +=1
         print(count)
 
