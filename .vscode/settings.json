@@ -109,4 +109,5 @@
     "editor.tabCompletion": "on",
     "editor.fontFamily": "\"'JetBrainsMono Nerd Font', Consolas, 'Lucida Console', monospace\"",
     "terminal.integrated.fontLigatures": true,
+    "editor.fontLigatures": true,
 }
