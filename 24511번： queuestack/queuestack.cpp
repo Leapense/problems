@@ -3,31 +3,42 @@ using namespace std;
 
 class Queuestack
 {
-private:
-    int n;
-    vector<int> t;
-    vector<long long> b;
-
 public:
-    Queuestack(int n, const vector<int> &t, const vector<long long> &b)
+    int N, M;
+    vector<int> A, B, C, queues;
+    Queuestack(int n, vector<int> a, vector<int> b)
     {
-        this->n = n;
-        this->t = t;
-        this->b = b;
+        N = n;
+        A = a;
+        B = b;
+        for (int i = 0; i < N; i++)
+            if (A[i] == 0)
+                queues.push_back(B[i]);
+        reverse(queues.begin(), queues.end());
     }
-    long long process(long long x)
+
+    void process(int m, vector<int> c)
     {
-        for (int i = 0; i < n; i++)
+        M = m;
+        C = c;
+        int k = queues.size();
+        string res = "";
+
+        for (int j = 1; j <= M; j++)
         {
-            if (t[i] == 0)
+            if (j <= k)
             {
-                long long tmp = b[i];
-                b[i] = x;
-                x = tmp;
+                res += to_string(queues[j - 1]) + " ";
+            }
+            else
+            {
+                res += to_string(C[j - k - 1]) + " ";
             }
         }
 
-        return x;
+        if (!res.empty())
+            res.pop_back();
+        cout << res;
     }
 };
 
@@ -40,25 +51,20 @@ int main()
     cin >> N;
 
     vector<int> A(N);
-    for (int i = 0; i < N; i++)
-        cin >> A[i];
+    for (auto &x : A)
+        cin >> x;
 
-    vector<long long> B(N);
-    for (int i = 0; i < N; i++)
-        cin >> B[i];
+    vector<int> B(N);
+    for (auto &x : B)
+        cin >> x;
+
+    Queuestack qs(N, A, B);
 
     int M;
     cin >> M;
 
-    vector<long long> C(M);
-    for (int i = 0; i < M; i++)
-        cin >> C[i];
-
-    Queuestack qs(N, A, B);
-    for (int i = 0; i < M; i++)
-    {
-        cout << qs.process(C[i]) << (i + 1 < M ? ' ' : '\n');
-    }
-
-    return 0;
+    vector<int> C(M);
+    for (auto &x : C)
+        cin >> x;
+    qs.process(M, C);
 }
