@@ -1,11 +1,16 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                      :::    :::    :::     */
-/*   Problem Number: 24511                             :+:    :+:      :+:    */
-/*                                                    +:+    +:+        +:+   */
-/*   By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+  */
-/*                                                  +#+      +#+        +#+   */
-/*   https://boj.kr/24511                          #+#        #+#      #+#    */
-/*   Solved: 2025/01/25 15:59:25 by cjhool        ###          ###   ##.kr    */
-/*                                                                            */
-/* ************************************************************************** */
+#include <bits/stdc++.h>
+using namespace std;
+
+class Queuestack
+{
+private:
+    int n;
+    vector<int> t;
+    vector<long long> b;
+
+public:
+    Queuestack(int n, const vector<int> &t, const vector<long long> &b)
+    {
+        this->n = n;
+    }
+}
