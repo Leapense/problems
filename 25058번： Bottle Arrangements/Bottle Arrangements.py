@@ -1,11 +1,31 @@
-#  **************************************************************************  #
-#                                                                              #
-#                                                       :::    :::    :::      #
-#    Problem Number: 25058                             :+:    :+:      :+:     #
-#                                                     +:+    +:+        +:+    #
-#    By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+   #
-#                                                   +#+      +#+        +#+    #
-#    https://boj.kr/25058                          #+#        #+#      #+#     #
-#    Solved: 2025/01/30 14:37:59 by cjhool        ###          ###   ##.kr     #
-#                                                                              #
-#  **************************************************************************  #
+t = int(input())
+for _ in range(t):
+    n, m = map(int, input().split())
+    critics = []
+    possible = True
+    for _ in range(m):
+        r, w = map(int, input().split())
+        l = r + w
+        if l > n:
+            possible = False
+        critics.append((r, w))
+    if not possible:
+        print("IMPOSSIBLE")
+        continue
+    found = False
+    for x in range(n + 1):
+        valid = True
+        for (r, w) in critics:
+            l = r + w
+            a = max(0, x - (n - l))
+            b = min(x, l)
+            if not (a <= r <= b):
+                valid = False
+                break
+        if valid:
+            print('R' * x + 'W' * (n - x))
+            found = True
+            break
+    if not found:
+        print("IMPOSSIBLE")
+        
