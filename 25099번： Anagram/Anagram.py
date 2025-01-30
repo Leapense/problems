@@ -1,11 +1,10 @@
-#  **************************************************************************  #
-#                                                                              #
-#                                                       :::    :::    :::      #
-#    Problem Number: 25099                             :+:    :+:      :+:     #
-#                                                     +:+    +:+        +:+    #
-#    By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+   #
-#                                                   +#+      +#+        +#+    #
-#    https://boj.kr/25099                          #+#        #+#      #+#     #
-#    Solved: 2025/01/30 16:02:05 by cjhool        ###          ###   ##.kr     #
-#                                                                              #
-#  **************************************************************************  #
+n = int(input())
+result = []
+seen = set()
+for _ in range(n):
+    word = input().strip()
+    key = ''.join(sorted(word))
+    if key not in seen:
+        seen.add(key)
+        result.append(word)
+print('\n'.join(result))
