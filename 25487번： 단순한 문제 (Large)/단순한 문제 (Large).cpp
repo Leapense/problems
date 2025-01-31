@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <unordered_map>
 
 using namespace std;
 
@@ -24,16 +25,39 @@ public:
 private:
     int T;
     vector<vector<int>> testCases;
+    unordered_map<int, vector<int>> divisors;
+
+    void precomputeDivisors(int n)
+    {
+        if (divisors.find(n) != divisors.end())
+            return;
+        vector<int> d;
+        for (int i = 1; i * i <= n; ++i)
+        {
+            if (n % i == 0)
+            {
+                d.push_back(i);
+                if (i != n / i)
+                    d.push_back(n / i);
+            }
+        }
+        divisors[n] = d;
+    }
 
     int countValidTuples(int a, int b, int c)
     {
         int count = 0;
         for (int x = 1; x <= a; ++x)
         {
-            for (int y = 1; y <= b; ++y)
+            precomputeDivisors(x);
+            for (int y : divisors[x])
             {
-                for (int z = 1; z <= c; ++z)
+                if (y > b)
+                    continue;
+                for (int z : divisors[y])
                 {
+                    if (z > c)
+                        continue;
                     if ((x % y == y % z) && (y % z == z % x))
                     {
                         ++count;
