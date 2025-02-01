@@ -1,11 +1,22 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                      :::    :::    :::     */
-/*   Problem Number: 26326                             :+:    :+:      :+:    */
-/*                                                    +:+    +:+        +:+   */
-/*   By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+  */
-/*                                                  +#+      +#+        +#+   */
-/*   https://boj.kr/26326                          #+#        #+#      #+#    */
-/*   Solved: 2025/02/01 20:01:52 by cjhool        ###          ###   ##.kr    */
-/*                                                                            */
-/* ************************************************************************** */
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+int main()
+{
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int n;
+    cin >> n;
+
+    while (n--)
+    {
+        double r;
+        cin >> r;
+        double area = 34.383 * r * r;
+        cout << fixed << setprecision(5) << area << "\n";
+    }
+
+    return 0;
+}
