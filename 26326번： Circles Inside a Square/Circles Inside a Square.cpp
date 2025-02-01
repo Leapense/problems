@@ -1,21 +1,21 @@
 #include <iostream>
+#include <cmath>
 #include <iomanip>
 
 using namespace std;
 
 int main()
 {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-    int n;
-    cin >> n;
-
-    while (n--)
+    int t;
+    cin >> t;
+    double r;
+    double factor = sqrt(6) + sqrt(2) + 2;
+    while (t--)
     {
-        double r;
         cin >> r;
-        double area = 34.383 * r * r;
-        cout << fixed << setprecision(5) << area << "\n";
+        double side = r * factor;
+        double area = side * side;
+        cout << fixed << setprecision(5) << area << endl;
     }
 
     return 0;
