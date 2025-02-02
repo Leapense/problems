@@ -1,4 +1,7 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
 using namespace std;
 
 int main()
@@ -7,76 +10,69 @@ int main()
     cin.tie(nullptr);
     string s;
     cin >> s;
-
-    vector<pair<char, long long>> st;
-    long long ans = 0;
-
-    for (char c : s)
+    vector<pair<char, int>> seg;
+    int n = s.size();
+    int i = 0;
+    while (i < n)
     {
-        if (c == '+')
+        char cur = s[i];
+        int cnt = 0;
+        while (i < n && s[i] == cur)
         {
-            if (!st.empty() && st.back().first == '+')
-            {
-                st.back().second++;
-            }
+            cnt++;
+            i++;
+        }
+        seg.push_back({cur, cnt});
+    }
+    vector<int> runs;
+    vector<int> oddGaps;
+    int curr = 0;
+    if (!seg.empty())
+    {
+        if (seg[0].first == '+')
+            curr = seg[0].second;
+        else
+        {
+            if (seg[0].second % 2 == 0)
+                curr = seg[0].second / 2;
             else
-            {
-                st.push_back({'+', 1});
-            }
+                curr = 0;
+        }
+    }
+    for (int j = 1; j < seg.size(); j++)
+    {
+        if (seg[j].first == '+')
+        {
+            curr += seg[j].second;
         }
         else
         {
-            if (!st.empty() && st.back().first == '-')
+            if (seg[j].second % 2 == 0)
             {
-                st.back().second++;
+                curr += seg[j].second / 2;
             }
             else
             {
-                st.push_back({'-', 1});
-            }
-
-            while (!st.empty() && st.back().first == '-' && st.back().second >= 2)
-            {
-                long long x = st.back().second;
-                st.pop_back();
-                long long plusCount = x / 2;
-                long long leftover = x % 2;
-                if (plusCount > 0)
-                {
-                    if (!st.empty() && st.back().first == '+')
-                    {
-                        st.back().second += plusCount;
-                    }
-                    else
-                    {
-                        st.push_back({'+', plusCount});
-                    }
-                }
-
-                if (leftover == 1)
-                {
-                    if (!st.empty() && st.back().first == '-')
-                    {
-                        st.back().second++;
-                    }
-                    else
-                    {
-                        st.push_back({'-', 1});
-                    }
-                }
+                runs.push_back(curr);
+                oddGaps.push_back(seg[j].second);
+                curr = 0;
             }
         }
     }
-
-    for (auto &p : st)
+    runs.push_back(curr);
+    int ans = 0;
+    for (int r : runs)
+        ans = max(ans, r);
+    for (int k = 0; k < oddGaps.size(); k++)
     {
-        if (p.first == '+')
+        int gapVal = oddGaps[k] / 2;
+        int cand = 0;
+        if (k < runs.size() && k + 1 < runs.size())
         {
-            ans = max(ans, p.second);
+            cand = max(runs[k] + gapVal, gapVal + runs[k + 1]);
         }
+        ans = max(ans, cand);
     }
-
-    cout << ans << "\n";
-
+    cout << ans;
     return 0;
 }
