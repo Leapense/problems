@@ -1,28 +1,21 @@
-class Skolvagen:
-    def __init__(self):
-        import sys
-        self.data = sys.stdin.read().strip()
+import sys
 
+class Skolvagen:
     def solve(self):
-        s = self.data.strip()
-        n = len(s)
-        INF = float('inf')
-        dp_north = 0
-        dp_south = INF
+        s = sys.stdin.readline().strip()
+        INF = 10**9
+        dp_north, dp_south = 0, INF
         for ch in s:
             if ch == 'N':
-                cost_n = 1
-                cost_s = 0
+                cost_north, cost_south = 1, 0
             elif ch == 'S':
-                cost_n = 0
-                cost_s = 1
+                cost_north, cost_south = 0, 1
             else:
-                cost_n = 1
-                cost_s = 1
-            new_dp_north = min(dp_north + cost_n, dp_south + 1 + cost_n)
-            new_dp_south = min(dp_south + cost_s, dp_north + 1 + cost_s)
+                cost_north, cost_south = 1, 1
+            new_dp_north = min(dp_north + cost_north, dp_south + 1 + cost_north)
+            new_dp_south = min(dp_south + cost_south, dp_north + 1 + cost_south)
             dp_north, dp_south = new_dp_north, new_dp_south
-        print(dp_north)
+        sys.stdout.write(str(min(dp_north, dp_south + 1)))
 
 if __name__ == '__main__':
     Skolvagen().solve()
