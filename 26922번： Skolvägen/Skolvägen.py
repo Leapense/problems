@@ -1,23 +1,28 @@
-class MinRoadCross:
-    def solve(self, intersections: str) -> int:
-        n = len(intersections)
-        INF = 10**9
-        dp = [[INF, INF] for _ in range(n + 1)]
-        dp[0][0] = 0
+class Skolvagen:
+    def __init__(self):
+        import sys
+        self.data = sys.stdin.read().strip()
 
-        def costN(c):
-            return 1 if c in ('N', 'B') else 0
-        def costS(c):
-            return 1 if c in ('S', 'B') else 0
-        
-        for i in range(1, n + 1):
-            c = intersections[i - 1]
-            dp[i][0] = min(dp[i - 1][0], dp[i - 1][1] + 1) + costN(c)
-            dp[i][1] = min(dp[i - 1][1], dp[i - 1][0] + 1) + costS(c)
+    def solve(self):
+        s = self.data.strip()
+        n = len(s)
+        INF = float('inf')
+        dp_north = 0
+        dp_south = INF
+        for ch in s:
+            if ch == 'N':
+                cost_n = 1
+                cost_s = 0
+            elif ch == 'S':
+                cost_n = 0
+                cost_s = 1
+            else:
+                cost_n = 1
+                cost_s = 1
+            new_dp_north = min(dp_north + cost_n, dp_south + 1 + cost_n)
+            new_dp_south = min(dp_south + cost_s, dp_north + 1 + cost_s)
+            dp_north, dp_south = new_dp_north, new_dp_south
+        print(dp_north)
 
-        return dp[n][0]
-    
-if __name__ == "__main__":
-    solver = MinRoadCross()
-    intersections = input().strip()
-    print(solver.solve(intersections))
+if __name__ == '__main__':
+    Skolvagen().solve()
