@@ -1,23 +1,20 @@
-import math
 import sys
+import math
 
-def egcd(a, b):
-    if b == 0:
-        return (a, 1, 0)
-    g, x, y = egcd(b, a % b)
-    return (g, y, x - (a // b) * y)
+def ceil_div_int(n, d):
+    if n >= 0:
+        return (n + d - 1) // d
+    else:
+        # n < 0, d > 0
+        # math.ceil(n/d) = -floor(-n/d)
+        return - ((-n) // d)
 
-def modinv(a, m):
-    g, x, _ = egcd(a, m)
-    if g != 1:
-        return None
-    return x % m
-
-def ceil_div(x, y):
-    q, r = divmod(x, y)
-    if r != 0 and ((y > 0 and r > 0) or (y < 0 and r < 0)):
-        return q + 1
-    return q
+def check(k, a, b, T, M):
+    L = k * a - T
+    R = k * b - T
+    m_low = ceil_div_int(L, M)
+    m_high = R // M  # 파이썬의 //는 음수에서도 내림
+    return m_low <= m_high
 
 def main():
     data = sys.stdin.read().split()
@@ -30,30 +27,18 @@ def main():
     if b <= 0:
         print(-1)
         return
-    if a == b:
-        if a == 0:
-            print(0 if T == 0 else -1)
-            return
-        r = a
-        g = math.gcd(abs(r), M)
-        if T % g != 0:
-            print(-1)
-            return
-        r1 = r // g
-        M1 = M // g
-        T1 = T // g
-        inv = modinv(r1 % M1, M1)
-        k0 = (T1 * inv) % M1
-        if k0 <= 0:
-            k0 += M1
-        print(k0)
-        return
-    if a == 0:
-        print(ceil_div(T, b))
-        return
-    cand1 = ceil_div(T, b)
-    cand2 = ceil_div(M - T, -a)
-    print(min(cand1, cand2))
+    lo = 1
+    # 초기 상한: 최소한 m=0 후보에서 T <= k*b 이므로 k >= ceil(T/b)
+    hi = max(ceil_div_int(T, b), M) + 2
+    ans = -1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if check(mid, a, b, T, M):
+            ans = mid
+            hi = mid - 1
+        else:
+            lo = mid + 1
+    print(ans)
 
 if __name__ == '__main__':
     main()
