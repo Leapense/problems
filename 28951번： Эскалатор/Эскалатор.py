@@ -1,17 +1,22 @@
-def sum_digits_count(m):
+def count_digits(x):
+    return len(str(x))
+
+def sum_digits_multiples(m):
     total = 0
     d = 1
-    lower = 1
-    while lower <= m:
-        upper = min(m, 10 ** d - 1)
-        total += (upper - lower + 1) * d
+    start = 1
+    while start <= m:
+        end = min(m, 10**d - 1)
+        count = end - start + 1
+        total += count * (d + 1)
         d += 1
-        lower = 10 ** (d - 1) * 10
+        start *= 10
     return total
 
 n = int(input().strip())
 m = n // 10
-result = sum_digits_count(m) + m + 1
-if n != 1 and n % 10 != 0:
-    result += len(str(n))
+result = sum_digits_multiples(m)
+result += count_digits(1)
+if n % 10 != 0 and n != 1:
+    result += count_digits(n)
 print(result)
