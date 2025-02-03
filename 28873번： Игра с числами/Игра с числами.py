@@ -1,44 +1,16 @@
 import sys
 import math
-
-def ceil_div_int(n, d):
-    if n >= 0:
-        return (n + d - 1) // d
+input_data = sys.stdin.read().split()
+a = int(input_data[0])
+b = int(input_data[1])
+T = (1 << 60) - 1
+if b <= 0:
+    print(-1)
+else:
+    if a == 0:
+        k = (T + b - 1) // b
+        print(k)
     else:
-        # n < 0, d > 0
-        # math.ceil(n/d) = -floor(-n/d)
-        return - ((-n) // d)
-
-def check(k, a, b, T, M):
-    L = k * a - T
-    R = k * b - T
-    m_low = ceil_div_int(L, M)
-    m_high = R // M  # 파이썬의 //는 음수에서도 내림
-    return m_low <= m_high
-
-def main():
-    data = sys.stdin.read().split()
-    if not data:
-        return
-    a = int(data[0])
-    b = int(data[1])
-    M = 1 << 61
-    T = (1 << 60) - 1
-    if b <= 0:
-        print(-1)
-        return
-    lo = 1
-    # 초기 상한: 최소한 m=0 후보에서 T <= k*b 이므로 k >= ceil(T/b)
-    hi = max(ceil_div_int(T, b), M) + 2
-    ans = -1
-    while lo <= hi:
-        mid = (lo + hi) // 2
-        if check(mid, a, b, T, M):
-            ans = mid
-            hi = mid - 1
-        else:
-            lo = mid + 1
-    print(ans)
-
-if __name__ == '__main__':
-    main()
+        k0 = (T + b - 1) // b
+        k1 = (((1 << 60) + 1) + (-a) - 1) // (-a)
+        print(min(k0, k1))
