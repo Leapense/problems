@@ -13,10 +13,9 @@ def egcd(a, b):
     
 def modinv(a, m):
     g, x, _ = egcd(a, m)
-    if g == 1:
+    if g != 1:
         return None
-    else:
-        return x % m
+    return x % m
 
 def ceil_div(x, y):
     q, r = divmod(x, y)
