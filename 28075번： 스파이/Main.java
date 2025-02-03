@@ -1,11 +1,11 @@
-/* ************************************************************************** */
-/*                                                                            */
-/* ::: ::: ::: */
-/* Problem Number: 28075 :+: :+: :+: */
-/* +:+ +:+ +:+ */
-/* By: cjhool <boj.kr/u/cjhool> +#+ +#+ +#+ */
-/* +#+ +#+ +#+ */
-/* https://boj.kr/28075 #+# #+# #+# */
-/* Solved: 2025/02/03 16:15:15 by cjhool ### ### ##.kr */
-/*                                                                            */
-/* ************************************************************************** */
+import java.util.Scanner;
+
+public class Main {
+    static int N, M;
+    static int[][] score = new int[2][3];
+    static int count = 0;
+
+    public static void main(String... args) {
+        Scanner sc = new Scanner(System.in);
+    }
+}
