@@ -1,31 +1,41 @@
-class ParityConstraintClosestPair:
-    def __init__(self, points):
-        self.points = points
+import sys
 
+class Solution:
     def solve(self):
-        self.points.sort()
-        min_even = float('inf')
-        min_odd = float('inf')
+        input_data = sys.stdin.read().split()
+        n = int(input_data[0])
+        coords = list(map(int, input_data[1:]))
+        coords.sort()
+        evens = []
+        odds = []
 
-        for i in range(1, len(self.points)):
-            diff = self.points[i] - self.points[i - 1]
-            if diff % 2 == 0:
+        for c in coords:
+            if c % 2 == 0:
+                evens.append(c)
+            else:
+                odds.append(c)
+        min_even = float('inf')
+        if len(evens) >= 2:
+            for i in range(1, len(evens)):
+                diff = evens[i] - evens[i - 1]
                 if diff < min_even:
                     min_even = diff
-            else:
-                if diff < min_odd:
-                    min_odd = diff
+        if len(odds) >= 2:
+            for i in range(1, len(odds)):
+                diff = odds[i] - odds[i - 1]
+                if diff < min_even:
+                    min_even = diff
         if min_even == float('inf'):
             min_even = -1
+        min_odd = float('inf')
+        for i in range(1, n):
+            if (coords[i] % 2) != (coords[i - 1] % 2):
+                diff = coords[i] - coords[i - 1]
+                if diff < min_odd:
+                    min_odd = diff
         if min_odd == float('inf'):
             min_odd = -1
-        return min_even, min_odd
-    
+        sys.stdout.write(f"{min_even} {min_odd}")
+
 if __name__ == "__main__":
-    import sys
-    input_data = sys.stdin.read().split()
-    n = int(input_data[0])
-    points = list(map(int, input_data[1:]))
-    solver = ParityConstraintClosestPair(points)
-    even, odd = solver.solve()
-    sys.stdout.write(f"{even} {odd}")
+    Solution().solve()
