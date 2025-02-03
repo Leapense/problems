@@ -1,16 +1,43 @@
 import sys
 import math
-input_data = sys.stdin.read().split()
-a = int(input_data[0])
-b = int(input_data[1])
-T = (1 << 60) - 1
-if b <= 0:
-    print(-1)
-else:
-    if a == 0:
-        k = (T + b - 1) // b
-        print(k)
-    else:
-        k0 = (T + b - 1) // b
-        k1 = (((1 << 60) + 1) + (-a) - 1) // (-a)
-        print(min(k0, k1))
+sys.setrecursionlimit(10**6)
+def main():
+    input = sys.stdin.readline
+    a, b = map(int, input().split())
+    X = 1 << 60
+    M = 1 << 61
+    T = X - 1
+    if a == b:
+        if a == 0:
+            print(-1)
+            return
+        g = math.gcd(abs(a), M)
+        if T % g != 0:
+            print(-1)
+            return
+        Mprime = M // g
+        a_prime = a // g
+        T_prime = T // g
+        inv = pow(a_prime, -1, Mprime)
+        n0 = (T_prime * inv) % Mprime
+        if n0 == 0:
+            n0 = Mprime
+        print(n0)
+        return
+    lo = 1
+    hi = M
+    ans = -1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        L = mid * a - T
+        R = mid * b - T
+        k_min = (L + M - 1) // M
+        k_max = R // M
+        if k_min <= k_max:
+            ans = mid
+            hi = mid - 1
+        else:
+            lo = mid + 1
+    print(ans)
+if __name__ == '__main__':
+    main()
