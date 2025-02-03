@@ -1,11 +1,20 @@
-#  **************************************************************************  #
-#                                                                              #
-#                                                       :::    :::    :::      #
-#    Problem Number: 28968                             :+:    :+:      :+:     #
-#                                                     +:+    +:+        +:+    #
-#    By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+   #
-#                                                   +#+      +#+        +#+    #
-#    https://boj.kr/28968                          #+#        #+#      #+#     #
-#    Solved: 2025/02/03 23:24:44 by cjhool        ###          ###   ##.kr     #
-#                                                                              #
-#  **************************************************************************  #
+import sys
+input_data = sys.stdin.read().split()
+
+n = int(input_data[0])
+k = int(input_data[1])
+mod = 10 ** 9 + 7
+
+if k == 0:
+    print(n % mod)
+    exit()
+
+a0, a1 = 1, 2
+if k == 1:
+    print((n * a1) % mod)
+    exit()
+
+for _ in range(2, k + 1):
+    a0, a1 = a1, (3 * a1 - a0) % mod
+
+print((n * a1) % mod)
