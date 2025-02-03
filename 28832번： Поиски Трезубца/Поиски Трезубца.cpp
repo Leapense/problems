@@ -19,7 +19,6 @@ int calcDist(int r, int c)
     return (r - 1) + (c - 1);
 }
 
-// 토러스 이동: D, U, R, L 순서
 const int dr[4] = {1, -1, 0, 0};
 const int dc[4] = {0, 0, 1, -1};
 const char mv[4] = {'D', 'U', 'R', 'L'};
@@ -37,7 +36,6 @@ public:
         {
             cin >> grid[i];
         }
-
         vector<Cell> clues;
         for (int i = 0; i < n; i++)
         {
@@ -45,21 +43,15 @@ public:
             {
                 if (grid[i][j] == 'X')
                 {
-                    Cell cell;
-                    cell.r = i;
-                    cell.c = j;
-                    cell.d = calcDist(i + 1, j + 1);
-                    clues.push_back(cell);
+                    clues.push_back({i, j, calcDist(i + 1, j + 1)});
                 }
             }
         }
-
         sort(clues.begin(), clues.end(), [](const Cell &a, const Cell &b)
              {
             if(a.d != b.d) return a.d < b.d;
             if(a.r != b.r) return a.r < b.r;
             return a.c < b.c; });
-
         vector<vector<bool>> collected(n, vector<bool>(m, false));
         string ans = "";
         int cr = 0, cc = 0;
@@ -79,14 +71,17 @@ public:
             {
                 Node cur = q.front();
                 q.pop();
+                if (cur.r == tr && cur.c == tc)
+                {
+                    found = true;
+                    er = cur.r;
+                    ec = cur.c;
+                    break;
+                }
                 if (!collected[cur.r][cur.c] && grid[cur.r][cur.c] == 'X')
                 {
                     int cd = calcDist(cur.r + 1, cur.c + 1);
-                    if (cd > targetD)
-                    {
-                        // 아직 unlock되지 않은 힌트
-                    }
-                    else if (cd == targetD)
+                    if (cd == targetD && cur.r == tr && cur.c == tc)
                     {
                         found = true;
                         er = cur.r;
@@ -100,8 +95,6 @@ public:
                     int nc = (cur.c + dc[k] + m) % m;
                     if (!vis[nr][nc])
                     {
-                        // 이동 가능 여부: 빈 칸은 언제나, 힌트 방은
-                        // 만약 미수집이라면, d 값이 targetD 이하여야 함.
                         if (grid[nr][nc] == 'X' && !collected[nr][nc])
                         {
                             int nd = calcDist(nr + 1, nc + 1);
@@ -136,36 +129,32 @@ public:
         {
             if (collected[cell.r][cell.c])
                 continue;
+            if (cr == cell.r && cc == cell.c)
+            {
+                collected[cell.r][cell.c] = true;
+                continue;
+            }
             int targetD = cell.d;
             string pathSegment = bfsPath(cell.r, cell.c, targetD);
             if (pathSegment == "")
             {
-                // 경로를 찾을 수 없는 경우(항상 경로가 존재함)
+                if (cr == cell.r && cc == cell.c)
+                    collected[cell.r][cell.c] = true;
                 continue;
             }
             for (char ch : pathSegment)
             {
                 if (ch == 'D')
-                {
                     cr = (cr + 1 < n ? cr + 1 : 0);
-                }
                 else if (ch == 'U')
-                {
                     cr = (cr - 1 >= 0 ? cr - 1 : n - 1);
-                }
                 else if (ch == 'R')
-                {
                     cc = (cc + 1 < m ? cc + 1 : 0);
-                }
                 else if (ch == 'L')
-                {
                     cc = (cc - 1 >= 0 ? cc - 1 : m - 1);
-                }
                 ans.push_back(ch);
                 if (grid[cr][cc] == 'X' && !collected[cr][cc])
-                {
                     collected[cr][cc] = true;
-                }
             }
         }
 
