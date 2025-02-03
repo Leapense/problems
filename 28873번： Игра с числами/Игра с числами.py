@@ -59,7 +59,7 @@ def main():
         return
     
     cand1 = ceil_div(T, b)
-    cand2 = ceil_div(T - M, a)
+    cand2 = ceil_div(M - T, -a)
     ans = min(cand1, cand2)
     print(ans)
 
