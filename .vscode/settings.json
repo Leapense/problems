@@ -110,5 +110,5 @@
     "editor.fontFamily": "JetBrainsMono Nerd Font",
     "terminal.integrated.fontLigatures": true,
     "editor.fontLigatures": true,
-    "editor.fontSize": 16,
+    "editor.fontSize": 11,
 }
