@@ -1,11 +1,13 @@
-#  **************************************************************************  #
-#                                                                              #
-#                                                       :::    :::    :::      #
-#    Problem Number: 28919                             :+:    :+:      :+:     #
-#                                                     +:+    +:+        +:+    #
-#    By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+   #
-#                                                   +#+      +#+        +#+    #
-#    https://boj.kr/28919                          #+#        #+#      #+#     #
-#    Solved: 2025/02/03 21:54:36 by cjhool        ###          ###   ##.kr     #
-#                                                                              #
-#  **************************************************************************  #
+n = int(input())
+a = list(map(int, input().split()))
+x = list(map(int, input().split()))
+total = sum(a)
+
+threshold = (total + 1) // 2
+s = 0
+
+for ai, xi in zip(a, x):
+    s += ai
+    if s >= threshold:
+        print(xi)
+        break
