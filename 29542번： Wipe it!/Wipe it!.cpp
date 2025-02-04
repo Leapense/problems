@@ -1,11 +1,24 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                      :::    :::    :::     */
-/*   Problem Number: 29542                             :+:    :+:      :+:    */
-/*                                                    +:+    +:+        +:+   */
-/*   By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+  */
-/*                                                  +#+      +#+        +#+   */
-/*   https://boj.kr/29542                          #+#        #+#      #+#    */
-/*   Solved: 2025/02/04 23:21:36 by cjhool        ###          ###   ##.kr    */
-/*                                                                            */
-/* ************************************************************************** */
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    ios::sync_with_stdio(false), cin.tie(nullptr);
+
+    string s;
+    cin >> s;
+    string result = "";
+
+    for (char c : s)
+    {
+        if (result.find(c) == string::npos)
+        {
+            result.push_back(c);
+        }
+    }
+
+    cout << result << "\n";
+    return 0;
+}
