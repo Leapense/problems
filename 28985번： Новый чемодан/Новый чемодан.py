@@ -1,11 +1,11 @@
 def max_suitcase_power(n):
-    S = n * (n + 1) // 2  # 1부터 n까지의 합
+    S = n * (n + 1) // 2  # 전체 합
 
     # S가 홀수이면 직사각형 불가능
     if S % 2 != 0:
         return 0
 
-    target = S // 2
+    target = S // 2  # 목표 절반 합
     current_sum = 0
     used_sticks = []
 
