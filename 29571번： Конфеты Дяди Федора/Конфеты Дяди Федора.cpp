@@ -1,51 +1,46 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
+using namespace std;
 
-int main() {
+int main()
+{
+    ios::sync_with_stdio(false), cin.tie(0);
+
     long long n;
-    std::cin >> n;
-    
-    if (n == 0) {
-        std::cout << "YES" << std::endl;
+    cin >> n;
+
+    if (n == 0)
+    {
+        cout << "YES";
         return 0;
     }
-    
-    // Precompute tetrahedral numbers up to 1e9
-    std::vector<long long> tetras;
-    tetras.push_back(0); // T(0) = 0
-    int N_max = 0;
-    long long T_N = 0;
-    for (int N = 1;; N++) {
-        long long T_N = N * (N + 1LL) * (N + 2LL) / 6LL;
-        if (T_N > 1e9)
-            break;
-        tetras.push_back(T_N);
-        N_max = N;
+
+    int maxA = 2100;
+    vector<long long> tetra(maxA + 1, 0);
+
+    for (int i = 1; i <= maxA; i++)
+    {
+        tetra[i] = (long long)i * (i + 1) * (i + 2) / 6;
     }
-    
-    bool found = false;
-    for (int N = 1; N <= N_max; N++) {
-        T_N = tetras[N];
-        if (T_N < n)
-            continue;
-        long long T_kminus1 = T_N - n;
-        if (T_kminus1 < 1)
-            continue;
-        // Binary search for T_kminus1 in tetras[1..N-1]
-        auto it = std::lower_bound(tetras.begin(), tetras.end(), T_kminus1);
-        if (it != tetras.end() && *it == T_kminus1) {
-            int idx = it - tetras.begin();
-            int k = idx; // Since tetras[0] = 0
-            if (k >= 2 && k <= N) {
-                found = true;
+
+    for (int a = 2; a <= maxA; a++)
+    {
+        for (int b = 1; b < a; b++)
+        {
+            long long diff = tetra[a] - tetra[b];
+            if (diff == n)
+            {
+                cout << "YES";
+                return 0;
+            }
+
+            if (diff < n)
+            {
                 break;
             }
         }
     }
-    if (found)
-        std::cout << "YES" << std::endl;
-    else
-        std::cout << "NO" << std::endl;
+
+    cout << "NO";
     return 0;
 }
