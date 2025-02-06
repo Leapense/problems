@@ -39,8 +39,8 @@ public class Main {
         Collections.sort(bojRecords, new Comparator<String>() {
             @Override
             public int compare(String s1, String s2) {
-                int num1 = Integer.parseInt(s1.substring(6));
-                int num2 = Integer.parseInt(s2.substring(6));
+                int num1 = Integer.parseInt(s1.substring(6).trim());
+                int num2 = Integer.parseInt(s2.substring(6).trim());
                 return num1 - num2;
             }
         });
