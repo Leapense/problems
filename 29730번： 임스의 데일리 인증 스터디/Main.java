@@ -39,8 +39,11 @@ public class Main {
         Collections.sort(bojRecords, new Comparator<String>() {
             @Override
             public int compare(String s1, String s2) {
-                int num1 = Integer.parseInt(s1.substring(6).trim());
-                int num2 = Integer.parseInt(s2.substring(6).trim());
+                // "boj.kr/" 이후의 문자열에서 공백 제거
+                String numStr1 = s1.substring(6).trim();
+                String numStr2 = s2.substring(6).trim();
+                int num1 = Integer.parseInt(numStr1);
+                int num2 = Integer.parseInt(numStr2);
                 return num1 - num2;
             }
         });
