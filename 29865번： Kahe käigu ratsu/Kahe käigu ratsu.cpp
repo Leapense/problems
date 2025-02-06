@@ -1,76 +1,64 @@
 #include <iostream>
-#include <string>
 #include <vector>
 #include <set>
-#include <algorithm>
+#include <string>
 
 using namespace std;
 
-pair<int, int> notation_to_coords(string notation)
+// 체스판 범위 검사 함수
+bool isValid(int col, int row)
 {
-    return {notation[1] - '1', notation[0] - 'a'};
-}
-
-string coords_to_notation(int r, int c)
-{
-    string notation = "";
-    notation += (char)('a' + c);
-    notation += (char)('1' + r);
-    return notation;
-}
-
-bool is_valid(int r, int c)
-{
-    return r >= 0 && r < 8 && c >= 0 && c < 8;
+    return (col >= 0 && col < 8 && row >= 0 && row < 8);
 }
 
 int main()
 {
-    string start_notation;
-    cin >> start_notation;
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    pair<int, int> start_coords = notation_to_coords(start_notation);
-    int start_r = start_coords.first;
-    int start_c = start_coords.second;
+    string start;
+    cin >> start;
 
-    vector<pair<int, int>> knight_moves = {
-        {-2, -1}, {-2, 1}, {-1, -2}, {-1, 2}, {1, -2}, {1, 2}, {2, -1}, {2, 1}};
+    // 입력받은 좌표를 (col, row) 좌표로 변환
+    // 'a'~'h' -> 0~7, '1'~'8' -> 0~7
+    int startCol = start[0] - 'a';
+    int startRow = start[1] - '1';
 
-    set<pair<int, int>> reachable_positions;
+    // 나이트가 이동할 수 있는 8가지 방향
+    vector<pair<int, int>> moves = {
+        {2, 1}, {2, -1}, {-2, 1}, {-2, -1}, {1, 2}, {1, -2}, {-1, 2}, {-1, -2}};
 
-    for (auto move1 : knight_moves)
+    // 두 번 이동 후 도달 가능한 좌표를 저장할 집합
+    set<string> positions;
+
+    // 첫 번째 이동
+    for (auto move1 : moves)
     {
-        int r1 = start_r + move1.first;
-        int c1 = start_c + move1.second;
+        int col1 = startCol + move1.first;
+        int row1 = startRow + move1.second;
+        if (!isValid(col1, row1))
+            continue;
 
-        if (is_valid(r1, c1))
+        // 두 번째 이동 (첫 번째 이동에서 구한 좌표에서)
+        for (auto move2 : moves)
         {
-            for (auto move2 : knight_moves)
-            {
-                int r2 = r1 + move2.first;
-                int c2 = c1 + move2.second;
+            int col2 = col1 + move2.first;
+            int row2 = row1 + move2.second;
+            if (!isValid(col2, row2))
+                continue;
 
-                if (is_valid(r2, c2))
-                {
-                    reachable_positions.insert({r2, c2});
-                }
-            }
+            // 체스 좌표 형식으로 변환 (예: 0->'a', 0->'1')
+            string pos = "";
+            pos.push_back('a' + col2);
+            pos.push_back('1' + row2);
+            positions.insert(pos);
         }
     }
 
-    reachable_positions.insert({start_r, start_c});
-
-    vector<string> result_notations;
-    for (const auto &pos : reachable_positions)
+    // 결과 출력 (출력 순서는 상관없음)
+    for (auto pos : positions)
     {
-        result_notations.push_back(coords_to_notation(pos.first, pos.second));
-    }
-
-    sort(result_notations.begin(), result_notations.end());
-
-    for (const string &notation : result_notations)
-    {
-        cout << notation << endl;
+        cout << pos << "\n";
     }
 
     return 0;
