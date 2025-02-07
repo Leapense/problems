@@ -1,20 +1,28 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
 
         while (true) {
-            int n = sc.nextInt();
+            String line = br.readLine();
+            if (line == null)
+                break;
+            int n = Integer.parseInt(line.trim());
+
             if (n == 0)
                 break;
 
-            if ((n & (n - 1)) == 0)
-                System.out.println("NAO");
-            else
-                System.out.println("SIM");
+            if ((n & (n - 1)) == 0) {
+                sb.append("NAO\n");
+            } else {
+                sb.append("SIM\n");
+            }
         }
 
-        sc.close();
+        System.out.print(sb);
     }
 }
