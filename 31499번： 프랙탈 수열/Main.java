@@ -1,11 +1,19 @@
-/* ************************************************************************** */
-/*                                                                            */
-/* ::: ::: ::: */
-/* Problem Number: 31499 :+: :+: :+: */
-/* +:+ +:+ +:+ */
-/* By: cjhool <boj.kr/u/cjhool> +#+ +#+ +#+ */
-/* +#+ +#+ +#+ */
-/* https://boj.kr/31499 #+# #+# #+# */
-/* Solved: 2025/02/10 13:34:14 by cjhool ### ### ##.kr */
-/*                                                                            */
-/* ************************************************************************** */
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int N = sc.nextInt();
+        int M = sc.nextInt();
+
+        long result = 1;
+
+        for (int i = 1; i <= N; i++) {
+            result = (result * i) % M;
+        }
+
+        System.out.println(result);
+        sc.close();
+    }
+}
