@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+
 using namespace std;
 
 int main()
@@ -8,15 +9,9 @@ int main()
     cin >> n >> r;
 
     int total = 1 << n;
-    int x = total - r + 1;
-
-    int wins = 0;
-    while ((1 << (wins + 1)) <= x)
-    {
-        wins++;
-    }
-
-    cout << wins + 1 << "\n";
+    int value = total - r + 1;
+    int k = floor(log2(value));
+    cout << k + 1 << endl;
 
     return 0;
 }
