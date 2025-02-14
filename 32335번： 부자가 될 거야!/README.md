@@ -1,4 +1,4 @@
-# 32335번: 부자가 될 거야! - <img src="https://static.solved.ac/tier_small/7.svg" style="height:20px" /> Silver IV
+# 32335번: 부자가 될 거야! - <img src="https://static.solved.ac/tier_small/8.svg" style="height:20px" /> Silver III
 
 <!-- performance -->
 
@@ -55,4 +55,4 @@
 
 ## 소스코드
 
-[소스코드 보기](부자가%20될%20거야!.py)
+[소스코드 보기](부자가%20될%20거야!.cpp)
