@@ -1,11 +1,20 @@
-/* ************************************************************************** */
-/*                                                                            */
-/* ::: ::: ::: */
-/* Problem Number: 32559 :+: :+: :+: */
-/* +:+ +:+ +:+ */
-/* By: cjhool <boj.kr/u/cjhool> +#+ +#+ +#+ */
-/* +#+ +#+ +#+ */
-/* https://boj.kr/32559 #+# #+# #+# */
-/* Solved: 2025/02/14 21:58:07 by cjhool ### ### ##.kr */
-/*                                                                            */
-/* ************************************************************************** */
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        long N = sc.nextLong();
+        long P = sc.nextLong();
+        sc.close();
+
+        long k = (N / P - 1) / 2;
+        long used = P * (1 + 2 * k);
+        long R = N - used;
+
+        if ((N % 2 == 0) && (P % 2 == 0) && (R >= P)) {
+            R -= P;
+        }
+
+        System.out.println(R);
+    }
+}
