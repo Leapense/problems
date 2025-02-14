@@ -5,16 +5,14 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         long N = sc.nextLong();
         long P = sc.nextLong();
-        sc.close();
+        long remaining = N - P;
+        long pairs = remaining / (2 * P);
+        long empty = remaining - pairs * 2 * P;
 
-        long k = (N / P - 1) / 2;
-        long used = P * (1 + 2 * k);
-        long R = N - used;
-
-        if ((N % 2 == 0) && (P % 2 == 0) && (R >= P)) {
-            R -= P;
+        if (empty == P) {
+            empty = 0;
         }
 
-        System.out.println(R);
+        System.out.println(empty);
     }
 }
