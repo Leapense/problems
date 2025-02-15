@@ -1,66 +1,57 @@
-def convert_to_minutes(time_str):
-    h, m = map(int, time_str.split(':'))
-    return h * 60 + m
+import math
 
-def compute_effective_times(depart_str, arrive_str):
-    dep = convert_to_minutes(depart_str)
-    arr = convert_to_minutes(arrive_str)
-    if arr < dep:
-        arr += 1440
+def time_to_minutes(time_str):
+    parts = time_str.split(':')
+    hours = int(parts[0])
+    minutes = int(parts[1])
+    return hours * 60 + minutes
 
-    return dep, arr + 1
+def minutes_to_time_str(minutes):
+    hours = minutes // 60
+    mins = minutes % 60
+    return "{:02d}:{:02d}".format(hours, mins)
 
-import sys
-
-def main():
-    data = sys.stdin.read().strip().splitlines()
-    if not data:
-        return
-    n = int(data[0].strip())
-
-    trips_from_zagreb = []
-    trips_from_graz = []
-
-    for line in data[1:n+1]:
-        parts = line.strip().split()
-        route = parts[0]
-        times = parts[1]
-
-        depart_time, arrive_time = times.split('--')
-        city_from, city_to = route.split('-')
-
-        if city_from == "Zagreb" and city_to == "Graz":
-            dep, eff_arr = compute_effective_times(depart_time, arrive_time)
-            trips_from_zagreb.append((dep, eff_arr))
-        elif city_from == "Graz" and city_to == "Wroclaw":
-            base_dep, eff_arr = compute_effective_times(depart_time, arrive_time)
-            trips_from_graz.append((base_dep, eff_arr))
-
-    best_time = None
-
-    for dep1, eff_arr1 in trips_from_zagreb:
-        for base_dep2, base_eff_arr2 in trips_from_graz:
-            if base_dep2 > eff_arr1:
-                k = 0
+def solve():
+    n = int(input())
+    zagreb_graz_trips = []
+    graz_wroclaw_trips = []
+    for _ in range(n):
+        line = input().split()
+        route_cities = line[0].split('-')
+        departure_city = route_cities[0]
+        arrival_city = route_cities[1]
+        time_range = line[1].split('--')
+        departure_time_str = time_range[0]
+        arrival_time_str = time_range[1]
+        departure_time_minutes = time_to_minutes(departure_time_str)
+        arrival_time_minutes = time_to_minutes(arrival_time_str)
+        if departure_city == "Zagreb" and arrival_city == "Graz":
+            zagreb_graz_trips.append({'departure': departure_time_minutes, 'arrival': arrival_time_minutes})
+        elif departure_city == "Graz" and arrival_city == "Wroclaw":
+            graz_wroclaw_trips.append({'departure': departure_time_minutes, 'arrival': arrival_time_minutes})
+            
+    min_travel_time = float('inf')
+    found_route = False
+    
+    for zg_trip in zagreb_graz_trips:
+        for gw_trip in graz_wroclaw_trips:
+            arrival_graz_time = zg_trip['arrival']
+            departure_graz_time = gw_trip['departure']
+            departure_zagreb_time = zg_trip['departure']
+            arrival_wroclaw_time = gw_trip['arrival']
+            
+            if arrival_graz_time < departure_graz_time:
+                travel_time = arrival_wroclaw_time - departure_zagreb_time + 1
             else:
-                k = (eff_arr1 - base_dep2) // 1440 + 1
-
-            abs_dep2 = base_dep2 + k * 1440
-
-            if abs_dep2 <= eff_arr1:
-                continue
-
-            abs_eff_arr2 = base_eff_arr2 + k * 1440
-            total_time = abs_eff_arr2 - dep1
-            if best_time is None or total_time < best_time:
-                best_time = total_time
-
-    if best_time is None:
+                travel_time = 1440 + arrival_wroclaw_time - departure_zagreb_time + 1
+                
+            min_travel_time = min(min_travel_time, travel_time)
+            found_route = True
+            
+    if not found_route or min_travel_time == float('inf'):
         print("NEMOGUCE")
     else:
-        hours = best_time // 60
-        minutes = best_time % 60
-        print(f"{hours}:{minutes:02d}")
+        print(minutes_to_time_str(min_travel_time))
 
-if __name__ == "__main__":
-    main()
+if __name__ == '__main__':
+    solve()
