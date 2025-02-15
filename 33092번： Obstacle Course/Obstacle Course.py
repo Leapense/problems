@@ -1,30 +1,45 @@
 def solve():
-    import sys, bisect
+    import sys
     input = sys.stdin.readline
+
     N = int(input().strip())
     A = list(map(int, input().split()))
 
-    bad_list = []
-    for i in range(0, N, 2):
-        if i + 2 < N:
-            if abs(A[i + 2] - A[i]) > 2:
-                bad_list.append(i)
+    odd_positions = []
+    odd_values = []
+    for i in range(N):
+        if i % 2 == 0:
+            odd_positions.append(i)
+            odd_values.append(A[i])
+    M = len(odd_values)
 
-    max_len = 1
-    for L in range(N):
-        idx = bisect.bisect_left(bad_list, L)
-        if idx < len(bad_list):
-            b = bad_list[idx]
-            R_max = min(N - 1, b + 1)
-        else:
-            R_max = N - 1
+    max_candidate = 0
 
-        curr_len = R_max - L + 1
-        if curr_len > max_len:
-            max_len = curr_len
-        if max_len == N:
-            break
-    print(max_len)
+    start = 0
+    i = 0
+    while i < M:
+        while i + 1 < M and abs(odd_values[i + 1] - odd_values[i]) in (0, 2):
+            i += 1
+        
+        c = i - start + 1
+        left_odd = odd_positions[start]
+        right_odd = odd_positions[i]
 
-if __name__ == "__main__":
+        candidate = (2 * c - 1)
+
+        if left_odd > 0:
+            candidate += 1
+
+        if right_odd < N - 1:
+            candidate += 1
+        
+        max_candidate = max(max_candidate, candidate)
+        i += 1
+        start = i
+    
+    max_candidate = max(max_candidate, 2)
+    max_candidate = min(max_candidate, N)
+    print(max_candidate)
+
+if __name__ == '__main__':
     solve()
