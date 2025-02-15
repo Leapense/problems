@@ -35,4 +35,4 @@
 
 ## 소스코드
 
-[소스코드 보기](Main.java)
+[소스코드 보기](Rocky%20Mountain.cpp)
