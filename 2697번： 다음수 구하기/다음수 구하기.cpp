@@ -1,11 +1,27 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                      :::    :::    :::     */
-/*   Problem Number: 2697                              :+:    :+:      :+:    */
-/*                                                    +:+    +:+        +:+   */
-/*   By: cjhool <boj.kr/u/cjhool>                    +#+    +#+          +#+  */
-/*                                                  +#+      +#+        +#+   */
-/*   https://boj.kr/2697                           #+#        #+#      #+#    */
-/*   Solved: 2025/02/16 18:30:09 by cjhool        ###          ###   ##.kr    */
-/*                                                                            */
-/* ************************************************************************** */
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+int main()
+{
+    int T;
+    cin >> T;
+
+    while (T--)
+    {
+        string A;
+        cin >> A;
+        if (next_permutation(A.begin(), A.end()))
+        {
+            cout << A << "\n";
+        }
+        else
+        {
+            cout << "BIGGEST\n";
+        }
+    }
+
+    return 0;
+}
