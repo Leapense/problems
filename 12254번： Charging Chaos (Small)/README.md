@@ -1,0 +1,66 @@
+# 12254번: Charging Chaos (Small) - <img src="https://static.solved.ac/tier_small/9.svg" style="height:20px" /> Silver II
+
+<!-- performance -->
+
+<!-- 문제 제출 후 깃허브에 푸시를 했을 때 제출한 코드의 성능이 입력될 공간입니다.-->
+
+<!-- end -->
+
+## 문제
+
+[문제 링크](https://boj.kr/12254)
+
+
+<p>Shota the farmer has a problem. He has just moved into his newly built farmhouse, but it turns out that the outlets haven't been configured correctly for all of his devices. Being a modern farmer, Shota owns a large number of smartphones and laptops, and even owns a tablet for his favorite cow Wagyu to use. In total, he owns <strong>N</strong> different devices.</p>
+
+<p>As these devices have different specifications and are made by a variety of companies, they each require a different electric flow to charge. Similarly, each outlet in the house outputs a specific electric flow. An electric flow can be represented by a string of 0s and 1s of length <strong>L</strong>.</p>
+
+<p>Shota would like to be able to charge all <strong>N</strong> of his devices at the same time. Coincidentally, there are exactly <strong>N</strong> outlets in his new house. In order to configure the electric flow from the outlets, there is a master control panel with <strong>L</strong> switches. The i<sup>th</sup> switch flips the i<sup>th</sup> bit of the electric flow from each outlet in the house. For example, if the electric flow from the outlets is:</p>
+
+<p>Outlet 0: 10</p>
+
+<p>Outlet 1: 01</p>
+
+<p>Outlet 2: 11</p>
+
+<p>Then flipping the second switch will reconfigure the electric flow to:</p>
+
+<p>Outlet 0: 1<strong>1</strong></p>
+
+<p>Outlet 1: 0<strong>0</strong></p>
+
+<p>Outlet 2: 1<strong>0</strong></p>
+
+<p>If Shota has a smartphone that needs flow "11" to charge, a tablet that needs flow "10" to charge, and a laptop that needs flow "00" to charge, then flipping the second switch will make him very happy!</p>
+
+<p>Misaki has been hired by Shota to help him solve this problem. She has measured the electric flows from the outlets in the house, and noticed that they are all different. Decide if it is possible for Shota to charge all of his devices at the same time, and if it is possible, figure out the minimum number of switches that needs to be flipped, because the switches are big and heavy and Misaki doesn't want to flip more than what she needs to.</p>
+
+
+
+## 입력
+
+
+<p>The first line of the input gives the number of test cases, <strong>T</strong>. <strong>T</strong> test cases follow. Each test case consists of three lines. The first line contains two space-separated integers <strong>N</strong> and <strong>L</strong>. The second line contains <strong>N</strong> space-separated strings of length <strong>L</strong>, representing the initial electric flow from the outlets. The third line also contains <strong>N</strong> space-separated strings of length <strong>L</strong>, representing the electric flow required by Shota's devices.</p>
+
+<p>Limits</p>
+
+<ul>
+<li>1 ≤ <strong>T</strong> ≤ 100.</li>
+<li>No two outlets will be producing the same electric flow, initially.</li>
+<li>No two devices will require the same electric flow.</li>
+<li><span style="line-height:1.6em">1 ≤ </span><strong style="line-height:1.6em">N</strong><span style="line-height:1.6em"> ≤ 10.</span></li>
+<li>2 ≤ <strong>L</strong> ≤ 10.</li>
+</ul>
+
+
+
+## 출력
+
+
+<p>For each test case, output one line containing "Case #<strong>x</strong>: <strong>y</strong>", where <strong>x</strong> is the case number (starting from 1) and <strong>y</strong> is the minimum number of switches to be flipped in order for Shota to charge all his devices. If it is impossible, <strong>y</strong> should be the string "NOT POSSIBLE" (without the quotes). Please note that our judge is not case-sensitive, but it is strict in other ways: so although "not &nbsp;possible" will be judged correct, any misspelling will be judged wrong. We suggest copying/pasting the string NOT POSSIBLE into your code.</p>
+
+
+
+## 소스코드
+
+[소스코드 보기](Charging%20Chaos%20(Small).cpp)

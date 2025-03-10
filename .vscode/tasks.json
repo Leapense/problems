@@ -28,8 +28,10 @@
             "label": "C/C++: g++ build active file",
             "command": "/usr/bin/g++",
             "args": [
+                "-std=c++23",
                 "-fdiagnostics-color=always",
                 "-g",
+                "-O2",
                 "${file}",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
