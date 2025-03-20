@@ -45,4 +45,4 @@
 
 ## 소스코드
 
-[소스코드 보기](It's%20All%20In%20The%20Mind.cpp)
+[소스코드 보기](It's%20All%20In%20The%20Mind.py)
