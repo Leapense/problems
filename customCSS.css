@@ -1,0 +1,39 @@
+/* 전체 배경 그라데이션 및 기본 스타일 */
+body {
+  background: linear-gradient(135deg, #74ABE2, #5563DE);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Glassmorphism 스타일을 적용한 컨테이너 */
+.glass-container {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 20px;
+  margin: 20px 0;
+}
+
+/* 코드 영역에 Glassmorphism 느낌 적용 */
+pre, code {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 10px;
+  overflow-x: auto;
+}
+
+/* 헤더와 푸터에 적용 */
+header, footer {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+

@@ -1,0 +1,1 @@
+genhtml --ignore-errors inconsistent,inconsistent coverage_before.info --output-directory out_before --css=../custom.css

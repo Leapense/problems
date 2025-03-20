@@ -1,0 +1,1 @@
+genhtml lcov.info --ignore-errors inconsistent,inconsistent --output-directory out --css=../custom.css

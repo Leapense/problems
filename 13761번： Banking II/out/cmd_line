@@ -1,0 +1,1 @@
+genhtml lcov2.info --output-directory out --css=../custom.css

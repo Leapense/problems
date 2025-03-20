@@ -1,0 +1,1 @@
+genhtml coverage_before.info --output-directory out_before --css=../custom.css
