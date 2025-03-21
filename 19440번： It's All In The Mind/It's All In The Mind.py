@@ -1,70 +1,65 @@
 import sys
 import math
 
-def main():
+def solve():
     input_data = sys.stdin.read().strip().split()
-    if not input_data:
+    if not input_data: 
         return
     t = int(input_data[0])
     index = 1
-    results = []
-    for _ in range(t):
-        n = int(input_data[index]); index += 1
-        m = int(input_data[index]); index += 1
-        
-        # Create a list to hold fixed values; use None for free positions.
-        fixed = [None] * (n + 1)  # 1-indexed
-        
-        for _ in range(m):
-            pos = int(input_data[index]); index += 1
-            val = int(input_data[index]); index += 1
-            fixed[pos] = val
-        
-        # We'll construct the sequence 'seq' that maximizes the ratio.
-        seq = [0] * (n + 1)  # 1-indexed
-        
-        # For positions 1 and 2: if free assign 100, else use the fixed value.
-        for i in [1, 2]:
-            if fixed[i] is None:
-                seq[i] = 100
-            else:
-                seq[i] = fixed[i]
-        
-        # Precompute the lower bound L for positions 3 to n via backward pass.
-        # L[i] = if fixed then fixed value, else L[i+1] (or 0 for the last element if free)
-        L = [0] * (n + 2)  # extra index to avoid boundary issues, 1-indexed
-        # For position n:
-        if fixed[n] is not None:
-            L[n] = fixed[n]
-        else:
-            L[n] = 0
-        
-        for i in range(n - 1, 2, -1):
-            if fixed[i] is not None:
-                L[i] = fixed[i]
-            else:
-                L[i] = L[i+1]
-        
-        # Now fill positions 3 to n
-        for i in range(3, n + 1):
-            if fixed[i] is not None:
-                seq[i] = fixed[i]
-            else:
-                # The minimal possible value is L[i]. 
-                # Also, it must be <= seq[i-1] (which is guaranteed by problem consistency).
-                seq[i] = L[i]
-                
-        total = sum(seq[1:])
-        numerator = seq[1] + seq[2]
-        
-        # Reduce the fraction numerator/total
-        g = math.gcd(numerator, total)
-        p = numerator // g
-        q = total // g
-        
-        results.append(f"{p}/{q}")
+    output_lines = []
     
-    sys.stdout.write("\n".join(results))
+    for _ in range(t):
+        n = int(input_data[index])
+        m = int(input_data[index+1])
+        index += 2
+        
+        # Prepare an array for the sequence (1-indexed for simplicity)
+        a = [None] * (n + 1)
+        fixed = [False] * (n + 1)
+        
+        # Process fixed elements
+        for _ in range(m):
+            pos = int(input_data[index])
+            val = int(input_data[index+1])
+            index += 2
+            a[pos] = val
+            fixed[pos] = True
+        
+        # Set a1 and a2: if they are not fixed, assign 100.
+        if not fixed[1]:
+            a[1] = 100
+        if not fixed[2]:
+            a[2] = 100
+        
+        # For indices 3 to n, if fixed use given value; if unknown assign 0 initially.
+        for i in range(3, n+1):
+            if not fixed[i]:
+                a[i] = 0
+
+        # Backward propagation for indices 3..n to ensure non-increasing order:
+        for i in range(n-1, 2, -1):
+            if a[i] < a[i+1]:
+                if not fixed[i]:
+                    a[i] = a[i+1]
+        
+        # Ensure non-increasing order between a2 and a3 (only if n >= 3)
+        if n >= 3 and a[2] < a[3]:
+            a[3] = a[2]
+        
+        # Calculate numerator and denominator.
+        num = a[1] + a[2]
+        total = sum(a[1: n+1])
+        
+        # Reduce the fraction to its irreducible form.
+        g = math.gcd(num, total)
+        num //= g
+        total //= g
+        
+        output_lines.append(f"{num}/{total}")
+    
+    sys.stdout.write("\n".join(output_lines))
+
 
 if __name__ == '__main__':
-    main()
+    solve()
