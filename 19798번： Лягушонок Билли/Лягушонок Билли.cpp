@@ -1,43 +1,56 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+using namespace std;
+using ll = long long;
 
 int main()
 {
-    int n;
-    std::cin >> n;
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-    std::vector<long long> distances(n);
+    int n;
+    cin >> n;
+    vector<ll> positions(n);
     for (int i = 0; i < n; ++i)
     {
-        std::cin >> distances[i];
+        cin >> positions[i];
     }
 
-    long long total_energy = 0;
-    int left = 0;
-
-    for (int i = n - 1; i >= left; --i)
+    // Group the mosquitoes by their positions.
+    // Since positions are sorted in non-decreasing order, we can simply group from the end.
+    vector<pair<ll, ll>> groups; // {position, count}
+    ll count = 1;
+    for (int i = n - 2; i >= 0; --i)
     {
-        if (distances[i] > 0)
+        if (positions[i] == positions[i + 1])
         {
-            total_energy += distances[i];
+            ++count;
         }
-
-        int j = i - 1;
-
-        while (j >= left && distances[j] >= 1 && distances[j] >= distances[i] - (i - j))
+        else
         {
-            distances[j] = std::max(0LL, distances[j] - 1);
-            j--;
+            groups.push_back({positions[i + 1], count});
+            count = 1;
         }
+    }
+    groups.push_back({positions[0], count});
 
-        while (left < n && distances[left] == 0)
+    // Process groups in descending order (we built groups in descending order already).
+    ll shift = 0;
+    ll energy = 0;
+    for (auto &group : groups)
+    {
+        ll pos = group.first;
+        ll cnt = group.second;
+        // Calculate effective position
+        ll effectivePos = pos - shift;
+        if (effectivePos > 0)
         {
-            left++;
+            energy += effectivePos * cnt;
+            shift += cnt; // Only mosquitoes eaten with energy cause further shifts.
         }
     }
 
-    std::cout << total_energy << std::endl;
-
+    cout << energy << "\n";
     return 0;
 }

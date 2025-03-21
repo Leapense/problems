@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-03-21 20:31:37</td>
+            <td class="headerValue">2025-03-21 20:46:06</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">-</td>
@@ -2453,7 +2453,7 @@
 <span id="L2391"><span class="lineNum">    2391</span>              :   {</span>
 <span id="L2392"><span class="lineNum">    2392</span>              : #if __cpp_if_consteval &gt;= 202106L</span>
 <span id="L2393"><span class="lineNum">    2393</span>              : # define _GLIBCXX_HAVE_IS_CONSTANT_EVALUATED 1</span>
-<span id="L2394"><span class="lineNum">    2394</span> <span class="tlaGNC">           4 :     if consteval { return true; } else { return false; }</span></span>
+<span id="L2394"><span class="lineNum">    2394</span> <span class="tlaGNC">           9 :     if consteval { return true; } else { return false; }</span></span>
 <span id="L2395"><span class="lineNum">    2395</span>              : #elif __cplusplus &gt;= 201103L &amp;&amp; __has_builtin(__builtin_is_constant_evaluated)</span>
 <span id="L2396"><span class="lineNum">    2396</span>              : # define _GLIBCXX_HAVE_IS_CONSTANT_EVALUATED 1</span>
 <span id="L2397"><span class="lineNum">    2397</span>              :     return __builtin_is_constant_evaluated();</span>
