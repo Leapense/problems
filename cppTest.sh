@@ -75,15 +75,18 @@ run_coverage() {
     lcov --list coverage_before.info > /tmp/coverage_before.txt
     dialog --title "커버리지 결과 (Before)" --textbox /tmp/coverage_before.txt 20 70
     rm /tmp/coverage_before.txt
+    clear
 
     lcov --ignore-errors inconsistent,inconsistent \
     --list coverage_after.info > /tmp/coverage_after.txt
     dialog --title "커버리지 결과 (After)" --textbox /tmp/coverage_after.txt 20 70
     rm /tmp/coverage_after.txt
+    clear
 
     lcov --list coverage_diff.info > /tmp/coverage_diff.txt
     dialog --title "커버리지 결과 (Diff)" --textbox /tmp/coverage_diff.txt 20 70
     rm /tmp/coverage_diff.txt
+    clear
 
     dialog --infobox "[$(date +"%T")] HTML 리포트 생성 중..." 5 50
     sleep 1
