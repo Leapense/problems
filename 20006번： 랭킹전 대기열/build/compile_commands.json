@@ -1,0 +1,14 @@
+[
+{
+  "directory": "/home/monika/Documents/problems/20006번： 랭킹전 대기열/build",
+  "command": "/usr/bin/g++ -g -o CMakeFiles/SrcLib.dir/cpp/src/main.o -c \"/home/monika/Documents/problems/20006번： 랭킹전 대기열/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20006번： 랭킹전 대기열/cpp/src/main.cpp",
+  "output": "CMakeFiles/SrcLib.dir/cpp/src/main.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/20006번： 랭킹전 대기열/build",
+  "command": "/usr/bin/g++ -g -o CMakeFiles/GameSimulationTest.dir/test/Testmain.o -c \"/home/monika/Documents/problems/20006번： 랭킹전 대기열/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/20006번： 랭킹전 대기열/test/Testmain.cpp",
+  "output": "CMakeFiles/GameSimulationTest.dir/test/Testmain.o"
+}
+]

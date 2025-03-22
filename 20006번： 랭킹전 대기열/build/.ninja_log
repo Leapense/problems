@@ -1,0 +1,16 @@
+# ninja log v6
+6524	6574	1742637531086048209	lib/libgmock_main.a	c96371ddaf9d8c92
+2	12	1742637186565855773	clean	eee472499eb9f57e
+3	2432	1742637524566726173	googletest-1.16.0/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.o	ff24649b51e5ae
+6491	6697	1742637531257049793	GameSimulationTest	3df5670bb35770e9
+6491	6697	1742637531257049793	/home/monika/Documents/problems/20006번： 랭킹전 대기열/build/GameSimulationTest[1]_tests.cmake	3df5670bb35770e9
+4	2955	1742637524567172015	googletest-1.16.0/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.o	89b78869054937ee
+6491	6697	1742637531257049793	GameSimulationTest[1]_tests.cmake	3df5670bb35770e9
+2665	2730	1742637527227012449	libSrcLib.a	c47c40b4006b6b87
+3	2665	1742637524566348810	CMakeFiles/SrcLib.dir/cpp/src/main.cpp.o	5e085222a1fa5a8
+3	4150	1742637524566523180	googletest-1.16.0/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.o	394335e1d207b9b6
+6318	6445	1742637530880046300	lib/libgtest.a	86187f2e02d716be
+6445	6491	1742637531008694511	lib/libgtest_main.a	715fd5da0ad9f72
+6445	6524	1742637531007047477	lib/libgmock.a	c136975ddd61f824
+4	4045	1742637524566960055	CMakeFiles/GameSimulationTest.dir/test/Testmain.cpp.o	a85f019c80437018
+3	6318	1742637524564987782	googletest-1.16.0/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.o	4dfbfc83503e87f8

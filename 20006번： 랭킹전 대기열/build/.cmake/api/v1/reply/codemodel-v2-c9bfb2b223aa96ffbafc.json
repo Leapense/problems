@@ -1,0 +1,65 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "Project",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "GameSimulationTest::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-GameSimulationTest-Debug-a2522cb788d8f960d679.json",
+					"name" : "GameSimulationTest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "SrcLib::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-SrcLib-Debug-8a19f88031a28afa7411.json",
+					"name" : "SrcLib",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/monika/Documents/problems/20006\ubc88\uff1a \ub7ad\ud0b9\uc804 \ub300\uae30\uc5f4/build",
+		"source" : "/home/monika/Documents/problems/20006\ubc88\uff1a \ub7ad\ud0b9\uc804 \ub300\uae30\uc5f4"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

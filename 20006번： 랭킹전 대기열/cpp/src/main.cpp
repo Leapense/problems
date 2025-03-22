@@ -77,3 +77,20 @@ string solve(const string &input)
 
     return oss.str();
 }
+
+#ifndef UNIT_TESTS
+int main()
+{
+    // 표준 입력을 통째로 읽어서 문자열로 만들기
+    std::ostringstream oss;
+    oss << std::cin.rdbuf();
+    std::string input = oss.str();
+
+    // solve() 호출
+    std::string output = solve(input);
+
+    // 결과 출력
+    std::cout << output;
+    return 0;
+}
+#endif

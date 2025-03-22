@@ -115,5 +115,5 @@
     "animations.Tabs": "Slide",
     "animations.Scrolling": "Slide",
     "animations.Focus-Dimming-Mode": "Full Window",
-    "cmake.sourceDirectory": "/home/monika/Documents/problems/20006번： 랭킹전 대기열",
+  "cmake.buildDirectory": "${workspaceFolder}/build",
 }

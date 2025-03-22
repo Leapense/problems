@@ -1,4 +1,4 @@
-# Install script for directory: /home/monika/Documents/problems/20006번： 랭킹전 대기열
+# Install script for directory: /home/monika/Documents/problems
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,7 +44,8 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/monika/Documents/problems/build/googletest-1.16.0/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/19981번： ЕГЭ/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/20006번： 랭킹전 대기열/cmake_install.cmake")
 
 endif()
 
