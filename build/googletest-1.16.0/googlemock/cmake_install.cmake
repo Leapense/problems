@@ -1,4 +1,4 @@
-# Install script for directory: /home/monika/Documents/problems/19981번： ЕГЭ/googletest-1.16.0/googlemock
+# Install script for directory: /home/monika/Documents/problems/20006번： 랭킹전 대기열/googletest-1.16.0/googlemock
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -43,7 +43,7 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "gmock" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/monika/Documents/problems/19981번： ЕГЭ/googletest-1.16.0/googlemock/include/")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/monika/Documents/problems/20006번： 랭킹전 대기열/googletest-1.16.0/googlemock/include/")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "gmock" OR NOT CMAKE_INSTALL_COMPONENT)

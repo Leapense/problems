@@ -1,5 +1,5 @@
 # CMake generated Testfile for 
-# Source directory: /home/monika/Documents/problems/19981번： ЕГЭ/googletest-1.16.0/googlemock
+# Source directory: /home/monika/Documents/problems/20006번： 랭킹전 대기열/googletest-1.16.0/googlemock
 # Build directory: /home/monika/Documents/problems/build/googletest-1.16.0/googlemock
 # 
 # This file includes the relevant testing commands required for 

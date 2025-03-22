@@ -1,4 +1,4 @@
-# Install script for directory: /home/monika/Documents/problems/19981번： ЕГЭ/googletest-1.16.0/googletest
+# Install script for directory: /home/monika/Documents/problems/20006번： 랭킹전 대기열/googletest-1.16.0/googletest
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -73,7 +73,7 @@ if(CMAKE_INSTALL_COMPONENT STREQUAL "gtest" OR NOT CMAKE_INSTALL_COMPONENT)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "gtest" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/monika/Documents/problems/19981번： ЕГЭ/googletest-1.16.0/googletest/include/")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/monika/Documents/problems/20006번： 랭킹전 대기열/googletest-1.16.0/googletest/include/")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "gtest" OR NOT CMAKE_INSTALL_COMPONENT)

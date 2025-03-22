@@ -1,5 +1,5 @@
 /home/monika/Documents/problems/build/CMakeFiles/SrcLib.dir
-/home/monika/Documents/problems/build/CMakeFiles/EGE_Test.dir
+/home/monika/Documents/problems/build/CMakeFiles/GameSimulationTest.dir
 /home/monika/Documents/problems/build/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/CMakeFiles/rebuild_cache.dir

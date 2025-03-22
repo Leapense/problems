@@ -6,7 +6,7 @@
 # It is included in the main 'build.ninja'.
 
 # =============================================================================
-# Project: EGE
+# Project: GameSimulation
 # Configurations: Debug
 # =============================================================================
 # =============================================================================
@@ -63,7 +63,7 @@ rule CXX_STATIC_LIBRARY_LINKER__SrcLib_Debug
 #############################################
 # Rule for generating CXX dependencies.
 
-rule CXX_SCAN__EGE_Test_Debug
+rule CXX_SCAN__GameSimulationTest_Debug
   depfile = $DEP_FILE
   command = /usr/bin/g++ $DEFINES $INCLUDES $FLAGS -E -x c++ $in -MT $DYNDEP_INTERMEDIATE_FILE -MD -MF $DEP_FILE -fmodules-ts -fdeps-file=$DYNDEP_INTERMEDIATE_FILE -fdeps-target=$OBJ_FILE -fdeps-format=p1689r5 -o $PREPROCESSED_OUTPUT_FILE
   description = Scanning $in for CXX dependencies
@@ -72,8 +72,8 @@ rule CXX_SCAN__EGE_Test_Debug
 #############################################
 # Rule to generate ninja dyndep files for CXX.
 
-rule CXX_DYNDEP__EGE_Test_Debug
-  command = /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/EGE_Test.dir/CXXDependInfo.json --lang=CXX --modmapfmt=gcc --dd=$out @$out.rsp
+rule CXX_DYNDEP__GameSimulationTest_Debug
+  command = /usr/bin/cmake -E cmake_ninja_dyndep --tdi=CMakeFiles/GameSimulationTest.dir/CXXDependInfo.json --lang=CXX --modmapfmt=gcc --dd=$out @$out.rsp
   description = Generating CXX dyndep file $out
   rspfile = $out.rsp
   rspfile_content = $in
@@ -83,7 +83,7 @@ rule CXX_DYNDEP__EGE_Test_Debug
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__EGE_Test_scanned_Debug
+rule CXX_COMPILER__GameSimulationTest_scanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/g++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -fmodules-ts -fmodule-mapper=$DYNDEP_MODULE_MAP_FILE -MD -fdeps-format=p1689r5 -x c++ -o $out -c $in
@@ -93,7 +93,7 @@ rule CXX_COMPILER__EGE_Test_scanned_Debug
 #############################################
 # Rule for compiling CXX files.
 
-rule CXX_COMPILER__EGE_Test_unscanned_Debug
+rule CXX_COMPILER__GameSimulationTest_unscanned_Debug
   depfile = $DEP_FILE
   deps = gcc
   command = ${LAUNCHER}${CODE_CHECK}/usr/bin/g++ $DEFINES $INCLUDES $FLAGS -MD -MT $out -MF $DEP_FILE -o $out -c $in
@@ -103,7 +103,7 @@ rule CXX_COMPILER__EGE_Test_unscanned_Debug
 #############################################
 # Rule for linking CXX executable.
 
-rule CXX_EXECUTABLE_LINKER__EGE_Test_Debug
+rule CXX_EXECUTABLE_LINKER__GameSimulationTest_Debug
   command = $PRE_LINK && /usr/bin/g++ $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD
   description = Linking CXX executable $TARGET_FILE
   restat = $RESTAT
@@ -317,7 +317,7 @@ rule CXX_STATIC_LIBRARY_LINKER__gtest_main_Debug
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = /usr/bin/cmake --regenerate-during-build -S"/home/monika/Documents/problems/19981번： ЕГЭ" -B/home/monika/Documents/problems/build
+  command = /usr/bin/cmake --regenerate-during-build -S"/home/monika/Documents/problems/20006번： 랭킹전 대기열" -B/home/monika/Documents/problems/build
   description = Re-running CMake...
   generator = 1
 

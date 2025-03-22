@@ -1,4 +1,4 @@
-# Install script for directory: /home/monika/Documents/problems/19981번： ЕГЭ/googletest-1.16.0
+# Install script for directory: /home/monika/Documents/problems/20006번： 랭킹전 대기열/googletest-1.16.0
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
