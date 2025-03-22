@@ -1,3 +1,30 @@
-Start testing: Mar 22 16:57 KST
+Start testing: Mar 22 17:26 KST
 ----------------------------------------------------------
-End testing: Mar 22 16:57 KST
+4/4 Testing: NegativeBase2.LargerNumber
+4/4 Test: NegativeBase2.LargerNumber
+Command: "/home/monika/Documents/problems/build/EGE_Test" "--gtest_filter=NegativeBase2.LargerNumber" "--gtest_also_run_disabled_tests"
+Directory: /home/monika/Documents/problems/build
+"NegativeBase2.LargerNumber" start time: Mar 22 17:26 KST
+Output:
+----------------------------------------------------------
+Running main() from /home/monika/Documents/problems/19981번： ЕГЭ/googletest-1.16.0/googletest/src/gtest_main.cc
+Note: Google Test filter = NegativeBase2.LargerNumber
+[==========] Running 1 test from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 1 test from NegativeBase2
+[ RUN      ] NegativeBase2.LargerNumber
+[       OK ] NegativeBase2.LargerNumber (0 ms)
+[----------] 1 test from NegativeBase2 (0 ms total)
+
+[----------] Global test environment tear-down
+[==========] 1 test from 1 test suite ran. (0 ms total)
+[  PASSED  ] 1 test.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"NegativeBase2.LargerNumber" end time: Mar 22 17:26 KST
+"NegativeBase2.LargerNumber" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Mar 22 17:26 KST

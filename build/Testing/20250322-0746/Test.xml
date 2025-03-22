@@ -21,14 +21,42 @@
 	TotalVirtualMemory="8191"
 	TotalPhysicalMemory="13812"
 	LogicalProcessorsPerPhysical="2"
-	ProcessorClockFrequency="3194.3"
+	ProcessorClockFrequency="3787.05"
 	>
 	<Testing>
-		<StartDateTime>Mar 22 16:57 KST</StartDateTime>
-		<StartTestTime>1742630230</StartTestTime>
-		<TestList/>
-		<EndDateTime>Mar 22 16:57 KST</EndDateTime>
-		<EndTestTime>1742630230</EndTestTime>
+		<StartDateTime>Mar 22 17:26 KST</StartDateTime>
+		<StartTestTime>1742631967</StartTestTime>
+		<TestList>
+			<Test>./NegativeBase2.LargerNumber</Test>
+		</TestList>
+		<Test Status="passed">
+			<Name>NegativeBase2.LargerNumber</Name>
+			<Path>.</Path>
+			<FullName>./NegativeBase2.LargerNumber</FullName>
+			<FullCommandLine>/home/monika/Documents/problems/build/EGE_Test "--gtest_filter=NegativeBase2.LargerNumber" "--gtest_also_run_disabled_tests"</FullCommandLine>
+			<Results>
+				<NamedMeasurement type="numeric/double" name="Execution Time">
+					<Value>0.00288462</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="numeric/double" name="Processors">
+					<Value>1</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Completion Status">
+					<Value>Completed</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Command Line">
+					<Value>/home/monika/Documents/problems/build/EGE_Test "--gtest_filter=NegativeBase2.LargerNumber" "--gtest_also_run_disabled_tests"</Value>
+				</NamedMeasurement>
+				<NamedMeasurement type="text/string" name="Environment">
+					<Value>#CTEST_RESOURCE_GROUP_COUNT=</Value>
+				</NamedMeasurement>
+				<Measurement>
+					<Value encoding="base64" compression="gzip">eJyNkDFOwzAUhnef4o3NELthQBSpA6ioAyigFKYoQk54DRaxXdkv5QrsiIU7sDBziNyDgSugJFXVIFH1n57sz/7//yW1McqUoKUyowCWzmoQj1aj0NaoJylmtqg1GvJi5WxeofYimkxOou/Pl5+vd2jemtfmQ5TWlhUSegojHh3z8c6J8K4QZTvdty68KFhsCU9h3iFwi55gqSpCB1OIsZSk1nguPR7xK+lKdHGtc3QsnW6VQbIJHgF179vgm9nXipCzNNwqg3llc1n192jWylnTtgKPFNarP/Dun4M8LIXkLoZO2d6oPQPXl3s5GI1B++BA954GsiSrgB3Wj1C68ME+m+H2/tsaOGn40CcFuDlbLC5mbeWe5ewXMta5cA==</Value>
+				</Measurement>
+			</Results>
+		</Test>
+		<EndDateTime>Mar 22 17:26 KST</EndDateTime>
+		<EndTestTime>1742631967</EndTestTime>
 		<ElapsedMinutes>0</ElapsedMinutes>
 	</Testing>
 </Site>

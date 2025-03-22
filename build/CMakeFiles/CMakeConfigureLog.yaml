@@ -506,3 +506,36 @@ events:
       Running the CXX compiler's linker: "/usr/bin/ld" "-v"
       GNU ld version 2.43.1-5.fc41
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake:101 (try_compile)"
+      - "/usr/share/cmake/Modules/CheckCSourceCompiles.cmake:52 (cmake_check_source_compiles)"
+      - "/usr/share/cmake/Modules/FindThreads.cmake:97 (CHECK_C_SOURCE_COMPILES)"
+      - "/usr/share/cmake/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "googletest-1.16.0/googletest/cmake/internal_utils.cmake:66 (find_package)"
+      - "googletest-1.16.0/googletest/CMakeLists.txt:83 (config_compiler_and_linker)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "/home/monika/Documents/problems/build/CMakeFiles/CMakeScratch/TryCompile-QQnarO"
+      binary: "/home/monika/Documents/problems/build/CMakeFiles/CMakeScratch/TryCompile-QQnarO"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: '/home/monika/Documents/problems/build/CMakeFiles/CMakeScratch/TryCompile-QQnarO'
+        
+        Run Build Command(s): /usr/bin/ninja-build -v cmTC_9840f
+        [1/2] /usr/bin/gcc -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_9840f.dir/src.c.o -c /home/monika/Documents/problems/build/CMakeFiles/CMakeScratch/TryCompile-QQnarO/src.c
+        [2/2] : && /usr/bin/gcc   CMakeFiles/cmTC_9840f.dir/src.c.o -o cmTC_9840f   && :
+        
+      exitCode: 0
+...

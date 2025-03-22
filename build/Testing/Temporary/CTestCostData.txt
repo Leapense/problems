@@ -1,0 +1,5 @@
+NegativeBase2.ZeroCase 1 0.00269593
+NegativeBase2.PositiveCase 1 0.00324417
+NegativeBase2.NegativeCase 1 0.00280303
+NegativeBase2.LargerNumber 1 0.00288462
+---
