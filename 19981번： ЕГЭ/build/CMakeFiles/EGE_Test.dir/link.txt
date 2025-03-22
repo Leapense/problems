@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/EGE_Test.dir/test/Testmain.cpp.o -o EGE_Test  lib/libgtest_main.a libSrcLib.a lib/libgtest.a

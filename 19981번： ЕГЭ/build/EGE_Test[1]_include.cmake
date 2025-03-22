@@ -1,0 +1,5 @@
+if(EXISTS "/home/monika/Documents/problems/19981번： ЕГЭ/build/EGE_Test[1]_tests.cmake")
+  include("/home/monika/Documents/problems/19981번： ЕГЭ/build/EGE_Test[1]_tests.cmake")
+else()
+  add_test(EGE_Test_NOT_BUILT EGE_Test_NOT_BUILT)
+endif()

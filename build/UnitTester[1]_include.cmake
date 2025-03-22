@@ -1,5 +1,0 @@
-if(EXISTS "/home/monika/Documents/problems/build/UnitTester[1]_tests.cmake")
-  include("/home/monika/Documents/problems/build/UnitTester[1]_tests.cmake")
-else()
-  add_test(UnitTester_NOT_BUILT UnitTester_NOT_BUILT)
-endif()
