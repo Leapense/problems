@@ -1,0 +1,5 @@
+if(EXISTS "/home/monika/Documents/problems/20006번： 랭킹전 대기열/build/GameSimulationTest[1]_tests.cmake")
+  include("/home/monika/Documents/problems/20006번： 랭킹전 대기열/build/GameSimulationTest[1]_tests.cmake")
+else()
+  add_test(GameSimulationTest_NOT_BUILT GameSimulationTest_NOT_BUILT)
+endif()
