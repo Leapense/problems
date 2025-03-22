@@ -1,0 +1,1 @@
+genhtml --ignore-errors inconsistent,inconsistent coverage_diff.info --output-directory out_diff --css=../custom.css
