@@ -1,0 +1,5 @@
+if(EXISTS "/home/monika/Documents/problems/build/main[1]_tests.cmake")
+  include("/home/monika/Documents/problems/build/main[1]_tests.cmake")
+else()
+  add_test(main_NOT_BUILT main_NOT_BUILT)
+endif()

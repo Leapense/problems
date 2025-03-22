@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -o CMakeFiles/main.dir/main.o -c \"/home/monika/Documents/problems/19981번： ЕГЭ/main.cpp\"",
+  "file": "/home/monika/Documents/problems/19981번： ЕГЭ/main.cpp",
+  "output": "CMakeFiles/main.dir/main.o"
+}
+]

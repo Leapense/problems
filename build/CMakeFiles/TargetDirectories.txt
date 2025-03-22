@@ -1,0 +1,4 @@
+/home/monika/Documents/problems/build/CMakeFiles/main.dir
+/home/monika/Documents/problems/build/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/CMakeFiles/rebuild_cache.dir
