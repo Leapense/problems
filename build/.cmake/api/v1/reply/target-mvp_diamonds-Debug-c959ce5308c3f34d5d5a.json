@@ -1,0 +1,99 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "20413\ubc88\uff1a MVP \ub2e4\uc774\uc544\ubaac\ub4dc (Easy)/mvp_diamonds"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable"
+		],
+		"files" : 
+		[
+			"20413\ubc88\uff1a MVP \ub2e4\uc774\uc544\ubaac\ub4dc (Easy)/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 11,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -std=c++23"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "23"
+			},
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"id" : "mvp_diamonds::@2ce04c61e58254617207",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "",
+				"role" : "flags"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "mvp_diamonds",
+	"nameOnDisk" : "mvp_diamonds",
+	"paths" : 
+	{
+		"build" : "20413\ubc88\uff1a MVP \ub2e4\uc774\uc544\ubaac\ub4dc (Easy)",
+		"source" : "20413\ubc88\uff1a MVP \ub2e4\uc774\uc544\ubaac\ub4dc (Easy)"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "20413\ubc88\uff1a MVP \ub2e4\uc774\uc544\ubaac\ub4dc (Easy)/cpp/src/main.cpp",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "EXECUTABLE"
+}

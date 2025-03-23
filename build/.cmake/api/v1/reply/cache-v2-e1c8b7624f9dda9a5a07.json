@@ -659,7 +659,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "5"
+			"value" : "7"
 		},
 		{
 			"name" : "CMAKE_OBJCOPY",
@@ -1059,7 +1059,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/monika/Documents/problems/build/20152\ubc88\uff1a Game Addiction"
+			"value" : "/home/monika/Documents/problems/build/20413\ubc88\uff1a MVP \ub2e4\uc774\uc544\ubaac\ub4dc (Easy)"
 		},
 		{
 			"name" : "GAME_ADDICTION_IS_TOP_LEVEL",
@@ -1083,7 +1083,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/monika/Documents/problems/20152\ubc88\uff1a Game Addiction"
+			"value" : "/home/monika/Documents/problems/20413\ubc88\uff1a MVP \ub2e4\uc774\uc544\ubaac\ub4dc (Easy)"
 		},
 		{
 			"name" : "GTest_DIR",

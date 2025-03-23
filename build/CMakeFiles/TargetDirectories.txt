@@ -21,3 +21,13 @@
 /home/monika/Documents/problems/build/20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/20162번： 간식 파티/CMakeFiles/snack_party.dir
+/home/monika/Documents/problems/build/20162번： 간식 파티/CMakeFiles/snack_party_test.dir
+/home/monika/Documents/problems/build/20162번： 간식 파티/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/20162번： 간식 파티/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/20162번： 간식 파티/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds.dir
+/home/monika/Documents/problems/build/20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir
+/home/monika/Documents/problems/build/20413번： MVP 다이아몬드 (Easy)/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/20413번： MVP 다이아몬드 (Easy)/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/20413번： MVP 다이아몬드 (Easy)/CMakeFiles/rebuild_cache.dir

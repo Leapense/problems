@@ -48,6 +48,8 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/monika/Documents/problems/build/20006번： 랭킹전 대기열/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/20152번： Game Addiction/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/20162번： 간식 파티/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/20413번： MVP 다이아몬드 (Easy)/cmake_install.cmake")
 
 endif()
 

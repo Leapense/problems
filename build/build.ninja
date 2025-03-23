@@ -525,11 +525,239 @@ build 20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이�
 build 20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!/rebuild_cache: phony 20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!/CMakeFiles/rebuild_cache.util
 
 # =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/monika/Documents/problems/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for EXECUTABLE target snack_party
+
+
+#############################################
+# Order-only phony target for snack_party
+
+build cmake_object_order_depends_target_snack_party: phony || .
+
+build 20162번：$ 간식$ 파티/CMakeFiles/snack_party.dir/cpp/src/main.cpp.o: CXX_COMPILER__snack_party_unscanned_Debug /home/monika/Documents/problems/20162번：$ 간식$ 파티/cpp/src/main.cpp || cmake_object_order_depends_target_snack_party
+  DEP_FILE = "20162번： 간식 파티/CMakeFiles/snack_party.dir/cpp/src/main.cpp.o.d"
+  FLAGS = -g -std=c++23
+  OBJECT_DIR = "20162번： 간식 파티/CMakeFiles/snack_party.dir"
+  OBJECT_FILE_DIR = "20162번： 간식 파티/CMakeFiles/snack_party.dir/cpp/src"
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target snack_party
+
+
+#############################################
+# Link the executable 20162번： 간식 파티/snack_party
+
+build 20162번：$ 간식$ 파티/snack_party: CXX_EXECUTABLE_LINKER__snack_party_Debug 20162번：$ 간식$ 파티/CMakeFiles/snack_party.dir/cpp/src/main.cpp.o
+  FLAGS = -g
+  OBJECT_DIR = "20162번： 간식 파티/CMakeFiles/snack_party.dir"
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = "20162번： 간식 파티/snack_party"
+  TARGET_PDB = snack_party.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target snack_party_test
+
+
+#############################################
+# Order-only phony target for snack_party_test
+
+build cmake_object_order_depends_target_snack_party_test: phony || .
+
+build 20162번：$ 간식$ 파티/CMakeFiles/snack_party_test.dir/test/Testmain.cpp.o: CXX_COMPILER__snack_party_test_unscanned_Debug /home/monika/Documents/problems/20162번：$ 간식$ 파티/test/Testmain.cpp || cmake_object_order_depends_target_snack_party_test
+  DEFINES = -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS
+  DEP_FILE = "20162번： 간식 파티/CMakeFiles/snack_party_test.dir/test/Testmain.cpp.o.d"
+  FLAGS = -g -std=c++23
+  OBJECT_DIR = "20162번： 간식 파티/CMakeFiles/snack_party_test.dir"
+  OBJECT_FILE_DIR = "20162번： 간식 파티/CMakeFiles/snack_party_test.dir/test"
+
+build 20162번：$ 간식$ 파티/CMakeFiles/snack_party_test.dir/cpp/src/main.cpp.o: CXX_COMPILER__snack_party_test_unscanned_Debug /home/monika/Documents/problems/20162번：$ 간식$ 파티/cpp/src/main.cpp || cmake_object_order_depends_target_snack_party_test
+  DEFINES = -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS
+  DEP_FILE = "20162번： 간식 파티/CMakeFiles/snack_party_test.dir/cpp/src/main.cpp.o.d"
+  FLAGS = -g -std=c++23
+  OBJECT_DIR = "20162번： 간식 파티/CMakeFiles/snack_party_test.dir"
+  OBJECT_FILE_DIR = "20162번： 간식 파티/CMakeFiles/snack_party_test.dir/cpp/src"
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target snack_party_test
+
+
+#############################################
+# Link the executable 20162번： 간식 파티/snack_party_test
+
+build 20162번：$ 간식$ 파티/snack_party_test: CXX_EXECUTABLE_LINKER__snack_party_test_Debug 20162번：$ 간식$ 파티/CMakeFiles/snack_party_test.dir/test/Testmain.cpp.o 20162번：$ 간식$ 파티/CMakeFiles/snack_party_test.dir/cpp/src/main.cpp.o | /usr/lib64/libgtest_main.so.1.14.0 /usr/lib64/libgtest.so.1.14.0
+  FLAGS = -g
+  LINK_LIBRARIES = /usr/lib64/libgtest_main.so.1.14.0  /usr/lib64/libgtest.so.1.14.0
+  OBJECT_DIR = "20162번： 간식 파티/CMakeFiles/snack_party_test.dir"
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = "20162번： 간식 파티/snack_party_test"
+  TARGET_PDB = snack_party_test.dbg
+
+
+#############################################
+# Utility command for test
+
+build 20162번：$ 간식$ 파티/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd "/home/monika/Documents/problems/build/20162번： 간식 파티" && /usr/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build 20162번：$ 간식$ 파티/test: phony 20162번：$ 간식$ 파티/CMakeFiles/test.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build 20162번：$ 간식$ 파티/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd "/home/monika/Documents/problems/build/20162번： 간식 파티" && /usr/bin/ccmake -S/home/monika/Documents/problems -B/home/monika/Documents/problems/build
+  DESC = Running CMake cache editor...
+  pool = console
+  restat = 1
+
+build 20162번：$ 간식$ 파티/edit_cache: phony 20162번：$ 간식$ 파티/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build 20162번：$ 간식$ 파티/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd "/home/monika/Documents/problems/build/20162번： 간식 파티" && /usr/bin/cmake --regenerate-during-build -S/home/monika/Documents/problems -B/home/monika/Documents/problems/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build 20162번：$ 간식$ 파티/rebuild_cache: phony 20162번：$ 간식$ 파티/CMakeFiles/rebuild_cache.util
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/monika/Documents/problems/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for EXECUTABLE target mvp_diamonds
+
+
+#############################################
+# Order-only phony target for mvp_diamonds
+
+build cmake_object_order_depends_target_mvp_diamonds: phony || .
+
+build 20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeFiles/mvp_diamonds.dir/cpp/src/main.cpp.o: CXX_COMPILER__mvp_diamonds_unscanned_Debug /home/monika/Documents/problems/20413번：$ MVP$ 다이아몬드$ (Easy)/cpp/src/main.cpp || cmake_object_order_depends_target_mvp_diamonds
+  DEP_FILE = "20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds.dir/cpp/src/main.cpp.o.d"
+  FLAGS = -g -std=c++23
+  OBJECT_DIR = "20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds.dir"
+  OBJECT_FILE_DIR = "20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds.dir/cpp/src"
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target mvp_diamonds
+
+
+#############################################
+# Link the executable 20413번： MVP 다이아몬드 (Easy)/mvp_diamonds
+
+build 20413번：$ MVP$ 다이아몬드$ (Easy)/mvp_diamonds: CXX_EXECUTABLE_LINKER__mvp_diamonds_Debug 20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeFiles/mvp_diamonds.dir/cpp/src/main.cpp.o
+  FLAGS = -g
+  OBJECT_DIR = "20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds.dir"
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = "20413번： MVP 다이아몬드 (Easy)/mvp_diamonds"
+  TARGET_PDB = mvp_diamonds.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target mvp_diamonds_test
+
+
+#############################################
+# Order-only phony target for mvp_diamonds_test
+
+build cmake_object_order_depends_target_mvp_diamonds_test: phony || .
+
+build 20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeFiles/mvp_diamonds_test.dir/test/Testmain.cpp.o: CXX_COMPILER__mvp_diamonds_test_unscanned_Debug /home/monika/Documents/problems/20413번：$ MVP$ 다이아몬드$ (Easy)/test/Testmain.cpp || cmake_object_order_depends_target_mvp_diamonds_test
+  DEFINES = -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS
+  DEP_FILE = "20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir/test/Testmain.cpp.o.d"
+  FLAGS = -g -std=c++23
+  OBJECT_DIR = "20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir"
+  OBJECT_FILE_DIR = "20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir/test"
+
+build 20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeFiles/mvp_diamonds_test.dir/cpp/src/main.cpp.o: CXX_COMPILER__mvp_diamonds_test_unscanned_Debug /home/monika/Documents/problems/20413번：$ MVP$ 다이아몬드$ (Easy)/cpp/src/main.cpp || cmake_object_order_depends_target_mvp_diamonds_test
+  DEFINES = -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS
+  DEP_FILE = "20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir/cpp/src/main.cpp.o.d"
+  FLAGS = -g -std=c++23
+  OBJECT_DIR = "20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir"
+  OBJECT_FILE_DIR = "20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir/cpp/src"
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target mvp_diamonds_test
+
+
+#############################################
+# Link the executable 20413번： MVP 다이아몬드 (Easy)/mvp_diamonds_test
+
+build 20413번：$ MVP$ 다이아몬드$ (Easy)/mvp_diamonds_test: CXX_EXECUTABLE_LINKER__mvp_diamonds_test_Debug 20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeFiles/mvp_diamonds_test.dir/test/Testmain.cpp.o 20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeFiles/mvp_diamonds_test.dir/cpp/src/main.cpp.o | /usr/lib64/libgtest_main.so.1.14.0 /usr/lib64/libgtest.so.1.14.0
+  FLAGS = -g
+  LINK_LIBRARIES = /usr/lib64/libgtest_main.so.1.14.0  /usr/lib64/libgtest.so.1.14.0
+  OBJECT_DIR = "20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir"
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = "20413번： MVP 다이아몬드 (Easy)/mvp_diamonds_test"
+  TARGET_PDB = mvp_diamonds_test.dbg
+
+
+#############################################
+# Utility command for test
+
+build 20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd "/home/monika/Documents/problems/build/20413번： MVP 다이아몬드 (Easy)" && /usr/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build 20413번：$ MVP$ 다이아몬드$ (Easy)/test: phony 20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeFiles/test.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build 20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd "/home/monika/Documents/problems/build/20413번： MVP 다이아몬드 (Easy)" && /usr/bin/ccmake -S/home/monika/Documents/problems -B/home/monika/Documents/problems/build
+  DESC = Running CMake cache editor...
+  pool = console
+  restat = 1
+
+build 20413번：$ MVP$ 다이아몬드$ (Easy)/edit_cache: phony 20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build 20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd "/home/monika/Documents/problems/build/20413번： MVP 다이아몬드 (Easy)" && /usr/bin/cmake --regenerate-during-build -S/home/monika/Documents/problems -B/home/monika/Documents/problems/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build 20413번：$ MVP$ 다이아몬드$ (Easy)/rebuild_cache: phony 20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeFiles/rebuild_cache.util
+
+# =============================================================================
 # Target aliases.
 
 build game_addiction: phony 20152번：$ Game$ Addiction/game_addiction
 
 build game_addiction_test: phony 20152번：$ Game$ Addiction/game_addiction_test
+
+build mvp_diamonds: phony 20413번：$ MVP$ 다이아몬드$ (Easy)/mvp_diamonds
+
+build mvp_diamonds_test: phony 20413번：$ MVP$ 다이아몬드$ (Easy)/mvp_diamonds_test
 
 build negative_base2: phony 19981번：$ ЕГЭ/negative_base2
 
@@ -543,6 +771,10 @@ build ranking_game: phony 20006번：$ 랭킹전$ 대기열/ranking_game
 
 build ranking_game_test: phony 20006번：$ 랭킹전$ 대기열/ranking_game_test
 
+build snack_party: phony 20162번：$ 간식$ 파티/snack_party
+
+build snack_party_test: phony 20162번：$ 간식$ 파티/snack_party_test
+
 # =============================================================================
 # Folder targets.
 
@@ -551,7 +783,7 @@ build ranking_game_test: phony 20006번：$ 랭킹전$ 대기열/ranking_game_te
 #############################################
 # Folder: /home/monika/Documents/problems/build
 
-build all: phony 19981번：$ ЕГЭ/all 20006번：$ 랭킹전$ 대기열/all 20152번：$ Game$ Addiction/all 20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!/all
+build all: phony 19981번：$ ЕГЭ/all 20006번：$ 랭킹전$ 대기열/all 20152번：$ Game$ Addiction/all 20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!/all 20162번：$ 간식$ 파티/all 20413번：$ MVP$ 다이아몬드$ (Easy)/all
 
 # =============================================================================
 
@@ -582,20 +814,34 @@ build 20152번：$ Game$ Addiction/all: phony 20152번：$ Game$ Addiction/game_
 build 20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!/all: phony 20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!/power_of_two 20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!/power_of_two_test
 
 # =============================================================================
+
+#############################################
+# Folder: /home/monika/Documents/problems/build/20162번： 간식 파티
+
+build 20162번：$ 간식$ 파티/all: phony 20162번：$ 간식$ 파티/snack_party 20162번：$ 간식$ 파티/snack_party_test
+
+# =============================================================================
+
+#############################################
+# Folder: /home/monika/Documents/problems/build/20413번： MVP 다이아몬드 (Easy)
+
+build 20413번：$ MVP$ 다이아몬드$ (Easy)/all: phony 20413번：$ MVP$ 다이아몬드$ (Easy)/mvp_diamonds 20413번：$ MVP$ 다이아몬드$ (Easy)/mvp_diamonds_test
+
+# =============================================================================
 # Built-in targets
 
 
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /home/monika/Documents/problems/19981번：$ ЕГЭ/CMakeLists.txt /home/monika/Documents/problems/20006번：$ 랭킹전$ 대기열/CMakeLists.txt /home/monika/Documents/problems/20152번：$ Game$ Addiction/CMakeLists.txt /home/monika/Documents/problems/20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!/CMakeLists.txt /home/monika/Documents/problems/CMakeLists.txt /usr/lib64/cmake/GTest/GTestConfig.cmake /usr/lib64/cmake/GTest/GTestConfigVersion.cmake /usr/lib64/cmake/GTest/GTestTargets-noconfig.cmake /usr/lib64/cmake/GTest/GTestTargets.cmake /usr/share/cmake/Modules/CMakeCXXInformation.cmake /usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake /usr/share/cmake/Modules/CMakeGenericSystem.cmake /usr/share/cmake/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake/Modules/CMakeLanguageInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake/Modules/CheckCXXSourceCompiles.cmake /usr/share/cmake/Modules/CheckIncludeFileCXX.cmake /usr/share/cmake/Modules/CheckLibraryExists.cmake /usr/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake/Modules/Compiler/GNU.cmake /usr/share/cmake/Modules/FindGTest.cmake /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake/Modules/FindPackageMessage.cmake /usr/share/cmake/Modules/FindThreads.cmake /usr/share/cmake/Modules/GoogleTest.cmake /usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake/Modules/Platform/Linux-GNU.cmake /usr/share/cmake/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake/Modules/Platform/Linux.cmake /usr/share/cmake/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.30.8/CMakeCXXCompiler.cmake CMakeFiles/3.30.8/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /home/monika/Documents/problems/19981번：$ ЕГЭ/CMakeLists.txt /home/monika/Documents/problems/20006번：$ 랭킹전$ 대기열/CMakeLists.txt /home/monika/Documents/problems/20152번：$ Game$ Addiction/CMakeLists.txt /home/monika/Documents/problems/20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!/CMakeLists.txt /home/monika/Documents/problems/20162번：$ 간식$ 파티/CMakeLists.txt /home/monika/Documents/problems/20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeLists.txt /home/monika/Documents/problems/CMakeLists.txt /usr/lib64/cmake/GTest/GTestConfig.cmake /usr/lib64/cmake/GTest/GTestConfigVersion.cmake /usr/lib64/cmake/GTest/GTestTargets-noconfig.cmake /usr/lib64/cmake/GTest/GTestTargets.cmake /usr/share/cmake/Modules/CMakeCXXInformation.cmake /usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake /usr/share/cmake/Modules/CMakeGenericSystem.cmake /usr/share/cmake/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake/Modules/CMakeLanguageInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake/Modules/CheckCXXSourceCompiles.cmake /usr/share/cmake/Modules/CheckIncludeFileCXX.cmake /usr/share/cmake/Modules/CheckLibraryExists.cmake /usr/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake/Modules/Compiler/GNU.cmake /usr/share/cmake/Modules/FindGTest.cmake /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake/Modules/FindPackageMessage.cmake /usr/share/cmake/Modules/FindThreads.cmake /usr/share/cmake/Modules/GoogleTest.cmake /usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake/Modules/Platform/Linux-GNU.cmake /usr/share/cmake/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake/Modules/Platform/Linux.cmake /usr/share/cmake/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.30.8/CMakeCXXCompiler.cmake CMakeFiles/3.30.8/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /home/monika/Documents/problems/19981번：$ ЕГЭ/CMakeLists.txt /home/monika/Documents/problems/20006번：$ 랭킹전$ 대기열/CMakeLists.txt /home/monika/Documents/problems/20152번：$ Game$ Addiction/CMakeLists.txt /home/monika/Documents/problems/20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!/CMakeLists.txt /home/monika/Documents/problems/CMakeLists.txt /usr/lib64/cmake/GTest/GTestConfig.cmake /usr/lib64/cmake/GTest/GTestConfigVersion.cmake /usr/lib64/cmake/GTest/GTestTargets-noconfig.cmake /usr/lib64/cmake/GTest/GTestTargets.cmake /usr/share/cmake/Modules/CMakeCXXInformation.cmake /usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake /usr/share/cmake/Modules/CMakeGenericSystem.cmake /usr/share/cmake/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake/Modules/CMakeLanguageInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake/Modules/CheckCXXSourceCompiles.cmake /usr/share/cmake/Modules/CheckIncludeFileCXX.cmake /usr/share/cmake/Modules/CheckLibraryExists.cmake /usr/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake/Modules/Compiler/GNU.cmake /usr/share/cmake/Modules/FindGTest.cmake /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake/Modules/FindPackageMessage.cmake /usr/share/cmake/Modules/FindThreads.cmake /usr/share/cmake/Modules/GoogleTest.cmake /usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake/Modules/Platform/Linux-GNU.cmake /usr/share/cmake/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake/Modules/Platform/Linux.cmake /usr/share/cmake/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.30.8/CMakeCXXCompiler.cmake CMakeFiles/3.30.8/CMakeSystem.cmake: phony
+build /home/monika/Documents/problems/19981번：$ ЕГЭ/CMakeLists.txt /home/monika/Documents/problems/20006번：$ 랭킹전$ 대기열/CMakeLists.txt /home/monika/Documents/problems/20152번：$ Game$ Addiction/CMakeLists.txt /home/monika/Documents/problems/20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!/CMakeLists.txt /home/monika/Documents/problems/20162번：$ 간식$ 파티/CMakeLists.txt /home/monika/Documents/problems/20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeLists.txt /home/monika/Documents/problems/CMakeLists.txt /usr/lib64/cmake/GTest/GTestConfig.cmake /usr/lib64/cmake/GTest/GTestConfigVersion.cmake /usr/lib64/cmake/GTest/GTestTargets-noconfig.cmake /usr/lib64/cmake/GTest/GTestTargets.cmake /usr/share/cmake/Modules/CMakeCXXInformation.cmake /usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake /usr/share/cmake/Modules/CMakeGenericSystem.cmake /usr/share/cmake/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake/Modules/CMakeLanguageInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake/Modules/CheckCXXSourceCompiles.cmake /usr/share/cmake/Modules/CheckIncludeFileCXX.cmake /usr/share/cmake/Modules/CheckLibraryExists.cmake /usr/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake/Modules/Compiler/GNU.cmake /usr/share/cmake/Modules/FindGTest.cmake /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake/Modules/FindPackageMessage.cmake /usr/share/cmake/Modules/FindThreads.cmake /usr/share/cmake/Modules/GoogleTest.cmake /usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake/Modules/Platform/Linux-GNU.cmake /usr/share/cmake/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake/Modules/Platform/Linux.cmake /usr/share/cmake/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.30.8/CMakeCXXCompiler.cmake CMakeFiles/3.30.8/CMakeSystem.cmake: phony
 
 
 #############################################
