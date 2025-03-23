@@ -11,3 +11,13 @@
 /home/monika/Documents/problems/build/20006번： 랭킹전 대기열/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/20006번： 랭킹전 대기열/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/20006번： 랭킹전 대기열/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/20152번： Game Addiction/CMakeFiles/game_addiction.dir
+/home/monika/Documents/problems/build/20152번： Game Addiction/CMakeFiles/game_addiction_test.dir
+/home/monika/Documents/problems/build/20152번： Game Addiction/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/20152번： Game Addiction/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/20152번： Game Addiction/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two.dir
+/home/monika/Documents/problems/build/20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two_test.dir
+/home/monika/Documents/problems/build/20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/rebuild_cache.dir

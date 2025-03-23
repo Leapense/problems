@@ -6,3 +6,5 @@
 # testing this directory and lists subdirectories to be tested as well.
 subdirs("19981번： ЕГЭ")
 subdirs("20006번： 랭킹전 대기열")
+subdirs("20152번： Game Addiction")
+subdirs("20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!")

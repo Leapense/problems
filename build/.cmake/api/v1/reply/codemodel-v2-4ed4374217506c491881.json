@@ -1,0 +1,231 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4
+					],
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "19981\ubc88\uff1a \u0415\u0413\u042d",
+					"jsonFile" : "directory-19981\ubc88\uff1a \u0415\u0413\u042d-Debug-2a14dacb81a6c627af33.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "19981\ubc88\uff1a \u0415\u0413\u042d",
+					"targetIndexes" : 
+					[
+						2,
+						3
+					]
+				},
+				{
+					"build" : "20006\ubc88\uff1a \ub7ad\ud0b9\uc804 \ub300\uae30\uc5f4",
+					"jsonFile" : "directory-20006\ubc88\uff1a \ub7ad\ud0b9\uc804 \ub300\uae30\uc5f4-Debug-cf031db515ea5d12021c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "20006\ubc88\uff1a \ub7ad\ud0b9\uc804 \ub300\uae30\uc5f4",
+					"targetIndexes" : 
+					[
+						6,
+						7
+					]
+				},
+				{
+					"build" : "20152\ubc88\uff1a Game Addiction",
+					"jsonFile" : "directory-20152\ubc88\uff1a Game Addiction-Debug-2bfee27b19d923fc9863.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 3,
+					"source" : "20152\ubc88\uff1a Game Addiction",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"build" : "20153\ubc88\uff1a \uc601\uc6c5\uc774\ub294 2\uc758 \uac70\ub4ed \uc81c\uacf1\uc744 \uc88b\uc544\ud574! \uc601\uc6c5\uc774\ub294 2\uc758 \uac70\ub4ed \uc81c\uacf1\uc744 \uc88b\uc544\ud574!",
+					"jsonFile" : "directory-20153\ubc88\uff1a \uc601\uc6c5\uc774\ub294 2\uc758 \uac70\ub4ed \uc81c\uacf1\uc744 \uc88b\uc544\ud574! \uc601\uc6c5\uc774\ub294 2\uc758 \uac70\ub4ed \uc81c\uacf1\uc744 \uc88b\uc544\ud574!-Debug-f65c1ccce2b87a25c36e.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 4,
+					"source" : "20153\ubc88\uff1a \uc601\uc6c5\uc774\ub294 2\uc758 \uac70\ub4ed \uc81c\uacf1\uc744 \uc88b\uc544\ud574! \uc601\uc6c5\uc774\ub294 2\uc758 \uac70\ub4ed \uc81c\uacf1\uc744 \uc88b\uc544\ud574!",
+					"targetIndexes" : 
+					[
+						4,
+						5
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4
+					],
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "TestCpp"
+				},
+				{
+					"directoryIndexes" : 
+					[
+						1
+					],
+					"name" : "NEGATIVE_BASE2",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2,
+						3
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "RANKING_GAME",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						6,
+						7
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "POWER_OF_TWO",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						4,
+						5
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 3,
+					"id" : "game_addiction::@cddd1d6f5e1163dea7c9",
+					"jsonFile" : "target-game_addiction-Debug-f2b6816ac67dadef2712.json",
+					"name" : "game_addiction",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 3,
+					"id" : "game_addiction_test::@cddd1d6f5e1163dea7c9",
+					"jsonFile" : "target-game_addiction_test-Debug-0b6e88df51cd146b0369.json",
+					"name" : "game_addiction_test",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "negative_base2::@a953c3f93b26479c9cf2",
+					"jsonFile" : "target-negative_base2-Debug-d3f9b2a4cd9be506bf5e.json",
+					"name" : "negative_base2",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "negative_base2_test::@a953c3f93b26479c9cf2",
+					"jsonFile" : "target-negative_base2_test-Debug-c4d38b47ed29a89f49ce.json",
+					"name" : "negative_base2_test",
+					"projectIndex" : 1
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "power_of_two::@979a85d16096e3fb0a5e",
+					"jsonFile" : "target-power_of_two-Debug-fc55aab960ad9fe0e6bb.json",
+					"name" : "power_of_two",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "power_of_two_test::@979a85d16096e3fb0a5e",
+					"jsonFile" : "target-power_of_two_test-Debug-18a0cc36b7f03e6584c2.json",
+					"name" : "power_of_two_test",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ranking_game::@8419d0b69ead9d0bd261",
+					"jsonFile" : "target-ranking_game-Debug-2775af7806d9e478e67a.json",
+					"name" : "ranking_game",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "ranking_game_test::@8419d0b69ead9d0bd261",
+					"jsonFile" : "target-ranking_game_test-Debug-e408e023f44b0a8f38c2.json",
+					"name" : "ranking_game_test",
+					"projectIndex" : 2
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/monika/Documents/problems/build",
+		"source" : "/home/monika/Documents/problems"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 7
+	}
+}

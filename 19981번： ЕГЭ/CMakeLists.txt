@@ -22,5 +22,3 @@ add_executable(negative_base2_test
 # 테스트 빌드에서는 메인 함수를 제외하도록 매크로 정의
 target_compile_definitions(negative_base2_test PRIVATE UNIT_TESTS)
 target_link_libraries(negative_base2_test PRIVATE GTest::gtest_main)
-
-add_test(NAME negative_base2_test COMMAND negative_base2_test)

@@ -34,5 +34,41 @@
   "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20006번： 랭킹전 대기열/CMakeFiles/ranking_game_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20006번： 랭킹전 대기열/cpp/src/main.cpp\"",
   "file": "/home/monika/Documents/problems/20006번： 랭킹전 대기열/cpp/src/main.cpp",
   "output": "20006번： 랭킹전 대기열/CMakeFiles/ranking_game_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 20152번： Game Addiction/CMakeFiles/game_addiction.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20152번： Game Addiction/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20152번： Game Addiction/cpp/src/main.cpp",
+  "output": "20152번： Game Addiction/CMakeFiles/game_addiction.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20152번： Game Addiction/CMakeFiles/game_addiction_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/20152번： Game Addiction/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/20152번： Game Addiction/test/Testmain.cpp",
+  "output": "20152번： Game Addiction/CMakeFiles/game_addiction_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20152번： Game Addiction/CMakeFiles/game_addiction_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20152번： Game Addiction/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20152번： Game Addiction/cpp/src/main.cpp",
+  "output": "20152번： Game Addiction/CMakeFiles/game_addiction_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/cpp/src/main.cpp",
+  "output": "20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/test/Testmain.cpp",
+  "output": "20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/cpp/src/main.cpp",
+  "output": "20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two_test.dir/cpp/src/main.cpp.o"
 }
 ]

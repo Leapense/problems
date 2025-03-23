@@ -23,4 +23,3 @@ add_executable(ranking_game_test
 target_compile_definitions(ranking_game_test PRIVATE UNIT_TESTS)
 target_link_libraries(ranking_game_test PRIVATE GTest::gtest_main)
 
-add_test(NAME ranking_game_test COMMAND ranking_game_test)

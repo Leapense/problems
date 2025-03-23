@@ -46,6 +46,8 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
   include("/home/monika/Documents/problems/build/19981번： ЕГЭ/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/20006번： 랭킹전 대기열/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/20152번： Game Addiction/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/cmake_install.cmake")
 
 endif()
 

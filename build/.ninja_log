@@ -1,17 +1,24 @@
 # ninja log v6
 1	1065	1742640808239280163	19981번： ЕГЭ/CMakeFiles/negative_base2.dir/cpp/src/main.cpp.o	35b73fad994a8343
-1966	2080	1742640861426785064	20006번： 랭킹전 대기열/ranking_game_test	8a0f621368cb1b09
-2	1069	1742640808240280172	19981번： ЕГЭ/CMakeFiles/negative_base2_test.dir/cpp/src/main.cpp.o	4917e1a833337d70
-1	1867	1742640778911001749	19981번： ЕГЭ/CMakeFiles/negative_base2_test.dir/test/Testmain.cpp.o	e6197c20efc38f40
-2	1966	1742640859464124422	20006번： 랭킹전 대기열/CMakeFiles/ranking_game_test.dir/cpp/src/main.cpp.o	39536f98a2606470
-2	1992	1742640859462766420	20006번： 랭킹전 대기열/CMakeFiles/ranking_game.dir/cpp/src/main.cpp.o	8947fe11eb6b1d23
-2	3648	1742640581032977068	20006번： 랭킹전 대기열/CMakeFiles/ranking_game_test.dir/test/Testmain.cpp.o	a3fbf79d3c769cb2
-2	147	1742640859464462150	19981번： ЕГЭ/negative_base2_test	5180483d015de6d7
-2	135	1742640859464305584	19981번： ЕГЭ/negative_base2	6bb7cf91bff20561
-1992	2088	1742640861452785311	20006번： 랭킹전 대기열/ranking_game	f3f144cd8eb9ee55
-1	1410	1742640919384335259	19981번： ЕГЭ/CMakeFiles/negative_base2_test.dir/cpp/src/main.cpp.o	3b5d40615fa245a0
-1	2293	1742640919383335250	19981번： ЕГЭ/CMakeFiles/negative_base2_test.dir/test/Testmain.cpp.o	517dec15ae79c03f
-2293	2392	1742640921675357008	19981번： ЕГЭ/negative_base2_test	5180483d015de6d7
-2	2410	1742640919385018591	20006번： 랭킹전 대기열/CMakeFiles/ranking_game_test.dir/cpp/src/main.cpp.o	2fa927bf7c21e3d0
-2	3705	1742640919384863058	20006번： 랭킹전 대기열/CMakeFiles/ranking_game_test.dir/test/Testmain.cpp.o	e4d17ba5a200af37
 3705	3784	1742640923087370412	20006번： 랭킹전 대기열/ranking_game_test	8a0f621368cb1b09
+1	2091	1742644833796190630	20152번： Game Addiction/CMakeFiles/game_addiction.dir/cpp/src/main.cpp.o	e42671b3aafcf1f9
+1992	2088	1742640861452785311	20006번： 랭킹전 대기열/ranking_game	f3f144cd8eb9ee55
+2	1063	1742706134038509779	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two_test.dir/cpp/src/main.cpp.o	4502ac085f088782
+3497	3576	1742644837292221728	20152번： Game Addiction/game_addiction_test	cd749d6c6828bb2e
+1	1767	1742705971882920568	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two_test.dir/test/Testmain.cpp.o	eda4fef95ecaa969
+2	3705	1742640919384863058	20006번： 랭킹전 대기열/CMakeFiles/ranking_game_test.dir/test/Testmain.cpp.o	e4d17ba5a200af37
+2	1992	1742640859462766420	20006번： 랭킹전 대기열/CMakeFiles/ranking_game.dir/cpp/src/main.cpp.o	8947fe11eb6b1d23
+2293	2392	1742640921675357008	19981번： ЕГЭ/negative_base2_test	5180483d015de6d7
+1	3497	1742644833797190639	20152번： Game Addiction/CMakeFiles/game_addiction_test.dir/test/Testmain.cpp.o	4457c8103cfd0af0
+1	2293	1742640919383335250	19981번： ЕГЭ/CMakeFiles/negative_base2_test.dir/test/Testmain.cpp.o	517dec15ae79c03f
+1	1410	1742640919384335259	19981번： ЕГЭ/CMakeFiles/negative_base2_test.dir/cpp/src/main.cpp.o	3b5d40615fa245a0
+2	1102	1742706134037977951	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two.dir/cpp/src/main.cpp.o	8cc1e7d2de27be
+2	2092	1742644833797930097	20152번： Game Addiction/CMakeFiles/game_addiction_test.dir/cpp/src/main.cpp.o	fb1843acabc77a4b
+2092	2190	1742644835887209230	20152번： Game Addiction/game_addiction	ddda6074bdcab8c8
+2	2410	1742640919385018591	20006번： 랭킹전 대기열/CMakeFiles/ranking_game_test.dir/cpp/src/main.cpp.o	2fa927bf7c21e3d0
+2	135	1742640859464305584	19981번： ЕГЭ/negative_base2	6bb7cf91bff20561
+1	1114	1742706770583972640	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two_test.dir/cpp/src/main.cpp.o	4502ac085f088782
+1	1147	1742706770582243774	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two.dir/cpp/src/main.cpp.o	8cc1e7d2de27be
+1147	1229	1742706771728264035	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/power_of_two	c17941d19a99d02
+1	1915	1742706770583755649	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two_test.dir/test/Testmain.cpp.o	eda4fef95ecaa969
+1915	1995	1742706772496277613	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/power_of_two_test	f137c88d01a7f8b9
