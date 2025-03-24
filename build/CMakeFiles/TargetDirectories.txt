@@ -51,3 +51,8 @@
 /home/monika/Documents/problems/build/20476번： Занос/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/20476번： Занос/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/20476번： Занос/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/20484번： Игра/CMakeFiles/game_test.dir
+/home/monika/Documents/problems/build/20484번： Игра/CMakeFiles/game_test_test.dir
+/home/monika/Documents/problems/build/20484번： Игра/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/20484번： Игра/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/20484번： Игра/CMakeFiles/rebuild_cache.dir

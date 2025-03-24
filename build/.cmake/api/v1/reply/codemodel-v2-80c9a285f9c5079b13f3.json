@@ -17,7 +17,8 @@
 						7,
 						8,
 						9,
-						10
+						10,
+						11
 					],
 					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
@@ -39,8 +40,8 @@
 					"source" : "19981\ubc88\uff1a \u0415\u0413\u042d",
 					"targetIndexes" : 
 					[
-						8,
-						9
+						10,
+						11
 					]
 				},
 				{
@@ -55,8 +56,8 @@
 					"source" : "20006\ubc88\uff1a \ub7ad\ud0b9\uc804 \ub300\uae30\uc5f4",
 					"targetIndexes" : 
 					[
-						14,
-						15
+						16,
+						17
 					]
 				},
 				{
@@ -87,8 +88,8 @@
 					"source" : "20153\ubc88\uff1a \uc601\uc6c5\uc774\ub294 2\uc758 \uac70\ub4ed \uc81c\uacf1\uc744 \uc88b\uc544\ud574! \uc601\uc6c5\uc774\ub294 2\uc758 \uac70\ub4ed \uc81c\uacf1\uc744 \uc88b\uc544\ud574!",
 					"targetIndexes" : 
 					[
-						10,
-						11
+						12,
+						13
 					]
 				},
 				{
@@ -103,8 +104,8 @@
 					"source" : "20162\ubc88\uff1a \uac04\uc2dd \ud30c\ud2f0",
 					"targetIndexes" : 
 					[
-						18,
-						19
+						20,
+						21
 					]
 				},
 				{
@@ -119,8 +120,8 @@
 					"source" : "20413\ubc88\uff1a MVP \ub2e4\uc774\uc544\ubaac\ub4dc (Easy)",
 					"targetIndexes" : 
 					[
-						6,
-						7
+						8,
+						9
 					]
 				},
 				{
@@ -135,8 +136,8 @@
 					"source" : "20416\ubc88\uff1a \uc5ed\uc804\uc758 \uc81c\uc655 (Easy)",
 					"targetIndexes" : 
 					[
-						16,
-						17
+						18,
+						19
 					]
 				},
 				{
@@ -183,8 +184,24 @@
 					"source" : "20476\ubc88\uff1a \u0417\u0430\u043d\u043e\u0441",
 					"targetIndexes" : 
 					[
-						12,
-						13
+						14,
+						15
+					]
+				},
+				{
+					"build" : "20484\ubc88\uff1a \u0418\u0433\u0440\u0430",
+					"jsonFile" : "directory-20484\ubc88\uff1a \u0418\u0433\u0440\u0430-Debug-a9caa0dd7400f73aa7f2.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 11,
+					"source" : "20484\ubc88\uff1a \u0418\u0433\u0440\u0430",
+					"targetIndexes" : 
+					[
+						6,
+						7
 					]
 				}
 			],
@@ -203,7 +220,8 @@
 						7,
 						8,
 						9,
-						10
+						10,
+						11
 					],
 					"directoryIndexes" : 
 					[
@@ -220,8 +238,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						8,
-						9
+						10,
+						11
 					]
 				},
 				{
@@ -233,8 +251,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						14,
-						15
+						16,
+						17
 					]
 				},
 				{
@@ -259,8 +277,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						10,
-						11
+						12,
+						13
 					]
 				},
 				{
@@ -272,8 +290,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						18,
-						19
+						20,
+						21
 					]
 				},
 				{
@@ -285,8 +303,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						6,
-						7
+						8,
+						9
 					]
 				},
 				{
@@ -298,8 +316,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						16,
-						17
+						18,
+						19
 					]
 				},
 				{
@@ -337,8 +355,21 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						12,
-						13
+						14,
+						15
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						11
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						6,
+						7
 					]
 				}
 			],
@@ -385,6 +416,20 @@
 					"jsonFile" : "target-game_addiction_test-Debug-0b6e88df51cd146b0369.json",
 					"name" : "game_addiction_test",
 					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 11,
+					"id" : "game_test::@39d1354b9079b429fb72",
+					"jsonFile" : "target-game_test-Debug-474e5544ab1233b1d48f.json",
+					"name" : "game_test",
+					"projectIndex" : 11
+				},
+				{
+					"directoryIndex" : 11,
+					"id" : "game_test_test::@39d1354b9079b429fb72",
+					"jsonFile" : "target-game_test_test-Debug-4c6fbfb3e3677a54a0eb.json",
+					"name" : "game_test_test",
+					"projectIndex" : 11
 				},
 				{
 					"directoryIndex" : 6,

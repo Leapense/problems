@@ -178,5 +178,23 @@
   "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20476번： Занос/CMakeFiles/race_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20476번： Занос/cpp/src/main.cpp\"",
   "file": "/home/monika/Documents/problems/20476번： Занос/cpp/src/main.cpp",
   "output": "20476번： Занос/CMakeFiles/race_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 20484번： Игра/CMakeFiles/game_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20484번： Игра/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20484번： Игра/cpp/src/main.cpp",
+  "output": "20484번： Игра/CMakeFiles/game_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20484번： Игра/CMakeFiles/game_test_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/20484번： Игра/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/20484번： Игра/test/Testmain.cpp",
+  "output": "20484번： Игра/CMakeFiles/game_test_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20484번： Игра/CMakeFiles/game_test_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20484번： Игра/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20484번： Игра/cpp/src/main.cpp",
+  "output": "20484번： Игра/CMakeFiles/game_test_test.dir/cpp/src/main.cpp.o"
 }
 ]
