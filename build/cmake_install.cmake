@@ -50,6 +50,9 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/monika/Documents/problems/build/20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/20162번： 간식 파티/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/20413번： MVP 다이아몬드 (Easy)/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/20416번： 역전의 제왕 (Easy)/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/20438번： 출석체크/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/20455번： Калькулятор/cmake_install.cmake")
 
 endif()
 

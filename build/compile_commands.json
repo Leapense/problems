@@ -106,5 +106,59 @@
   "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20413번： MVP 다이아몬드 (Easy)/cpp/src/main.cpp\"",
   "file": "/home/monika/Documents/problems/20413번： MVP 다이아몬드 (Easy)/cpp/src/main.cpp",
   "output": "20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20416번： 역전의 제왕 (Easy)/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20416번： 역전의 제왕 (Easy)/cpp/src/main.cpp",
+  "output": "20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/20416번： 역전의 제왕 (Easy)/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/20416번： 역전의 제왕 (Easy)/test/Testmain.cpp",
+  "output": "20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20416번： 역전의 제왕 (Easy)/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20416번： 역전의 제왕 (Easy)/cpp/src/main.cpp",
+  "output": "20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 20438번： 출석체크/CMakeFiles/attend_check.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20438번： 출석체크/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20438번： 출석체크/cpp/src/main.cpp",
+  "output": "20438번： 출석체크/CMakeFiles/attend_check.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20438번： 출석체크/CMakeFiles/attend_check_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/20438번： 출석체크/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/20438번： 출석체크/test/Testmain.cpp",
+  "output": "20438번： 출석체크/CMakeFiles/attend_check_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20438번： 출석체크/CMakeFiles/attend_check_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20438번： 출석체크/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20438번： 출석체크/cpp/src/main.cpp",
+  "output": "20438번： 출석체크/CMakeFiles/attend_check_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 20455번： Калькулятор/CMakeFiles/boj_20455.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20455번： Калькулятор/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20455번： Калькулятор/cpp/src/main.cpp",
+  "output": "20455번： Калькулятор/CMakeFiles/boj_20455.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20455번： Калькулятор/CMakeFiles/boj_20455_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/20455번： Калькулятор/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/20455번： Калькулятор/test/Testmain.cpp",
+  "output": "20455번： Калькулятор/CMakeFiles/boj_20455_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20455번： Калькулятор/CMakeFiles/boj_20455_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20455번： Калькулятор/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20455번： Калькулятор/cpp/src/main.cpp",
+  "output": "20455번： Калькулятор/CMakeFiles/boj_20455_test.dir/cpp/src/main.cpp.o"
 }
 ]

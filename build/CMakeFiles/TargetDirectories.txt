@@ -31,3 +31,18 @@
 /home/monika/Documents/problems/build/20413번： MVP 다이아몬드 (Easy)/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/20413번： MVP 다이아몬드 (Easy)/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/20413번： MVP 다이아몬드 (Easy)/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king.dir
+/home/monika/Documents/problems/build/20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king_test.dir
+/home/monika/Documents/problems/build/20416번： 역전의 제왕 (Easy)/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/20416번： 역전의 제왕 (Easy)/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/20416번： 역전의 제왕 (Easy)/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/20438번： 출석체크/CMakeFiles/attend_check.dir
+/home/monika/Documents/problems/build/20438번： 출석체크/CMakeFiles/attend_check_test.dir
+/home/monika/Documents/problems/build/20438번： 출석체크/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/20438번： 출석체크/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/20438번： 출석체크/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/20455번： Калькулятор/CMakeFiles/boj_20455.dir
+/home/monika/Documents/problems/build/20455번： Калькулятор/CMakeFiles/boj_20455_test.dir
+/home/monika/Documents/problems/build/20455번： Калькулятор/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/20455번： Калькулятор/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/20455번： Калькулятор/CMakeFiles/rebuild_cache.dir

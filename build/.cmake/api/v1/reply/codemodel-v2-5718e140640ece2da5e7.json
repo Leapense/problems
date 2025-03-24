@@ -13,7 +13,10 @@
 						3,
 						4,
 						5,
-						6
+						6,
+						7,
+						8,
+						9
 					],
 					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
@@ -35,8 +38,8 @@
 					"source" : "19981\ubc88\uff1a \u0415\u0413\u042d",
 					"targetIndexes" : 
 					[
-						4,
-						5
+						8,
+						9
 					]
 				},
 				{
@@ -51,8 +54,8 @@
 					"source" : "20006\ubc88\uff1a \ub7ad\ud0b9\uc804 \ub300\uae30\uc5f4",
 					"targetIndexes" : 
 					[
-						8,
-						9
+						12,
+						13
 					]
 				},
 				{
@@ -67,8 +70,8 @@
 					"source" : "20152\ubc88\uff1a Game Addiction",
 					"targetIndexes" : 
 					[
-						0,
-						1
+						4,
+						5
 					]
 				},
 				{
@@ -83,8 +86,8 @@
 					"source" : "20153\ubc88\uff1a \uc601\uc6c5\uc774\ub294 2\uc758 \uac70\ub4ed \uc81c\uacf1\uc744 \uc88b\uc544\ud574! \uc601\uc6c5\uc774\ub294 2\uc758 \uac70\ub4ed \uc81c\uacf1\uc744 \uc88b\uc544\ud574!",
 					"targetIndexes" : 
 					[
-						6,
-						7
+						10,
+						11
 					]
 				},
 				{
@@ -99,8 +102,8 @@
 					"source" : "20162\ubc88\uff1a \uac04\uc2dd \ud30c\ud2f0",
 					"targetIndexes" : 
 					[
-						10,
-						11
+						16,
+						17
 					]
 				},
 				{
@@ -113,6 +116,54 @@
 					"parentIndex" : 0,
 					"projectIndex" : 6,
 					"source" : "20413\ubc88\uff1a MVP \ub2e4\uc774\uc544\ubaac\ub4dc (Easy)",
+					"targetIndexes" : 
+					[
+						6,
+						7
+					]
+				},
+				{
+					"build" : "20416\ubc88\uff1a \uc5ed\uc804\uc758 \uc81c\uc655 (Easy)",
+					"jsonFile" : "directory-20416\ubc88\uff1a \uc5ed\uc804\uc758 \uc81c\uc655 (Easy)-Debug-12793f60c17a4c315a0d.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 7,
+					"source" : "20416\ubc88\uff1a \uc5ed\uc804\uc758 \uc81c\uc655 (Easy)",
+					"targetIndexes" : 
+					[
+						14,
+						15
+					]
+				},
+				{
+					"build" : "20438\ubc88\uff1a \ucd9c\uc11d\uccb4\ud06c",
+					"jsonFile" : "directory-20438\ubc88\uff1a \ucd9c\uc11d\uccb4\ud06c-Debug-f90143618e9c94bd1895.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 8,
+					"source" : "20438\ubc88\uff1a \ucd9c\uc11d\uccb4\ud06c",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				},
+				{
+					"build" : "20455\ubc88\uff1a \u041a\u0430\u043b\u044c\u043a\u0443\u043b\u044f\u0442\u043e\u0440",
+					"jsonFile" : "directory-20455\ubc88\uff1a \u041a\u0430\u043b\u044c\u043a\u0443\u043b\u044f\u0442\u043e\u0440-Debug-72d62483b5465cad1ae8.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 9,
+					"source" : "20455\ubc88\uff1a \u041a\u0430\u043b\u044c\u043a\u0443\u043b\u044f\u0442\u043e\u0440",
 					"targetIndexes" : 
 					[
 						2,
@@ -131,7 +182,10 @@
 						3,
 						4,
 						5,
-						6
+						6,
+						7,
+						8,
+						9
 					],
 					"directoryIndexes" : 
 					[
@@ -148,8 +202,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						4,
-						5
+						8,
+						9
 					]
 				},
 				{
@@ -161,14 +215,79 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						8,
-						9
+						12,
+						13
 					]
 				},
 				{
 					"directoryIndexes" : 
 					[
 						3
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						4,
+						5
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "POWER_OF_TWO",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						10,
+						11
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						5
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						16,
+						17
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						6
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						6,
+						7
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						7
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						14,
+						15
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						8
 					],
 					"name" : "GAME_ADDICTION",
 					"parentIndex" : 0,
@@ -181,33 +300,7 @@
 				{
 					"directoryIndexes" : 
 					[
-						4
-					],
-					"name" : "POWER_OF_TWO",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						6,
-						7
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						5
-					],
-					"name" : "GAME_ADDICTION",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						10,
-						11
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						6
+						9
 					],
 					"name" : "GAME_ADDICTION",
 					"parentIndex" : 0,
@@ -220,6 +313,34 @@
 			],
 			"targets" : 
 			[
+				{
+					"directoryIndex" : 8,
+					"id" : "attend_check::@02f444e6a6e8e76d02a3",
+					"jsonFile" : "target-attend_check-Debug-3f7059c0e1a67d5ad32a.json",
+					"name" : "attend_check",
+					"projectIndex" : 8
+				},
+				{
+					"directoryIndex" : 8,
+					"id" : "attend_check_test::@02f444e6a6e8e76d02a3",
+					"jsonFile" : "target-attend_check_test-Debug-f665c8db113b108ca16d.json",
+					"name" : "attend_check_test",
+					"projectIndex" : 8
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "boj_20455::@4b0417b677d69c073fc5",
+					"jsonFile" : "target-boj_20455-Debug-a9cedd2bab9b731cfec4.json",
+					"name" : "boj_20455",
+					"projectIndex" : 9
+				},
+				{
+					"directoryIndex" : 9,
+					"id" : "boj_20455_test::@4b0417b677d69c073fc5",
+					"jsonFile" : "target-boj_20455_test-Debug-5b30ce7f002e9c528af3.json",
+					"name" : "boj_20455_test",
+					"projectIndex" : 9
+				},
 				{
 					"directoryIndex" : 3,
 					"id" : "game_addiction::@cddd1d6f5e1163dea7c9",
@@ -289,6 +410,20 @@
 					"jsonFile" : "target-ranking_game_test-Debug-e408e023f44b0a8f38c2.json",
 					"name" : "ranking_game_test",
 					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "reverse_king::@815eb697b158fadf1020",
+					"jsonFile" : "target-reverse_king-Debug-496b123d02fd9a16734e.json",
+					"name" : "reverse_king",
+					"projectIndex" : 7
+				},
+				{
+					"directoryIndex" : 7,
+					"id" : "reverse_king_test::@815eb697b158fadf1020",
+					"jsonFile" : "target-reverse_king_test-Debug-1dc255830fcd5565f165.json",
+					"name" : "reverse_king_test",
+					"projectIndex" : 7
 				},
 				{
 					"directoryIndex" : 5,
