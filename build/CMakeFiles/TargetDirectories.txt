@@ -46,3 +46,8 @@
 /home/monika/Documents/problems/build/20455번： Калькулятор/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/20455번： Калькулятор/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/20455번： Калькулятор/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/20476번： Занос/CMakeFiles/race.dir
+/home/monika/Documents/problems/build/20476번： Занос/CMakeFiles/race_test.dir
+/home/monika/Documents/problems/build/20476번： Занос/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/20476번： Занос/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/20476번： Занос/CMakeFiles/rebuild_cache.dir

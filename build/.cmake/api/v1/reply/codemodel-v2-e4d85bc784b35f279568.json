@@ -16,7 +16,8 @@
 						6,
 						7,
 						8,
-						9
+						9,
+						10
 					],
 					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
@@ -54,8 +55,8 @@
 					"source" : "20006\ubc88\uff1a \ub7ad\ud0b9\uc804 \ub300\uae30\uc5f4",
 					"targetIndexes" : 
 					[
-						12,
-						13
+						14,
+						15
 					]
 				},
 				{
@@ -102,8 +103,8 @@
 					"source" : "20162\ubc88\uff1a \uac04\uc2dd \ud30c\ud2f0",
 					"targetIndexes" : 
 					[
-						16,
-						17
+						18,
+						19
 					]
 				},
 				{
@@ -134,8 +135,8 @@
 					"source" : "20416\ubc88\uff1a \uc5ed\uc804\uc758 \uc81c\uc655 (Easy)",
 					"targetIndexes" : 
 					[
-						14,
-						15
+						16,
+						17
 					]
 				},
 				{
@@ -169,6 +170,22 @@
 						2,
 						3
 					]
+				},
+				{
+					"build" : "20476\ubc88\uff1a \u0417\u0430\u043d\u043e\u0441",
+					"jsonFile" : "directory-20476\ubc88\uff1a \u0417\u0430\u043d\u043e\u0441-Debug-6415263619e37c10c6e3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 10,
+					"source" : "20476\ubc88\uff1a \u0417\u0430\u043d\u043e\u0441",
+					"targetIndexes" : 
+					[
+						12,
+						13
+					]
 				}
 			],
 			"name" : "Debug",
@@ -185,7 +202,8 @@
 						6,
 						7,
 						8,
-						9
+						9,
+						10
 					],
 					"directoryIndexes" : 
 					[
@@ -215,8 +233,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						12,
-						13
+						14,
+						15
 					]
 				},
 				{
@@ -254,8 +272,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						16,
-						17
+						18,
+						19
 					]
 				},
 				{
@@ -280,8 +298,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						14,
-						15
+						16,
+						17
 					]
 				},
 				{
@@ -308,6 +326,19 @@
 					[
 						2,
 						3
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						10
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						12,
+						13
 					]
 				}
 			],
@@ -396,6 +427,20 @@
 					"jsonFile" : "target-power_of_two_test-Debug-18a0cc36b7f03e6584c2.json",
 					"name" : "power_of_two_test",
 					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 10,
+					"id" : "race::@3de70e48bc21e216e76f",
+					"jsonFile" : "target-race-Debug-aa07685a1826413dad4f.json",
+					"name" : "race",
+					"projectIndex" : 10
+				},
+				{
+					"directoryIndex" : 10,
+					"id" : "race_test::@3de70e48bc21e216e76f",
+					"jsonFile" : "target-race_test-Debug-cec7a99e00d485088977.json",
+					"name" : "race_test",
+					"projectIndex" : 10
 				},
 				{
 					"directoryIndex" : 2,
