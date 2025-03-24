@@ -56,3 +56,8 @@
 /home/monika/Documents/problems/build/20484번： Игра/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/20484번： Игра/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/20484번： Игра/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/20626번： AiGo/CMakeFiles/aigo.dir
+/home/monika/Documents/problems/build/20626번： AiGo/CMakeFiles/aigo_test.dir
+/home/monika/Documents/problems/build/20626번： AiGo/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/20626번： AiGo/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/20626번： AiGo/CMakeFiles/rebuild_cache.dir

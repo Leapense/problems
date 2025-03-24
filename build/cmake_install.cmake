@@ -55,6 +55,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/monika/Documents/problems/build/20455번： Калькулятор/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/20476번： Занос/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/20484번： Игра/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/20626번： AiGo/cmake_install.cmake")
 
 endif()
 
