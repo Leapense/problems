@@ -214,5 +214,41 @@
   "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20626번： AiGo/CMakeFiles/aigo_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20626번： AiGo/cpp/src/main.cpp\"",
   "file": "/home/monika/Documents/problems/20626번： AiGo/cpp/src/main.cpp",
   "output": "20626번： AiGo/CMakeFiles/aigo_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 20837번： Robottävling/CMakeFiles/Robot_Travel.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20837번： Robottävling/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20837번： Robottävling/cpp/src/main.cpp",
+  "output": "20837번： Robottävling/CMakeFiles/Robot_Travel.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20837번： Robottävling/CMakeFiles/Robot_Travel_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/20837번： Robottävling/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/20837번： Robottävling/test/Testmain.cpp",
+  "output": "20837번： Robottävling/CMakeFiles/Robot_Travel_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20837번： Robottävling/CMakeFiles/Robot_Travel_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20837번： Robottävling/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20837번： Robottävling/cpp/src/main.cpp",
+  "output": "20837번： Robottävling/CMakeFiles/Robot_Travel_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 20915번： 숫자 카드 놀이/CMakeFiles/Card_Game.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20915번： 숫자 카드 놀이/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20915번： 숫자 카드 놀이/cpp/src/main.cpp",
+  "output": "20915번： 숫자 카드 놀이/CMakeFiles/Card_Game.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20915번： 숫자 카드 놀이/CMakeFiles/Card_Game_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/20915번： 숫자 카드 놀이/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/20915번： 숫자 카드 놀이/test/Testmain.cpp",
+  "output": "20915번： 숫자 카드 놀이/CMakeFiles/Card_Game_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20915번： 숫자 카드 놀이/CMakeFiles/Card_Game_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20915번： 숫자 카드 놀이/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20915번： 숫자 카드 놀이/cpp/src/main.cpp",
+  "output": "20915번： 숫자 카드 놀이/CMakeFiles/Card_Game_test.dir/cpp/src/main.cpp.o"
 }
 ]

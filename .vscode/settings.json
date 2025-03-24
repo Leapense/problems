@@ -107,7 +107,7 @@
     },
     "editor.tabSize": 4,
     "editor.tabCompletion": "on",
-    "editor.fontFamily": "JetBrainsMonoNL Nerd Font",
+    "editor.fontFamily": "D2CodingLigature Nerd Font",
     "terminal.integrated.fontLigatures": true,
     "editor.fontLigatures": true,
     "editor.fontSize": 13.125,

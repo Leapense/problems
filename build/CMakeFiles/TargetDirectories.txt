@@ -61,3 +61,13 @@
 /home/monika/Documents/problems/build/20626번： AiGo/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/20626번： AiGo/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/20626번： AiGo/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/20837번： Robottävling/CMakeFiles/Robot_Travel.dir
+/home/monika/Documents/problems/build/20837번： Robottävling/CMakeFiles/Robot_Travel_test.dir
+/home/monika/Documents/problems/build/20837번： Robottävling/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/20837번： Robottävling/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/20837번： Robottävling/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/20915번： 숫자 카드 놀이/CMakeFiles/Card_Game.dir
+/home/monika/Documents/problems/build/20915번： 숫자 카드 놀이/CMakeFiles/Card_Game_test.dir
+/home/monika/Documents/problems/build/20915번： 숫자 카드 놀이/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/20915번： 숫자 카드 놀이/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/20915번： 숫자 카드 놀이/CMakeFiles/rebuild_cache.dir

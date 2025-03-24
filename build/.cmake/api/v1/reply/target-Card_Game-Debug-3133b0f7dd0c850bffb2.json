@@ -1,0 +1,99 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "20915\ubc88\uff1a \uc22b\uc790 \uce74\ub4dc \ub180\uc774/Card_Game"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable"
+		],
+		"files" : 
+		[
+			"20915\ubc88\uff1a \uc22b\uc790 \uce74\ub4dc \ub180\uc774/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 11,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -std=c++23"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "23"
+			},
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"id" : "Card_Game::@c279b97673d6076714ee",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "",
+				"role" : "flags"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "Card_Game",
+	"nameOnDisk" : "Card_Game",
+	"paths" : 
+	{
+		"build" : "20915\ubc88\uff1a \uc22b\uc790 \uce74\ub4dc \ub180\uc774",
+		"source" : "20915\ubc88\uff1a \uc22b\uc790 \uce74\ub4dc \ub180\uc774"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "20915\ubc88\uff1a \uc22b\uc790 \uce74\ub4dc \ub180\uc774/cpp/src/main.cpp",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "EXECUTABLE"
+}

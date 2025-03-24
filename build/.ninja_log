@@ -1,61 +1,66 @@
 # ninja log v6
-2	1219	1742795149224165242	20476번： Занос/CMakeFiles/race.dir/cpp/src/main.cpp.o	980748540621ee75
+2	1199	1742713138649793998	20162번： 간식 파티/CMakeFiles/snack_party_test.dir/cpp/src/main.cpp.o	660d8fac53c33f36
+3	1601	1742731982980331935	20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king_test.dir/cpp/src/main.cpp.o	9295a77a7d055c39
+1601	1744	1742731984578076682	20416번： 역전의 제왕 (Easy)/reverse_king	eba95e673308141e
+2	2092	1742644833797930097	20152번： Game Addiction/CMakeFiles/game_addiction_test.dir/cpp/src/main.cpp.o	fb1843acabc77a4b
+2	2189	1742812277628316578	20626번： AiGo/CMakeFiles/aigo_test.dir/test/Testmain.cpp.o	51dab3c608d81947
+1	1228	1742713138647792280	20162번： 간식 파티/CMakeFiles/snack_party.dir/cpp/src/main.cpp.o	dca1e59ca37e4211
 2068	2146	1742795151290191332	20476번： Занос/race_test	291e52e3ea2bbc69
 1	2091	1742644833796190630	20152번： Game Addiction/CMakeFiles/game_addiction.dir/cpp/src/main.cpp.o	e42671b3aafcf1f9
-2293	2392	1742640921675357008	19981번： ЕГЭ/negative_base2_test	5180483d015de6d7
-1219	1321	1742795150441180611	20476번： Занос/race	1cba14e8711daf78
-3705	3784	1742640923087370412	20006번： 랭킹전 대기열/ranking_game_test	8a0f621368cb1b09
-2	2136	1742724539848773574	20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir/test/Testmain.cpp.o	4c578b7a1b68d1c5
-2198	2300	1742731985175084972	20416번： 역전의 제왕 (Easy)/reverse_king_test	eeeaceb0edf714ac
-2	1452	1742735029778793778	20455번： Калькулятор/CMakeFiles/boj_20455.dir/cpp/src/main.cpp.o	7f3610a822e2352f
-2	1446	1742735029780227272	20455번： Калькулятор/CMakeFiles/boj_20455_test.dir/cpp/src/main.cpp.o	29ffea84079b799d
-2136	2222	1742724541981616422	20413번： MVP 다이아몬드 (Easy)/mvp_diamonds_test	fc55d045b4521146
-1285	1392	1742809689044830497	20484번： Игра/game_test	11875d24dd5e2696
-1452	1579	1742735031228815016	20455번： Калькулятор/boj_20455	87e1c578943a3f38
-1	2293	1742640919383335250	19981번： ЕГЭ/CMakeFiles/negative_base2_test.dir/test/Testmain.cpp.o	517dec15ae79c03f
-2092	2190	1742644835887209230	20152번： Game Addiction/game_addiction	ddda6074bdcab8c8
-2	1334	1742733536675221551	20438번： 출석체크/CMakeFiles/attend_check.dir/cpp/src/main.cpp.o	b7860d4a73e68f4
-1341	1444	1742724541186604625	20413번： MVP 다이아몬드 (Easy)/mvp_diamonds	9df2301edd2c06ef
-2	3705	1742640919384863058	20006번： 랭킹전 대기열/CMakeFiles/ranking_game_test.dir/test/Testmain.cpp.o	e4d17ba5a200af37
-3497	3576	1742644837292221728	20152번： Game Addiction/game_addiction_test	cd749d6c6828bb2e
-2	1338	1742724539848982438	20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir/cpp/src/main.cpp.o	606beec9e4028cd1
-1228	1312	1742713139874807950	20162번： 간식 파티/snack_party	dc2e7fd09cce126f
-2	135	1742640859464305584	19981번： ЕГЭ/negative_base2	6bb7cf91bff20561
 3	2378	1742733509732818220	20438번： 출석체크/CMakeFiles/attend_check_test.dir/test/Testmain.cpp.o	43e7728e1216e628
 3	1285	1742809687762814796	20484번： Игра/CMakeFiles/game_test.dir/cpp/src/main.cpp.o	6220d82b21e93c18
-1	1065	1742640808239280163	19981번： ЕГЭ/CMakeFiles/negative_base2.dir/cpp/src/main.cpp.o	35b73fad994a8343
-2	1949	1742713138648792293	20162번： 간식 파티/CMakeFiles/snack_party_test.dir/test/Testmain.cpp.o	67f75adef2abe0b
+3497	3576	1742644837292221728	20152번： Game Addiction/game_addiction_test	cd749d6c6828bb2e
+2	1338	1742724539848982438	20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir/cpp/src/main.cpp.o	606beec9e4028cd1
+2	1452	1742735029778793778	20455번： Калькулятор/CMakeFiles/boj_20455.dir/cpp/src/main.cpp.o	7f3610a822e2352f
+2	1206	1742812277628547234	20626번： AiGo/CMakeFiles/aigo_test.dir/cpp/src/main.cpp.o	39dbad4e44787a6
+2	1446	1742735029780227272	20455번： Калькулятор/CMakeFiles/boj_20455_test.dir/cpp/src/main.cpp.o	29ffea84079b799d
+1285	1392	1742809689044830497	20484번： Игра/game_test	11875d24dd5e2696
+1	2293	1742640919383335250	19981번： ЕГЭ/CMakeFiles/negative_base2_test.dir/test/Testmain.cpp.o	517dec15ae79c03f
+2198	2300	1742731985175084972	20416번： 역전의 제왕 (Easy)/reverse_king_test	eeeaceb0edf714ac
+3	1392	1742815099782689393	20837번： Robottävling/CMakeFiles/Robot_Travel_test.dir/cpp/src/main.cpp.o	fdffac0acfecf6b8
+1189	1311	1742812278814527143	20626번： AiGo/aigo	a82f7ba1c03c131
+2	1189	1742812277627512616	20626번： AiGo/CMakeFiles/aigo.dir/cpp/src/main.cpp.o	110f70ad795c7b94
+2	2201	1742815099782458487	20837번： Robottävling/CMakeFiles/Robot_Travel_test.dir/test/Testmain.cpp.o	72308f6daf7af300
+2092	2190	1742644835887209230	20152번： Game Addiction/game_addiction	ddda6074bdcab8c8
+2	1334	1742733536675221551	20438번： 출석체크/CMakeFiles/attend_check.dir/cpp/src/main.cpp.o	b7860d4a73e68f4
+2	1394	1742815099781050618	20837번： Robottävling/CMakeFiles/Robot_Travel.dir/cpp/src/main.cpp.o	33e0b23fade21b23
+2293	2392	1742640921675357008	19981번： ЕГЭ/negative_base2_test	5180483d015de6d7
+2	1218	1742795149225414112	20476번： Занос/CMakeFiles/race_test.dir/cpp/src/main.cpp.o	c659719d7c47fd81
+2	1219	1742795149224165242	20476번： Занос/CMakeFiles/race.dir/cpp/src/main.cpp.o	980748540621ee75
+2189	2290	1742812279814539381	20626번： AiGo/aigo_test	947646979b08fd44
+2	3705	1742640919384863058	20006번： 랭킹전 대기열/CMakeFiles/ranking_game_test.dir/test/Testmain.cpp.o	e4d17ba5a200af37
 2	1341	1742724539847584755	20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds.dir/cpp/src/main.cpp.o	d35957a9ba5a752e
-2	1601	1742731982979054477	20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king.dir/cpp/src/main.cpp.o	9e84893f71f6b215
-1949	2018	1742713140595817158	20162번： 간식 파티/snack_party_test	c2124b2d58527e8d
+2	1949	1742713138648792293	20162번： 간식 파티/CMakeFiles/snack_party_test.dir/test/Testmain.cpp.o	67f75adef2abe0b
+1	1065	1742640808239280163	19981번： ЕГЭ/CMakeFiles/negative_base2.dir/cpp/src/main.cpp.o	35b73fad994a8343
+1452	1579	1742735031228815016	20455번： Калькулятор/boj_20455	87e1c578943a3f38
+2201	2316	1742815101980077530	20837번： Robottävling/Robot_Travel_test	8471f1cc2a4a6f2b
 2336	2429	1742735032112827964	20455번： Калькулятор/boj_20455_test	f2963bf449eaaf5d
-1749	1846	1742809705566032834	20484번： Игра/game_test_test	2c71707b83330281
+1949	2018	1742713140595817158	20162번： 간식 파티/snack_party_test	c2124b2d58527e8d
+1219	1321	1742795150441180611	20476번： Занос/race	1cba14e8711daf78
+1228	1312	1742713139874807950	20162번： 간식 파티/snack_party	dc2e7fd09cce126f
+3705	3784	1742640923087370412	20006번： 랭킹전 대기열/ranking_game_test	8a0f621368cb1b09
+2	1601	1742731982979054477	20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king.dir/cpp/src/main.cpp.o	9e84893f71f6b215
+2	2136	1742724539848773574	20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir/test/Testmain.cpp.o	4c578b7a1b68d1c5
 1334	1440	1742733538006241477	20438번： 출석체크/attend_check	ea1849fae2eb15db
-2	2092	1742644833797930097	20152번： Game Addiction/CMakeFiles/game_addiction_test.dir/cpp/src/main.cpp.o	fb1843acabc77a4b
-1601	1744	1742731984578076682	20416번： 역전의 제왕 (Easy)/reverse_king	eba95e673308141e
 2	2198	1742731982980121448	20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king_test.dir/test/Testmain.cpp.o	11baf37286585bb7
-1	1410	1742640919384335259	19981번： ЕГЭ/CMakeFiles/negative_base2_test.dir/cpp/src/main.cpp.o	3b5d40615fa245a0
-3	1284	1742809687764474682	20484번： Игра/CMakeFiles/game_test_test.dir/cpp/src/main.cpp.o	9d3272be570d5060
+1341	1444	1742724541186604625	20413번： MVP 다이아몬드 (Easy)/mvp_diamonds	9df2301edd2c06ef
 2	1749	1742809703819011439	20484번： Игра/CMakeFiles/game_test_test.dir/test/Testmain.cpp.o	ed7c429dec8293e3
 1303	1428	1742733537975241013	20438번： 출석체크/attend_check_test	6c7128b7f4837b5a
 1915	1995	1742706772496277613	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/power_of_two_test	f137c88d01a7f8b9
+1	1410	1742640919384335259	19981번： ЕГЭ/CMakeFiles/negative_base2_test.dir/cpp/src/main.cpp.o	3b5d40615fa245a0
 2	1303	1742733536676025902	20438번： 출석체크/CMakeFiles/attend_check_test.dir/cpp/src/main.cpp.o	e507ef5728786743
 1	1114	1742706770583972640	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two_test.dir/cpp/src/main.cpp.o	4502ac085f088782
 2	2336	1742735029780002377	20455번： Калькулятор/CMakeFiles/boj_20455_test.dir/test/Testmain.cpp.o	2345e61072a79fd2
+1749	1846	1742809705566032834	20484번： Игра/game_test_test	2c71707b83330281
 1	1147	1742706770582243774	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two.dir/cpp/src/main.cpp.o	8cc1e7d2de27be
 1	1915	1742706770583755649	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two_test.dir/test/Testmain.cpp.o	eda4fef95ecaa969
+1394	1502	1742815101173067654	20837번： Robottävling/Robot_Travel	206bda87823c8dd8
 2	1992	1742640859462766420	20006번： 랭킹전 대기열/CMakeFiles/ranking_game.dir/cpp/src/main.cpp.o	8947fe11eb6b1d23
-1	1228	1742713138647792280	20162번： 간식 파티/CMakeFiles/snack_party.dir/cpp/src/main.cpp.o	dca1e59ca37e4211
 2	2068	1742795149225262977	20476번： Занос/CMakeFiles/race_test.dir/test/Testmain.cpp.o	73be87da24c2ce3e
 1147	1229	1742706771728264035	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/power_of_two	c17941d19a99d02
 2	2410	1742640919385018591	20006번： 랭킹전 대기열/CMakeFiles/ranking_game_test.dir/cpp/src/main.cpp.o	2fa927bf7c21e3d0
+2	135	1742640859464305584	19981번： ЕГЭ/negative_base2	6bb7cf91bff20561
+3	1284	1742809687764474682	20484번： Игра/CMakeFiles/game_test_test.dir/cpp/src/main.cpp.o	9d3272be570d5060
 1	3497	1742644833797190639	20152번： Game Addiction/CMakeFiles/game_addiction_test.dir/test/Testmain.cpp.o	4457c8103cfd0af0
+2136	2222	1742724541981616422	20413번： MVP 다이아몬드 (Easy)/mvp_diamonds_test	fc55d045b4521146
 1992	2088	1742640861452785311	20006번： 랭킹전 대기열/ranking_game	f3f144cd8eb9ee55
-2	1218	1742795149225414112	20476번： Занос/CMakeFiles/race_test.dir/cpp/src/main.cpp.o	c659719d7c47fd81
-3	1601	1742731982980331935	20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king_test.dir/cpp/src/main.cpp.o	9295a77a7d055c39
-2	1199	1742713138649793998	20162번： 간식 파티/CMakeFiles/snack_party_test.dir/cpp/src/main.cpp.o	660d8fac53c33f36
-2	1189	1742812277627512616	20626번： AiGo/CMakeFiles/aigo.dir/cpp/src/main.cpp.o	110f70ad795c7b94
-2	1206	1742812277628547234	20626번： AiGo/CMakeFiles/aigo_test.dir/cpp/src/main.cpp.o	39dbad4e44787a6
-1189	1311	1742812278814527143	20626번： AiGo/aigo	a82f7ba1c03c131
-2	2189	1742812277628316578	20626번： AiGo/CMakeFiles/aigo_test.dir/test/Testmain.cpp.o	51dab3c608d81947
-2189	2290	1742812279814539381	20626번： AiGo/aigo_test	947646979b08fd44
