@@ -62,6 +62,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/monika/Documents/problems/build/20954번： 택배 기사 민서/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/21032번： Odd GCD Matching/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/21041번： Largest Exotic Number/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/21049번： Coin Stacks/cmake_install.cmake")
 
 endif()
 

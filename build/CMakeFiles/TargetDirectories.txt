@@ -91,3 +91,8 @@
 /home/monika/Documents/problems/build/21041번： Largest Exotic Number/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/21041번： Largest Exotic Number/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/21041번： Largest Exotic Number/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21049번： Coin Stacks/CMakeFiles/CoinStack.dir
+/home/monika/Documents/problems/build/21049번： Coin Stacks/CMakeFiles/CoinStack_test.dir
+/home/monika/Documents/problems/build/21049번： Coin Stacks/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21049번： Coin Stacks/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21049번： Coin Stacks/CMakeFiles/rebuild_cache.dir
