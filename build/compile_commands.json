@@ -340,5 +340,23 @@
   "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21049번： Coin Stacks/CMakeFiles/CoinStack_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21049번： Coin Stacks/cpp/src/main.cpp\"",
   "file": "/home/monika/Documents/problems/21049번： Coin Stacks/cpp/src/main.cpp",
   "output": "21049번： Coin Stacks/CMakeFiles/CoinStack_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 21127번： Binary Supersonic Utahraptors/CMakeFiles/BSU.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21127번： Binary Supersonic Utahraptors/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21127번： Binary Supersonic Utahraptors/cpp/src/main.cpp",
+  "output": "21127번： Binary Supersonic Utahraptors/CMakeFiles/BSU.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21127번： Binary Supersonic Utahraptors/CMakeFiles/BSU_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/21127번： Binary Supersonic Utahraptors/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/21127번： Binary Supersonic Utahraptors/test/Testmain.cpp",
+  "output": "21127번： Binary Supersonic Utahraptors/CMakeFiles/BSU_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21127번： Binary Supersonic Utahraptors/CMakeFiles/BSU_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21127번： Binary Supersonic Utahraptors/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21127번： Binary Supersonic Utahraptors/cpp/src/main.cpp",
+  "output": "21127번： Binary Supersonic Utahraptors/CMakeFiles/BSU_test.dir/cpp/src/main.cpp.o"
 }
 ]

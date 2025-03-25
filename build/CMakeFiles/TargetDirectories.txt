@@ -96,3 +96,8 @@
 /home/monika/Documents/problems/build/21049번： Coin Stacks/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/21049번： Coin Stacks/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/21049번： Coin Stacks/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21127번： Binary Supersonic Utahraptors/CMakeFiles/BSU.dir
+/home/monika/Documents/problems/build/21127번： Binary Supersonic Utahraptors/CMakeFiles/BSU_test.dir
+/home/monika/Documents/problems/build/21127번： Binary Supersonic Utahraptors/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21127번： Binary Supersonic Utahraptors/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21127번： Binary Supersonic Utahraptors/CMakeFiles/rebuild_cache.dir
