@@ -1757,15 +1757,363 @@ build 20950번：$ 미술가$ 미미/CMakeFiles/rebuild_cache.util: CUSTOM_COMMA
 build 20950번：$ 미술가$ 미미/rebuild_cache: phony 20950번：$ 미술가$ 미미/CMakeFiles/rebuild_cache.util
 
 # =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/monika/Documents/problems/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for EXECUTABLE target DeliveryRoute
+
+
+#############################################
+# Order-only phony target for DeliveryRoute
+
+build cmake_object_order_depends_target_DeliveryRoute: phony || .
+
+build 20954번：$ 택배$ 기사$ 민서/CMakeFiles/DeliveryRoute.dir/cpp/src/main.cpp.o: CXX_COMPILER__DeliveryRoute_unscanned_Debug /home/monika/Documents/problems/20954번：$ 택배$ 기사$ 민서/cpp/src/main.cpp || cmake_object_order_depends_target_DeliveryRoute
+  DEP_FILE = "20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute.dir/cpp/src/main.cpp.o.d"
+  FLAGS = -g -std=c++23
+  OBJECT_DIR = "20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute.dir"
+  OBJECT_FILE_DIR = "20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute.dir/cpp/src"
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target DeliveryRoute
+
+
+#############################################
+# Link the executable 20954번： 택배 기사 민서/DeliveryRoute
+
+build 20954번：$ 택배$ 기사$ 민서/DeliveryRoute: CXX_EXECUTABLE_LINKER__DeliveryRoute_Debug 20954번：$ 택배$ 기사$ 민서/CMakeFiles/DeliveryRoute.dir/cpp/src/main.cpp.o
+  FLAGS = -g
+  OBJECT_DIR = "20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute.dir"
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = "20954번： 택배 기사 민서/DeliveryRoute"
+  TARGET_PDB = DeliveryRoute.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target DeliveryRoute_test
+
+
+#############################################
+# Order-only phony target for DeliveryRoute_test
+
+build cmake_object_order_depends_target_DeliveryRoute_test: phony || .
+
+build 20954번：$ 택배$ 기사$ 민서/CMakeFiles/DeliveryRoute_test.dir/test/Testmain.cpp.o: CXX_COMPILER__DeliveryRoute_test_unscanned_Debug /home/monika/Documents/problems/20954번：$ 택배$ 기사$ 민서/test/Testmain.cpp || cmake_object_order_depends_target_DeliveryRoute_test
+  DEFINES = -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS
+  DEP_FILE = "20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute_test.dir/test/Testmain.cpp.o.d"
+  FLAGS = -g -std=c++23
+  OBJECT_DIR = "20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute_test.dir"
+  OBJECT_FILE_DIR = "20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute_test.dir/test"
+
+build 20954번：$ 택배$ 기사$ 민서/CMakeFiles/DeliveryRoute_test.dir/cpp/src/main.cpp.o: CXX_COMPILER__DeliveryRoute_test_unscanned_Debug /home/monika/Documents/problems/20954번：$ 택배$ 기사$ 민서/cpp/src/main.cpp || cmake_object_order_depends_target_DeliveryRoute_test
+  DEFINES = -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS
+  DEP_FILE = "20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute_test.dir/cpp/src/main.cpp.o.d"
+  FLAGS = -g -std=c++23
+  OBJECT_DIR = "20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute_test.dir"
+  OBJECT_FILE_DIR = "20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute_test.dir/cpp/src"
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target DeliveryRoute_test
+
+
+#############################################
+# Link the executable 20954번： 택배 기사 민서/DeliveryRoute_test
+
+build 20954번：$ 택배$ 기사$ 민서/DeliveryRoute_test: CXX_EXECUTABLE_LINKER__DeliveryRoute_test_Debug 20954번：$ 택배$ 기사$ 민서/CMakeFiles/DeliveryRoute_test.dir/test/Testmain.cpp.o 20954번：$ 택배$ 기사$ 민서/CMakeFiles/DeliveryRoute_test.dir/cpp/src/main.cpp.o | /usr/lib64/libgtest_main.so.1.14.0 /usr/lib64/libgtest.so.1.14.0
+  FLAGS = -g
+  LINK_LIBRARIES = /usr/lib64/libgtest_main.so.1.14.0  /usr/lib64/libgtest.so.1.14.0
+  OBJECT_DIR = "20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute_test.dir"
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = "20954번： 택배 기사 민서/DeliveryRoute_test"
+  TARGET_PDB = DeliveryRoute_test.dbg
+
+
+#############################################
+# Utility command for test
+
+build 20954번：$ 택배$ 기사$ 민서/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd "/home/monika/Documents/problems/build/20954번： 택배 기사 민서" && /usr/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build 20954번：$ 택배$ 기사$ 민서/test: phony 20954번：$ 택배$ 기사$ 민서/CMakeFiles/test.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build 20954번：$ 택배$ 기사$ 민서/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd "/home/monika/Documents/problems/build/20954번： 택배 기사 민서" && /usr/bin/ccmake -S/home/monika/Documents/problems -B/home/monika/Documents/problems/build
+  DESC = Running CMake cache editor...
+  pool = console
+  restat = 1
+
+build 20954번：$ 택배$ 기사$ 민서/edit_cache: phony 20954번：$ 택배$ 기사$ 민서/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build 20954번：$ 택배$ 기사$ 민서/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd "/home/monika/Documents/problems/build/20954번： 택배 기사 민서" && /usr/bin/cmake --regenerate-during-build -S/home/monika/Documents/problems -B/home/monika/Documents/problems/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build 20954번：$ 택배$ 기사$ 민서/rebuild_cache: phony 20954번：$ 택배$ 기사$ 민서/CMakeFiles/rebuild_cache.util
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/monika/Documents/problems/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for EXECUTABLE target OddGCDMatching
+
+
+#############################################
+# Order-only phony target for OddGCDMatching
+
+build cmake_object_order_depends_target_OddGCDMatching: phony || .
+
+build 21032번：$ Odd$ GCD$ Matching/CMakeFiles/OddGCDMatching.dir/cpp/src/main.cpp.o: CXX_COMPILER__OddGCDMatching_unscanned_Debug /home/monika/Documents/problems/21032번：$ Odd$ GCD$ Matching/cpp/src/main.cpp || cmake_object_order_depends_target_OddGCDMatching
+  DEP_FILE = "21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching.dir/cpp/src/main.cpp.o.d"
+  FLAGS = -g -std=c++23
+  OBJECT_DIR = "21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching.dir"
+  OBJECT_FILE_DIR = "21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching.dir/cpp/src"
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target OddGCDMatching
+
+
+#############################################
+# Link the executable 21032번： Odd GCD Matching/OddGCDMatching
+
+build 21032번：$ Odd$ GCD$ Matching/OddGCDMatching: CXX_EXECUTABLE_LINKER__OddGCDMatching_Debug 21032번：$ Odd$ GCD$ Matching/CMakeFiles/OddGCDMatching.dir/cpp/src/main.cpp.o
+  FLAGS = -g
+  OBJECT_DIR = "21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching.dir"
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = "21032번： Odd GCD Matching/OddGCDMatching"
+  TARGET_PDB = OddGCDMatching.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target OddGCDMatching_test
+
+
+#############################################
+# Order-only phony target for OddGCDMatching_test
+
+build cmake_object_order_depends_target_OddGCDMatching_test: phony || .
+
+build 21032번：$ Odd$ GCD$ Matching/CMakeFiles/OddGCDMatching_test.dir/test/Testmain.cpp.o: CXX_COMPILER__OddGCDMatching_test_unscanned_Debug /home/monika/Documents/problems/21032번：$ Odd$ GCD$ Matching/test/Testmain.cpp || cmake_object_order_depends_target_OddGCDMatching_test
+  DEFINES = -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS
+  DEP_FILE = "21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching_test.dir/test/Testmain.cpp.o.d"
+  FLAGS = -g -std=c++23
+  OBJECT_DIR = "21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching_test.dir"
+  OBJECT_FILE_DIR = "21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching_test.dir/test"
+
+build 21032번：$ Odd$ GCD$ Matching/CMakeFiles/OddGCDMatching_test.dir/cpp/src/main.cpp.o: CXX_COMPILER__OddGCDMatching_test_unscanned_Debug /home/monika/Documents/problems/21032번：$ Odd$ GCD$ Matching/cpp/src/main.cpp || cmake_object_order_depends_target_OddGCDMatching_test
+  DEFINES = -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS
+  DEP_FILE = "21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching_test.dir/cpp/src/main.cpp.o.d"
+  FLAGS = -g -std=c++23
+  OBJECT_DIR = "21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching_test.dir"
+  OBJECT_FILE_DIR = "21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching_test.dir/cpp/src"
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target OddGCDMatching_test
+
+
+#############################################
+# Link the executable 21032번： Odd GCD Matching/OddGCDMatching_test
+
+build 21032번：$ Odd$ GCD$ Matching/OddGCDMatching_test: CXX_EXECUTABLE_LINKER__OddGCDMatching_test_Debug 21032번：$ Odd$ GCD$ Matching/CMakeFiles/OddGCDMatching_test.dir/test/Testmain.cpp.o 21032번：$ Odd$ GCD$ Matching/CMakeFiles/OddGCDMatching_test.dir/cpp/src/main.cpp.o | /usr/lib64/libgtest_main.so.1.14.0 /usr/lib64/libgtest.so.1.14.0
+  FLAGS = -g
+  LINK_LIBRARIES = /usr/lib64/libgtest_main.so.1.14.0  /usr/lib64/libgtest.so.1.14.0
+  OBJECT_DIR = "21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching_test.dir"
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = "21032번： Odd GCD Matching/OddGCDMatching_test"
+  TARGET_PDB = OddGCDMatching_test.dbg
+
+
+#############################################
+# Utility command for test
+
+build 21032번：$ Odd$ GCD$ Matching/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd "/home/monika/Documents/problems/build/21032번： Odd GCD Matching" && /usr/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build 21032번：$ Odd$ GCD$ Matching/test: phony 21032번：$ Odd$ GCD$ Matching/CMakeFiles/test.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build 21032번：$ Odd$ GCD$ Matching/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd "/home/monika/Documents/problems/build/21032번： Odd GCD Matching" && /usr/bin/ccmake -S/home/monika/Documents/problems -B/home/monika/Documents/problems/build
+  DESC = Running CMake cache editor...
+  pool = console
+  restat = 1
+
+build 21032번：$ Odd$ GCD$ Matching/edit_cache: phony 21032번：$ Odd$ GCD$ Matching/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build 21032번：$ Odd$ GCD$ Matching/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd "/home/monika/Documents/problems/build/21032번： Odd GCD Matching" && /usr/bin/cmake --regenerate-during-build -S/home/monika/Documents/problems -B/home/monika/Documents/problems/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build 21032번：$ Odd$ GCD$ Matching/rebuild_cache: phony 21032번：$ Odd$ GCD$ Matching/CMakeFiles/rebuild_cache.util
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/monika/Documents/problems/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for EXECUTABLE target LargestExoticNumbers
+
+
+#############################################
+# Order-only phony target for LargestExoticNumbers
+
+build cmake_object_order_depends_target_LargestExoticNumbers: phony || .
+
+build 21041번：$ Largest$ Exotic$ Number/CMakeFiles/LargestExoticNumbers.dir/cpp/src/main.cpp.o: CXX_COMPILER__LargestExoticNumbers_unscanned_Debug /home/monika/Documents/problems/21041번：$ Largest$ Exotic$ Number/cpp/src/main.cpp || cmake_object_order_depends_target_LargestExoticNumbers
+  DEP_FILE = "21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers.dir/cpp/src/main.cpp.o.d"
+  FLAGS = -g -std=c++23
+  OBJECT_DIR = "21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers.dir"
+  OBJECT_FILE_DIR = "21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers.dir/cpp/src"
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target LargestExoticNumbers
+
+
+#############################################
+# Link the executable 21041번： Largest Exotic Number/LargestExoticNumbers
+
+build 21041번：$ Largest$ Exotic$ Number/LargestExoticNumbers: CXX_EXECUTABLE_LINKER__LargestExoticNumbers_Debug 21041번：$ Largest$ Exotic$ Number/CMakeFiles/LargestExoticNumbers.dir/cpp/src/main.cpp.o
+  FLAGS = -g
+  OBJECT_DIR = "21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers.dir"
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = "21041번： Largest Exotic Number/LargestExoticNumbers"
+  TARGET_PDB = LargestExoticNumbers.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target LargestExoticNumbers_test
+
+
+#############################################
+# Order-only phony target for LargestExoticNumbers_test
+
+build cmake_object_order_depends_target_LargestExoticNumbers_test: phony || .
+
+build 21041번：$ Largest$ Exotic$ Number/CMakeFiles/LargestExoticNumbers_test.dir/test/Testmain.cpp.o: CXX_COMPILER__LargestExoticNumbers_test_unscanned_Debug /home/monika/Documents/problems/21041번：$ Largest$ Exotic$ Number/test/Testmain.cpp || cmake_object_order_depends_target_LargestExoticNumbers_test
+  DEFINES = -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS
+  DEP_FILE = "21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers_test.dir/test/Testmain.cpp.o.d"
+  FLAGS = -g -std=c++23
+  OBJECT_DIR = "21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers_test.dir"
+  OBJECT_FILE_DIR = "21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers_test.dir/test"
+
+build 21041번：$ Largest$ Exotic$ Number/CMakeFiles/LargestExoticNumbers_test.dir/cpp/src/main.cpp.o: CXX_COMPILER__LargestExoticNumbers_test_unscanned_Debug /home/monika/Documents/problems/21041번：$ Largest$ Exotic$ Number/cpp/src/main.cpp || cmake_object_order_depends_target_LargestExoticNumbers_test
+  DEFINES = -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS
+  DEP_FILE = "21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers_test.dir/cpp/src/main.cpp.o.d"
+  FLAGS = -g -std=c++23
+  OBJECT_DIR = "21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers_test.dir"
+  OBJECT_FILE_DIR = "21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers_test.dir/cpp/src"
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target LargestExoticNumbers_test
+
+
+#############################################
+# Link the executable 21041번： Largest Exotic Number/LargestExoticNumbers_test
+
+build 21041번：$ Largest$ Exotic$ Number/LargestExoticNumbers_test: CXX_EXECUTABLE_LINKER__LargestExoticNumbers_test_Debug 21041번：$ Largest$ Exotic$ Number/CMakeFiles/LargestExoticNumbers_test.dir/test/Testmain.cpp.o 21041번：$ Largest$ Exotic$ Number/CMakeFiles/LargestExoticNumbers_test.dir/cpp/src/main.cpp.o | /usr/lib64/libgtest_main.so.1.14.0 /usr/lib64/libgtest.so.1.14.0
+  FLAGS = -g
+  LINK_LIBRARIES = /usr/lib64/libgtest_main.so.1.14.0  /usr/lib64/libgtest.so.1.14.0
+  OBJECT_DIR = "21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers_test.dir"
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = "21041번： Largest Exotic Number/LargestExoticNumbers_test"
+  TARGET_PDB = LargestExoticNumbers_test.dbg
+
+
+#############################################
+# Utility command for test
+
+build 21041번：$ Largest$ Exotic$ Number/CMakeFiles/test.util: CUSTOM_COMMAND
+  COMMAND = cd "/home/monika/Documents/problems/build/21041번： Largest Exotic Number" && /usr/bin/ctest --force-new-ctest-process
+  DESC = Running tests...
+  pool = console
+  restat = 1
+
+build 21041번：$ Largest$ Exotic$ Number/test: phony 21041번：$ Largest$ Exotic$ Number/CMakeFiles/test.util
+
+
+#############################################
+# Utility command for edit_cache
+
+build 21041번：$ Largest$ Exotic$ Number/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd "/home/monika/Documents/problems/build/21041번： Largest Exotic Number" && /usr/bin/ccmake -S/home/monika/Documents/problems -B/home/monika/Documents/problems/build
+  DESC = Running CMake cache editor...
+  pool = console
+  restat = 1
+
+build 21041번：$ Largest$ Exotic$ Number/edit_cache: phony 21041번：$ Largest$ Exotic$ Number/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build 21041번：$ Largest$ Exotic$ Number/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd "/home/monika/Documents/problems/build/21041번： Largest Exotic Number" && /usr/bin/cmake --regenerate-during-build -S/home/monika/Documents/problems -B/home/monika/Documents/problems/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build 21041번：$ Largest$ Exotic$ Number/rebuild_cache: phony 21041번：$ Largest$ Exotic$ Number/CMakeFiles/rebuild_cache.util
+
+# =============================================================================
 # Target aliases.
 
 build Card_Game: phony 20915번：$ 숫자$ 카드$ 놀이/Card_Game
 
 build Card_Game_test: phony 20915번：$ 숫자$ 카드$ 놀이/Card_Game_test
 
+build DeliveryRoute: phony 20954번：$ 택배$ 기사$ 민서/DeliveryRoute
+
+build DeliveryRoute_test: phony 20954번：$ 택배$ 기사$ 민서/DeliveryRoute_test
+
+build LargestExoticNumbers: phony 21041번：$ Largest$ Exotic$ Number/LargestExoticNumbers
+
+build LargestExoticNumbers_test: phony 21041번：$ Largest$ Exotic$ Number/LargestExoticNumbers_test
+
 build MiMi: phony 20950번：$ 미술가$ 미미/MiMi
 
 build MiMi_test: phony 20950번：$ 미술가$ 미미/MiMi_test
+
+build OddGCDMatching: phony 21032번：$ Odd$ GCD$ Matching/OddGCDMatching
+
+build OddGCDMatching_test: phony 21032번：$ Odd$ GCD$ Matching/OddGCDMatching_test
 
 build Robot_Travel: phony 20837번：$ Robottävling/Robot_Travel
 
@@ -1827,7 +2175,7 @@ build snack_party_test: phony 20162번：$ 간식$ 파티/snack_party_test
 #############################################
 # Folder: /home/monika/Documents/problems/build
 
-build all: phony 19981번：$ ЕГЭ/all 20006번：$ 랭킹전$ 대기열/all 20152번：$ Game$ Addiction/all 20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!/all 20162번：$ 간식$ 파티/all 20413번：$ MVP$ 다이아몬드$ (Easy)/all 20416번：$ 역전의$ 제왕$ (Easy)/all 20438번：$ 출석체크/all 20455번：$ Калькулятор/all 20476번：$ Занос/all 20484번：$ Игра/all 20626번：$ AiGo/all 20837번：$ Robottävling/all 20915번：$ 숫자$ 카드$ 놀이/all 20950번：$ 미술가$ 미미/all
+build all: phony 19981번：$ ЕГЭ/all 20006번：$ 랭킹전$ 대기열/all 20152번：$ Game$ Addiction/all 20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!/all 20162번：$ 간식$ 파티/all 20413번：$ MVP$ 다이아몬드$ (Easy)/all 20416번：$ 역전의$ 제왕$ (Easy)/all 20438번：$ 출석체크/all 20455번：$ Калькулятор/all 20476번：$ Занос/all 20484번：$ Игра/all 20626번：$ AiGo/all 20837번：$ Robottävling/all 20915번：$ 숫자$ 카드$ 놀이/all 20950번：$ 미술가$ 미미/all 20954번：$ 택배$ 기사$ 민서/all 21032번：$ Odd$ GCD$ Matching/all 21041번：$ Largest$ Exotic$ Number/all
 
 # =============================================================================
 
@@ -1935,20 +2283,41 @@ build 20915번：$ 숫자$ 카드$ 놀이/all: phony 20915번：$ 숫자$ 카드
 build 20950번：$ 미술가$ 미미/all: phony 20950번：$ 미술가$ 미미/MiMi 20950번：$ 미술가$ 미미/MiMi_test
 
 # =============================================================================
+
+#############################################
+# Folder: /home/monika/Documents/problems/build/20954번： 택배 기사 민서
+
+build 20954번：$ 택배$ 기사$ 민서/all: phony 20954번：$ 택배$ 기사$ 민서/DeliveryRoute 20954번：$ 택배$ 기사$ 민서/DeliveryRoute_test
+
+# =============================================================================
+
+#############################################
+# Folder: /home/monika/Documents/problems/build/21032번： Odd GCD Matching
+
+build 21032번：$ Odd$ GCD$ Matching/all: phony 21032번：$ Odd$ GCD$ Matching/OddGCDMatching 21032번：$ Odd$ GCD$ Matching/OddGCDMatching_test
+
+# =============================================================================
+
+#############################################
+# Folder: /home/monika/Documents/problems/build/21041번： Largest Exotic Number
+
+build 21041번：$ Largest$ Exotic$ Number/all: phony 21041번：$ Largest$ Exotic$ Number/LargestExoticNumbers 21041번：$ Largest$ Exotic$ Number/LargestExoticNumbers_test
+
+# =============================================================================
 # Built-in targets
 
 
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /home/monika/Documents/problems/19981번：$ ЕГЭ/CMakeLists.txt /home/monika/Documents/problems/20006번：$ 랭킹전$ 대기열/CMakeLists.txt /home/monika/Documents/problems/20152번：$ Game$ Addiction/CMakeLists.txt /home/monika/Documents/problems/20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!/CMakeLists.txt /home/monika/Documents/problems/20162번：$ 간식$ 파티/CMakeLists.txt /home/monika/Documents/problems/20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeLists.txt /home/monika/Documents/problems/20416번：$ 역전의$ 제왕$ (Easy)/CMakeLists.txt /home/monika/Documents/problems/20438번：$ 출석체크/CMakeLists.txt /home/monika/Documents/problems/20455번：$ Калькулятор/CMakeLists.txt /home/monika/Documents/problems/20476번：$ Занос/CMakeLists.txt /home/monika/Documents/problems/20484번：$ Игра/CMakeLists.txt /home/monika/Documents/problems/20626번：$ AiGo/CMakeLists.txt /home/monika/Documents/problems/20837번：$ Robottävling/CMakeLists.txt /home/monika/Documents/problems/20915번：$ 숫자$ 카드$ 놀이/CMakeLists.txt /home/monika/Documents/problems/20950번：$ 미술가$ 미미/CMakeLists.txt /home/monika/Documents/problems/CMakeLists.txt /usr/lib64/cmake/GTest/GTestConfig.cmake /usr/lib64/cmake/GTest/GTestConfigVersion.cmake /usr/lib64/cmake/GTest/GTestTargets-noconfig.cmake /usr/lib64/cmake/GTest/GTestTargets.cmake /usr/share/cmake/Modules/CMakeCXXInformation.cmake /usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake /usr/share/cmake/Modules/CMakeGenericSystem.cmake /usr/share/cmake/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake/Modules/CMakeLanguageInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake/Modules/CheckCXXSourceCompiles.cmake /usr/share/cmake/Modules/CheckIncludeFileCXX.cmake /usr/share/cmake/Modules/CheckLibraryExists.cmake /usr/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake/Modules/Compiler/GNU.cmake /usr/share/cmake/Modules/FindGTest.cmake /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake/Modules/FindPackageMessage.cmake /usr/share/cmake/Modules/FindThreads.cmake /usr/share/cmake/Modules/GoogleTest.cmake /usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake/Modules/Platform/Linux-GNU.cmake /usr/share/cmake/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake/Modules/Platform/Linux.cmake /usr/share/cmake/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.30.8/CMakeCXXCompiler.cmake CMakeFiles/3.30.8/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /home/monika/Documents/problems/19981번：$ ЕГЭ/CMakeLists.txt /home/monika/Documents/problems/20006번：$ 랭킹전$ 대기열/CMakeLists.txt /home/monika/Documents/problems/20152번：$ Game$ Addiction/CMakeLists.txt /home/monika/Documents/problems/20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!/CMakeLists.txt /home/monika/Documents/problems/20162번：$ 간식$ 파티/CMakeLists.txt /home/monika/Documents/problems/20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeLists.txt /home/monika/Documents/problems/20416번：$ 역전의$ 제왕$ (Easy)/CMakeLists.txt /home/monika/Documents/problems/20438번：$ 출석체크/CMakeLists.txt /home/monika/Documents/problems/20455번：$ Калькулятор/CMakeLists.txt /home/monika/Documents/problems/20476번：$ Занос/CMakeLists.txt /home/monika/Documents/problems/20484번：$ Игра/CMakeLists.txt /home/monika/Documents/problems/20626번：$ AiGo/CMakeLists.txt /home/monika/Documents/problems/20837번：$ Robottävling/CMakeLists.txt /home/monika/Documents/problems/20915번：$ 숫자$ 카드$ 놀이/CMakeLists.txt /home/monika/Documents/problems/20950번：$ 미술가$ 미미/CMakeLists.txt /home/monika/Documents/problems/20954번：$ 택배$ 기사$ 민서/CMakeLists.txt /home/monika/Documents/problems/21032번：$ Odd$ GCD$ Matching/CMakeLists.txt /home/monika/Documents/problems/21041번：$ Largest$ Exotic$ Number/CMakeLists.txt /home/monika/Documents/problems/CMakeLists.txt /usr/lib64/cmake/GTest/GTestConfig.cmake /usr/lib64/cmake/GTest/GTestConfigVersion.cmake /usr/lib64/cmake/GTest/GTestTargets-noconfig.cmake /usr/lib64/cmake/GTest/GTestTargets.cmake /usr/share/cmake/Modules/CMakeCXXInformation.cmake /usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake /usr/share/cmake/Modules/CMakeGenericSystem.cmake /usr/share/cmake/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake/Modules/CMakeLanguageInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake/Modules/CheckCXXSourceCompiles.cmake /usr/share/cmake/Modules/CheckIncludeFileCXX.cmake /usr/share/cmake/Modules/CheckLibraryExists.cmake /usr/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake/Modules/Compiler/GNU.cmake /usr/share/cmake/Modules/FindGTest.cmake /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake/Modules/FindPackageMessage.cmake /usr/share/cmake/Modules/FindThreads.cmake /usr/share/cmake/Modules/GoogleTest.cmake /usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake/Modules/Platform/Linux-GNU.cmake /usr/share/cmake/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake/Modules/Platform/Linux.cmake /usr/share/cmake/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.30.8/CMakeCXXCompiler.cmake CMakeFiles/3.30.8/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /home/monika/Documents/problems/19981번：$ ЕГЭ/CMakeLists.txt /home/monika/Documents/problems/20006번：$ 랭킹전$ 대기열/CMakeLists.txt /home/monika/Documents/problems/20152번：$ Game$ Addiction/CMakeLists.txt /home/monika/Documents/problems/20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!/CMakeLists.txt /home/monika/Documents/problems/20162번：$ 간식$ 파티/CMakeLists.txt /home/monika/Documents/problems/20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeLists.txt /home/monika/Documents/problems/20416번：$ 역전의$ 제왕$ (Easy)/CMakeLists.txt /home/monika/Documents/problems/20438번：$ 출석체크/CMakeLists.txt /home/monika/Documents/problems/20455번：$ Калькулятор/CMakeLists.txt /home/monika/Documents/problems/20476번：$ Занос/CMakeLists.txt /home/monika/Documents/problems/20484번：$ Игра/CMakeLists.txt /home/monika/Documents/problems/20626번：$ AiGo/CMakeLists.txt /home/monika/Documents/problems/20837번：$ Robottävling/CMakeLists.txt /home/monika/Documents/problems/20915번：$ 숫자$ 카드$ 놀이/CMakeLists.txt /home/monika/Documents/problems/20950번：$ 미술가$ 미미/CMakeLists.txt /home/monika/Documents/problems/CMakeLists.txt /usr/lib64/cmake/GTest/GTestConfig.cmake /usr/lib64/cmake/GTest/GTestConfigVersion.cmake /usr/lib64/cmake/GTest/GTestTargets-noconfig.cmake /usr/lib64/cmake/GTest/GTestTargets.cmake /usr/share/cmake/Modules/CMakeCXXInformation.cmake /usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake /usr/share/cmake/Modules/CMakeGenericSystem.cmake /usr/share/cmake/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake/Modules/CMakeLanguageInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake/Modules/CheckCXXSourceCompiles.cmake /usr/share/cmake/Modules/CheckIncludeFileCXX.cmake /usr/share/cmake/Modules/CheckLibraryExists.cmake /usr/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake/Modules/Compiler/GNU.cmake /usr/share/cmake/Modules/FindGTest.cmake /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake/Modules/FindPackageMessage.cmake /usr/share/cmake/Modules/FindThreads.cmake /usr/share/cmake/Modules/GoogleTest.cmake /usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake/Modules/Platform/Linux-GNU.cmake /usr/share/cmake/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake/Modules/Platform/Linux.cmake /usr/share/cmake/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.30.8/CMakeCXXCompiler.cmake CMakeFiles/3.30.8/CMakeSystem.cmake: phony
+build /home/monika/Documents/problems/19981번：$ ЕГЭ/CMakeLists.txt /home/monika/Documents/problems/20006번：$ 랭킹전$ 대기열/CMakeLists.txt /home/monika/Documents/problems/20152번：$ Game$ Addiction/CMakeLists.txt /home/monika/Documents/problems/20153번：$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!$ 영웅이는$ 2의$ 거듭$ 제곱을$ 좋아해!/CMakeLists.txt /home/monika/Documents/problems/20162번：$ 간식$ 파티/CMakeLists.txt /home/monika/Documents/problems/20413번：$ MVP$ 다이아몬드$ (Easy)/CMakeLists.txt /home/monika/Documents/problems/20416번：$ 역전의$ 제왕$ (Easy)/CMakeLists.txt /home/monika/Documents/problems/20438번：$ 출석체크/CMakeLists.txt /home/monika/Documents/problems/20455번：$ Калькулятор/CMakeLists.txt /home/monika/Documents/problems/20476번：$ Занос/CMakeLists.txt /home/monika/Documents/problems/20484번：$ Игра/CMakeLists.txt /home/monika/Documents/problems/20626번：$ AiGo/CMakeLists.txt /home/monika/Documents/problems/20837번：$ Robottävling/CMakeLists.txt /home/monika/Documents/problems/20915번：$ 숫자$ 카드$ 놀이/CMakeLists.txt /home/monika/Documents/problems/20950번：$ 미술가$ 미미/CMakeLists.txt /home/monika/Documents/problems/20954번：$ 택배$ 기사$ 민서/CMakeLists.txt /home/monika/Documents/problems/21032번：$ Odd$ GCD$ Matching/CMakeLists.txt /home/monika/Documents/problems/21041번：$ Largest$ Exotic$ Number/CMakeLists.txt /home/monika/Documents/problems/CMakeLists.txt /usr/lib64/cmake/GTest/GTestConfig.cmake /usr/lib64/cmake/GTest/GTestConfigVersion.cmake /usr/lib64/cmake/GTest/GTestTargets-noconfig.cmake /usr/lib64/cmake/GTest/GTestTargets.cmake /usr/share/cmake/Modules/CMakeCXXInformation.cmake /usr/share/cmake/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake/Modules/CMakeFindDependencyMacro.cmake /usr/share/cmake/Modules/CMakeGenericSystem.cmake /usr/share/cmake/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake/Modules/CMakeLanguageInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake/Modules/CheckCXXSourceCompiles.cmake /usr/share/cmake/Modules/CheckIncludeFileCXX.cmake /usr/share/cmake/Modules/CheckLibraryExists.cmake /usr/share/cmake/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake/Modules/Compiler/GNU-CXX.cmake /usr/share/cmake/Modules/Compiler/GNU.cmake /usr/share/cmake/Modules/FindGTest.cmake /usr/share/cmake/Modules/FindPackageHandleStandardArgs.cmake /usr/share/cmake/Modules/FindPackageMessage.cmake /usr/share/cmake/Modules/FindThreads.cmake /usr/share/cmake/Modules/GoogleTest.cmake /usr/share/cmake/Modules/Internal/CheckSourceCompiles.cmake /usr/share/cmake/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake/Modules/Platform/Linux-GNU.cmake /usr/share/cmake/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake/Modules/Platform/Linux.cmake /usr/share/cmake/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.30.8/CMakeCXXCompiler.cmake CMakeFiles/3.30.8/CMakeSystem.cmake: phony
 
 
 #############################################

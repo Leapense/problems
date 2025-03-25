@@ -268,5 +268,59 @@
   "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20950번： 미술가 미미/CMakeFiles/MiMi_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20950번： 미술가 미미/cpp/src/main.cpp\"",
   "file": "/home/monika/Documents/problems/20950번： 미술가 미미/cpp/src/main.cpp",
   "output": "20950번： 미술가 미미/CMakeFiles/MiMi_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20954번： 택배 기사 민서/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20954번： 택배 기사 민서/cpp/src/main.cpp",
+  "output": "20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/20954번： 택배 기사 민서/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/20954번： 택배 기사 민서/test/Testmain.cpp",
+  "output": "20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20954번： 택배 기사 민서/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20954번： 택배 기사 민서/cpp/src/main.cpp",
+  "output": "20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21032번： Odd GCD Matching/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21032번： Odd GCD Matching/cpp/src/main.cpp",
+  "output": "21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/21032번： Odd GCD Matching/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/21032번： Odd GCD Matching/test/Testmain.cpp",
+  "output": "21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21032번： Odd GCD Matching/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21032번： Odd GCD Matching/cpp/src/main.cpp",
+  "output": "21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21041번： Largest Exotic Number/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21041번： Largest Exotic Number/cpp/src/main.cpp",
+  "output": "21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/21041번： Largest Exotic Number/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/21041번： Largest Exotic Number/test/Testmain.cpp",
+  "output": "21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21041번： Largest Exotic Number/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21041번： Largest Exotic Number/cpp/src/main.cpp",
+  "output": "21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers_test.dir/cpp/src/main.cpp.o"
 }
 ]

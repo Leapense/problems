@@ -1,0 +1,99 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "20954\ubc88\uff1a \ud0dd\ubc30 \uae30\uc0ac \ubbfc\uc11c/DeliveryRoute"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable"
+		],
+		"files" : 
+		[
+			"20954\ubc88\uff1a \ud0dd\ubc30 \uae30\uc0ac \ubbfc\uc11c/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 11,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -std=c++23"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "23"
+			},
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"id" : "DeliveryRoute::@17dd7a7ca3f9b1074b4c",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "",
+				"role" : "flags"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "DeliveryRoute",
+	"nameOnDisk" : "DeliveryRoute",
+	"paths" : 
+	{
+		"build" : "20954\ubc88\uff1a \ud0dd\ubc30 \uae30\uc0ac \ubbfc\uc11c",
+		"source" : "20954\ubc88\uff1a \ud0dd\ubc30 \uae30\uc0ac \ubbfc\uc11c"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "20954\ubc88\uff1a \ud0dd\ubc30 \uae30\uc0ac \ubbfc\uc11c/cpp/src/main.cpp",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "EXECUTABLE"
+}

@@ -76,3 +76,18 @@
 /home/monika/Documents/problems/build/20950번： 미술가 미미/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/20950번： 미술가 미미/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/20950번： 미술가 미미/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute.dir
+/home/monika/Documents/problems/build/20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute_test.dir
+/home/monika/Documents/problems/build/20954번： 택배 기사 민서/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/20954번： 택배 기사 민서/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/20954번： 택배 기사 민서/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching.dir
+/home/monika/Documents/problems/build/21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching_test.dir
+/home/monika/Documents/problems/build/21032번： Odd GCD Matching/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21032번： Odd GCD Matching/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21032번： Odd GCD Matching/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers.dir
+/home/monika/Documents/problems/build/21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers_test.dir
+/home/monika/Documents/problems/build/21041번： Largest Exotic Number/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21041번： Largest Exotic Number/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21041번： Largest Exotic Number/CMakeFiles/rebuild_cache.dir
