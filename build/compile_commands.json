@@ -250,5 +250,23 @@
   "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20915번： 숫자 카드 놀이/CMakeFiles/Card_Game_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20915번： 숫자 카드 놀이/cpp/src/main.cpp\"",
   "file": "/home/monika/Documents/problems/20915번： 숫자 카드 놀이/cpp/src/main.cpp",
   "output": "20915번： 숫자 카드 놀이/CMakeFiles/Card_Game_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 20950번： 미술가 미미/CMakeFiles/MiMi.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20950번： 미술가 미미/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20950번： 미술가 미미/cpp/src/main.cpp",
+  "output": "20950번： 미술가 미미/CMakeFiles/MiMi.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20950번： 미술가 미미/CMakeFiles/MiMi_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/20950번： 미술가 미미/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/20950번： 미술가 미미/test/Testmain.cpp",
+  "output": "20950번： 미술가 미미/CMakeFiles/MiMi_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 20950번： 미술가 미미/CMakeFiles/MiMi_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/20950번： 미술가 미미/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/20950번： 미술가 미미/cpp/src/main.cpp",
+  "output": "20950번： 미술가 미미/CMakeFiles/MiMi_test.dir/cpp/src/main.cpp.o"
 }
 ]

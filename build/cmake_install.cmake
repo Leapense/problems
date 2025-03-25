@@ -58,6 +58,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/monika/Documents/problems/build/20626번： AiGo/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/20837번： Robottävling/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/20915번： 숫자 카드 놀이/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/20950번： 미술가 미미/cmake_install.cmake")
 
 endif()
 
