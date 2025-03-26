@@ -64,6 +64,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/monika/Documents/problems/build/21041번： Largest Exotic Number/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/21049번： Coin Stacks/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/21127번： Binary Supersonic Utahraptors/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/21154번： Over the Hill, Part 1/cmake_install.cmake")
 
 endif()
 

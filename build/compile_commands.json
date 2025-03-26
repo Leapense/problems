@@ -358,5 +358,23 @@
   "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21127번： Binary Supersonic Utahraptors/CMakeFiles/BSU_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21127번： Binary Supersonic Utahraptors/cpp/src/main.cpp\"",
   "file": "/home/monika/Documents/problems/21127번： Binary Supersonic Utahraptors/cpp/src/main.cpp",
   "output": "21127번： Binary Supersonic Utahraptors/CMakeFiles/BSU_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 21154번： Over the Hill, Part 1/CMakeFiles/CipherText.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21154번： Over the Hill, Part 1/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21154번： Over the Hill, Part 1/cpp/src/main.cpp",
+  "output": "21154번： Over the Hill, Part 1/CMakeFiles/CipherText.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21154번： Over the Hill, Part 1/CMakeFiles/CipherText_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/21154번： Over the Hill, Part 1/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/21154번： Over the Hill, Part 1/test/Testmain.cpp",
+  "output": "21154번： Over the Hill, Part 1/CMakeFiles/CipherText_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21154번： Over the Hill, Part 1/CMakeFiles/CipherText_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21154번： Over the Hill, Part 1/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21154번： Over the Hill, Part 1/cpp/src/main.cpp",
+  "output": "21154번： Over the Hill, Part 1/CMakeFiles/CipherText_test.dir/cpp/src/main.cpp.o"
 }
 ]

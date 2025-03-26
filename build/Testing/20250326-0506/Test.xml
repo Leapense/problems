@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="(empty)"
+	BuildStamp="20250326-0506-Experimental"
+	Name="(empty)"
+	Generator="ctest-3.30.8"
+	CompilerName=""
+	CompilerVersion=""
+	OSName="Linux"
+	Hostname="gigachad-linux"
+	OSRelease="6.13.8-200.fc41.x86_64"
+	OSVersion="#1 SMP PREEMPT_DYNAMIC Sun Mar 23 05:03:09 UTC 2025"
+	OSPlatform="x86_64"
+	Is64Bits="1"
+	VendorString="AuthenticAMD"
+	VendorID="Advanced Micro Devices"
+	FamilyID="25"
+	ModelID="80"
+	ProcessorCacheSize="512"
+	NumberOfLogicalCPU="12"
+	NumberOfPhysicalCPU="6"
+	TotalVirtualMemory="8191"
+	TotalPhysicalMemory="13812"
+	LogicalProcessorsPerPhysical="2"
+	ProcessorClockFrequency="3486.15"
+	>
+	<Testing>
+		<StartDateTime>Mar 26 19:18 KST</StartDateTime>
+		<StartTestTime>1742984332</StartTestTime>
+		<TestList/>
+		<EndDateTime>Mar 26 19:18 KST</EndDateTime>
+		<EndTestTime>1742984332</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>
