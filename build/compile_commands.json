@@ -466,5 +466,41 @@
   "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21396번： 이진수 더하기/CMakeFiles/SumOfBinaryNumbers_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21396번： 이진수 더하기/cpp/src/main.cpp\"",
   "file": "/home/monika/Documents/problems/21396번： 이진수 더하기/cpp/src/main.cpp",
   "output": "21396번： 이진수 더하기/CMakeFiles/SumOfBinaryNumbers_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 21414번： Вычислительная ихтиология/CMakeFiles/boj_21414.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21414번： Вычислительная ихтиология/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21414번： Вычислительная ихтиология/cpp/src/main.cpp",
+  "output": "21414번： Вычислительная ихтиология/CMakeFiles/boj_21414.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21414번： Вычислительная ихтиология/CMakeFiles/boj_21414_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/21414번： Вычислительная ихтиология/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/21414번： Вычислительная ихтиология/test/Testmain.cpp",
+  "output": "21414번： Вычислительная ихтиология/CMakeFiles/boj_21414_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21414번： Вычислительная ихтиология/CMakeFiles/boj_21414_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21414번： Вычислительная ихтиология/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21414번： Вычислительная ихтиология/cpp/src/main.cpp",
+  "output": "21414번： Вычислительная ихтиология/CMakeFiles/boj_21414_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 21496번： Вырубка леса/CMakeFiles/Forest.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21496번： Вырубка леса/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21496번： Вырубка леса/cpp/src/main.cpp",
+  "output": "21496번： Вырубка леса/CMakeFiles/Forest.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21496번： Вырубка леса/CMakeFiles/Forest_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/21496번： Вырубка леса/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/21496번： Вырубка леса/test/Testmain.cpp",
+  "output": "21496번： Вырубка леса/CMakeFiles/Forest_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21496번： Вырубка леса/CMakeFiles/Forest_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21496번： Вырубка леса/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21496번： Вырубка леса/cpp/src/main.cpp",
+  "output": "21496번： Вырубка леса/CMakeFiles/Forest_test.dir/cpp/src/main.cpp.o"
 }
 ]

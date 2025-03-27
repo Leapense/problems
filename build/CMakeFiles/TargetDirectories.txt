@@ -131,3 +131,13 @@
 /home/monika/Documents/problems/build/21396번： 이진수 더하기/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/21396번： 이진수 더하기/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/21396번： 이진수 더하기/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21414번： Вычислительная ихтиология/CMakeFiles/boj_21414.dir
+/home/monika/Documents/problems/build/21414번： Вычислительная ихтиология/CMakeFiles/boj_21414_test.dir
+/home/monika/Documents/problems/build/21414번： Вычислительная ихтиология/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21414번： Вычислительная ихтиология/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21414번： Вычислительная ихтиология/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21496번： Вырубка леса/CMakeFiles/Forest.dir
+/home/monika/Documents/problems/build/21496번： Вырубка леса/CMakeFiles/Forest_test.dir
+/home/monika/Documents/problems/build/21496번： Вырубка леса/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21496번： Вырубка леса/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21496번： Вырубка леса/CMakeFiles/rebuild_cache.dir

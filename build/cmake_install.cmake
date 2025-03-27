@@ -70,6 +70,8 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/monika/Documents/problems/build/21325번： Free food/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/21344번： Hot Springs/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/21396번： 이진수 더하기/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/21414번： Вычислительная ихтиология/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/21496번： Вырубка леса/cmake_install.cmake")
 
 endif()
 

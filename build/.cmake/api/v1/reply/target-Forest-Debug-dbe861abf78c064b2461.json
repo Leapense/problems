@@ -1,0 +1,99 @@
+{
+	"artifacts" : 
+	[
+		{
+			"path" : "21496\ubc88\uff1a \u0412\u044b\u0440\u0443\u0431\u043a\u0430 \u043b\u0435\u0441\u0430/Forest"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_executable"
+		],
+		"files" : 
+		[
+			"21496\ubc88\uff1a \u0412\u044b\u0440\u0443\u0431\u043a\u0430 \u043b\u0435\u0441\u0430/CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 11,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : "-g -std=c++23"
+				}
+			],
+			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					1
+				],
+				"standard" : "23"
+			},
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"id" : "Forest::@5f411743bee9d6082acf",
+	"link" : 
+	{
+		"commandFragments" : 
+		[
+			{
+				"fragment" : "-g",
+				"role" : "flags"
+			},
+			{
+				"fragment" : "",
+				"role" : "flags"
+			}
+		],
+		"language" : "CXX"
+	},
+	"name" : "Forest",
+	"nameOnDisk" : "Forest",
+	"paths" : 
+	{
+		"build" : "21496\ubc88\uff1a \u0412\u044b\u0440\u0443\u0431\u043a\u0430 \u043b\u0435\u0441\u0430",
+		"source" : "21496\ubc88\uff1a \u0412\u044b\u0440\u0443\u0431\u043a\u0430 \u043b\u0435\u0441\u0430"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "21496\ubc88\uff1a \u0412\u044b\u0440\u0443\u0431\u043a\u0430 \u043b\u0435\u0441\u0430/cpp/src/main.cpp",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "EXECUTABLE"
+}
