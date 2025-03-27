@@ -448,5 +448,23 @@
   "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21344번： Hot Springs/CMakeFiles/HotSprings_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21344번： Hot Springs/cpp/src/main.cpp\"",
   "file": "/home/monika/Documents/problems/21344번： Hot Springs/cpp/src/main.cpp",
   "output": "21344번： Hot Springs/CMakeFiles/HotSprings_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 21396번： 이진수 더하기/CMakeFiles/SumOfBinaryNumbers.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21396번： 이진수 더하기/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21396번： 이진수 더하기/cpp/src/main.cpp",
+  "output": "21396번： 이진수 더하기/CMakeFiles/SumOfBinaryNumbers.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21396번： 이진수 더하기/CMakeFiles/SumOfBinaryNumbers_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/21396번： 이진수 더하기/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/21396번： 이진수 더하기/test/Testmain.cpp",
+  "output": "21396번： 이진수 더하기/CMakeFiles/SumOfBinaryNumbers_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21396번： 이진수 더하기/CMakeFiles/SumOfBinaryNumbers_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21396번： 이진수 더하기/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21396번： 이진수 더하기/cpp/src/main.cpp",
+  "output": "21396번： 이진수 더하기/CMakeFiles/SumOfBinaryNumbers_test.dir/cpp/src/main.cpp.o"
 }
 ]

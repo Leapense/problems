@@ -659,7 +659,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "26"
+			"value" : "27"
 		},
 		{
 			"name" : "CMAKE_OBJCOPY",
@@ -1059,7 +1059,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/monika/Documents/problems/build/21344\ubc88\uff1a Hot Springs"
+			"value" : "/home/monika/Documents/problems/build/21396\ubc88\uff1a \uc774\uc9c4\uc218 \ub354\ud558\uae30"
 		},
 		{
 			"name" : "GAME_ADDICTION_IS_TOP_LEVEL",
@@ -1083,7 +1083,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/monika/Documents/problems/21344\ubc88\uff1a Hot Springs"
+			"value" : "/home/monika/Documents/problems/21396\ubc88\uff1a \uc774\uc9c4\uc218 \ub354\ud558\uae30"
 		},
 		{
 			"name" : "GTest_DIR",
