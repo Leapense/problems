@@ -65,6 +65,10 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/monika/Documents/problems/build/21049번： Coin Stacks/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/21127번： Binary Supersonic Utahraptors/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/21154번： Over the Hill, Part 1/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/21208번： Gratitude/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/21275번： 폰 호석만/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/21325번： Free food/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/21344번： Hot Springs/cmake_install.cmake")
 
 endif()
 

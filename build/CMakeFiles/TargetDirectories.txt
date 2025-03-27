@@ -106,3 +106,23 @@
 /home/monika/Documents/problems/build/21154번： Over the Hill, Part 1/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/21154번： Over the Hill, Part 1/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/21154번： Over the Hill, Part 1/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21208번： Gratitude/CMakeFiles/Gratitude.dir
+/home/monika/Documents/problems/build/21208번： Gratitude/CMakeFiles/Gratitude_test.dir
+/home/monika/Documents/problems/build/21208번： Gratitude/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21208번： Gratitude/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21208번： Gratitude/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21275번： 폰 호석만/CMakeFiles/Hosukman.dir
+/home/monika/Documents/problems/build/21275번： 폰 호석만/CMakeFiles/Hosukman_test.dir
+/home/monika/Documents/problems/build/21275번： 폰 호석만/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21275번： 폰 호석만/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21275번： 폰 호석만/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21325번： Free food/CMakeFiles/FreeFood.dir
+/home/monika/Documents/problems/build/21325번： Free food/CMakeFiles/FreeFood_test.dir
+/home/monika/Documents/problems/build/21325번： Free food/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21325번： Free food/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21325번： Free food/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21344번： Hot Springs/CMakeFiles/HotSprings.dir
+/home/monika/Documents/problems/build/21344번： Hot Springs/CMakeFiles/HotSprings_test.dir
+/home/monika/Documents/problems/build/21344번： Hot Springs/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21344번： Hot Springs/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21344번： Hot Springs/CMakeFiles/rebuild_cache.dir

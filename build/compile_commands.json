@@ -376,5 +376,77 @@
   "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21154번： Over the Hill, Part 1/CMakeFiles/CipherText_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21154번： Over the Hill, Part 1/cpp/src/main.cpp\"",
   "file": "/home/monika/Documents/problems/21154번： Over the Hill, Part 1/cpp/src/main.cpp",
   "output": "21154번： Over the Hill, Part 1/CMakeFiles/CipherText_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 21208번： Gratitude/CMakeFiles/Gratitude.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21208번： Gratitude/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21208번： Gratitude/cpp/src/main.cpp",
+  "output": "21208번： Gratitude/CMakeFiles/Gratitude.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21208번： Gratitude/CMakeFiles/Gratitude_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/21208번： Gratitude/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/21208번： Gratitude/test/Testmain.cpp",
+  "output": "21208번： Gratitude/CMakeFiles/Gratitude_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21208번： Gratitude/CMakeFiles/Gratitude_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21208번： Gratitude/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21208번： Gratitude/cpp/src/main.cpp",
+  "output": "21208번： Gratitude/CMakeFiles/Gratitude_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 21275번： 폰 호석만/CMakeFiles/Hosukman.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21275번： 폰 호석만/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21275번： 폰 호석만/cpp/src/main.cpp",
+  "output": "21275번： 폰 호석만/CMakeFiles/Hosukman.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21275번： 폰 호석만/CMakeFiles/Hosukman_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/21275번： 폰 호석만/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/21275번： 폰 호석만/test/Testmain.cpp",
+  "output": "21275번： 폰 호석만/CMakeFiles/Hosukman_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21275번： 폰 호석만/CMakeFiles/Hosukman_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21275번： 폰 호석만/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21275번： 폰 호석만/cpp/src/main.cpp",
+  "output": "21275번： 폰 호석만/CMakeFiles/Hosukman_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 21325번： Free food/CMakeFiles/FreeFood.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21325번： Free food/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21325번： Free food/cpp/src/main.cpp",
+  "output": "21325번： Free food/CMakeFiles/FreeFood.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21325번： Free food/CMakeFiles/FreeFood_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/21325번： Free food/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/21325번： Free food/test/Testmain.cpp",
+  "output": "21325번： Free food/CMakeFiles/FreeFood_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21325번： Free food/CMakeFiles/FreeFood_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21325번： Free food/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21325번： Free food/cpp/src/main.cpp",
+  "output": "21325번： Free food/CMakeFiles/FreeFood_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 21344번： Hot Springs/CMakeFiles/HotSprings.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21344번： Hot Springs/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21344번： Hot Springs/cpp/src/main.cpp",
+  "output": "21344번： Hot Springs/CMakeFiles/HotSprings.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21344번： Hot Springs/CMakeFiles/HotSprings_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/21344번： Hot Springs/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/21344번： Hot Springs/test/Testmain.cpp",
+  "output": "21344번： Hot Springs/CMakeFiles/HotSprings_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21344번： Hot Springs/CMakeFiles/HotSprings_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21344번： Hot Springs/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21344번： Hot Springs/cpp/src/main.cpp",
+  "output": "21344번： Hot Springs/CMakeFiles/HotSprings_test.dir/cpp/src/main.cpp.o"
 }
 ]
