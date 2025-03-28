@@ -161,3 +161,18 @@
 /home/monika/Documents/problems/build/21662번： Дипломы/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/21662번： Дипломы/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/21662번： Дипломы/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21736번： 헌내기는 친구가 필요해/CMakeFiles/NeedFriends.dir
+/home/monika/Documents/problems/build/21736번： 헌내기는 친구가 필요해/CMakeFiles/NeedFriends_test.dir
+/home/monika/Documents/problems/build/21736번： 헌내기는 친구가 필요해/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21736번： 헌내기는 친구가 필요해/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21736번： 헌내기는 친구가 필요해/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21741번： Ожерелье/CMakeFiles/Necklace.dir
+/home/monika/Documents/problems/build/21741번： Ожерелье/CMakeFiles/Necklace_test.dir
+/home/monika/Documents/problems/build/21741번： Ожерелье/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21741번： Ожерелье/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21741번： Ожерелье/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21763번： Bingo/CMakeFiles/Bingo.dir
+/home/monika/Documents/problems/build/21763번： Bingo/CMakeFiles/Bingo_test.dir
+/home/monika/Documents/problems/build/21763번： Bingo/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21763번： Bingo/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21763번： Bingo/CMakeFiles/rebuild_cache.dir
