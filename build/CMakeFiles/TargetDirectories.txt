@@ -176,3 +176,8 @@
 /home/monika/Documents/problems/build/21763번： Bingo/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/21763번： Bingo/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/21763번： Bingo/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21854번： Monsters/CMakeFiles/Monsters.dir
+/home/monika/Documents/problems/build/21854번： Monsters/CMakeFiles/Monsters_test.dir
+/home/monika/Documents/problems/build/21854번： Monsters/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21854번： Monsters/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21854번： Monsters/CMakeFiles/rebuild_cache.dir

@@ -79,6 +79,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/monika/Documents/problems/build/21736번： 헌내기는 친구가 필요해/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/21741번： Ожерелье/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/21763번： Bingo/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/21854번： Monsters/cmake_install.cmake")
 
 endif()
 

@@ -42,7 +42,8 @@
 						32,
 						33,
 						34,
-						35
+						35,
+						36
 					],
 					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
@@ -64,8 +65,8 @@
 					"source" : "19981\ubc88\uff1a \u0415\u0413\u042d",
 					"targetIndexes" : 
 					[
-						58,
-						59
+						60,
+						61
 					]
 				},
 				{
@@ -80,8 +81,8 @@
 					"source" : "20006\ubc88\uff1a \ub7ad\ud0b9\uc804 \ub300\uae30\uc5f4",
 					"targetIndexes" : 
 					[
-						64,
-						65
+						66,
+						67
 					]
 				},
 				{
@@ -96,8 +97,8 @@
 					"source" : "20152\ubc88\uff1a Game Addiction",
 					"targetIndexes" : 
 					[
-						52,
-						53
+						54,
+						55
 					]
 				},
 				{
@@ -112,8 +113,8 @@
 					"source" : "20153\ubc88\uff1a \uc601\uc6c5\uc774\ub294 2\uc758 \uac70\ub4ed \uc81c\uacf1\uc744 \uc88b\uc544\ud574! \uc601\uc6c5\uc774\ub294 2\uc758 \uac70\ub4ed \uc81c\uacf1\uc744 \uc88b\uc544\ud574!",
 					"targetIndexes" : 
 					[
-						60,
-						61
+						62,
+						63
 					]
 				},
 				{
@@ -128,8 +129,8 @@
 					"source" : "20162\ubc88\uff1a \uac04\uc2dd \ud30c\ud2f0",
 					"targetIndexes" : 
 					[
-						68,
-						69
+						70,
+						71
 					]
 				},
 				{
@@ -144,8 +145,8 @@
 					"source" : "20413\ubc88\uff1a MVP \ub2e4\uc774\uc544\ubaac\ub4dc (Easy)",
 					"targetIndexes" : 
 					[
-						56,
-						57
+						58,
+						59
 					]
 				},
 				{
@@ -160,8 +161,8 @@
 					"source" : "20416\ubc88\uff1a \uc5ed\uc804\uc758 \uc81c\uc655 (Easy)",
 					"targetIndexes" : 
 					[
-						66,
-						67
+						68,
+						69
 					]
 				},
 				{
@@ -176,8 +177,8 @@
 					"source" : "20438\ubc88\uff1a \ucd9c\uc11d\uccb4\ud06c",
 					"targetIndexes" : 
 					[
-						46,
-						47
+						48,
+						49
 					]
 				},
 				{
@@ -192,8 +193,8 @@
 					"source" : "20455\ubc88\uff1a \u041a\u0430\u043b\u044c\u043a\u0443\u043b\u044f\u0442\u043e\u0440",
 					"targetIndexes" : 
 					[
-						48,
-						49
+						50,
+						51
 					]
 				},
 				{
@@ -208,8 +209,8 @@
 					"source" : "20476\ubc88\uff1a \u0417\u0430\u043d\u043e\u0441",
 					"targetIndexes" : 
 					[
-						62,
-						63
+						64,
+						65
 					]
 				},
 				{
@@ -224,8 +225,8 @@
 					"source" : "20484\ubc88\uff1a \u0418\u0433\u0440\u0430",
 					"targetIndexes" : 
 					[
-						54,
-						55
+						56,
+						57
 					]
 				},
 				{
@@ -240,8 +241,8 @@
 					"source" : "20626\ubc88\uff1a AiGo",
 					"targetIndexes" : 
 					[
-						44,
-						45
+						46,
+						47
 					]
 				},
 				{
@@ -256,8 +257,8 @@
 					"source" : "20837\ubc88\uff1a Robott\u00e4vling",
 					"targetIndexes" : 
 					[
-						38,
-						39
+						40,
+						41
 					]
 				},
 				{
@@ -320,8 +321,8 @@
 					"source" : "21032\ubc88\uff1a Odd GCD Matching",
 					"targetIndexes" : 
 					[
-						36,
-						37
+						38,
+						39
 					]
 				},
 				{
@@ -464,8 +465,8 @@
 					"source" : "21396\ubc88\uff1a \uc774\uc9c4\uc218 \ub354\ud558\uae30",
 					"targetIndexes" : 
 					[
-						42,
-						43
+						44,
+						45
 					]
 				},
 				{
@@ -480,8 +481,8 @@
 					"source" : "21414\ubc88\uff1a \u0412\u044b\u0447\u0438\u0441\u043b\u0438\u0442\u0435\u043b\u044c\u043d\u0430\u044f \u0438\u0445\u0442\u0438\u043e\u043b\u043e\u0433\u0438\u044f",
 					"targetIndexes" : 
 					[
-						50,
-						51
+						52,
+						53
 					]
 				},
 				{
@@ -560,8 +561,8 @@
 					"source" : "21662\ubc88\uff1a \u0414\u0438\u043f\u043b\u043e\u043c\u044b",
 					"targetIndexes" : 
 					[
-						40,
-						41
+						42,
+						43
 					]
 				},
 				{
@@ -576,8 +577,8 @@
 					"source" : "21736\ubc88\uff1a \ud5cc\ub0b4\uae30\ub294 \uce5c\uad6c\uac00 \ud544\uc694\ud574",
 					"targetIndexes" : 
 					[
-						34,
-						35
+						36,
+						37
 					]
 				},
 				{
@@ -592,8 +593,8 @@
 					"source" : "21741\ubc88\uff1a \u041e\u0436\u0435\u0440\u0435\u043b\u044c\u0435",
 					"targetIndexes" : 
 					[
-						32,
-						33
+						34,
+						35
 					]
 				},
 				{
@@ -610,6 +611,22 @@
 					[
 						2,
 						3
+					]
+				},
+				{
+					"build" : "21854\ubc88\uff1a Monsters",
+					"jsonFile" : "directory-21854\ubc88\uff1a Monsters-Debug-4aad1a5e9af3f9eddfc9.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.14"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 36,
+					"source" : "21854\ubc88\uff1a Monsters",
+					"targetIndexes" : 
+					[
+						32,
+						33
 					]
 				}
 			],
@@ -653,7 +670,8 @@
 						32,
 						33,
 						34,
-						35
+						35,
+						36
 					],
 					"directoryIndexes" : 
 					[
@@ -670,8 +688,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						58,
-						59
+						60,
+						61
 					]
 				},
 				{
@@ -683,71 +701,6 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						64,
-						65
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						3
-					],
-					"name" : "GAME_ADDICTION",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						52,
-						53
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						4
-					],
-					"name" : "POWER_OF_TWO",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						60,
-						61
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						5
-					],
-					"name" : "GAME_ADDICTION",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						68,
-						69
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						6
-					],
-					"name" : "GAME_ADDICTION",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						56,
-						57
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						7
-					],
-					"name" : "GAME_ADDICTION",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
 						66,
 						67
 					]
@@ -755,46 +708,7 @@
 				{
 					"directoryIndexes" : 
 					[
-						8
-					],
-					"name" : "GAME_ADDICTION",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						46,
-						47
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						9
-					],
-					"name" : "GAME_ADDICTION",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						48,
-						49
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						10
-					],
-					"name" : "GAME_ADDICTION",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						62,
-						63
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						11
+						3
 					],
 					"name" : "GAME_ADDICTION",
 					"parentIndex" : 0,
@@ -807,14 +721,118 @@
 				{
 					"directoryIndexes" : 
 					[
+						4
+					],
+					"name" : "POWER_OF_TWO",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						62,
+						63
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						5
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						70,
+						71
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						6
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						58,
+						59
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						7
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						68,
+						69
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						8
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						48,
+						49
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						9
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						50,
+						51
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						10
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						64,
+						65
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						11
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						56,
+						57
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
 						12
 					],
 					"name" : "GAME_ADDICTION",
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						44,
-						45
+						46,
+						47
 					]
 				},
 				{
@@ -826,8 +844,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						38,
-						39
+						40,
+						41
 					]
 				},
 				{
@@ -878,8 +896,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						36,
-						37
+						38,
+						39
 					]
 				},
 				{
@@ -995,8 +1013,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						42,
-						43
+						44,
+						45
 					]
 				},
 				{
@@ -1008,8 +1026,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						50,
-						51
+						52,
+						53
 					]
 				},
 				{
@@ -1073,8 +1091,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						40,
-						41
+						42,
+						43
 					]
 				},
 				{
@@ -1086,8 +1104,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						34,
-						35
+						36,
+						37
 					]
 				},
 				{
@@ -1099,8 +1117,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						32,
-						33
+						34,
+						35
 					]
 				},
 				{
@@ -1114,6 +1132,19 @@
 					[
 						2,
 						3
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						36
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						32,
+						33
 					]
 				}
 			],
@@ -1342,6 +1373,20 @@
 					"jsonFile" : "target-ModernArt_test-Debug-95f4bed21ddb5fca528d.json",
 					"name" : "ModernArt_test",
 					"projectIndex" : 31
+				},
+				{
+					"directoryIndex" : 36,
+					"id" : "Monsters::@4305b603c7a89ae6a80d",
+					"jsonFile" : "target-Monsters-Debug-a0e8bce37679dae24152.json",
+					"name" : "Monsters",
+					"projectIndex" : 36
+				},
+				{
+					"directoryIndex" : 36,
+					"id" : "Monsters_test::@4305b603c7a89ae6a80d",
+					"jsonFile" : "target-Monsters_test-Debug-ba9df6c7275412691cd4.json",
+					"name" : "Monsters_test",
+					"projectIndex" : 36
 				},
 				{
 					"directoryIndex" : 34,
