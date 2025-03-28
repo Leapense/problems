@@ -141,3 +141,18 @@
 /home/monika/Documents/problems/build/21496번： Вырубка леса/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/21496번： Вырубка леса/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/21496번： Вырубка леса/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21555번： 빛의 돌 옮기기/CMakeFiles/LightStone.dir
+/home/monika/Documents/problems/build/21555번： 빛의 돌 옮기기/CMakeFiles/LightStone_test.dir
+/home/monika/Documents/problems/build/21555번： 빛의 돌 옮기기/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21555번： 빛의 돌 옮기기/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21555번： 빛의 돌 옮기기/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21593번： Simple Cron Spec/CMakeFiles/CronSpec.dir
+/home/monika/Documents/problems/build/21593번： Simple Cron Spec/CMakeFiles/CronSpec_test.dir
+/home/monika/Documents/problems/build/21593번： Simple Cron Spec/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21593번： Simple Cron Spec/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21593번： Simple Cron Spec/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21616번： Modern Art/CMakeFiles/ModernArt.dir
+/home/monika/Documents/problems/build/21616번： Modern Art/CMakeFiles/ModernArt_test.dir
+/home/monika/Documents/problems/build/21616번： Modern Art/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21616번： Modern Art/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21616번： Modern Art/CMakeFiles/rebuild_cache.dir

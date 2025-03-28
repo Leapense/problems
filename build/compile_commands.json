@@ -502,5 +502,59 @@
   "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21496번： Вырубка леса/CMakeFiles/Forest_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21496번： Вырубка леса/cpp/src/main.cpp\"",
   "file": "/home/monika/Documents/problems/21496번： Вырубка леса/cpp/src/main.cpp",
   "output": "21496번： Вырубка леса/CMakeFiles/Forest_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 21555번： 빛의 돌 옮기기/CMakeFiles/LightStone.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21555번： 빛의 돌 옮기기/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21555번： 빛의 돌 옮기기/cpp/src/main.cpp",
+  "output": "21555번： 빛의 돌 옮기기/CMakeFiles/LightStone.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21555번： 빛의 돌 옮기기/CMakeFiles/LightStone_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/21555번： 빛의 돌 옮기기/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/21555번： 빛의 돌 옮기기/test/Testmain.cpp",
+  "output": "21555번： 빛의 돌 옮기기/CMakeFiles/LightStone_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21555번： 빛의 돌 옮기기/CMakeFiles/LightStone_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21555번： 빛의 돌 옮기기/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21555번： 빛의 돌 옮기기/cpp/src/main.cpp",
+  "output": "21555번： 빛의 돌 옮기기/CMakeFiles/LightStone_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 21593번： Simple Cron Spec/CMakeFiles/CronSpec.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21593번： Simple Cron Spec/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21593번： Simple Cron Spec/cpp/src/main.cpp",
+  "output": "21593번： Simple Cron Spec/CMakeFiles/CronSpec.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21593번： Simple Cron Spec/CMakeFiles/CronSpec_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/21593번： Simple Cron Spec/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/21593번： Simple Cron Spec/test/Testmain.cpp",
+  "output": "21593번： Simple Cron Spec/CMakeFiles/CronSpec_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21593번： Simple Cron Spec/CMakeFiles/CronSpec_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21593번： Simple Cron Spec/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21593번： Simple Cron Spec/cpp/src/main.cpp",
+  "output": "21593번： Simple Cron Spec/CMakeFiles/CronSpec_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 21616번： Modern Art/CMakeFiles/ModernArt.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21616번： Modern Art/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21616번： Modern Art/cpp/src/main.cpp",
+  "output": "21616번： Modern Art/CMakeFiles/ModernArt.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21616번： Modern Art/CMakeFiles/ModernArt_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/21616번： Modern Art/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/21616번： Modern Art/test/Testmain.cpp",
+  "output": "21616번： Modern Art/CMakeFiles/ModernArt_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21616번： Modern Art/CMakeFiles/ModernArt_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21616번： Modern Art/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21616번： Modern Art/cpp/src/main.cpp",
+  "output": "21616번： Modern Art/CMakeFiles/ModernArt_test.dir/cpp/src/main.cpp.o"
 }
 ]
