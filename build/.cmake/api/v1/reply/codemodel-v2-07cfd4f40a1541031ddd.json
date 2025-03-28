@@ -38,7 +38,8 @@
 						28,
 						29,
 						30,
-						31
+						31,
+						32
 					],
 					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
 					"minimumCMakeVersion" : 
@@ -60,8 +61,8 @@
 					"source" : "19981\ubc88\uff1a \u0415\u0413\u042d",
 					"targetIndexes" : 
 					[
-						50,
-						51
+						52,
+						53
 					]
 				},
 				{
@@ -76,8 +77,8 @@
 					"source" : "20006\ubc88\uff1a \ub7ad\ud0b9\uc804 \ub300\uae30\uc5f4",
 					"targetIndexes" : 
 					[
-						56,
-						57
+						58,
+						59
 					]
 				},
 				{
@@ -92,8 +93,8 @@
 					"source" : "20152\ubc88\uff1a Game Addiction",
 					"targetIndexes" : 
 					[
-						44,
-						45
+						46,
+						47
 					]
 				},
 				{
@@ -108,8 +109,8 @@
 					"source" : "20153\ubc88\uff1a \uc601\uc6c5\uc774\ub294 2\uc758 \uac70\ub4ed \uc81c\uacf1\uc744 \uc88b\uc544\ud574! \uc601\uc6c5\uc774\ub294 2\uc758 \uac70\ub4ed \uc81c\uacf1\uc744 \uc88b\uc544\ud574!",
 					"targetIndexes" : 
 					[
-						52,
-						53
+						54,
+						55
 					]
 				},
 				{
@@ -124,8 +125,8 @@
 					"source" : "20162\ubc88\uff1a \uac04\uc2dd \ud30c\ud2f0",
 					"targetIndexes" : 
 					[
-						60,
-						61
+						62,
+						63
 					]
 				},
 				{
@@ -140,8 +141,8 @@
 					"source" : "20413\ubc88\uff1a MVP \ub2e4\uc774\uc544\ubaac\ub4dc (Easy)",
 					"targetIndexes" : 
 					[
-						48,
-						49
+						50,
+						51
 					]
 				},
 				{
@@ -156,8 +157,8 @@
 					"source" : "20416\ubc88\uff1a \uc5ed\uc804\uc758 \uc81c\uc655 (Easy)",
 					"targetIndexes" : 
 					[
-						58,
-						59
+						60,
+						61
 					]
 				},
 				{
@@ -172,8 +173,8 @@
 					"source" : "20438\ubc88\uff1a \ucd9c\uc11d\uccb4\ud06c",
 					"targetIndexes" : 
 					[
-						38,
-						39
+						40,
+						41
 					]
 				},
 				{
@@ -188,8 +189,8 @@
 					"source" : "20455\ubc88\uff1a \u041a\u0430\u043b\u044c\u043a\u0443\u043b\u044f\u0442\u043e\u0440",
 					"targetIndexes" : 
 					[
-						40,
-						41
+						42,
+						43
 					]
 				},
 				{
@@ -204,8 +205,8 @@
 					"source" : "20476\ubc88\uff1a \u0417\u0430\u043d\u043e\u0441",
 					"targetIndexes" : 
 					[
-						54,
-						55
+						56,
+						57
 					]
 				},
 				{
@@ -220,8 +221,8 @@
 					"source" : "20484\ubc88\uff1a \u0418\u0433\u0440\u0430",
 					"targetIndexes" : 
 					[
-						46,
-						47
+						48,
+						49
 					]
 				},
 				{
@@ -236,8 +237,8 @@
 					"source" : "20626\ubc88\uff1a AiGo",
 					"targetIndexes" : 
 					[
-						36,
-						37
+						38,
+						39
 					]
 				},
 				{
@@ -460,8 +461,8 @@
 					"source" : "21396\ubc88\uff1a \uc774\uc9c4\uc218 \ub354\ud558\uae30",
 					"targetIndexes" : 
 					[
-						34,
-						35
+						36,
+						37
 					]
 				},
 				{
@@ -476,8 +477,8 @@
 					"source" : "21414\ubc88\uff1a \u0412\u044b\u0447\u0438\u0441\u043b\u0438\u0442\u0435\u043b\u044c\u043d\u0430\u044f \u0438\u0445\u0442\u0438\u043e\u043b\u043e\u0433\u0438\u044f",
 					"targetIndexes" : 
 					[
-						42,
-						43
+						44,
+						45
 					]
 				},
 				{
@@ -543,6 +544,22 @@
 						28,
 						29
 					]
+				},
+				{
+					"build" : "21662\ubc88\uff1a \u0414\u0438\u043f\u043b\u043e\u043c\u044b",
+					"jsonFile" : "directory-21662\ubc88\uff1a \u0414\u0438\u043f\u043b\u043e\u043c\u044b-Debug-997162c1c0eaec7370a9.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.10"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 32,
+					"source" : "21662\ubc88\uff1a \u0414\u0438\u043f\u043b\u043e\u043c\u044b",
+					"targetIndexes" : 
+					[
+						34,
+						35
+					]
 				}
 			],
 			"name" : "Debug",
@@ -581,7 +598,8 @@
 						28,
 						29,
 						30,
-						31
+						31,
+						32
 					],
 					"directoryIndexes" : 
 					[
@@ -598,8 +616,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						50,
-						51
+						52,
+						53
 					]
 				},
 				{
@@ -611,71 +629,6 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						56,
-						57
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						3
-					],
-					"name" : "GAME_ADDICTION",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						44,
-						45
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						4
-					],
-					"name" : "POWER_OF_TWO",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						52,
-						53
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						5
-					],
-					"name" : "GAME_ADDICTION",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						60,
-						61
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						6
-					],
-					"name" : "GAME_ADDICTION",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						48,
-						49
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						7
-					],
-					"name" : "GAME_ADDICTION",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
 						58,
 						59
 					]
@@ -683,46 +636,7 @@
 				{
 					"directoryIndexes" : 
 					[
-						8
-					],
-					"name" : "GAME_ADDICTION",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						38,
-						39
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						9
-					],
-					"name" : "GAME_ADDICTION",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						40,
-						41
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						10
-					],
-					"name" : "GAME_ADDICTION",
-					"parentIndex" : 0,
-					"targetIndexes" : 
-					[
-						54,
-						55
-					]
-				},
-				{
-					"directoryIndexes" : 
-					[
-						11
+						3
 					],
 					"name" : "GAME_ADDICTION",
 					"parentIndex" : 0,
@@ -735,14 +649,118 @@
 				{
 					"directoryIndexes" : 
 					[
+						4
+					],
+					"name" : "POWER_OF_TWO",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						54,
+						55
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						5
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						62,
+						63
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						6
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						50,
+						51
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						7
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						60,
+						61
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						8
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						40,
+						41
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						9
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						42,
+						43
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						10
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						56,
+						57
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						11
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						48,
+						49
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
 						12
 					],
 					"name" : "GAME_ADDICTION",
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						36,
-						37
+						38,
+						39
 					]
 				},
 				{
@@ -923,8 +941,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						34,
-						35
+						36,
+						37
 					]
 				},
 				{
@@ -936,8 +954,8 @@
 					"parentIndex" : 0,
 					"targetIndexes" : 
 					[
-						42,
-						43
+						44,
+						45
 					]
 				},
 				{
@@ -990,6 +1008,19 @@
 					[
 						28,
 						29
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						32
+					],
+					"name" : "GAME_ADDICTION",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						34,
+						35
 					]
 				}
 			],
@@ -1232,6 +1263,20 @@
 					"jsonFile" : "target-Robot_Travel_test-Debug-419cc7fa3c6e3d7d2ce2.json",
 					"name" : "Robot_Travel_test",
 					"projectIndex" : 13
+				},
+				{
+					"directoryIndex" : 32,
+					"id" : "SolveDiplomas::@fdf6d368fc2df775215d",
+					"jsonFile" : "target-SolveDiplomas-Debug-a59475f153e1a7b5f9c1.json",
+					"name" : "SolveDiplomas",
+					"projectIndex" : 32
+				},
+				{
+					"directoryIndex" : 32,
+					"id" : "SolveDiplomas_test::@fdf6d368fc2df775215d",
+					"jsonFile" : "target-SolveDiplomas_test-Debug-fb9f24353a8d927137d7.json",
+					"name" : "SolveDiplomas_test",
+					"projectIndex" : 32
 				},
 				{
 					"directoryIndex" : 26,

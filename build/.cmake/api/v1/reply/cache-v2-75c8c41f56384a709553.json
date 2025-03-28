@@ -659,7 +659,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "32"
+			"value" : "33"
 		},
 		{
 			"name" : "CMAKE_OBJCOPY",
@@ -1059,7 +1059,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/monika/Documents/problems/build/21616\ubc88\uff1a Modern Art"
+			"value" : "/home/monika/Documents/problems/build/21662\ubc88\uff1a \u0414\u0438\u043f\u043b\u043e\u043c\u044b"
 		},
 		{
 			"name" : "GAME_ADDICTION_IS_TOP_LEVEL",
@@ -1083,7 +1083,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/monika/Documents/problems/21616\ubc88\uff1a Modern Art"
+			"value" : "/home/monika/Documents/problems/21662\ubc88\uff1a \u0414\u0438\u043f\u043b\u043e\u043c\u044b"
 		},
 		{
 			"name" : "GTest_DIR",

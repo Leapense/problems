@@ -156,3 +156,8 @@
 /home/monika/Documents/problems/build/21616번： Modern Art/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/21616번： Modern Art/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/21616번： Modern Art/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21662번： Дипломы/CMakeFiles/SolveDiplomas.dir
+/home/monika/Documents/problems/build/21662번： Дипломы/CMakeFiles/SolveDiplomas_test.dir
+/home/monika/Documents/problems/build/21662번： Дипломы/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21662번： Дипломы/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21662번： Дипломы/CMakeFiles/rebuild_cache.dir

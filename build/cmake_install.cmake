@@ -75,6 +75,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/monika/Documents/problems/build/21555번： 빛의 돌 옮기기/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/21593번： Simple Cron Spec/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/21616번： Modern Art/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/21662번： Дипломы/cmake_install.cmake")
 
 endif()
 
