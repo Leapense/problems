@@ -646,5 +646,41 @@
   "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21854번： Monsters/CMakeFiles/Monsters_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21854번： Monsters/cpp/src/main.cpp\"",
   "file": "/home/monika/Documents/problems/21854번： Monsters/cpp/src/main.cpp",
   "output": "21854번： Monsters/CMakeFiles/Monsters_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 21869번： Maximum Bishop/CMakeFiles/MaximumBishop.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21869번： Maximum Bishop/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21869번： Maximum Bishop/cpp/src/main.cpp",
+  "output": "21869번： Maximum Bishop/CMakeFiles/MaximumBishop.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21869번： Maximum Bishop/CMakeFiles/MaximumBishop_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/21869번： Maximum Bishop/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/21869번： Maximum Bishop/test/Testmain.cpp",
+  "output": "21869번： Maximum Bishop/CMakeFiles/MaximumBishop_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21869번： Maximum Bishop/CMakeFiles/MaximumBishop_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21869번： Maximum Bishop/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21869번： Maximum Bishop/cpp/src/main.cpp",
+  "output": "21869번： Maximum Bishop/CMakeFiles/MaximumBishop_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 21881번： Innome/CMakeFiles/ComputeMaxTabs.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21881번： Innome/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21881번： Innome/cpp/src/main.cpp",
+  "output": "21881번： Innome/CMakeFiles/ComputeMaxTabs.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21881번： Innome/CMakeFiles/ComputeMaxTabs_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/21881번： Innome/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/21881번： Innome/test/Testmain.cpp",
+  "output": "21881번： Innome/CMakeFiles/ComputeMaxTabs_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21881번： Innome/CMakeFiles/ComputeMaxTabs_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21881번： Innome/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21881번： Innome/cpp/src/main.cpp",
+  "output": "21881번： Innome/CMakeFiles/ComputeMaxTabs_test.dir/cpp/src/main.cpp.o"
 }
 ]

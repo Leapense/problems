@@ -181,3 +181,13 @@
 /home/monika/Documents/problems/build/21854번： Monsters/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/21854번： Monsters/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/21854번： Monsters/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21869번： Maximum Bishop/CMakeFiles/MaximumBishop.dir
+/home/monika/Documents/problems/build/21869번： Maximum Bishop/CMakeFiles/MaximumBishop_test.dir
+/home/monika/Documents/problems/build/21869번： Maximum Bishop/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21869번： Maximum Bishop/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21869번： Maximum Bishop/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/21881번： Innome/CMakeFiles/ComputeMaxTabs.dir
+/home/monika/Documents/problems/build/21881번： Innome/CMakeFiles/ComputeMaxTabs_test.dir
+/home/monika/Documents/problems/build/21881번： Innome/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/21881번： Innome/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/21881번： Innome/CMakeFiles/rebuild_cache.dir

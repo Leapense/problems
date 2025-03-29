@@ -80,6 +80,8 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/monika/Documents/problems/build/21741번： Ожерелье/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/21763번： Bingo/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/21854번： Monsters/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/21869번： Maximum Bishop/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/21881번： Innome/cmake_install.cmake")
 
 endif()
 
