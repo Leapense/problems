@@ -700,5 +700,41 @@
   "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21938번： 영상처리/CMakeFiles/ImageProcessing_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21938번： 영상처리/cpp/src/main.cpp\"",
   "file": "/home/monika/Documents/problems/21938번： 영상처리/cpp/src/main.cpp",
   "output": "21938번： 영상처리/CMakeFiles/ImageProcessing_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 21980번： 비슷한 번호판/CMakeFiles/CarLicensePlates.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21980번： 비슷한 번호판/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21980번： 비슷한 번호판/cpp/src/main.cpp",
+  "output": "21980번： 비슷한 번호판/CMakeFiles/CarLicensePlates.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21980번： 비슷한 번호판/CMakeFiles/CarLicensePlates_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/21980번： 비슷한 번호판/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/21980번： 비슷한 번호판/test/Testmain.cpp",
+  "output": "21980번： 비슷한 번호판/CMakeFiles/CarLicensePlates_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 21980번： 비슷한 번호판/CMakeFiles/CarLicensePlates_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/21980번： 비슷한 번호판/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/21980번： 비슷한 번호판/cpp/src/main.cpp",
+  "output": "21980번： 비슷한 번호판/CMakeFiles/CarLicensePlates_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 22034번： Alto Singing/CMakeFiles/Transpose.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/22034번： Alto Singing/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/22034번： Alto Singing/cpp/src/main.cpp",
+  "output": "22034번： Alto Singing/CMakeFiles/Transpose.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 22034번： Alto Singing/CMakeFiles/Transpose_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/22034번： Alto Singing/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/22034번： Alto Singing/test/Testmain.cpp",
+  "output": "22034번： Alto Singing/CMakeFiles/Transpose_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 22034번： Alto Singing/CMakeFiles/Transpose_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/22034번： Alto Singing/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/22034번： Alto Singing/cpp/src/main.cpp",
+  "output": "22034번： Alto Singing/CMakeFiles/Transpose_test.dir/cpp/src/main.cpp.o"
 }
 ]

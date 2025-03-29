@@ -83,6 +83,8 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/monika/Documents/problems/build/21869번： Maximum Bishop/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/21881번： Innome/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/21938번： 영상처리/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/21980번： 비슷한 번호판/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/22034번： Alto Singing/cmake_install.cmake")
 
 endif()
 
