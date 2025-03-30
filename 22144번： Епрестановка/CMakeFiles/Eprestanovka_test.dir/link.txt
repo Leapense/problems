@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/Eprestanovka_test.dir/test/Testmain.cpp.o CMakeFiles/Eprestanovka_test.dir/cpp/src/main.cpp.o -o Eprestanovka_test  /usr/lib64/libgtest_main.so.1.14.0 /usr/lib64/libgtest.so.1.14.0
