@@ -189,6 +189,15 @@ CMAKE_TAPI:FILEPATH=CMAKE_TAPI-NOTFOUND
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
+DEX_SAVE_BINARY_DIR:STATIC=/home/monika/Documents/problems/build/22037번： DEX Save
+
+//Value Computed by CMake
+DEX_SAVE_IS_TOP_LEVEL:STATIC=OFF
+
+//Value Computed by CMake
+DEX_SAVE_SOURCE_DIR:STATIC=/home/monika/Documents/problems/22037번： DEX Save
+
+//Value Computed by CMake
 GAME_ADDICTION_BINARY_DIR:STATIC=/home/monika/Documents/problems/build/22034번： Alto Singing
 
 //Value Computed by CMake
@@ -325,7 +334,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=42
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=43
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP

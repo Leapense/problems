@@ -659,7 +659,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "42"
+			"value" : "43"
 		},
 		{
 			"name" : "CMAKE_OBJCOPY",
@@ -1036,6 +1036,42 @@
 			],
 			"type" : "BOOL",
 			"value" : "FALSE"
+		},
+		{
+			"name" : "DEX_SAVE_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/monika/Documents/problems/build/22037\ubc88\uff1a DEX Save"
+		},
+		{
+			"name" : "DEX_SAVE_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "OFF"
+		},
+		{
+			"name" : "DEX_SAVE_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/monika/Documents/problems/22037\ubc88\uff1a DEX Save"
 		},
 		{
 			"name" : "FIND_PACKAGE_MESSAGE_DETAILS_GTest",

@@ -206,3 +206,8 @@
 /home/monika/Documents/problems/build/22034번： Alto Singing/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/22034번： Alto Singing/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/22034번： Alto Singing/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/22037번： DEX Save/CMakeFiles/DexSave.dir
+/home/monika/Documents/problems/build/22037번： DEX Save/CMakeFiles/DexSave_test.dir
+/home/monika/Documents/problems/build/22037번： DEX Save/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/22037번： DEX Save/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/22037번： DEX Save/CMakeFiles/rebuild_cache.dir
