@@ -659,7 +659,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "43"
+			"value" : "44"
 		},
 		{
 			"name" : "CMAKE_OBJCOPY",
@@ -1132,6 +1132,42 @@
 			],
 			"type" : "PATH",
 			"value" : "/usr/lib64/cmake/GTest"
+		},
+		{
+			"name" : "MOTHERS_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/monika/Documents/problems/build/22088\ubc88\uff1a \u041d\u0430 \u0434\u0430\u043b\u0435\u043a\u043e\u0439 \u0410\u043c\u0430\u0437\u043e\u043d\u043a\u0435"
+		},
+		{
+			"name" : "MOTHERS_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "OFF"
+		},
+		{
+			"name" : "MOTHERS_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "/home/monika/Documents/problems/22088\ubc88\uff1a \u041d\u0430 \u0434\u0430\u043b\u0435\u043a\u043e\u0439 \u0410\u043c\u0430\u0437\u043e\u043d\u043a\u0435"
 		},
 		{
 			"name" : "NEGATIVE_BASE2_BINARY_DIR",

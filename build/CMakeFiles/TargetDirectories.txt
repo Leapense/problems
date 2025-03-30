@@ -211,3 +211,8 @@
 /home/monika/Documents/problems/build/22037번： DEX Save/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/22037번： DEX Save/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/22037번： DEX Save/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/22088번： На далекой Амазонке/CMakeFiles/Mothers.dir
+/home/monika/Documents/problems/build/22088번： На далекой Амазонке/CMakeFiles/Mothers_test.dir
+/home/monika/Documents/problems/build/22088번： На далекой Амазонке/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/22088번： На далекой Амазонке/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/22088번： На далекой Амазонке/CMakeFiles/rebuild_cache.dir

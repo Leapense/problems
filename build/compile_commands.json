@@ -754,5 +754,23 @@
   "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 22037번： DEX Save/CMakeFiles/DexSave_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/22037번： DEX Save/cpp/src/main.cpp\"",
   "file": "/home/monika/Documents/problems/22037번： DEX Save/cpp/src/main.cpp",
   "output": "22037번： DEX Save/CMakeFiles/DexSave_test.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -g -std=c++23 -o 22088번： На далекой Амазонке/CMakeFiles/Mothers.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/22088번： На далекой Амазонке/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/22088번： На далекой Амазонке/cpp/src/main.cpp",
+  "output": "22088번： На далекой Амазонке/CMakeFiles/Mothers.dir/cpp/src/main.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 22088번： На далекой Амазонке/CMakeFiles/Mothers_test.dir/test/Testmain.cpp.o -c \"/home/monika/Documents/problems/22088번： На далекой Амазонке/test/Testmain.cpp\"",
+  "file": "/home/monika/Documents/problems/22088번： На далекой Амазонке/test/Testmain.cpp",
+  "output": "22088번： На далекой Амазонке/CMakeFiles/Mothers_test.dir/test/Testmain.cpp.o"
+},
+{
+  "directory": "/home/monika/Documents/problems/build",
+  "command": "/usr/bin/g++ -DGTEST_LINKED_AS_SHARED_LIBRARY=1 -DUNIT_TESTS -g -std=c++23 -o 22088번： На далекой Амазонке/CMakeFiles/Mothers_test.dir/cpp/src/main.cpp.o -c \"/home/monika/Documents/problems/22088번： На далекой Амазонке/cpp/src/main.cpp\"",
+  "file": "/home/monika/Documents/problems/22088번： На далекой Амазонке/cpp/src/main.cpp",
+  "output": "22088번： На далекой Амазонке/CMakeFiles/Mothers_test.dir/cpp/src/main.cpp.o"
 }
 ]
