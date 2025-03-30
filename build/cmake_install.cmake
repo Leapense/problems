@@ -87,6 +87,8 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/monika/Documents/problems/build/22034번： Alto Singing/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/22037번： DEX Save/cmake_install.cmake")
   include("/home/monika/Documents/problems/build/22088번： На далекой Амазонке/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/22105번： Король и королева/cmake_install.cmake")
+  include("/home/monika/Documents/problems/build/22114번： 창영이와 점프/cmake_install.cmake")
 
 endif()
 

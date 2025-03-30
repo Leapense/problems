@@ -216,3 +216,13 @@
 /home/monika/Documents/problems/build/22088번： На далекой Амазонке/CMakeFiles/test.dir
 /home/monika/Documents/problems/build/22088번： На далекой Амазонке/CMakeFiles/edit_cache.dir
 /home/monika/Documents/problems/build/22088번： На далекой Амазонке/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/22105번： Король и королева/CMakeFiles/Chess.dir
+/home/monika/Documents/problems/build/22105번： Король и королева/CMakeFiles/Chess_test.dir
+/home/monika/Documents/problems/build/22105번： Король и королева/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/22105번： Король и королева/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/22105번： Король и королева/CMakeFiles/rebuild_cache.dir
+/home/monika/Documents/problems/build/22114번： 창영이와 점프/CMakeFiles/MaxContinuousBlocks.dir
+/home/monika/Documents/problems/build/22114번： 창영이와 점프/CMakeFiles/MaxContinuousBlocks_test.dir
+/home/monika/Documents/problems/build/22114번： 창영이와 점프/CMakeFiles/test.dir
+/home/monika/Documents/problems/build/22114번： 창영이와 점프/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/build/22114번： 창영이와 점프/CMakeFiles/rebuild_cache.dir

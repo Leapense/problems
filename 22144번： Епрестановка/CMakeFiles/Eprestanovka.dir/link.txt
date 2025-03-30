@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/Eprestanovka.dir/cpp/src/main.cpp.o -o Eprestanovka
