@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - coverage_diff.info - home/monika/Documents/problems/22156번： Ключ к шифру/main.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../gcov.css">
+</head>
+
+<body>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="title">LCOV - code coverage report</td></tr>
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+            <tr>
+              <td width="100%">
+                <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="10%" class="headerValue"><a href="../../../../../index.html" title="Click to go to top-level">top level</a> - <a href="index.html" title="Click to go to directory /home/monika/Documents/problems/22156번： Ключ к шифру">/home/monika/Documents/problems/22156번： Ключ к шифру</a> - main.cpp<span style="font-size: 80%;"> (source / <a href="main.cpp.func-c.html" title="Click to go to function table">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="5%"></td>
+            <td width="5%" class="headerCovTableHead">Coverage</td>
+            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
+            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">coverage_diff.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
+            <td class="headerCovTableEntry">49</td>
+            <td class="headerCovTableEntry">49</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test Date:</td>
+            <td class="headerValue">2025-03-30 19:42:56</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">3</td>
+          </tr>
+                  <tr><td><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+          </table>
+
+          <table cellpadding=0 cellspacing=0 border=0>
+            <tr>
+              <td><br></td>
+            </tr>
+            <tr>
+              <td>
+<pre class="sourceHeading">            Line data    Source code</pre>
+<pre class="source">
+<span id="L1"><span class="lineNum">       1</span>              : #include &lt;iostream&gt;</span>
+<span id="L2"><span class="lineNum">       2</span>              : #include &lt;string&gt;</span>
+<span id="L3"><span class="lineNum">       3</span>              : #include &lt;vector&gt;</span>
+<span id="L4"><span class="lineNum">       4</span>              : #include &lt;algorithm&gt;</span>
+<span id="L5"><span class="lineNum">       5</span>              : </span>
+<span id="L6"><span class="lineNum">       6</span>              : using namespace std;</span>
+<span id="L7"><span class="lineNum">       7</span>              : using ull = unsigned long long;</span>
+<span id="L8"><span class="lineNum">       8</span>              : </span>
+<span id="L9"><span class="lineNum">       9</span>              : const ull BASE = 131;</span>
+<span id="L10"><span class="lineNum">      10</span>              : </span>
+<span id="L11"><span class="lineNum">      11</span>              : vector&lt;ull&gt; prefixHash, revPrefixHash, power;</span>
+<span id="L12"><span class="lineNum">      12</span>              : </span>
+<span id="L13"><span class="lineNum">      13</span> <span class="tlaGNC">           3 : void computeHashes(const string &amp;s, const string &amp;s_rev) {</span></span>
+<span id="L14"><span class="lineNum">      14</span> <span class="tlaGNC">           3 :     int n = s.size();</span></span>
+<span id="L15"><span class="lineNum">      15</span> <span class="tlaGNC">           3 :     prefixHash.resize(n + 1);</span></span>
+<span id="L16"><span class="lineNum">      16</span> <span class="tlaGNC">           3 :     revPrefixHash.resize(n + 1);</span></span>
+<span id="L17"><span class="lineNum">      17</span> <span class="tlaGNC">           3 :     power.resize(n + 1);</span></span>
+<span id="L18"><span class="lineNum">      18</span> <span class="tlaGNC">           3 :     prefixHash[0] = 0;</span></span>
+<span id="L19"><span class="lineNum">      19</span> <span class="tlaGNC">           3 :     revPrefixHash[0] = 0;</span></span>
+<span id="L20"><span class="lineNum">      20</span> <span class="tlaGNC">           3 :     power[0] = 1;</span></span>
+<span id="L21"><span class="lineNum">      21</span>              : </span>
+<span id="L22"><span class="lineNum">      22</span> <span class="tlaGNC">          24 :     for (int i = 0; i &lt; n; i++) {</span></span>
+<span id="L23"><span class="lineNum">      23</span> <span class="tlaGNC">          21 :         prefixHash[i + 1] = prefixHash[i] * BASE + s[i];</span></span>
+<span id="L24"><span class="lineNum">      24</span> <span class="tlaGNC">          21 :         revPrefixHash[i + 1] = revPrefixHash[i] * BASE + s_rev[i];</span></span>
+<span id="L25"><span class="lineNum">      25</span> <span class="tlaGNC">          21 :         power[i + 1] = power[i] * BASE;</span></span>
+<span id="L26"><span class="lineNum">      26</span>              :     }</span>
+<span id="L27"><span class="lineNum">      27</span> <span class="tlaGNC">           3 : }</span></span>
+<span id="L28"><span class="lineNum">      28</span>              : </span>
+<span id="L29"><span class="lineNum">      29</span> <span class="tlaGNC">          54 : ull getHash(const vector&lt;ull&gt;&amp; hashArr, int l, int r) {</span></span>
+<span id="L30"><span class="lineNum">      30</span> <span class="tlaGNC">          54 :     return hashArr[r + 1] - hashArr[l] * power[r - l + 1];</span></span>
+<span id="L31"><span class="lineNum">      31</span>              : }</span>
+<span id="L32"><span class="lineNum">      32</span>              : </span>
+<span id="L33"><span class="lineNum">      33</span> <span class="tlaGNC">           1 : int main()</span></span>
+<span id="L34"><span class="lineNum">      34</span>              : {</span>
+<span id="L35"><span class="lineNum">      35</span> <span class="tlaGNC">           1 :     ios::sync_with_stdio(false);</span></span>
+<span id="L36"><span class="lineNum">      36</span> <span class="tlaGNC">           1 :     cin.tie(nullptr);</span></span>
+<span id="L37"><span class="lineNum">      37</span>              : </span>
+<span id="L38"><span class="lineNum">      38</span>              :     int T;</span>
+<span id="L39"><span class="lineNum">      39</span> <span class="tlaGNC">           1 :     cin &gt;&gt; T;</span></span>
+<span id="L40"><span class="lineNum">      40</span> <span class="tlaGNC">           4 :     while (T--) {</span></span>
+<span id="L41"><span class="lineNum">      41</span> <span class="tlaGNC">           3 :         string enc;</span></span>
+<span id="L42"><span class="lineNum">      42</span> <span class="tlaGNC">           3 :         cin &gt;&gt; enc;</span></span>
+<span id="L43"><span class="lineNum">      43</span> <span class="tlaGNC">           3 :         int n = enc.size();</span></span>
+<span id="L44"><span class="lineNum">      44</span> <span class="tlaGNC">           3 :         string enc_rev = enc;</span></span>
+<span id="L45"><span class="lineNum">      45</span> <span class="tlaGNC">           3 :         reverse(enc_rev.begin(), enc_rev.end());</span></span>
+<span id="L46"><span class="lineNum">      46</span>              : </span>
+<span id="L47"><span class="lineNum">      47</span> <span class="tlaGNC">           3 :         computeHashes(enc, enc_rev);</span></span>
+<span id="L48"><span class="lineNum">      48</span>              : </span>
+<span id="L49"><span class="lineNum">      49</span> <span class="tlaGNC">           3 :         int bestKeyLen = 0;</span></span>
+<span id="L50"><span class="lineNum">      50</span> <span class="tlaGNC">           3 :         int best_t_len = -1;</span></span>
+<span id="L51"><span class="lineNum">      51</span> <span class="tlaGNC">           3 :         int best_r = 0;</span></span>
+<span id="L52"><span class="lineNum">      52</span>              : </span>
+<span id="L53"><span class="lineNum">      53</span> <span class="tlaGNC">          15 :         for (int r = 0; r &lt;= n / 2; r++) {</span></span>
+<span id="L54"><span class="lineNum">      54</span> <span class="tlaGNC">          12 :             int t_len = n - 2 * r;</span></span>
+<span id="L55"><span class="lineNum">      55</span> <span class="tlaGNC">          12 :             if (t_len &lt;= 0) break;</span></span>
+<span id="L56"><span class="lineNum">      56</span>              : </span>
+<span id="L57"><span class="lineNum">      57</span> <span class="tlaGNC">          12 :             int lo = 1, hi = t_len;</span></span>
+<span id="L58"><span class="lineNum">      58</span> <span class="tlaGNC">          12 :             int cur_max = 0;</span></span>
+<span id="L59"><span class="lineNum">      59</span>              : </span>
+<span id="L60"><span class="lineNum">      60</span> <span class="tlaGNC">          39 :             while (lo &lt;= hi) {</span></span>
+<span id="L61"><span class="lineNum">      61</span> <span class="tlaGNC">          27 :                 int mid = (lo + hi) / 2;</span></span>
+<span id="L62"><span class="lineNum">      62</span>              : </span>
+<span id="L63"><span class="lineNum">      63</span> <span class="tlaGNC">          27 :                 ull hash1 = getHash(prefixHash, r, r + mid - 1);</span></span>
+<span id="L64"><span class="lineNum">      64</span> <span class="tlaGNC">          27 :                 ull hash2 = getHash(revPrefixHash, r, r + mid - 1);</span></span>
+<span id="L65"><span class="lineNum">      65</span>              : </span>
+<span id="L66"><span class="lineNum">      66</span> <span class="tlaGNC">          27 :                 if (hash1 == hash2) {</span></span>
+<span id="L67"><span class="lineNum">      67</span> <span class="tlaGNC">          14 :                     cur_max = mid;</span></span>
+<span id="L68"><span class="lineNum">      68</span> <span class="tlaGNC">          14 :                     lo = mid + 1;</span></span>
+<span id="L69"><span class="lineNum">      69</span>              :                 } else {</span>
+<span id="L70"><span class="lineNum">      70</span> <span class="tlaGNC">          13 :                     hi = mid - 1;</span></span>
+<span id="L71"><span class="lineNum">      71</span>              :                 }</span>
+<span id="L72"><span class="lineNum">      72</span>              :             }</span>
+<span id="L73"><span class="lineNum">      73</span>              : </span>
+<span id="L74"><span class="lineNum">      74</span> <span class="tlaGNC">          12 :             if (cur_max &gt; bestKeyLen || (cur_max == bestKeyLen &amp;&amp; t_len &gt; best_t_len)) {</span></span>
+<span id="L75"><span class="lineNum">      75</span> <span class="tlaGNC">           5 :                 bestKeyLen = cur_max;</span></span>
+<span id="L76"><span class="lineNum">      76</span> <span class="tlaGNC">           5 :                 best_t_len = t_len;</span></span>
+<span id="L77"><span class="lineNum">      77</span> <span class="tlaGNC">           5 :                 best_r = r;</span></span>
+<span id="L78"><span class="lineNum">      78</span>              :             }</span>
+<span id="L79"><span class="lineNum">      79</span>              :         }</span>
+<span id="L80"><span class="lineNum">      80</span>              : </span>
+<span id="L81"><span class="lineNum">      81</span> <span class="tlaGNC">           3 :         cout &lt;&lt; enc.substr(best_r, bestKeyLen) &lt;&lt; &quot;\n&quot;;</span></span>
+<span id="L82"><span class="lineNum">      82</span> <span class="tlaGNC">           3 :     }</span></span>
+<span id="L83"><span class="lineNum">      83</span>              : </span>
+<span id="L84"><span class="lineNum">      84</span> <span class="tlaGNC">           1 :     return 0;</span></span>
+<span id="L85"><span class="lineNum">      85</span>              : }</span>
+        </pre>
+              </td>
+            </tr>
+          </table>
+          <br>
+
+          <table width="100%" border=0 cellspacing=0 cellpadding=0>
+            <tr><td class="ruler"><img src="../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.3-7.g38a82d5</a></td></tr>
+          </table>
+          <br>
+
+</body>
+</html>

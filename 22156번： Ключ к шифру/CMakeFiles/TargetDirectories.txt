@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/22156번： Ключ к шифру/CMakeFiles/DecodingTest.dir
+/home/monika/Documents/problems/22156번： Ключ к шифру/CMakeFiles/DecodingTest_test.dir
+/home/monika/Documents/problems/22156번： Ключ к шифру/CMakeFiles/test.dir
+/home/monika/Documents/problems/22156번： Ключ к шифру/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/22156번： Ключ к шифру/CMakeFiles/rebuild_cache.dir
