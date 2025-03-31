@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/22549번: 友だちの誘い方/CMakeFiles/boj_22549.dir
+/home/monika/Documents/problems/22549번: 友だちの誘い方/CMakeFiles/boj_22549_test.dir
+/home/monika/Documents/problems/22549번: 友だちの誘い方/CMakeFiles/test.dir
+/home/monika/Documents/problems/22549번: 友だちの誘い方/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/22549번: 友だちの誘い方/CMakeFiles/rebuild_cache.dir
