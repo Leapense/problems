@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/22281번: Forest for the Trees/CMakeFiles/Forest_for_the_Trees.dir
+/home/monika/Documents/problems/22281번: Forest for the Trees/CMakeFiles/Forest_for_the_Trees_test.dir
+/home/monika/Documents/problems/22281번: Forest for the Trees/CMakeFiles/test.dir
+/home/monika/Documents/problems/22281번: Forest for the Trees/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/22281번: Forest for the Trees/CMakeFiles/rebuild_cache.dir
