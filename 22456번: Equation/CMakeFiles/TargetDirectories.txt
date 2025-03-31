@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/22456번: Equation/CMakeFiles/boj_22456.dir
+/home/monika/Documents/problems/22456번: Equation/CMakeFiles/boj_22456_test.dir
+/home/monika/Documents/problems/22456번: Equation/CMakeFiles/test.dir
+/home/monika/Documents/problems/22456번: Equation/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/22456번: Equation/CMakeFiles/rebuild_cache.dir
