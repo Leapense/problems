@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/22609번: Matsuzaki Number/CMakeFiles/boj_22609.dir
+/home/monika/Documents/problems/22609번: Matsuzaki Number/CMakeFiles/boj_22609_test.dir
+/home/monika/Documents/problems/22609번: Matsuzaki Number/CMakeFiles/test.dir
+/home/monika/Documents/problems/22609번: Matsuzaki Number/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/22609번: Matsuzaki Number/CMakeFiles/rebuild_cache.dir
