@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/22624번: Strange String Manipulation/CMakeFiles/boj_22624.dir
+/home/monika/Documents/problems/22624번: Strange String Manipulation/CMakeFiles/boj_22624_test.dir
+/home/monika/Documents/problems/22624번: Strange String Manipulation/CMakeFiles/test.dir
+/home/monika/Documents/problems/22624번: Strange String Manipulation/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/22624번: Strange String Manipulation/CMakeFiles/rebuild_cache.dir
