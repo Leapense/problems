@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/22941번: RPG 마스터 오명진/CMakeFiles/boj_22941.dir
+/home/monika/Documents/problems/22941번: RPG 마스터 오명진/CMakeFiles/boj_22941_test.dir
+/home/monika/Documents/problems/22941번: RPG 마스터 오명진/CMakeFiles/test.dir
+/home/monika/Documents/problems/22941번: RPG 마스터 오명진/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/22941번: RPG 마스터 오명진/CMakeFiles/rebuild_cache.dir
