@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/22765번: Make Purse Light/CMakeFiles/boj_22765.dir
+/home/monika/Documents/problems/22765번: Make Purse Light/CMakeFiles/boj_22765_test.dir
+/home/monika/Documents/problems/22765번: Make Purse Light/CMakeFiles/test.dir
+/home/monika/Documents/problems/22765번: Make Purse Light/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/22765번: Make Purse Light/CMakeFiles/rebuild_cache.dir
