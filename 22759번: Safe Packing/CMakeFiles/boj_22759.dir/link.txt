@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/boj_22759.dir/cpp/src/main.cpp.o -o boj_22759

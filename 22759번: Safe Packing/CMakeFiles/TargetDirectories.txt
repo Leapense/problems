@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/22759번: Safe Packing/CMakeFiles/boj_22759.dir
+/home/monika/Documents/problems/22759번: Safe Packing/CMakeFiles/boj_22759_test.dir
+/home/monika/Documents/problems/22759번: Safe Packing/CMakeFiles/test.dir
+/home/monika/Documents/problems/22759번: Safe Packing/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/22759번: Safe Packing/CMakeFiles/rebuild_cache.dir
