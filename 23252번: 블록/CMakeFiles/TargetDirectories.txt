@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/23252번: 블록/CMakeFiles/boj_23252.dir
+/home/monika/Documents/problems/23252번: 블록/CMakeFiles/boj_23252_test.dir
+/home/monika/Documents/problems/23252번: 블록/CMakeFiles/test.dir
+/home/monika/Documents/problems/23252번: 블록/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/23252번: 블록/CMakeFiles/rebuild_cache.dir
