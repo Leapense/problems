@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/23081번: 오델로/CMakeFiles/boj_23081.dir
+/home/monika/Documents/problems/23081번: 오델로/CMakeFiles/boj_23081_test.dir
+/home/monika/Documents/problems/23081번: 오델로/CMakeFiles/test.dir
+/home/monika/Documents/problems/23081번: 오델로/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/23081번: 오델로/CMakeFiles/rebuild_cache.dir
