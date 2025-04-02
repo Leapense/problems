@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/22971번: 증가하는 부분 수열의 개수/CMakeFiles/boj_22971.dir
+/home/monika/Documents/problems/22971번: 증가하는 부분 수열의 개수/CMakeFiles/boj_22971_test.dir
+/home/monika/Documents/problems/22971번: 증가하는 부분 수열의 개수/CMakeFiles/test.dir
+/home/monika/Documents/problems/22971번: 증가하는 부분 수열의 개수/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/22971번: 증가하는 부분 수열의 개수/CMakeFiles/rebuild_cache.dir
