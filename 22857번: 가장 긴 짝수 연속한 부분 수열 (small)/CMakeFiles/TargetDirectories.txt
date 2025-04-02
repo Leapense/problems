@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/22857번: 가장 긴 짝수 연속한 부분 수열 (small)/CMakeFiles/boj_22857.dir
+/home/monika/Documents/problems/22857번: 가장 긴 짝수 연속한 부분 수열 (small)/CMakeFiles/boj_22857_test.dir
+/home/monika/Documents/problems/22857번: 가장 긴 짝수 연속한 부분 수열 (small)/CMakeFiles/test.dir
+/home/monika/Documents/problems/22857번: 가장 긴 짝수 연속한 부분 수열 (small)/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/22857번: 가장 긴 짝수 연속한 부분 수열 (small)/CMakeFiles/rebuild_cache.dir
