@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/22937번: 교수님 계산기가 고장났어요!/CMakeFiles/boj_22937.dir
+/home/monika/Documents/problems/22937번: 교수님 계산기가 고장났어요!/CMakeFiles/boj_22937_test.dir
+/home/monika/Documents/problems/22937번: 교수님 계산기가 고장났어요!/CMakeFiles/test.dir
+/home/monika/Documents/problems/22937번: 교수님 계산기가 고장났어요!/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/22937번: 교수님 계산기가 고장났어요!/CMakeFiles/rebuild_cache.dir
