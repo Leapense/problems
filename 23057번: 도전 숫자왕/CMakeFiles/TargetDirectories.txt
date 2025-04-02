@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/23057번: 도전 숫자왕/CMakeFiles/boj_23057.dir
+/home/monika/Documents/problems/23057번: 도전 숫자왕/CMakeFiles/boj_23057_test.dir
+/home/monika/Documents/problems/23057번: 도전 숫자왕/CMakeFiles/test.dir
+/home/monika/Documents/problems/23057번: 도전 숫자왕/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/23057번: 도전 숫자왕/CMakeFiles/rebuild_cache.dir
