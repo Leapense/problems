@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/22973번: 점프 숨바꼭질/CMakeFiles/boj_22973.dir
+/home/monika/Documents/problems/22973번: 점프 숨바꼭질/CMakeFiles/boj_22973_test.dir
+/home/monika/Documents/problems/22973번: 점프 숨바꼭질/CMakeFiles/test.dir
+/home/monika/Documents/problems/22973번: 점프 숨바꼭질/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/22973번: 점프 숨바꼭질/CMakeFiles/rebuild_cache.dir
