@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/22793번: Radix 3/CMakeFiles/boj_22793.dir
+/home/monika/Documents/problems/22793번: Radix 3/CMakeFiles/boj_22793_test.dir
+/home/monika/Documents/problems/22793번: Radix 3/CMakeFiles/test.dir
+/home/monika/Documents/problems/22793번: Radix 3/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/22793번: Radix 3/CMakeFiles/rebuild_cache.dir

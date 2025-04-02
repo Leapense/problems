@@ -1,0 +1,2 @@
+# Empty dependencies file for boj_22793.
+# This may be replaced when dependencies are built.
