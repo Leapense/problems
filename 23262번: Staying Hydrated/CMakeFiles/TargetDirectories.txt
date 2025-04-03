@@ -1,0 +1,5 @@
+/home/monika/Documents/problems/23262번: Staying Hydrated/CMakeFiles/boj_23262.dir
+/home/monika/Documents/problems/23262번: Staying Hydrated/CMakeFiles/boj_23262_test.dir
+/home/monika/Documents/problems/23262번: Staying Hydrated/CMakeFiles/test.dir
+/home/monika/Documents/problems/23262번: Staying Hydrated/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/23262번: Staying Hydrated/CMakeFiles/rebuild_cache.dir
