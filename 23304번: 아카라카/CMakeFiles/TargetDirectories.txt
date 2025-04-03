@@ -1,0 +1,4 @@
+/home/monika/Documents/problems/23304번: 아카라카/CMakeFiles/boj_23304.dir
+/home/monika/Documents/problems/23304번: 아카라카/CMakeFiles/test.dir
+/home/monika/Documents/problems/23304번: 아카라카/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/23304번: 아카라카/CMakeFiles/rebuild_cache.dir
