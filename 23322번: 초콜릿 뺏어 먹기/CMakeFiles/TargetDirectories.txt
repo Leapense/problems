@@ -1,0 +1,4 @@
+/home/monika/Documents/problems/23322번: 초콜릿 뺏어 먹기/CMakeFiles/boj_23322.dir
+/home/monika/Documents/problems/23322번: 초콜릿 뺏어 먹기/CMakeFiles/test.dir
+/home/monika/Documents/problems/23322번: 초콜릿 뺏어 먹기/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/23322번: 초콜릿 뺏어 먹기/CMakeFiles/rebuild_cache.dir
