@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <limits>
 using namespace std;
 
 int main()
@@ -13,21 +12,16 @@ int main()
     cin >> N;
 
     int total = 3 * N;
-    vector<long long> ages(total);
+    vector<long long> age(total);
 
     for (int i = 0; i < total; i++) {
-        cin >> ages[i];
+        cin >> age[i];
     }
 
-    sort(ages.begin(), ages.end());
+    sort(age.begin(), age.end());
 
-    long long ans = numeric_limits<long long>::max();
+    long long answer = age[2 * N - 1] - age[N];
 
-    for (int k = N; k <= 2 * N; k++) {
-        long long diff = ages[k + N - 1] - ages[k];
-        ans = min(ans, diff);
-    }
-
-    cout << ans << "\n";
+    cout << answer << "\n";
     return 0;
 }

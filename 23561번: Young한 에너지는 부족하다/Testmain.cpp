@@ -1,26 +1,16 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include <limits>
 #ifdef UNIT_TESTS
 #include <gtest/gtest.h>
 #endif
 
 using namespace std;
 
-// 3N명의 참가자 연령에서 크루의 에너지(세 명 중 중앙값)들 간 최대-최소 차이를 최소화하는 값을 구하는 함수.
-// 최적의 아이디어는 전체를 오름차순 정렬한 뒤, 
-// 첫 N개는 각 크루의 최소값으로 고정하고, 남은 2N개에서 연속한 N개를 중앙값으로 선택하는 경우들 중 차이가 최소인 값을 찾는 것이다.
-// 구체적으로, sorted array v에서 i를 0부터 N까지 두면, 후보값은 v[i+2N-1] - v[i+N]가 된다.
 long long minEnergyDiff(int N, const vector<long long>& ages) {
     vector<long long> v = ages; // 원본 복사
     sort(v.begin(), v.end());
-    long long ans = numeric_limits<long long>::max();
-    // i: 0부터 N까지. (i = k - N, k를 N부터 2N까지 돌리는 것과 동일)
-    for (int i = 0; i <= N; i++) {
-        long long candidate = v[i + 2 * N - 1] - v[i + N];
-        ans = min(ans, candidate);
-    }
+    long long ans = v[2 * N - 1] - v[N];
     return ans;
 }
 
