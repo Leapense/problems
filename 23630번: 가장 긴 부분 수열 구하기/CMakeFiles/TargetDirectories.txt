@@ -1,0 +1,4 @@
+/home/monika/Documents/problems/23630번: 가장 긴 부분 수열 구하기/CMakeFiles/boj_23630.dir
+/home/monika/Documents/problems/23630번: 가장 긴 부분 수열 구하기/CMakeFiles/test.dir
+/home/monika/Documents/problems/23630번: 가장 긴 부분 수열 구하기/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/23630번: 가장 긴 부분 수열 구하기/CMakeFiles/rebuild_cache.dir
