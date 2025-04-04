@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <limits>
-#ifdef UNIT_TESTS
+#ifdef UNIT_TEST
 #include <gtest/gtest.h>
 #endif
 
@@ -24,7 +24,7 @@ long long minEnergyDiff(int N, const vector<long long>& ages) {
     return ans;
 }
 
-#ifndef UNIT_TESTS
+#ifndef UNIT_TEST
 // 실제 입출력용 main 함수
 int main(){
     ios::sync_with_stdio(false);
