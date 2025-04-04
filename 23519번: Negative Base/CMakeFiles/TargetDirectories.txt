@@ -1,0 +1,4 @@
+/home/monika/Documents/problems/23519번: Negative Base/CMakeFiles/boj_23519.dir
+/home/monika/Documents/problems/23519번: Negative Base/CMakeFiles/test.dir
+/home/monika/Documents/problems/23519번: Negative Base/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/23519번: Negative Base/CMakeFiles/rebuild_cache.dir
