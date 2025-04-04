@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/boj_23561.dir/Testmain.cpp.o -o boj_23561  /usr/lib64/libgtest_main.so.1.14.0 /usr/lib64/libgtest.so.1.14.0
