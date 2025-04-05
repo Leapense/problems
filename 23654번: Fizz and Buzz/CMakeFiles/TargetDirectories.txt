@@ -1,0 +1,4 @@
+/home/monika/Documents/problems/23654번: Fizz and Buzz/CMakeFiles/boj_23654.dir
+/home/monika/Documents/problems/23654번: Fizz and Buzz/CMakeFiles/test.dir
+/home/monika/Documents/problems/23654번: Fizz and Buzz/CMakeFiles/edit_cache.dir
+/home/monika/Documents/problems/23654번: Fizz and Buzz/CMakeFiles/rebuild_cache.dir
