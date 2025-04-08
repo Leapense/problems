@@ -1,0 +1,152 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <sstream>
+#include <cmath>
+using namespace std;
+string solve_case(istream &in){
+    ostringstream out;
+    int N; in >> N;
+    vector<int> pub(N);
+    for (int i = 0; i < N; i++) in >> pub[i];
+    int K; in >> K;
+    vector<vector<int>> jury(K, vector<int>(N));
+    for (int i = 0; i < K; i++){
+        for (int j = 0; j < N; j++){
+            in >> jury[i][j];
+        }
+    }
+    int maxVotes = -1, part1 = -1;
+    for (int i = 0; i < N; i++){
+        if(pub[i] > maxVotes){
+            maxVotes = pub[i];
+            part1 = i + 1;
+        }
+    }
+    vector<int> pubScore(N);
+    vector<int> sortedPub = pub;
+    sort(sortedPub.begin(), sortedPub.end(), greater<int>());
+    vector<int> uniqueVotes;
+    uniqueVotes.push_back(sortedPub[0]);
+    for (int i = 1; i < N; i++){
+        if(sortedPub[i] != sortedPub[i - 1])
+            uniqueVotes.push_back(sortedPub[i]);
+    }
+    int currentScore = N;
+    vector<int> voteToScore(1001, 0);
+    for (auto v : uniqueVotes){
+        voteToScore[v] = currentScore;
+        currentScore--;
+    }
+    for (int i = 0; i < N; i++){
+        pubScore[i] = voteToScore[pub[i]];
+    }
+    int minPubScore = N + 1;
+    for (auto s : pubScore) minPubScore = min(minPubScore, s);
+    vector<int> jurySum(N, 0);
+    for (int j = 0; j < N; j++){
+        for (int i = 0; i < K; i++){
+            jurySum[j] += jury[i][j];
+        }
+    }
+    vector<int> juryScore(N);
+    vector<int> sortedJury = jurySum;
+    sort(sortedJury.begin(), sortedJury.end(), greater<int>());
+    vector<int> uniqueJury;
+    uniqueJury.push_back(sortedJury[0]);
+    for (int i = 1; i < N; i++){
+        if(sortedJury[i] != sortedJury[i - 1])
+            uniqueJury.push_back(sortedJury[i]);
+    }
+    currentScore = N;
+    vector<int> jurySumToScore(1001, 0);
+    for (auto v : uniqueJury){
+        jurySumToScore[v] = currentScore;
+        currentScore--;
+    }
+    for (int i = 0; i < N; i++){
+        juryScore[i] = jurySumToScore[jurySum[i]];
+    }
+    vector<int> totalScore(N);
+    for (int i = 0; i < N; i++){
+        totalScore[i] = pubScore[i] + juryScore[i];
+    }
+    int part3 = -1, bestTotal = -1;
+    for (int i = 0; i < N; i++){
+        if(totalScore[i] > bestTotal){
+            bestTotal = totalScore[i];
+            part3 = i + 1;
+        }
+    }
+    vector<int> officialPos(N);
+    vector<pair<int,int>> stars;
+    for (int i = 0; i < N; i++){
+        stars.push_back({totalScore[i], i});
+    }
+    sort(stars.begin(), stars.end(), [&](auto a, auto b){
+        if(a.first == b.first) return a.second < b.second;
+        return a.first > b.first;
+    });
+    for (int pos = 0; pos < N; pos++){
+        officialPos[stars[pos].second] = pos + 1;
+    }
+    int bestJury = -1, bestSumDiff = 1e9;
+    for (int j = 0; j < K; j++){
+        vector<pair<int,int>> juryOrder;
+        for (int i = 0; i < N; i++){
+            juryOrder.push_back({jury[j][i], i});
+        }
+        sort(juryOrder.begin(), juryOrder.end(), [&](auto a, auto b){
+            return a.first > b.first;
+        });
+        vector<int> juryPos(N);
+        for (int pos = 0; pos < N; pos++){
+            juryPos[juryOrder[pos].second] = pos + 1;
+        }
+        int sumDiff = 0;
+        for (int i = 0; i < N; i++){
+            sumDiff += abs(officialPos[i] - juryPos[i]);
+        }
+        if(sumDiff < bestSumDiff){
+            bestSumDiff = sumDiff;
+            bestJury = j + 1;
+        }
+    }
+    out << part1 << "\n" << minPubScore << "\n" << part3 << "\n" << bestJury;
+    return out.str();
+}
+#ifndef UNIT_TEST
+int main(){
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+    std::cout << solve_case(std::cin);
+    return 0;
+}
+#else
+#include <gtest/gtest.h>
+TEST(GenijalacTest, Sample1){
+    string input = "5\n3\n4\n2\n6\n7\n2\n1 4 5 2 3\n5 1 2 4 3\n";
+    string expected = "5\n1\n5\n2";
+    istringstream iss(input);
+    string result = solve_case(iss);
+    EXPECT_EQ(result, expected);
+}
+TEST(GenijalacTest, Sample2){
+    string input = "2\n89\n100\n5\n2 1\n1 2\n2 1\n1 2\n1 2\n";
+    string expected = "2\n1\n2\n2";
+    istringstream iss(input);
+    string result = solve_case(iss);
+    EXPECT_EQ(result, expected);
+}
+TEST(GenijalacTest, Sample3){
+    string input = "10\n5\n6\n3\n6\n3\n7\n12\n15\n15\n6\n7\n1 2 3 4 5 6 7 8 9 10\n2 7 8 1 3 6 4 5 10 9\n9 10 7 4 5 6 8 3 2 1\n10 9 1 3 2 5 4 6 7 8\n2 1 3 4 9 5 8 6 10 7\n9 8 2 7 1 4 5 3 6 10\n8 7 3 4 9 2 5 10 6 1\n";
+    string expected = "8\n5\n9\n1";
+    istringstream iss(input);
+    string result = solve_case(iss);
+    EXPECT_EQ(result, expected);
+}
+int main(int argc, char **argv){
+    ::testing::InitGoogleTest(&argc, argv);
+    return RUN_ALL_TESTS();
+}
+#endif
