@@ -1,10 +1,8 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include <iostream>
+#include <vector>
+#include <algorithm>
 
-struct Person {
-    int age_days;
-    int pos;
-};
+using namespace std;
 
 int main()
 {
@@ -14,34 +12,44 @@ int main()
     int N, K;
     cin >> N >> K;
 
-    vector<Person> people(N);
-    for (int i = 0; i < N; ++i) {
+    vector<int> ages(N);
+    for (int i = 0; i < N; i++) {
         int G, M, D;
         cin >> G >> M >> D;
-        int total_days = G * 360 + M * 30 + D;
-        people[i] = {total_days, i};
+        ages[i] = G * 400 + M * 30 + D;
     }
 
-    vector<int> sorted_ages;
-    for (const auto& p : people) {
-        sorted_ages.push_back(p.age_days);
+    vector<int> tmp = ages;
+    sort(tmp.begin(), tmp.end(), greater<int>());
+
+    int T = tmp[K - 1];
+    int countGreater = 0;
+
+    for (auto v : ages) {
+        if (v > T) countGreater++;
     }
 
-    sort(sorted_ages.rbegin(), sorted_ages.rend());
-
-    int age_limit = sorted_ages[K - 1];
-    int vaccinated = 0, sent_home = 0;
-
-    for (const auto& p : people) {
-        if (vaccinated >= K) break;
-        if (p.age_days >= age_limit) {
-            vaccinated++;
+    int need = K - countGreater;
+    int vaccCount = 0, rejectCount = 0, pos = 0;
+    for (int i = 0; i < N && vaccCount < K; i++) {
+        if (ages[i] > T) {
+            vaccCount++;
+            pos = i + 1;
+            continue;
+        }
+        if (ages[i] == T) {
+            if (need > 0) {
+                vaccCount++;
+                need--;
+                pos = i + 1;
+                continue;
+            } else {
+                rejectCount++;
+            }
         } else {
-            sent_home++;
+            rejectCount++;
         }
     }
-
-    cout << sent_home << "\n";
-
+    cout << rejectCount;
     return 0;
 }
