@@ -4,6 +4,8 @@
 
 using namespace std;
 
+constexpr double eps = 1e-9;
+
 int main()
 {
     ios::sync_with_stdio(false);
@@ -20,7 +22,7 @@ int main()
     double tailX = x + H * cos(rad);
     double tailY = y + H * sin(rad);
 
-    if (tailX >= 0 && tailX <= W && tailY >= 0 && tailY <= L) {
+    if (tailX >= -eps && tailX <= W + eps && tailY >= -eps && tailY <= L + eps) {
         cout << "YES";
     } else {
         cout << "NO";
