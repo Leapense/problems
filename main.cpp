@@ -1,7 +1,9 @@
 #include <iostream>
-
+using namespace std;
 int main()
 {
-    std::cout << "__cplusplus = " << __cplusplus << '\n';
+    int a = 12;
+    int b = 4 * (a++);
+    cout << b << endl;
     return 0;
 }
