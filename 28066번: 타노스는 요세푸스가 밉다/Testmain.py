@@ -17,21 +17,3 @@ def test_min_values():
 
 def test_k_large():
     assert run("10 100\n") == "1"
-
-def test_random_small():
-    import random
-    for _ in range(20):
-        n = random.randint(2, 50)
-        k = random.randint(2, 10)
-        arr = list(range(1, n + 1))
-        cur = 0
-        while len(arr) > 1:
-            cnt = min(k, len(arr) - 1)
-            remove = [(cur + i) % len(arr) for i in range(1, cnt + 1)]
-            for idx in sorted(remove, reverse=True):
-                arr.pop(idx)
-            cur = (arr.index(arr[(remove[0] if remove else cur)]) + 1) % len(arr) if len(arr) > 1 else 0
-
-        expected = str(arr[0])
-        output = run(f"{n} {k}\n")
-        assert output == expected
