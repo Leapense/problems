@@ -1,230 +1,230 @@
 # ninja log v6
-6	1348	1743009644687354427	21275번： 폰 호석만/CMakeFiles/Hosukman_test.dir/cpp/src/main.cpp.o	46f891137fa2d699
-13	1266	1743314315601014759	22114번： 창영이와 점프/CMakeFiles/MaxContinuousBlocks_test.dir/cpp/src/main.cpp.o	442bd7b1411c4705
-2	1452	1742735029778793778	20455번： Калькулятор/CMakeFiles/boj_20455.dir/cpp/src/main.cpp.o	7f3610a822e2352f
-2362	2468	1743081686345003714	21496번： Вырубка леса/Forest_test	2fbe5df8e1a47f2e
-10	1261	1743308660940870978	22088번： На далекой Амазонке/CMakeFiles/Mothers_test.dir/cpp/src/main.cpp.o	46b69915cd016e3a
-6	1794	1743231589484916165	21881번： Innome/CMakeFiles/ComputeMaxTabs_test.dir/test/Testmain.cpp.o	8e3be17b7a579681
-2	1334	1742733536675221551	20438번： 출석체크/CMakeFiles/attend_check.dir/cpp/src/main.cpp.o	b7860d4a73e68f4
-1024	1096	1743226469690949335	21869번： Maximum Bishop/MaximumBishop	5a2ba5db315f831b
-1567	1672	1743079073145550906	21414번： Вычислительная ихтиология/boj_21414	f80cded95bd4060f
-1074	1159	1742889165238510283	20954번： 택배 기사 민서/DeliveryRoute	1a0bf259adefa7d3
-1394	1502	1742815101173067654	20837번： Robottävling/Robot_Travel	206bda87823c8dd8
-9	2074	1743302342925882437	22037번： DEX Save/CMakeFiles/DexSave_test.dir/test/Testmain.cpp.o	1c45633898d486af
-7	1853	1743236613833862733	21938번： 영상처리/CMakeFiles/ImageProcessing_test.dir/test/Testmain.cpp.o	7063b9837c89974b
-9	1024	1743226468675940462	21869번： Maximum Bishop/CMakeFiles/MaximumBishop.dir/cpp/src/main.cpp.o	4cafc813f531d3ee
-4	1229	1742839383752697812	20950번： 미술가 미미/CMakeFiles/MiMi_test.dir/cpp/src/main.cpp.o	1f6cdfa630ab9644
-1307	1394	1742900830437475017	21049번： Coin Stacks/CoinStack	c021d9525701ba62
-1322	1391	1743236615148391221	21938번： 영상처리/ImageProcessing	77dd5fb4077cf056
-2028	2101	1743152274138320008	21662번： Дипломы/SolveDiplomas_test	9706461cdf9525d3
-6	1347	1743071043792095861	21396번： 이진수 더하기/CMakeFiles/SumOfBinaryNumbers_test.dir/cpp/src/main.cpp.o	9136758e371be2c2
-2066	2137	1743071045850730360	21396번： 이진수 더하기/SumOfBinaryNumbers_test	797fbcc7224de401
-1370	1446	1743312155871925947	22105번： Король и королева/Chess	2df073a9bc8a358d
-2191	2284	1743005165321486975	21208번： Gratitude/Gratitude_test	6349d438042bafc0
-2	2198	1742731982980121448	20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king_test.dir/test/Testmain.cpp.o	11baf37286585bb7
-17	1822	1743169561243175628	21854번： Monsters/CMakeFiles/Monsters.dir/cpp/src/main.cpp.o	2c879bf42595b9e7
-7	1299	1743236613834046940	21938번： 영상처리/CMakeFiles/ImageProcessing_test.dir/cpp/src/main.cpp.o	13c51c8df9902813
-4	1364	1743067222488837311	21344번： Hot Springs/CMakeFiles/HotSprings.dir/cpp/src/main.cpp.o	4d5755ba93d2077c
+1189	1311	1742812278814527143	20626번： AiGo/aigo	a82f7ba1c03c131
+2	1093	1742889164167608793	20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute_test.dir/cpp/src/main.cpp.o	b4f3efc0d44dfb9c
+985	1055	1743231590462864559	21881번： Innome/ComputeMaxTabs	dd7d9082b219ef74
+1365	1442	1743146048026876080	21616번： Modern Art/ModernArt	c09597a20a59c3be
+1303	1428	1742733537975241013	20438번： 출석체크/attend_check_test	6c7128b7f4837b5a
+2	2336	1742735029780002377	20455번： Калькулятор/CMakeFiles/boj_20455_test.dir/test/Testmain.cpp.o	2345e61072a79fd2
+4	1275	1742839383751367006	20950번： 미술가 미미/CMakeFiles/MiMi.dir/cpp/src/main.cpp.o	d8c98de4a8d78355
+1334	1440	1742733538006241477	20438번： 출석체크/attend_check	ea1849fae2eb15db
+6	1376	1743244682127312624	22034번： Alto Singing/CMakeFiles/Transpose.dir/cpp/src/main.cpp.o	ab6211ec8834e263
+6	2106	1743058619563791495	21325번： Free food/CMakeFiles/FreeFood_test.dir/test/Testmain.cpp.o	72fb8b817fd2375b
+5	2117	1742908234476324693	21154번： Over the Hill, Part 1/CMakeFiles/CipherText_test.dir/test/Testmain.cpp.o	ae5d34ca58bc0412
+4	2110	1742898716617974282	21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers_test.dir/test/Testmain.cpp.o	3853be3361a9daf1
+2	1303	1742733536676025902	20438번： 출석체크/CMakeFiles/attend_check_test.dir/cpp/src/main.cpp.o	e507ef5728786743
+1	1410	1742640919384335259	19981번： ЕГЭ/CMakeFiles/negative_base2_test.dir/cpp/src/main.cpp.o	3b5d40615fa245a0
+7	2028	1743152272118093965	21662번： Дипломы/CMakeFiles/SolveDiplomas_test.dir/test/Testmain.cpp.o	a8eb11e998b66dd5
+2	2092	1742644833797930097	20152번： Game Addiction/CMakeFiles/game_addiction_test.dir/cpp/src/main.cpp.o	fb1843acabc77a4b
+4	1288	1742908292171916288	21154번： Over the Hill, Part 1/CMakeFiles/CipherText.dir/cpp/src/main.cpp.o	d30e552371d4744d
+1291	1399	1743314316877685243	22114번： 창영이와 점프/MaxContinuousBlocks	3652f922ac5d7f8e
+5	1291	1743141066490881931	21593번： Simple Cron Spec/CMakeFiles/CronSpec.dir/cpp/src/main.cpp.o	3ea240ec0dbd0360
+1161	1249	1743152273271310829	21662번： Дипломы/SolveDiplomas	2d078b1a48ef98fc
 7	1958	1743240507018728603	21980번： 비슷한 번호판/CMakeFiles/CarLicensePlates_test.dir/test/Testmain.cpp.o	3ec56100c9c6c0f2
 2336	2429	1742735032112827964	20455번： Калькулятор/boj_20455_test	f2963bf449eaaf5d
-4	2224	1742839383752528202	20950번： 미술가 미미/CMakeFiles/MiMi_test.dir/test/Testmain.cpp.o	e9a33c10813f4cb7
-1924	1993	1743244684045329825	22034번： Alto Singing/Transpose_test	c6c6c520a16f727f
-6	992	1743231589485102898	21881번： Innome/CMakeFiles/ComputeMaxTabs_test.dir/cpp/src/main.cpp.o	6f221e273f8679a4
-5	1024	1742980819129391704	21170번： Digital Speedometer/CMakeFiles/Speedometer_test.dir/cpp/src/main.cpp.o	f8ed313507a2ab87
 1822	1951	1743169563046992575	21854번： Monsters/Monsters	7d7231f12c7c66b4
 4	1125	1742908292173261627	21154번： Over the Hill, Part 1/CMakeFiles/CipherText_test.dir/cpp/src/main.cpp.o	c916071622877845
 1	1147	1742706770582243774	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two.dir/cpp/src/main.cpp.o	8cc1e7d2de27be
-9	1856	1743226468676534676	21869번： Maximum Bishop/CMakeFiles/MaximumBishop_test.dir/test/Testmain.cpp.o	9ef35a159095442a
-1342	1444	1743009646022807595	21275번： 폰 호석만/Hosukman	55c30458fb863173
-6	1962	1743009644686789375	21275번： 폰 호석만/CMakeFiles/Hosukman_test.dir/test/Testmain.cpp.o	46565ad0050116ac
-5	1556	1743079071584763107	21414번： Вычислительная ихтиология/CMakeFiles/boj_21414_test.dir/cpp/src/main.cpp.o	55a17c790f730aeb
-4	1307	1742900829134462379	21049번： Coin Stacks/CMakeFiles/CoinStack.dir/cpp/src/main.cpp.o	79425e09937452e4
-4	2308	1742826969682192205	20915번： 숫자 카드 놀이/CMakeFiles/Card_Game_test.dir/test/Testmain.cpp.o	4a8a2b5024ef47b3
-2	1749	1742809703819011439	20484번： Игра/CMakeFiles/game_test_test.dir/test/Testmain.cpp.o	ed7c429dec8293e3
-6	2423	1743159204697851988	21736번： 헌내기는 친구가 필요해/CMakeFiles/NeedFriends_test.dir/test/Testmain.cpp.o	25cd0ca8d207b780
-4	1275	1742839383751367006	20950번： 미술가 미미/CMakeFiles/MiMi.dir/cpp/src/main.cpp.o	d8c98de4a8d78355
+2	2201	1742815099782458487	20837번： Robottävling/CMakeFiles/Robot_Travel_test.dir/test/Testmain.cpp.o	72308f6daf7af300
+6	2066	1743071043791767841	21396번： 이진수 더하기/CMakeFiles/SumOfBinaryNumbers_test.dir/test/Testmain.cpp.o	c424c34b59a11d9e
+2	1189	1742812277627512616	20626번： AiGo/CMakeFiles/aigo.dir/cpp/src/main.cpp.o	110f70ad795c7b94
+10	1259	1743308660939693997	22088번： На далекой Амазонке/CMakeFiles/Mothers.dir/cpp/src/main.cpp.o	1752ef8b26dd1042
+9	1611	1743165990103864795	21763번： Bingo/CMakeFiles/Bingo_test.dir/cpp/src/main.cpp.o	3ab21d1dd48b5fcb
+7	1472	1743302490909153989	22037번： DEX Save/CMakeFiles/DexSave_test.dir/cpp/src/main.cpp.o	208bf1ab5d4b5ef7
+1312	1425	1743141067797897253	21593번： Simple Cron Spec/CronSpec_test	a260bc8edf5723d4
+5	2166	1743067222489837319	21344번： Hot Springs/CMakeFiles/HotSprings_test.dir/test/Testmain.cpp.o	e1117d90daa7c01
+2198	2300	1742731985175084972	20416번： 역전의 제왕 (Easy)/reverse_king_test	eeeaceb0edf714ac
+6	2563	1743084960721989282	21555번： 빛의 돌 옮기기/CMakeFiles/LightStone_test.dir/test/Testmain.cpp.o	966816cb096ce469
+7	1322	1743236613833148855	21938번： 영상처리/CMakeFiles/ImageProcessing.dir/cpp/src/main.cpp.o	b2dd88f12844a193
+1	1228	1742713138647792280	20162번： 간식 파티/CMakeFiles/snack_party.dir/cpp/src/main.cpp.o	dca1e59ca37e4211
+1	2091	1742644833796190630	20152번： Game Addiction/CMakeFiles/game_addiction.dir/cpp/src/main.cpp.o	e42671b3aafcf1f9
+2201	2316	1742815101980077530	20837번： Robottävling/Robot_Travel_test	8471f1cc2a4a6f2b
+5	1050	1742980819128627426	21170번： Digital Speedometer/CMakeFiles/Speedometer.dir/cpp/src/main.cpp.o	c18fe9da50756a14
+1452	1579	1742735031228815016	20455번： Калькулятор/boj_20455	87e1c578943a3f38
+2078	2174	1743079073656555199	21414번： Вычислительная ихтиология/boj_21414_test	18cd80909930f052
+2068	2146	1742795151290191332	20476번： Занос/race_test	291e52e3ea2bbc69
+2	1992	1742640859462766420	20006번： 랭킹전 대기열/CMakeFiles/ranking_game.dir/cpp/src/main.cpp.o	8947fe11eb6b1d23
+1894	1984	1742894118155365602	21032번： Odd GCD Matching/OddGCDMatching_test	86226e51378199fe
+3	1465	1742898716616974272	21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers.dir/cpp/src/main.cpp.o	cc0e1eaf6cbb7e3b
+3903	4021	1743163492502835175	21741번： Ожерелье/Necklace	3235c0be5441fd6a
+2106	2200	1743058621663810823	21325번： Free food/FreeFood_test	601d55f532850b70
+2563	2672	1743084963277839441	21555번： 빛의 돌 옮기기/LightStone_test	8ff01ca104d33abd
+1506	1634	1742826971184217470	20915번： 숫자 카드 놀이/Card_Game	5c902b73e847fa71
+5	2078	1743079071583537783	21414번： Вычислительная ихтиология/CMakeFiles/boj_21414_test.dir/test/Testmain.cpp.o	ad4ab30612a5bf91
+4	1515	1742826969683162207	20915번： 숫자 카드 놀이/CMakeFiles/Card_Game_test.dir/cpp/src/main.cpp.o	e998c354c14cba08
+19	2964	1743169561243972896	21854번： Monsters/CMakeFiles/Monsters_test.dir/test/Testmain.cpp.o	4e76fad5a4f8c39b
+1050	1133	1742980820173642475	21170번： Digital Speedometer/Speedometer	fe59e4e618c585c8
+1147	1229	1742706771728264035	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/power_of_two	c17941d19a99d02
+2964	3083	1743169564189005040	21854번： Monsters/Monsters_test	51d9bd292dad466a
+2189	2290	1742812279814539381	20626번： AiGo/aigo_test	947646979b08fd44
+9	1024	1743226468675940462	21869번： Maximum Bishop/CMakeFiles/MaximumBishop.dir/cpp/src/main.cpp.o	4cafc813f531d3ee
+7	1853	1743236613833862733	21938번： 영상처리/CMakeFiles/ImageProcessing_test.dir/test/Testmain.cpp.o	7063b9837c89974b
+6	1312	1743141066491881942	21593번： Simple Cron Spec/CMakeFiles/CronSpec_test.dir/cpp/src/main.cpp.o	a6e1e4e83eb5ef39
+5	1342	1743009644685789361	21275번： 폰 호석만/CMakeFiles/Hosukman.dir/cpp/src/main.cpp.o	5a085b322ffb7807
+1024	1125	1742980820147642101	21170번： Digital Speedometer/Speedometer_test	e6a4c5c52c36a7e2
+3705	3784	1742640923087370412	20006번： 랭킹전 대기열/ranking_game_test	8a0f621368cb1b09
+5	380	1745218987513422176	build.ninja	bc2d3c259f6c1d31
+2	2189	1742812277628316578	20626번： AiGo/CMakeFiles/aigo_test.dir/test/Testmain.cpp.o	51dab3c608d81947
+18	2850	1743163445537310288	21741번： Ожерелье/CMakeFiles/Necklace_test.dir/test/Testmain.cpp.o	57a71f0b87647515
+1125	1248	1742908293292927782	21154번： Over the Hill, Part 1/CipherText_test	7e31f8ca21bebb4c
+1259	1328	1743308662188704782	22088번： На далекой Амазонке/Mothers	40a16a9951d2a327
+6	1477	1743302490908153980	22037번： DEX Save/CMakeFiles/DexSave.dir/cpp/src/main.cpp.o	e390bbf8015a1c10
+2	1219	1742795149224165242	20476번： Занос/CMakeFiles/race.dir/cpp/src/main.cpp.o	980748540621ee75
+1591	1714	1743165991684766040	21763번： Bingo/Bingo	a880181248320061
+1624	1781	1743159206315870270	21736번： 헌내기는 친구가 필요해/NeedFriends	19e5df8a9e1911ed
+2269	2339	1743146048930884711	21616번： Modern Art/ModernArt_test	57f97808cf94ee57
+10	2130	1743308660940632147	22088번： На далекой Амазонке/CMakeFiles/Mothers_test.dir/test/Testmain.cpp.o	8c1bf2184f5812c2
+1993	2092	1742900831123481670	21049번： Coin Stacks/CoinStack_test	234f4bf7c3add083
+2	2410	1742640919385018591	20006번： 랭킹전 대기열/CMakeFiles/ranking_game_test.dir/cpp/src/main.cpp.o	2fa927bf7c21e3d0
 7	1728	1743005163137457701	21208번： Gratitude/CMakeFiles/Gratitude.dir/cpp/src/main.cpp.o	df38811bb3d6a944
 1958	2081	1743240508969040938	21980번： 비슷한 번호판/CarLicensePlates_test	b4ce9a55533e2f73
+6	1379	1743071043790714202	21396번： 이진수 더하기/CMakeFiles/SumOfBinaryNumbers.dir/cpp/src/main.cpp.o	b66fbef87d0b5364
+2110	2237	1742898718723994707	21041번： Largest Exotic Number/LargestExoticNumbers_test	cbf200256487a612
+3033	3144	1743169564258005793	21763번： Bingo/Bingo_test	e0f0312135464b3a
+17	1822	1743169561243175628	21854번： Monsters/CMakeFiles/Monsters.dir/cpp/src/main.cpp.o	2c879bf42595b9e7
+3	1285	1742809687762814796	20484번： Игра/CMakeFiles/game_test.dir/cpp/src/main.cpp.o	6220d82b21e93c18
+4	1993	1742900829135334439	21049번： Coin Stacks/CMakeFiles/CoinStack_test.dir/test/Testmain.cpp.o	812a987a0d7fca92
+1654	1721	1742889327784887637	20954번： 택배 기사 민서/DeliveryRoute_test	551aa4b676327d17
+7	1162	1743152272118327236	21662번： Дипломы/CMakeFiles/SolveDiplomas_test.dir/cpp/src/main.cpp.o	f79f852247041c00
 1219	1321	1742795150441180611	20476번： Занос/race	1cba14e8711daf78
 17	3032	1743169561241972874	21763번： Bingo/CMakeFiles/Bingo_test.dir/test/Testmain.cpp.o	1679b12c6d5b924d
-3	1506	1742826969681192188	20915번： 숫자 카드 놀이/CMakeFiles/Card_Game.dir/cpp/src/main.cpp.o	45af5fe23d8bc2fd
 6	1378	1743058619564612606	21325번： Free food/CMakeFiles/FreeFood_test.dir/cpp/src/main.cpp.o	1ee8c46d6d1d4d8b
+8	3857	1743163488607791644	21741번： Ожерелье/CMakeFiles/Necklace_test.dir/cpp/src/main.cpp.o	c278a22bdd1b9258
+7	1299	1743236613834046940	21938번： 영상처리/CMakeFiles/ImageProcessing_test.dir/cpp/src/main.cpp.o	13c51c8df9902813
+4	1364	1743067222488837311	21344번： Hot Springs/CMakeFiles/HotSprings.dir/cpp/src/main.cpp.o	4d5755ba93d2077c
 2	135	1742640859464305584	19981번： ЕГЭ/negative_base2	6bb7cf91bff20561
 4	1566	1743079071582537775	21414번： Вычислительная ихтиология/CMakeFiles/boj_21414.dir/cpp/src/main.cpp.o	4b1ad688decbda7d
-1853	1931	1743236615678395709	21938번： 영상처리/ImageProcessing_test	e9142148838d3fb0
 8	1591	1743165990101748348	21763번： Bingo/CMakeFiles/Bingo.dir/cpp/src/main.cpp.o	84746d522862ca9
+1853	1931	1743236615678395709	21938번： 영상처리/ImageProcessing_test	e9142148838d3fb0
+3	1284	1742809687764474682	20484번： Игра/CMakeFiles/game_test_test.dir/cpp/src/main.cpp.o	9d3272be570d5060
+1	3497	1742644833797190639	20152번： Game Addiction/CMakeFiles/game_addiction_test.dir/test/Testmain.cpp.o	4457c8103cfd0af0
+6	1962	1743009644686789375	21275번： 폰 호석만/CMakeFiles/Hosukman_test.dir/test/Testmain.cpp.o	46565ad0050116ac
+1341	1444	1742724541186604625	20413번： MVP 다이아몬드 (Easy)/mvp_diamonds	9df2301edd2c06ef
+1288	1392	1742908293455929454	21154번： Over the Hill, Part 1/CipherText	58873aa4f64d54f9
+4	2224	1742839383752528202	20950번： 미술가 미미/CMakeFiles/MiMi_test.dir/test/Testmain.cpp.o	e9a33c10813f4cb7
+9	2074	1743302342925882437	22037번： DEX Save/CMakeFiles/DexSave_test.dir/test/Testmain.cpp.o	1c45633898d486af
+2	1341	1742724539847584755	20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds.dir/cpp/src/main.cpp.o	d35957a9ba5a752e
+1472	1605	1743302492374166577	22037번： DEX Save/DexSave_test	63fbd13b7a068de6
+2191	2284	1743005165321486975	21208번： Gratitude/Gratitude_test	6349d438042bafc0
 1	1915	1742706770583755649	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two_test.dir/test/Testmain.cpp.o	eda4fef95ecaa969
+1074	1159	1742889165238510283	20954번： 택배 기사 민서/DeliveryRoute	1a0bf259adefa7d3
+1394	1502	1742815101173067654	20837번： Robottävling/Robot_Travel	206bda87823c8dd8
+13	1266	1743314315601014759	22114번： 창영이와 점프/CMakeFiles/MaxContinuousBlocks_test.dir/cpp/src/main.cpp.o	442bd7b1411c4705
+8	1690	1743005163139254975	21208번： Gratitude/CMakeFiles/Gratitude_test.dir/cpp/src/main.cpp.o	49df2005ccad6314
+1601	1744	1742731984578076682	20416번： 역전의 제왕 (Easy)/reverse_king	eba95e673308141e
+10	2012	1743312154511914186	22105번： Король и королева/CMakeFiles/Chess_test.dir/test/Testmain.cpp.o	202667c31054c3f7
+3	1601	1742731982980331935	20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king_test.dir/cpp/src/main.cpp.o	9295a77a7d055c39
+6	1356	1743081683987983634	21496번： Вырубка леса/CMakeFiles/Forest.dir/cpp/src/main.cpp.o	344ad99b7d7fd549
+4	1283	1742900829135510031	21049번： Coin Stacks/CMakeFiles/CoinStack_test.dir/cpp/src/main.cpp.o	b4d7b1636da1aa59
+2	2068	1742795149225262977	20476번： Занос/CMakeFiles/race_test.dir/test/Testmain.cpp.o	73be87da24c2ce3e
+2028	2101	1743152274138320008	21662번： Дипломы/SolveDiplomas_test	9706461cdf9525d3
+1150	1252	1742905246798561861	21127번： Binary Supersonic Utahraptors/BSU	acde11cfbf1e5504
+7	1336	1743240507018023771	21980번： 비슷한 번호판/CMakeFiles/CarLicensePlates.dir/cpp/src/main.cpp.o	eb9b6d3ca515ebcb
+2	1452	1742735029778793778	20455번： Калькулятор/CMakeFiles/boj_20455.dir/cpp/src/main.cpp.o	7f3610a822e2352f
+2362	2468	1743081686345003714	21496번： Вырубка леса/Forest_test	2fbe5df8e1a47f2e
+1915	1995	1742706772496277613	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/power_of_two_test	f137c88d01a7f8b9
+21	1865	1743169561245972918	21854번： Monsters/CMakeFiles/Monsters_test.dir/cpp/src/main.cpp.o	a9c2eaba88316a34
+2	1394	1742815099781050618	20837번： Robottävling/CMakeFiles/Robot_Travel.dir/cpp/src/main.cpp.o	33e0b23fade21b23
+5	1435	1743058619562791486	21325번： Free food/CMakeFiles/FreeFood.dir/cpp/src/main.cpp.o	253863769e3557bf
+2	1338	1742724539848982438	20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir/cpp/src/main.cpp.o	606beec9e4028cd1
+2136	2222	1742724541981616422	20413번： MVP 다이아몬드 (Easy)/mvp_diamonds_test	fc55d045b4521146
+3	1086	1742894116265182921	21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching_test.dir/cpp/src/main.cpp.o	60a9cc8a689d92cc
+1567	1672	1743079073145550906	21414번： Вычислительная ихтиология/boj_21414	f80cded95bd4060f
+1024	1096	1743226469690949335	21869번： Maximum Bishop/MaximumBishop	5a2ba5db315f831b
+6	1794	1743231589484916165	21881번： Innome/CMakeFiles/ComputeMaxTabs_test.dir/test/Testmain.cpp.o	8e3be17b7a579681
+2	1334	1742733536675221551	20438번： 출석체크/CMakeFiles/attend_check.dir/cpp/src/main.cpp.o	b7860d4a73e68f4
+10	1261	1743308660940870978	22088번： На далекой Амазонке/CMakeFiles/Mothers_test.dir/cpp/src/main.cpp.o	46b69915cd016e3a
+1307	1394	1742900830437475017	21049번： Coin Stacks/CoinStack	c021d9525701ba62
+1322	1391	1743236615148391221	21938번： 영상처리/ImageProcessing	77dd5fb4077cf056
+9	1856	1743226468676534676	21869번： Maximum Bishop/CMakeFiles/MaximumBishop_test.dir/test/Testmain.cpp.o	9ef35a159095442a
+2	1949	1742713138648792293	20162번： 간식 파티/CMakeFiles/snack_party_test.dir/test/Testmain.cpp.o	67f75adef2abe0b
+4	1945	1742980531071270901	21170번： Digital Speedometer/CMakeFiles/Speedometer_test.dir/test/Testmain.cpp.o	c2fbe9818792015b
+1962	2041	1743009646642816050	21275번： 폰 호석만/Hosukman_test	87f89ba5724a195c
+4	1150	1742905245653227161	21127번： Binary Supersonic Utahraptors/CMakeFiles/BSU_test.dir/cpp/src/main.cpp.o	b3b55c268583616f
+6	1348	1743009644687354427	21275번： 폰 호석만/CMakeFiles/Hosukman_test.dir/cpp/src/main.cpp.o	46f891137fa2d699
+6	1530	1743084960722207765	21555번： 빛의 돌 옮기기/CMakeFiles/LightStone_test.dir/cpp/src/main.cpp.o	c53804a27960e6f7
+1949	2018	1742713140595817158	20162번： 간식 파티/snack_party_test	c2124b2d58527e8d
+1992	2088	1742640861452785311	20006번： 랭킹전 대기열/ranking_game	f3f144cd8eb9ee55
+1728	1810	1743005164858480769	21208번： Gratitude/Gratitude	46c394eeba37c417
 1465	1559	1742898718078988452	21041번： Largest Exotic Number/LargestExoticNumbers	f430678739b97e18
 6	1562	1743084960720818251	21555번： 빛의 돌 옮기기/CMakeFiles/LightStone.dir/cpp/src/main.cpp.o	6bc7a27735158e64
 1379	1473	1743071045163724971	21396번： 이진수 더하기/SumOfBinaryNumbers	3f365168d75c35c1
 6	1365	1743146046669049531	21616번： Modern Art/CMakeFiles/ModernArt_test.dir/cpp/src/main.cpp.o	287d9a0bfb5d934c
-2	2068	1742795149225262977	20476번： Занос/CMakeFiles/race_test.dir/test/Testmain.cpp.o	73be87da24c2ce3e
+2	3705	1742640919384863058	20006번： 랭킹전 대기열/CMakeFiles/ranking_game_test.dir/test/Testmain.cpp.o	e4d17ba5a200af37
+6	2269	1743146046667863106	21616번： Modern Art/CMakeFiles/ModernArt_test.dir/test/Testmain.cpp.o	12488259571aedc7
+3	1894	1742894116264347525	21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching_test.dir/test/Testmain.cpp.o	ee826a319d3bcba1
+6	1603	1743159204699159697	21736번： 헌내기는 친구가 필요해/CMakeFiles/NeedFriends_test.dir/cpp/src/main.cpp.o	47229fb94b40d492
+2066	2137	1743071045850730360	21396번： 이진수 더하기/SumOfBinaryNumbers_test	797fbcc7224de401
+1370	1446	1743312155871925947	22105번： Король и королева/Chess	2df073a9bc8a358d
+6	1347	1743071043792095861	21396번： 이진수 더하기/CMakeFiles/SumOfBinaryNumbers_test.dir/cpp/src/main.cpp.o	9136758e371be2c2
+1435	1530	1743058620992804647	21325번： Free food/FreeFood	86c858dd739d784a
+8	1370	1743312154510914178	22105번： Король и королева/CMakeFiles/Chess.dir/cpp/src/main.cpp.o	de579209e481c5b2
+2	1115	1742894116263347515	21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching.dir/cpp/src/main.cpp.o	8f0af9cc40a198cf
+1356	1480	1743081685337995135	21496번： Вырубка леса/Forest	e04459a5425fc420
+4	1229	1742839383752697812	20950번： 미술가 미미/CMakeFiles/MiMi_test.dir/cpp/src/main.cpp.o	1f6cdfa630ab9644
 3497	3576	1742644837292221728	20152번： Game Addiction/game_addiction_test	cd749d6c6828bb2e
-2	1446	1742735029780227272	20455번： Калькулятор/CMakeFiles/boj_20455_test.dir/cpp/src/main.cpp.o	29ffea84079b799d
 5	1623	1743159204696851976	21736번： 헌내기는 친구가 필요해/CMakeFiles/NeedFriends.dir/cpp/src/main.cpp.o	339241dde5c4718d
-1856	1923	1743226470522956607	21869번： Maximum Bishop/MaximumBishop_test	b2e12d1e09f45069
-1275	1376	1742839385022379846	20950번： 미술가 미미/MiMi	d9650dc17a03db99
-7	1378	1743081683990130228	21496번： Вырубка леса/CMakeFiles/Forest_test.dir/cpp/src/main.cpp.o	d31840e89ad90ef6
+2	1446	1742735029780227272	20455번： Калькулятор/CMakeFiles/boj_20455_test.dir/cpp/src/main.cpp.o	29ffea84079b799d
+1478	1598	1743302492380166628	22037번： DEX Save/DexSave	608a82b2842891f4
+1336	1407	1743240508347035465	21980번： 비슷한 번호판/CarLicensePlates	2628792df990121b
+1	2293	1742640919383335250	19981번： ЕГЭ/CMakeFiles/negative_base2_test.dir/test/Testmain.cpp.o	517dec15ae79c03f
+2092	2190	1742644835887209230	20152번： Game Addiction/game_addiction	ddda6074bdcab8c8
+2	2136	1742724539848773574	20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir/test/Testmain.cpp.o	4c578b7a1b68d1c5
+2	1601	1742731982979054477	20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king.dir/cpp/src/main.cpp.o	9e84893f71f6b215
+8	2191	1743005163138457715	21208번： Gratitude/CMakeFiles/Gratitude_test.dir/test/Testmain.cpp.o	3565e81aebc6f172
 7	1318	1743240507019086048	21980번： 비슷한 번호판/CMakeFiles/CarLicensePlates_test.dir/cpp/src/main.cpp.o	e305da2ffdeccb4f
 7	1161	1743152272117298612	21662번： Дипломы/CMakeFiles/SolveDiplomas.dir/cpp/src/main.cpp.o	a776c84a83261949
 2166	2297	1743067224650854651	21344번： Hot Springs/HotSprings_test	1f435b4f95d64d8c
 1	1114	1742706770583972640	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/CMakeFiles/power_of_two_test.dir/cpp/src/main.cpp.o	4502ac085f088782
-1125	1248	1742908293292927782	21154번： Over the Hill, Part 1/CipherText_test	7e31f8ca21bebb4c
-7	1336	1743240507018023771	21980번： 비슷한 번호판/CMakeFiles/CarLicensePlates.dir/cpp/src/main.cpp.o	eb9b6d3ca515ebcb
-1915	1995	1742706772496277613	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/power_of_two_test	f137c88d01a7f8b9
-21	1865	1743169561245972918	21854번： Monsters/CMakeFiles/Monsters_test.dir/cpp/src/main.cpp.o	a9c2eaba88316a34
-1825	1909	1742905320034402543	21127번： Binary Supersonic Utahraptors/BSU_test	ddaa9a598363facf
-5	1341	1743067222490588257	21344번： Hot Springs/CMakeFiles/HotSprings_test.dir/cpp/src/main.cpp.o	23ace388e1f10bbb
-2	1218	1742795149225414112	20476번： Занос/CMakeFiles/race_test.dir/cpp/src/main.cpp.o	c659719d7c47fd81
-2	1074	1742889164166501132	20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute.dir/cpp/src/main.cpp.o	7fa8f3c94bafba9a
-2	1303	1742733536676025902	20438번： 출석체크/CMakeFiles/attend_check_test.dir/cpp/src/main.cpp.o	e507ef5728786743
-4	2110	1742898716617974282	21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers_test.dir/test/Testmain.cpp.o	3853be3361a9daf1
-1	1410	1742640919384335259	19981번： ЕГЭ/CMakeFiles/negative_base2_test.dir/cpp/src/main.cpp.o	3b5d40615fa245a0
-7	1924	1743244682128312633	22034번： Alto Singing/CMakeFiles/Transpose_test.dir/test/Testmain.cpp.o	a3a72bb4863c39e5
-5	1365	1743146046666863096	21616번： Modern Art/CMakeFiles/ModernArt.dir/cpp/src/main.cpp.o	f3514086c031b6f5
-2068	2146	1742795151290191332	20476번： Занос/race_test	291e52e3ea2bbc69
-2078	2174	1743079073656555199	21414번： Вычислительная ихтиология/boj_21414_test	18cd80909930f052
-1452	1579	1742735031228815016	20455번： Калькулятор/boj_20455	87e1c578943a3f38
-2	2201	1742815099782458487	20837번： Robottävling/CMakeFiles/Robot_Travel_test.dir/test/Testmain.cpp.o	72308f6daf7af300
-6	2066	1743071043791767841	21396번： 이진수 더하기/CMakeFiles/SumOfBinaryNumbers_test.dir/test/Testmain.cpp.o	c424c34b59a11d9e
-2	1189	1742812277627512616	20626번： AiGo/CMakeFiles/aigo.dir/cpp/src/main.cpp.o	110f70ad795c7b94
-1115	1194	1742894117376358155	21032번： Odd GCD Matching/OddGCDMatching	f02057c65d7fd719
-1794	1864	1743231591271871861	21881번： Innome/ComputeMaxTabs_test	c1b809bd82a69c10
-3	1150	1742905245652548705	21127번： Binary Supersonic Utahraptors/CMakeFiles/BSU.dir/cpp/src/main.cpp.o	aecfbd3b6ea5e061
-2201	2316	1742815101980077530	20837번： Robottävling/Robot_Travel_test	8471f1cc2a4a6f2b
-5	1050	1742980819128627426	21170번： Digital Speedometer/CMakeFiles/Speedometer.dir/cpp/src/main.cpp.o	c18fe9da50756a14
-18	2850	1743163445537310288	21741번： Ожерелье/CMakeFiles/Necklace_test.dir/test/Testmain.cpp.o	57a71f0b87647515
-2	2189	1742812277628316578	20626번： AiGo/CMakeFiles/aigo_test.dir/test/Testmain.cpp.o	51dab3c608d81947
-5	380	1745210292798190243	build.ninja	bc2d3c259f6c1d31
-6	1376	1743244682127312624	22034번： Alto Singing/CMakeFiles/Transpose.dir/cpp/src/main.cpp.o	ab6211ec8834e263
-1334	1440	1742733538006241477	20438번： 출석체크/attend_check	ea1849fae2eb15db
-7	1472	1743302490909153989	22037번： DEX Save/CMakeFiles/DexSave_test.dir/cpp/src/main.cpp.o	208bf1ab5d4b5ef7
-1312	1425	1743141067797897253	21593번： Simple Cron Spec/CronSpec_test	a260bc8edf5723d4
-1291	1398	1743141067776897007	21593번： Simple Cron Spec/CronSpec	69f9b4839b09c43b
-2423	2517	1743159207114879298	21736번： 헌내기는 친구가 필요해/NeedFriends_test	3b6f4fa0a04c8303
-8	2191	1743005163138457715	21208번： Gratitude/CMakeFiles/Gratitude_test.dir/test/Testmain.cpp.o	3565e81aebc6f172
-2092	2190	1742644835887209230	20152번： Game Addiction/game_addiction	ddda6074bdcab8c8
-2	2136	1742724539848773574	20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir/test/Testmain.cpp.o	4c578b7a1b68d1c5
-2	1601	1742731982979054477	20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king.dir/cpp/src/main.cpp.o	9e84893f71f6b215
-1562	1701	1743084962276831146	21555번： 빛의 돌 옮기기/LightStone	282b1474d72f57f6
-11	1371	1743312154512914195	22105번： Король и королева/CMakeFiles/Chess_test.dir/cpp/src/main.cpp.o	b61f72e76cb6f33c
-4	1150	1742905245653227161	21127번： Binary Supersonic Utahraptors/CMakeFiles/BSU_test.dir/cpp/src/main.cpp.o	b3b55c268583616f
-7	3903	1743163488606791633	21741번： Ожерелье/CMakeFiles/Necklace.dir/cpp/src/main.cpp.o	5f9ff94fde0e9f9f
-1591	1714	1743165991684766040	21763번： Bingo/Bingo	a880181248320061
-1259	1328	1743308662188704782	22088번： На далекой Амазонке/Mothers	40a16a9951d2a327
-2	1219	1742795149224165242	20476번： Занос/CMakeFiles/race.dir/cpp/src/main.cpp.o	980748540621ee75
-1624	1781	1743159206315870270	21736번： 헌내기는 친구가 필요해/NeedFriends	19e5df8a9e1911ed
-6	1477	1743302490908153980	22037번： DEX Save/CMakeFiles/DexSave.dir/cpp/src/main.cpp.o	e390bbf8015a1c10
-2012	2097	1743312156513931498	22105번： Король и королева/Chess_test	d8962734f2a40ff3
-2130	2217	1743308663059712304	22088번： На далекой Амазонке/Mothers_test	265ad61f68977a1
-1228	1312	1742713139874807950	20162번： 간식 파티/snack_party	dc2e7fd09cce126f
-6	1312	1743141066491881942	21593번： Simple Cron Spec/CMakeFiles/CronSpec_test.dir/cpp/src/main.cpp.o	a6e1e4e83eb5ef39
-1024	1125	1742980820147642101	21170번： Digital Speedometer/Speedometer_test	e6a4c5c52c36a7e2
-3705	3784	1742640923087370412	20006번： 랭킹전 대기열/ranking_game_test	8a0f621368cb1b09
-5	1342	1743009644685789361	21275번： 폰 호석만/CMakeFiles/Hosukman.dir/cpp/src/main.cpp.o	5a085b322ffb7807
-2110	2237	1742898718723994707	21041번： Largest Exotic Number/LargestExoticNumbers_test	cbf200256487a612
-6	1379	1743071043790714202	21396번： 이진수 더하기/CMakeFiles/SumOfBinaryNumbers.dir/cpp/src/main.cpp.o	b66fbef87d0b5364
-7	2362	1743081683988983643	21496번： Вырубка леса/CMakeFiles/Forest_test.dir/test/Testmain.cpp.o	bfbe7caf0fef649e
 1	1065	1742640808239280163	19981번： ЕГЭ/CMakeFiles/negative_base2.dir/cpp/src/main.cpp.o	35b73fad994a8343
-1189	1311	1742812278814527143	20626번： AiGo/aigo	a82f7ba1c03c131
-1654	1721	1742889327784887637	20954번： 택배 기사 민서/DeliveryRoute_test	551aa4b676327d17
-7	1162	1743152272118327236	21662번： Дипломы/CMakeFiles/SolveDiplomas_test.dir/cpp/src/main.cpp.o	f79f852247041c00
-8	3857	1743163488607791644	21741번： Ожерелье/CMakeFiles/Necklace_test.dir/cpp/src/main.cpp.o	c278a22bdd1b9258
-3	1086	1742894116265182921	21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching_test.dir/cpp/src/main.cpp.o	60a9cc8a689d92cc
-2224	2335	1742839385971389433	20950번： 미술가 미미/MiMi_test	99b5a88915fbe771
+7	2362	1743081683988983643	21496번： Вырубка леса/CMakeFiles/Forest_test.dir/test/Testmain.cpp.o	bfbe7caf0fef649e
 7	1375	1743244682129625025	22034번： Alto Singing/CMakeFiles/Transpose_test.dir/cpp/src/main.cpp.o	1cdc02b29b7de678
-10	2130	1743308660940632147	22088번： На далекой Амазонке/CMakeFiles/Mothers_test.dir/test/Testmain.cpp.o	8c1bf2184f5812c2
-2	2410	1742640919385018591	20006번： 랭킹전 대기열/CMakeFiles/ranking_game_test.dir/cpp/src/main.cpp.o	2fa927bf7c21e3d0
-1993	2092	1742900831123481670	21049번： Coin Stacks/CoinStack_test	234f4bf7c3add083
-2308	2410	1742826971986230960	20915번： 숫자 카드 놀이/Card_Game_test	b5a12146bcb0157e
-1285	1392	1742809689044830497	20484번： Игра/game_test	11875d24dd5e2696
-4	1433	1742898716619021703	21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers_test.dir/cpp/src/main.cpp.o	87e0784710563827
-3	1601	1742731982980331935	20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king_test.dir/cpp/src/main.cpp.o	9295a77a7d055c39
-10	2012	1743312154511914186	22105번： Король и королева/CMakeFiles/Chess_test.dir/test/Testmain.cpp.o	202667c31054c3f7
-2269	2339	1743146048930884711	21616번： Modern Art/ModernArt_test	57f97808cf94ee57
-1364	1453	1743067223848848219	21344번： Hot Springs/HotSprings	4b016be1693c0b97
-3	1392	1742815099782689393	20837번： Robottävling/CMakeFiles/Robot_Travel_test.dir/cpp/src/main.cpp.o	fdffac0acfecf6b8
-1601	1744	1742731984578076682	20416번： 역전의 제왕 (Easy)/reverse_king	eba95e673308141e
-8	1690	1743005163139254975	21208번： Gratitude/CMakeFiles/Gratitude_test.dir/cpp/src/main.cpp.o	49df2005ccad6314
-3	1285	1742809687762814796	20484번： Игра/CMakeFiles/game_test.dir/cpp/src/main.cpp.o	6220d82b21e93c18
-4	1993	1742900829135334439	21049번： Coin Stacks/CMakeFiles/CoinStack_test.dir/test/Testmain.cpp.o	812a987a0d7fca92
-6	1603	1743159204699159697	21736번： 헌내기는 친구가 필요해/CMakeFiles/NeedFriends_test.dir/cpp/src/main.cpp.o	47229fb94b40d492
-6	2269	1743146046667863106	21616번： Modern Art/CMakeFiles/ModernArt_test.dir/test/Testmain.cpp.o	12488259571aedc7
-3	1894	1742894116264347525	21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching_test.dir/test/Testmain.cpp.o	ee826a319d3bcba1
-2	1206	1742812277628547234	20626번： AiGo/CMakeFiles/aigo_test.dir/cpp/src/main.cpp.o	39dbad4e44787a6
-4	1825	1742905318213381640	21127번： Binary Supersonic Utahraptors/CMakeFiles/BSU_test.dir/test/Testmain.cpp.o	768b996fdf8b47a9
-2	1093	1742889164167608793	20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute_test.dir/cpp/src/main.cpp.o	b4f3efc0d44dfb9c
-2293	2392	1742640921675357008	19981번： ЕГЭ/negative_base2_test	5180483d015de6d7
-9	1023	1743226468676742738	21869번： Maximum Bishop/CMakeFiles/MaximumBishop_test.dir/cpp/src/main.cpp.o	f340cd9006397050
-2	1654	1742889326132873755	20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute_test.dir/test/Testmain.cpp.o	b76301eff5033b31
-1749	1846	1742809705566032834	20484번： Игра/game_test_test	2c71707b83330281
-1303	1428	1742733537975241013	20438번： 출석체크/attend_check_test	6c7128b7f4837b5a
-2	2336	1742735029780002377	20455번： Калькулятор/CMakeFiles/boj_20455_test.dir/test/Testmain.cpp.o	2345e61072a79fd2
-3033	3144	1743169564258005793	21763번： Bingo/Bingo_test	e0f0312135464b3a
-2	2092	1742644833797930097	20152번： Game Addiction/CMakeFiles/game_addiction_test.dir/cpp/src/main.cpp.o	fb1843acabc77a4b
-7	2028	1743152272118093965	21662번： Дипломы/CMakeFiles/SolveDiplomas_test.dir/test/Testmain.cpp.o	a8eb11e998b66dd5
-4	1288	1742908292171916288	21154번： Over the Hill, Part 1/CMakeFiles/CipherText.dir/cpp/src/main.cpp.o	d30e552371d4744d
-5	1291	1743141066490881931	21593번： Simple Cron Spec/CMakeFiles/CronSpec.dir/cpp/src/main.cpp.o	3ea240ec0dbd0360
-1291	1399	1743314316877685243	22114번： 창영이와 점프/MaxContinuousBlocks	3652f922ac5d7f8e
-6	2106	1743058619563791495	21325번： Free food/CMakeFiles/FreeFood_test.dir/test/Testmain.cpp.o	72fb8b817fd2375b
-5	2117	1742908234476324693	21154번： Over the Hill, Part 1/CMakeFiles/CipherText_test.dir/test/Testmain.cpp.o	ae5d34ca58bc0412
-3	1284	1742809687764474682	20484번： Игра/CMakeFiles/game_test_test.dir/cpp/src/main.cpp.o	9d3272be570d5060
-1	3497	1742644833797190639	20152번： Game Addiction/CMakeFiles/game_addiction_test.dir/test/Testmain.cpp.o	4457c8103cfd0af0
-4	1283	1742900829135510031	21049번： Coin Stacks/CMakeFiles/CoinStack_test.dir/cpp/src/main.cpp.o	b4d7b1636da1aa59
-6	1356	1743081683987983634	21496번： Вырубка леса/CMakeFiles/Forest.dir/cpp/src/main.cpp.o	344ad99b7d7fd549
-2106	2200	1743058621663810823	21325번： Free food/FreeFood_test	601d55f532850b70
-6	1530	1743084960722207765	21555번： 빛의 돌 옮기기/CMakeFiles/LightStone_test.dir/cpp/src/main.cpp.o	c53804a27960e6f7
-1949	2018	1742713140595817158	20162번： 간식 파티/snack_party_test	c2124b2d58527e8d
-1365	1442	1743146048026876080	21616번： Modern Art/ModernArt	c09597a20a59c3be
-985	1055	1743231590462864559	21881번： Innome/ComputeMaxTabs	dd7d9082b219ef74
-1341	1444	1742724541186604625	20413번： MVP 다이아몬드 (Easy)/mvp_diamonds	9df2301edd2c06ef
-1288	1392	1742908293455929454	21154번： Over the Hill, Part 1/CipherText	58873aa4f64d54f9
-4	1515	1742826969683162207	20915번： 숫자 카드 놀이/CMakeFiles/Card_Game_test.dir/cpp/src/main.cpp.o	e998c354c14cba08
-19	2964	1743169561243972896	21854번： Monsters/CMakeFiles/Monsters_test.dir/test/Testmain.cpp.o	4e76fad5a4f8c39b
-1	2293	1742640919383335250	19981번： ЕГЭ/CMakeFiles/negative_base2_test.dir/test/Testmain.cpp.o	517dec15ae79c03f
-1336	1407	1743240508347035465	21980번： 비슷한 번호판/CarLicensePlates	2628792df990121b
-1478	1598	1743302492380166628	22037번： DEX Save/DexSave	608a82b2842891f4
-4	1945	1742980531071270901	21170번： Digital Speedometer/CMakeFiles/Speedometer_test.dir/test/Testmain.cpp.o	c2fbe9818792015b
-2	1949	1742713138648792293	20162번： 간식 파티/CMakeFiles/snack_party_test.dir/test/Testmain.cpp.o	67f75adef2abe0b
-1962	2041	1743009646642816050	21275번： 폰 호석만/Hosukman_test	87f89ba5724a195c
-2	1341	1742724539847584755	20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds.dir/cpp/src/main.cpp.o	d35957a9ba5a752e
-1472	1605	1743302492374166577	22037번： DEX Save/DexSave_test	63fbd13b7a068de6
-2	1115	1742894116263347515	21032번： Odd GCD Matching/CMakeFiles/OddGCDMatching.dir/cpp/src/main.cpp.o	8f0af9cc40a198cf
-1356	1480	1743081685337995135	21496번： Вырубка леса/Forest	e04459a5425fc420
-8	1370	1743312154510914178	22105번： Король и королева/CMakeFiles/Chess.dir/cpp/src/main.cpp.o	de579209e481c5b2
-1435	1530	1743058620992804647	21325번： Free food/FreeFood	86c858dd739d784a
-5	1435	1743058619562791486	21325번： Free food/CMakeFiles/FreeFood.dir/cpp/src/main.cpp.o	253863769e3557bf
-2	1394	1742815099781050618	20837번： Robottävling/CMakeFiles/Robot_Travel.dir/cpp/src/main.cpp.o	33e0b23fade21b23
-1	1228	1742713138647792280	20162번： 간식 파티/CMakeFiles/snack_party.dir/cpp/src/main.cpp.o	dca1e59ca37e4211
-6	2563	1743084960721989282	21555번： 빛의 돌 옮기기/CMakeFiles/LightStone_test.dir/test/Testmain.cpp.o	966816cb096ce469
-7	1322	1743236613833148855	21938번： 영상처리/CMakeFiles/ImageProcessing.dir/cpp/src/main.cpp.o	b2dd88f12844a193
-1	2091	1742644833796190630	20152번： Game Addiction/CMakeFiles/game_addiction.dir/cpp/src/main.cpp.o	e42671b3aafcf1f9
-2	1338	1742724539848982438	20413번： MVP 다이아몬드 (Easy)/CMakeFiles/mvp_diamonds_test.dir/cpp/src/main.cpp.o	606beec9e4028cd1
-2198	2300	1742731985175084972	20416번： 역전의 제왕 (Easy)/reverse_king_test	eeeaceb0edf714ac
-5	2166	1743067222489837319	21344번： Hot Springs/CMakeFiles/HotSprings_test.dir/test/Testmain.cpp.o	e1117d90daa7c01
-2136	2222	1742724541981616422	20413번： MVP 다이아몬드 (Easy)/mvp_diamonds_test	fc55d045b4521146
-1150	1252	1742905246798561861	21127번： Binary Supersonic Utahraptors/BSU	acde11cfbf1e5504
-1050	1133	1742980820173642475	21170번： Digital Speedometer/Speedometer	fe59e4e618c585c8
-1147	1229	1742706771728264035	20153번： 영웅이는 2의 거듭 제곱을 좋아해! 영웅이는 2의 거듭 제곱을 좋아해!/power_of_two	c17941d19a99d02
-2	1992	1742640859462766420	20006번： 랭킹전 대기열/CMakeFiles/ranking_game.dir/cpp/src/main.cpp.o	8947fe11eb6b1d23
-1894	1984	1742894118155365602	21032번： Odd GCD Matching/OddGCDMatching_test	86226e51378199fe
-2563	2672	1743084963277839441	21555번： 빛의 돌 옮기기/LightStone_test	8ff01ca104d33abd
-1506	1634	1742826971184217470	20915번： 숫자 카드 놀이/Card_Game	5c902b73e847fa71
-3857	4003	1743163492456906953	21741번： Ожерелье/Necklace_test	d384caf6e26bf6d8
-6	985	1743231589483855722	21881번： Innome/CMakeFiles/ComputeMaxTabs.dir/cpp/src/main.cpp.o	a1e7d5de23c06dc6
-2	1199	1742713138649793998	20162번： 간식 파티/CMakeFiles/snack_party_test.dir/cpp/src/main.cpp.o	660d8fac53c33f36
-1992	2088	1742640861452785311	20006번： 랭킹전 대기열/ranking_game	f3f144cd8eb9ee55
-1728	1810	1743005164858480769	21208번： Gratitude/Gratitude	46c394eeba37c417
+2224	2335	1742839385971389433	20950번： 미술가 미미/MiMi_test	99b5a88915fbe771
+7	2038	1743140966809858046	21593번： Simple Cron Spec/CMakeFiles/CronSpec_test.dir/test/Testmain.cpp.o	662a6c72fbac732b
 3	2378	1742733509732818220	20438번： 출석체크/CMakeFiles/attend_check_test.dir/test/Testmain.cpp.o	43e7728e1216e628
 1376	1453	1743244683497324911	22034번： Alto Singing/Transpose	75068e38373a2700
-7	2038	1743140966809858046	21593번： Simple Cron Spec/CMakeFiles/CronSpec_test.dir/test/Testmain.cpp.o	662a6c72fbac732b
-3903	4021	1743163492502835175	21741번： Ожерелье/Necklace	3235c0be5441fd6a
-3	1465	1742898716616974272	21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers.dir/cpp/src/main.cpp.o	cc0e1eaf6cbb7e3b
-2964	3083	1743169564189005040	21854번： Monsters/Monsters_test	51d9bd292dad466a
-2	3705	1742640919384863058	20006번： 랭킹전 대기열/CMakeFiles/ranking_game_test.dir/test/Testmain.cpp.o	e4d17ba5a200af37
-2189	2290	1742812279814539381	20626번： AiGo/aigo_test	947646979b08fd44
-5	2078	1743079071583537783	21414번： Вычислительная ихтиология/CMakeFiles/boj_21414_test.dir/test/Testmain.cpp.o	ad4ab30612a5bf91
-1161	1249	1743152273271310829	21662번： Дипломы/SolveDiplomas	2d078b1a48ef98fc
-10	1259	1743308660939693997	22088번： На далекой Амазонке/CMakeFiles/Mothers.dir/cpp/src/main.cpp.o	1752ef8b26dd1042
-9	1611	1743165990103864795	21763번： Bingo/CMakeFiles/Bingo_test.dir/cpp/src/main.cpp.o	3ab21d1dd48b5fcb
+7	1378	1743081683990130228	21496번： Вырубка леса/CMakeFiles/Forest_test.dir/cpp/src/main.cpp.o	d31840e89ad90ef6
+1275	1376	1742839385022379846	20950번： 미술가 미미/MiMi	d9650dc17a03db99
+1856	1923	1743226470522956607	21869번： Maximum Bishop/MaximumBishop_test	b2e12d1e09f45069
+2	1199	1742713138649793998	20162번： 간식 파티/CMakeFiles/snack_party_test.dir/cpp/src/main.cpp.o	660d8fac53c33f36
+6	985	1743231589483855722	21881번： Innome/CMakeFiles/ComputeMaxTabs.dir/cpp/src/main.cpp.o	a1e7d5de23c06dc6
+3857	4003	1743163492456906953	21741번： Ожерелье/Necklace_test	d384caf6e26bf6d8
+2130	2217	1743308663059712304	22088번： На далекой Амазонке/Mothers_test	265ad61f68977a1
+1228	1312	1742713139874807950	20162번： 간식 파티/snack_party	dc2e7fd09cce126f
+2308	2410	1742826971986230960	20915번： 숫자 카드 놀이/Card_Game_test	b5a12146bcb0157e
+1285	1392	1742809689044830497	20484번： Игра/game_test	11875d24dd5e2696
+2	1206	1742812277628547234	20626번： AiGo/CMakeFiles/aigo_test.dir/cpp/src/main.cpp.o	39dbad4e44787a6
+4	1825	1742905318213381640	21127번： Binary Supersonic Utahraptors/CMakeFiles/BSU_test.dir/test/Testmain.cpp.o	768b996fdf8b47a9
+1562	1701	1743084962276831146	21555번： 빛의 돌 옮기기/LightStone	282b1474d72f57f6
+1291	1398	1743141067776897007	21593번： Simple Cron Spec/CronSpec	69f9b4839b09c43b
 13	1291	1743314315599674117	22114번： 창영이와 점프/CMakeFiles/MaxContinuousBlocks.dir/cpp/src/main.cpp.o	bbb26f94c548a349
+5	1341	1743067222490588257	21344번： Hot Springs/CMakeFiles/HotSprings_test.dir/cpp/src/main.cpp.o	23ace388e1f10bbb
+1825	1909	1742905320034402543	21127번： Binary Supersonic Utahraptors/BSU_test	ddaa9a598363facf
+2	1074	1742889164166501132	20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute.dir/cpp/src/main.cpp.o	7fa8f3c94bafba9a
+2	1218	1742795149225414112	20476번： Занос/CMakeFiles/race_test.dir/cpp/src/main.cpp.o	c659719d7c47fd81
+2423	2517	1743159207114879298	21736번： 헌내기는 친구가 필요해/NeedFriends_test	3b6f4fa0a04c8303
+4	1433	1742898716619021703	21041번： Largest Exotic Number/CMakeFiles/LargestExoticNumbers_test.dir/cpp/src/main.cpp.o	87e0784710563827
+11	1371	1743312154512914195	22105번： Король и королева/CMakeFiles/Chess_test.dir/cpp/src/main.cpp.o	b61f72e76cb6f33c
+7	1924	1743244682128312633	22034번： Alto Singing/CMakeFiles/Transpose_test.dir/test/Testmain.cpp.o	a3a72bb4863c39e5
+5	1365	1743146046666863096	21616번： Modern Art/CMakeFiles/ModernArt.dir/cpp/src/main.cpp.o	f3514086c031b6f5
+1794	1864	1743231591271871861	21881번： Innome/ComputeMaxTabs_test	c1b809bd82a69c10
+1115	1194	1742894117376358155	21032번： Odd GCD Matching/OddGCDMatching	f02057c65d7fd719
+2012	2097	1743312156513931498	22105번： Король и королева/Chess_test	d8962734f2a40ff3
+3	1506	1742826969681192188	20915번： 숫자 카드 놀이/CMakeFiles/Card_Game.dir/cpp/src/main.cpp.o	45af5fe23d8bc2fd
+2293	2392	1742640921675357008	19981번： ЕГЭ/negative_base2_test	5180483d015de6d7
+9	1023	1743226468676742738	21869번： Maximum Bishop/CMakeFiles/MaximumBishop_test.dir/cpp/src/main.cpp.o	f340cd9006397050
+3	1150	1742905245652548705	21127번： Binary Supersonic Utahraptors/CMakeFiles/BSU.dir/cpp/src/main.cpp.o	aecfbd3b6ea5e061
+3	1392	1742815099782689393	20837번： Robottävling/CMakeFiles/Robot_Travel_test.dir/cpp/src/main.cpp.o	fdffac0acfecf6b8
+1364	1453	1743067223848848219	21344번： Hot Springs/HotSprings	4b016be1693c0b97
+2	2198	1742731982980121448	20416번： 역전의 제왕 (Easy)/CMakeFiles/reverse_king_test.dir/test/Testmain.cpp.o	11baf37286585bb7
+1342	1444	1743009646022807595	21275번： 폰 호석만/Hosukman	55c30458fb863173
+7	3903	1743163488606791633	21741번： Ожерелье/CMakeFiles/Necklace.dir/cpp/src/main.cpp.o	5f9ff94fde0e9f9f
+6	992	1743231589485102898	21881번： Innome/CMakeFiles/ComputeMaxTabs_test.dir/cpp/src/main.cpp.o	6f221e273f8679a4
+5	1024	1742980819129391704	21170번： Digital Speedometer/CMakeFiles/Speedometer_test.dir/cpp/src/main.cpp.o	f8ed313507a2ab87
+1924	1993	1743244684045329825	22034번： Alto Singing/Transpose_test	c6c6c520a16f727f
+4	1307	1742900829134462379	21049번： Coin Stacks/CMakeFiles/CoinStack.dir/cpp/src/main.cpp.o	79425e09937452e4
+5	1556	1743079071584763107	21414번： Вычислительная ихтиология/CMakeFiles/boj_21414_test.dir/cpp/src/main.cpp.o	55a17c790f730aeb
+6	2423	1743159204697851988	21736번： 헌내기는 친구가 필요해/CMakeFiles/NeedFriends_test.dir/test/Testmain.cpp.o	25cd0ca8d207b780
+2	1654	1742889326132873755	20954번： 택배 기사 민서/CMakeFiles/DeliveryRoute_test.dir/test/Testmain.cpp.o	b76301eff5033b31
+1749	1846	1742809705566032834	20484번： Игра/game_test_test	2c71707b83330281
+2	1749	1742809703819011439	20484번： Игра/CMakeFiles/game_test_test.dir/test/Testmain.cpp.o	ed7c429dec8293e3
+4	2308	1742826969682192205	20915번： 숫자 카드 놀이/CMakeFiles/Card_Game_test.dir/test/Testmain.cpp.o	4a8a2b5024ef47b3
