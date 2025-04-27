@@ -1,7 +1,7 @@
 [
 	{
 		"directory": "/home/monika/Documents/problems/30022번: 행사 준비",
-		"command": "/usr/bin/g++ -std=c++23 -O2 solution.cpp -o solution",
+		"command": "/usr/bin/g++ -std=c++26 -Wall -Wextra -O2 -pipe -static -c solution.cpp -o solution.o",
 		"file": "solution.cpp"
 	}
 ]
