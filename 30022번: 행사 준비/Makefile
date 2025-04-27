@@ -1,18 +1,29 @@
-# ==== 기본 변수 ====
-CXX      := g++
-CXXFLAGS := -std=c++26 -Wall -Wextra -O2 -pipe -static
-TARGET   := solution
-SRCS     := solution.cpp
-OBJS     := $(SRCS:.cpp=.o)
+# ── Makefile ──
 
-# ==== 기본 규칙 ====
+# 1) 컴파일러와 플래그
+CXX      := g++
+CXXFLAGS := -std=c++26 -O2 -Wall -Wextra
+
+# 2) 소스와 오브젝트 자동 수집
+SRCS := solution.cpp
+OBJS := $(SRCS:.cpp=.o)
+
+# 3) 최종 실행파일 이름
+TARGET := solution
+
+# 4) 기본 타겟 (make 만 입력했을 때)
+.PHONY: all
 all: $(TARGET)
 
+# 5) 실행파일 빌드
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
+# 6) 오브젝트 개별 컴파일
 %.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
+# 7) 정리 (clean)
+.PHONY: clean
 clean:
-	rm -f $(TARGET) $(OBJS)
+	rm -f $(OBJS) $(TARGET)

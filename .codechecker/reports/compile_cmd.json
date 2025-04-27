@@ -1,7 +1,0 @@
-[
-  {
-    "directory": "/home/monika/Documents/problems/30022\ubc88: \ud589\uc0ac \uc900\ube44",
-    "command": "/usr/bin/g++ -std=c++26 -O2 solution.cpp -o solution",
-    "file": "solution.cpp"
-  }
-]
