@@ -1,0 +1,48 @@
+@startuml TD
+title Sequence Diagram
+
+skinparam BackgroundColor           #1C1C1C
+skinparam DefaultFontColor          #F5F5F5
+skinparam RoundCorner                 8
+skinparam Shadowing                   false
+skinparam DefaultFontName             "SF Pro Display"
+skinparam DefaultFontSize             16
+
+skinparam Sequence {
+    ActorBackgroundColor            #2E2E2E
+    ParticipantBackgroundColor      #2E2E2E
+    LifeLineBackgroundColor         #2E2E2E
+
+    ActorBorderColor                #5E5E5E
+    ParticipantBorderColor          #5E5E5E
+    LifeLineBorderColor             #5E5E5E
+
+    ArrowColor                      #A5A5A5
+    FontColor                       #F5F5F5
+}
+
+skinparam SequenceGroupBackgroundColor #1C1C1C
+
+actor User
+participant Main
+participant ContextStack as "Stack"
+participant Context
+
+User -> Main : enter N and\nsequence string
+Main -> ContextStack : push(root)
+
+loop for each character c in s
+    alt c == '('
+        Main -> ContextStack : push(new Context)
+    else c == ')'
+        Main -> ContextStack : pop() returns ctx
+        activate Context
+        Context -> Context : if ctx.count == 0\n  val = 1\nelse\n  val = ctx.prod + 1
+        deactivate Context
+        Main -> ContextStack : peek() returns parentCtx
+        Main -> parentCtx : parentCtx.prod *= val\nparentCtx.count++
+    end
+end
+
+Main -> User : output final prod value
+@enduml

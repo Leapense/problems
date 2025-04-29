@@ -1,0 +1,40 @@
+@startuml Flow-Chart
+
+skinparam BackgroundColor #1e1e1e
+skinparam DefaultTextAlignment center
+skinparam Shadowing false
+skinparam ActivityBackgroundColor #2c2c2c
+skinparam ActivityBorderColor #3a3a3c
+skinparam ActivityFontColor #ffffff
+skinparam DecisionBackgroundColor #2c2c2e
+skinparam DecisionBorderColor #3a3a3c
+skinparam DecisionFontColor #ffffff
+skinparam ArrowColor #8e8e93
+skinparam DefaultFontName "SF Pro Display"
+skinparam DefaultFontSize 16
+skinparam LabelFontColor #ffffff
+skinparam ArrowFontColor #ffffff
+
+start
+:Read N and string s;
+:Set up root Context (prod=1, count=0) and push onto stack;
+repeat
+    :c = next character in s;
+    if (c == '(') then (yes)
+        :Push new Context(prod=1, count=0);
+    else (no)
+        :ctx = pop();
+        if (ctx.count == 0) then (empty pair)
+            :val = 1;
+        else (nested)
+            :val = ctx.prod + 1;
+        endif
+        :parent = stack.peek();
+        :parent.prod *= val;
+        :parent.count++;
+    endif
+repeat while (more characters?)
+:Output stack.peek().prod;
+stop
+
+@enduml

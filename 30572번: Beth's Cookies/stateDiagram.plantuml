@@ -1,0 +1,44 @@
+@startuml State Diagram
+
+skinparam backgroundColor #1d1d1f
+skinparam defaultFontColor #ffffff
+skinparam TitleFontColor #ffffff
+skinparam state {
+    BackgroundColor #2c2c2e
+    BorderColor #3a3a3c
+    FontColor #ffffff
+}
+
+skinparam ArrowColor #0a84ff
+skinparam defaultFontName "SF Pro Display"
+skinparam DefaultTextAlignment center
+skinparam dpi 150
+
+title State Diagram
+
+[*] --> Idle
+
+state Idle {
+    Idle: waiting for input
+}
+
+state InParsing {
+    InParsing: processing characters
+}
+
+state ComputeValue {
+    ComputeValue: computing value of context
+}
+
+state End {
+    End: finished parsing
+}
+
+Idle --> InParsing : input available
+InParsing --> InParsing : '(' / push new context
+InParsing --> ComputeValue : ')' / pop & compute
+ComputeValue --> InParsing : multiply into parent
+InParsing --> End : no more characters
+End --> [*]
+
+@enduml

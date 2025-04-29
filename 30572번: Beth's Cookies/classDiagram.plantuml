@@ -1,0 +1,23 @@
+@startuml "Class Diagram"
+
+skinparam backgroundColor #1e1e1e
+skinparam defaultFontColor #ffffff
+skinparam classBackgroundColor #2c2c2c
+skinparam classBorderColor #888888
+skinparam ArrowColor #888888
+skinparam dpi 150
+skinparam defaultFontName "SF Pro Display"
+
+title Class Diagram
+
+class Main {
+    + main(args: String[]): void
+}
+
+class Context {
+    - prod: BigInteger
+    - count: int
+}
+
+Main "1" *-- "*" Context : creates
+@enduml
