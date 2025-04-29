@@ -1,0 +1,39 @@
+@startuml TD
+
+skinparam dpi 150
+skinparam DefaultFontName "Liga SFMono Nerd Font"
+
+start
+
+:Read **n**;
+if (n == 0) then (yes)
+    :Print **empty line**;
+    stop
+else (no)
+    :Reserve vector<Point> **a** (size **n**);
+    :for i = 1..n\n  · read (id, flex, cond)\n  · push_back into **a**; 
+    :Sort **a** by **flexibility DESC**;
+
+    :double **maxCond** = -INF;
+    :list<string> **undominated**;
+
+    repeat
+        :Take next block with identical **flex**;
+        :double **blockMax** = -INF;
+        repeat
+            :pop point **p** from block;
+            if (p.cond > maxCond) then (yes)
+                :undominated += p.id;
+            endif
+            :blockMax = max(blockMax, p.cond);
+        repeat while (more points in block?)
+
+        :maxCond = max(maxCond, blockMax);
+    repeat while (more blocks?)
+
+    :Sort **undominated** lexicographically;
+    :Print IDs space-separated;
+    stop
+endif
+
+@enduml

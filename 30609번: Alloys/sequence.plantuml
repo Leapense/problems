@@ -1,0 +1,30 @@
+@startuml TD
+
+actor User
+participant Main
+participant "std::istream\n(cin)" as Cin
+participant "vector<Point>" as Vec
+participant "std::sort\n(flex-desc)" as SortFlex
+participant "Block-Scan" as Scan
+participant "std::sort\n(lex IDs)" as SortIDs
+participant "std::ostream\n(cout)" as Cout
+
+User -> Main : program launch\n+ alloy data via STDIN
+Main -> Cin : read n
+loop read n lines
+    Main -> Cin : read id, flex, cond
+    Main -> Vec : emplace_back(Point)
+end
+
+Main -> SortFlex : sort(Vec)\n(by flexibility ↓)
+SortFlex --> Main
+
+Main -> Scan : linear block scan\n• update maxCond\n• collect undominated IDs
+Scan --> Main : list undominated
+
+Main -> SortIDs : sort(undominated IDs)
+SortIDs --> Main
+
+Main -> Cout : print IDs\n(space-separated)
+Cout --> User : result on STDOUT
+@enduml

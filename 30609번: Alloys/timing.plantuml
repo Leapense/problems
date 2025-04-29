@@ -1,0 +1,34 @@
+@startuml "Timing Diagram"
+
+skinparam DefaultFontName "SFMono Nerd Font"
+skinparam Dpi 150
+
+title Timing Diagram - solution.cpp
+
+robust "main()" as MAIN
+concise "ReadInput" as IN
+concise "Sort(Alloys)" as SORT
+concise "Scan(Frontier)" as SCAN
+concise "WriteOutput" as OUT
+
+@0
+MAIN is start
+IN   is start
+
+@1
+IN   is done
+SORT is active
+
+@2
+SORT is done
+SCAN is active
+
+@3
+SCAN is done
+OUT  is active
+
+@4
+OUT  is done
+MAIN is stop
+
+@enduml
