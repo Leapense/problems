@@ -1,0 +1,50 @@
+@startuml Sequence Diagram
+
+skinparam BackgroundColor #1e1e1e
+skinparam DefaultFontColor #ffffff
+skinparam DefaultFontName "SF Pro Display"
+skinparam dpi 150
+
+skinparam SequenceArrowColor #9cdcfe
+skinparam SequenceParticipantBorderColor #ffffff
+skinparam SequenceParticipantBackgroundColor #2d2d30
+skinparam SequenceParticipantFontColor #ffffff
+
+skinparam SequenceLifeLineBorderColor #ffffff
+skinparam SequenceLifeLineBackgroundColor #2d2d30
+skinparam SequenceLifeLineFontColor #ffffff
+
+skinparam SequenceNoteBackgroundColor #3f3f46
+skinparam SequenceNoteBorderColor #ffffff
+
+skinparam SequenceDividerBackgroundColor #272727
+skinparam SequenceDividerBorderColor #ffffff
+
+skinparam SequenceGroupBackgroundColor #1e1e1e
+skinparam SequenceGroupBorderColor #ffffff
+
+skinparam ActorBorderColor #ffffff
+
+actor User
+participant "solution.py" as S
+participant "pow(...,MOD)" as P
+participant Stdout
+
+User -> S: run `solution.py` with input N
+activate S
+
+S -> S: n = int(input().strip())
+alt n == 2
+    S -> Stdout: print(1)
+else n >= 3
+    S -> P: pow(2, n-3, MOD)
+    activate P
+    P --> S: return 2^(n-3) mod MOD
+    deactivate P
+
+    S -> S: result = n * (returned value) % MOD
+    S -> Stdout: print(result)
+end
+
+deactivate S
+@enduml

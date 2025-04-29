@@ -1,0 +1,25 @@
+@startuml Flow-Chart
+
+skinparam backgroundColor #1e1e1e
+skinparam defaultFontColor #dcdcdc
+skinparam activity {
+    backgroundColor #2e2e2e
+    borderColor #5e5e5e
+    fontColor #dcdcdc
+}
+skinparam arrowColor #9cdcfe
+skinparam shadowing false
+skinparam dpi 150
+skinparam defaultFontName "SF Pro Display"
+
+start
+    :Read N from input;
+    if (N == 2?) then (yes)
+        :Print 1;
+        stop
+    else (no)
+        :result = N * pow(2, N-3, 1e9+7) mod 1e9+7;
+        :Print result;
+        stop
+    endif
+@enduml

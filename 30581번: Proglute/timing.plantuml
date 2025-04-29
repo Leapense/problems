@@ -1,0 +1,31 @@
+@startuml "Timing Diagram"
+
+skinparam backgroundColor #1c1c1e
+skinparam defaultFontColor #d1d1d6
+skinparam defaultFontName "SF Pro Text"
+skinparam dpi 150
+
+skinparam timingDiagram {
+    lineColor #d1d1d6
+    borderColor #3a3a3c
+    backgroundColor #1c1c1e
+    lifetimeBackgroundColor #2c2c2e
+}
+
+hide time axis
+
+robust Solution
+@0 
+Solution is Start
+@1
+Solution is Read_N
+@2
+Solution is Branch_N_equals_2
+@3
+Solution is Compute_Result
+@4
+Solution is Output_Result
+@5
+Solution is End
+
+@enduml
