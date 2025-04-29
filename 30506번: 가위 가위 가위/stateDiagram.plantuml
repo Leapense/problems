@@ -1,0 +1,45 @@
+@startuml TD
+skinparam BackgroundColor black
+skinparam DefaultFontColor #00FF00
+skinparam DefaultFontName 'Liga SFMono Nerd Font'
+skinparam StateBorderColor #00FF00
+skinparam StateBackgroundColor black
+skinparam StateFontColor #00FF00
+skinparam ArrowColor #00FF00
+skinparam ArrowThickness 2
+skinparam NoteBackgroundColor black
+skinparam NoteBorderColor #00FF00
+
+[*] --> Init
+
+state Init {
+    note right: Build baseline string\n(all '2's length=100)
+    Init --> SendBaseline
+}
+
+state SendBaseline {
+    note right: Send "? " + baseline\nto Judge
+    SendBaseline --> AwaitK
+}
+
+state AwaitK {
+    note right: Receive K (baseline win count)
+    AwaitK --> QueryLoop
+}
+
+state QueryLoop {
+    note right: for i in 0..99:\n  send "? " + query_i\n receive W[i]
+    QueryLoop --> Deduce
+}
+
+state Deduce {
+    note right: Compute delta[i]=W[i]-K\nMap to {0,2,5} moves
+    Deduce --> SendFinal
+}
+
+state SendFinal {
+    note right: Send "! " + machine_guess\nTerminate session
+    SendFinal --> [*]
+}
+
+@enduml

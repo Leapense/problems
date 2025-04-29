@@ -1,0 +1,42 @@
+@startuml TD
+skinparam backgroundColor black
+skinparam ActorBorderColor #00FF00
+skinparam ActorBackgroundColor black
+skinparam ActorFontColor #00FF00
+skinparam ParticipantBorderColor #00FF00
+skinparam ParticipantFontColor #00FF00
+skinparam ParticipantBackgroundColor black
+skinparam SequenceArrowColor #00FF00
+skinparam SequenceLifeLineBorderColor #00FF00
+skinparam SequenceLifeLineBackgroundColor black
+skinparam NoteBorderColor #00FF00
+skinparam NoteBackgroundColor black
+skinparam NoteFontColor #00FF00
+skinparam CardBorderColor #00FF00
+skinparam SequenceGroupBorderColor #00FF00
+skinparam SequenceGroupBackgroundColor black
+skinparam SequenceGroupFontColor #00FF00
+skinparam SequenceGroupHeaderFontColor #00FF00
+skinparam SequenceStereotypeFontColor #00FF00
+skinparam SequenceTitleFontColor #00FF00
+skinparam DefaultFontColor #00FF00
+skinparam DefaultFontName 'Liga SFMono Nerd Font'
+
+autonumber
+actor Youngjae
+participant Judge
+
+Youngjae -> Judge : ? 22222…2    \n(send baseline of 100×'2')
+note over Judge : returns K (baseline wins)
+Judge --> Youngjae : K
+
+loop for i = 0 to 99
+    Youngjae -> Judge : ? q[i]       \n(query with Rock at pos i)
+    note over Judge : returns W[i]
+    Judge --> Youngjae : W[i]
+end
+
+Youngjae -> Judge : ! machine        \n(final guess of 100 moves)
+note over Judge : verify and finish
+
+@enduml

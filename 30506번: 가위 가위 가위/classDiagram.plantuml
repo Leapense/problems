@@ -1,0 +1,37 @@
+@startuml TD
+skinparam BackgroundColor black
+skinparam DefaultFontColor #00FF00
+skinparam DefaultFontName 'Liga SFMono Nerd Font'
+skinparam ClassBorderColor #00FF00
+skinparam ClassBackgroundColor black
+skinparam ClassFontColor #00FF00
+skinparam ClassAttributeIconColor #00FF00
+skinparam InterfaceBorderColor #00FF00
+skinparam InterfaceBackgroundColor black
+skinparam InterfaceFontColor #00FF00
+skinparam ArrowColor #00FF00
+
+interface IJudge {
+    + play(hand: string): int
+}
+
+class RpsSolver {
+    - baseline: string
+    - K: int
+    - W: vector<int>
+    - machine: string
+    + run(): void
+    - sendQuery(hand: string): int
+    - deduceMachine(): string
+}
+
+class JudgeSimulator {
+    - machine: string
+    + JudgeSimulator(machine: string)
+    + play(hand: string): int
+}
+
+IJudge <|.. JudgeSimulator
+RpsSolver ..> IJudge
+
+@enduml

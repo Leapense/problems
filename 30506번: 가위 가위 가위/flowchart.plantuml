@@ -1,0 +1,39 @@
+@startuml TD
+skinparam backgroundColor black
+skinparam defaultFontName 'Liga SFMono Nerd Font'
+skinparam defaultFontSize 12
+skinparam activityBackgroundColor black
+skinparam activityBorderColor #00FF00
+skinparam activityFontColor #00FF00
+skinparam ArrowColor #00FF00
+skinparam decisionBackgroundColor black
+skinparam decisionBorderColor #00FF00
+skinparam decisionFontColor #00FF00
+
+start
+
+:Initialize baseline = "222...2" (100×'2');
+:Send "? " + baseline;
+:Read K;  'Baseline win count';
+
+!define N 100
+:i = 0;
+
+while (i < N?) is (yes)
+    :Let query = baseline;
+    :query[i] = '0';
+    :Send "? " + query;
+    :Read W[i];
+    :i = i + 1;
+endwhile (i ≥ N)
+
+:For each i compute delta = W[i] - K;
+:If delta == -1 -> machine[i] = '5';
+:If delta == +1 -> machine[i] = '2';
+:If delta ==  0 -> machine[i] = '0';
+
+:Reconstruct full machine string;
+:Send "! " + machine;
+stop
+
+@enduml
