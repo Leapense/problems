@@ -1,0 +1,26 @@
+@startuml TD
+
+skinparam {
+    ClassBoardColor #CCCCCC
+    ClassBackgroundColor #FFFFFF
+    DefaultFontName "SF Pro Display"
+    DefaultFontSize 14
+    ClassAttributeIconSize 0
+}
+
+class Solution {
+    + solve(in: istream&, out: ostream&): void
+}
+
+class "std::istream" as istream
+class "std::ostream" as ostream
+
+class Main {
+    + main(): int
+}
+
+Solution --> istream : reads from
+Solution --> ostream : writes to
+Main ..> Solution : invokes
+
+@enduml

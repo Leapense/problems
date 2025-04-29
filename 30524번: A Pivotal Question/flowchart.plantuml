@@ -1,0 +1,39 @@
+@startuml TD
+skinparam DefaultFontName 'Liga SFMono Nerd Font'
+skinparam DefaultFontSize 14
+
+start
+
+:Read integer n;
+:Read array a[0..n-1];
+
+:suffix_min[n] = +∞;
+repeat
+    :i = n-1 down to 0;
+    :suffix_min[i] = min(a[i], suffix_min[i+1]);
+repeat :while i > 0
+
+:cur_max = 0;
+:total = 0;
+:first100 = empty list;
+
+:i = 0;
+while (i < n?) is (yes)
+    :cur_max = max(cur_max, a[i]);
+    if (a[i] == cur_max AND suffix_min[i+1] > a[i]) then (yes)
+        :total = total + 1;
+        if (size(first100) < 100?) then (yes)
+            :append a[i] to first100;
+        endif
+    endif
+    :i = i + 1;
+endwhile (i < n?)
+
+if (total == 0?) then (yes)
+    :output "0";
+else (no)
+    :output total;
+    :for each v in first100 ➞ output v;
+endif
+stop
+@enduml

@@ -1,0 +1,41 @@
+@startuml TD
+
+skinparam {
+    SequenceArrowColor #0060DF
+    SequenceArrowThickness 2
+    SequenceLifeLineBorderColor #888888
+    SequenceLifeLineBackgroundColor #F5F5F5
+    SequenceParticipantBackgroundColor #FFFFFF
+    SequenceParticipantBorderColor #CCCCCC
+    ActorFontName "SF Pro Display"
+    ParticipantFontName "SF Pro Display"
+    SequenceArrowFontName "SF Pro Display"
+    DefaultFontName "SF Pro Display"
+}
+
+actor User
+participant "main()" as Main
+participant "std::istream" as In
+participant "std::ostream" as Out
+
+User -> Main: start program
+activate Main
+
+Main -> In: read n
+Main -> In: read a[0..n-1]
+
+Main -> Main: build suffix_min[] (right→left pass)
+Main -> Main: init cur_max=0, total=0, first100=[]
+
+loop for i = 0 to n-1
+    Main -> Main: cur_max = max(cur_max, a[i])
+    Main -> Main: check (a[i] == cur_max && suffix_min[i+1] > a[i])
+    alt is pivot
+        Main -> Main: total++
+        Main -> Main: if first100.size()<100 → append a[i]
+    end
+end
+
+Main -> Out: if total==0 ? "0" : total + first100[ ]
+deactivate Main
+@enduml
