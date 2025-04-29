@@ -1,27 +1,40 @@
 import sys
 
-def compute_feedback(guess: str, secret: str) -> str:
-    fb = []
-    secret_set = set(secret)
-    for g_char, s_char in zip(guess, secret):
-        if g_char == s_char:
-            fb.append('*')
-        elif g_char in secret_set:
-            fb.append('!')
+def compute_feedback(secret: str, guess: str) -> str:
+    fb_chars = []
+    for s_ch, g_ch in zip(secret, guess):
+        if g_ch == s_ch:
+            fb_chars.append('*')
+        elif g_ch in secret:
+            fb_chars.append('!')
         else:
-            fb.append('X')
-    return ''.join(fb)
+            fb_chars.append('X')
+    return ''.join(fb_chars)
 
-def main():
-    data = sys.stdin.read().split()
-    it = iter(data)
-    n = int(next(it))
-    words = [next(it) for _ in range(n)]
+def solve(stdin: sys.stdin, stdout: sys.stdout) -> None:
+    lines = stdin.read().splitlines()
+    it = iter(lines)
+
+    try:
+        n = int(next(it))
+    except StopIteration:
+        return
+    
+    words = [next(it).strip() for _ in range(n)]
     secret = words[0]
-    g = int(next(it))
-    feedbacks = [next(it) for _ in range(g)]
 
-    count = sum(compute_feedback(w, secret) == fb for fb in feedbacks for w in words)
-    print(count)
+    g = int(next(it))
+    feedbacks = [next(it).strip() for _ in range(g)]
+
+    for fb in feedbacks:
+        cnt = 0
+        for w in words:
+            if compute_feedback(secret, w) == fb:
+                cnt += 1
+        print(cnt, file=stdout)
+
+def main() -> None:
+    solve(sys.stdin, sys.stdout)
+
 if __name__ == "__main__":
     main()

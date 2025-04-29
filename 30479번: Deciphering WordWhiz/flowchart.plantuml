@@ -1,0 +1,28 @@
+@startuml title WordWhiz - solution.py Flow Chart
+
+start
+:*Read integer N*;
+repeat
+    :Read next word;\nappend to dictionary;
+repeat while (read < N?)
+
+:secret ← dict[0];
+:Read integer G;
+
+repeat
+    :Read one feedback line\n(f[1..G]);
+    :count ← 0;
+
+    partition "iterate dictionary" {
+        :for each word w in dictionary;
+        if (compute_feedback(secret, w)\n== current feedback ?) then (yes)
+            :count ← count + 1;
+        endif
+    }
+
+    :print count;
+repeat while (processed < G?)
+
+stop
+
+@enduml

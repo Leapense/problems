@@ -1,0 +1,28 @@
+@startuml title WordWhiz - Sequence Diagram
+autonumber
+actor User as U
+participant "solution.py\n(main)" as P
+participant "compute_feedback()" as CF
+
+U  ->  P : 입력 데이터 제공 (stdin)\n• N, 사전 단어 N개\n• G, 피드백 G개
+activate P
+
+P -> P : 입력 파싱 및 변수 초기화
+
+loop 각 guess i = 1 .. G
+    loop 사전의 모든 단어 w
+        P  ->  CF : feedback = compute_feedback(secret, w)
+        activate CF
+        CF -->  P : 피드백 문자열
+        deactivate CF
+        alt feedback == target_feedback_i
+            P -> P : count++
+        end
+    end
+    P  -->  U : count 출력 (stdout)
+end
+
+deactivate P
+U <-- P : 프로그램 종료
+
+@enduml
