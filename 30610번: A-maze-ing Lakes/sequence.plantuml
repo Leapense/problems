@@ -1,0 +1,51 @@
+@startuml TD
+title A-maze-ing Lakes - Sequence Diagram for Main.java
+
+actor "User / OS" as USER
+participant "Main\n(main method)" as MAIN
+participant "BufferedReader" as BR
+participant "Grid\nchar[N][M]" as GRID
+participant "seen\nboolean[N][M]" as SEEN
+participant "ArrayDeque<int[2]>\n(queue)" as Q
+database "StdOut" as OUT
+
+USER -> MAIN : program launch
+MAIN -> BR : readLine() ➜ "N M"
+BR --> MAIN : String
+MAIN -> GRID : allocate N rows
+
+loop N lines
+    MAIN -> BR : readLine()
+    BR --> MAIN : row-string
+    MAIN -> GRID : store chars
+end
+
+MAIN -> SEEN : allocate & init false
+MAIN -> Q : new ArrayDeque()
+MAIN -> LIST : new ArrayList()
+
+loop for each cell (r,c)
+    alt grid[r][c] == '1' && !seen
+        MAIN -> SEEN : mark seen[r][c]
+        MAIN -> Q : clear(); add([r,c])
+        MAIN -> area : 0
+        loop while Q not empty
+            MAIN -> Q : removeFirst()
+            Q --> MAIN : [x,y]
+            MAIN -> area : area++
+            MAIN -> GRID : examine 4 neighbours
+            alt neighbours is water & unseen
+                MAIN -> SEEN : mark neighbour
+                MAIN -> Q : add(neighbour)
+            end
+        end
+        MAIN -> LIST : add(area)
+    end
+end
+
+MAIN -> LIST : sort()
+MAIN -> OUT : print LIST.size()
+MAIN -> OUT : print sorted areas
+OUT --> USER : console result
+
+@enduml

@@ -1,0 +1,60 @@
+@startuml TD
+
+scale 140 width
+
+robust "Main Thread"            as MAIN
+robust "BufferedReader"         as BR
+robust "ArrayDeque (queue)"     as QUEUE
+robust "ArrayList (lakeSizes)"  as LIST
+robust "StdOut"                 as OUT
+
+@0
+MAIN is Idle
+BR is Idle
+QUEUE is Empty
+LIST is Empty
+OUT is Idle
+
+@1
+MAIN is Reading
+BR is Busy
+
+@2
+MAIN is Reading
+BR is Done
+
+@2.5
+MAIN is Scanning
+QUEUE is Idle
+LIST is Empty
+
+@3
+MAIN is BFS
+QUEUE is Filling
+
+@4
+MAIN is BFS
+QUEUE is Empty
+LIST is Growing
+
+@4.5
+MAIN is BFS
+QUEUE is Filling
+
+@5
+MAIN is BFS
+QUEUE is Empty
+LIST is Growing
+
+@6
+MAIN is Sorting
+LIST is Sorting
+
+@7
+MAIN is Output
+OUT is Writing
+
+@8
+MAIN is Idle
+OUT is Idle
+@enduml

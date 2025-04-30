@@ -1,0 +1,32 @@
+@startuml TD
+title A-maze-ing Lakes - Activity Diagram for Main.java (Java 15)
+
+start
+
+:Read first line → _N_, _M_;
+:Loop N times → read one row of chars into **grid[N][M]**;
+
+:Create **seen[N][M]** = false;
+:Create empty **lakeSizes** list;
+:Create reusable **ArrayDeque<int[2]> queue**;
+
+repeat
+    if (grid[r][c] == '1' **and** !seen[r][c]) then (yes)
+        :Mark current tile seen;
+        :queue.clear(); queue.add([r,c]);
+        :area = 0;
+        repeat
+            :int[ ] pos = queue.removeFirst();
+            :area++;
+            :Check 4 neighbours;
+            :For every neighbour that is water\nand unseen → mark & enqueue;
+        repeat while (queue not empty) is (more)
+        :lakeSizes.add(area);
+    endif
+repeat while (more cells) is (next cell)
+
+:Collections.sort(lakeSizes);
+:Print lakeSizes.size();
+:Print all areas space-separated;
+stop
+@enduml
