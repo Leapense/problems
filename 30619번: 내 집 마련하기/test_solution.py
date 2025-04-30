@@ -6,7 +6,10 @@ import solution
 def run_io(input_data: str) -> str:
     backup_stdin = sys.stdin
     backup_stdout = sys.stdout
-    sys.stdin = io.StringIO(input_data)
+    data = input_data.lstrip()
+    if not data.endswith("\n"):
+        data += "\n"
+    sys.stdin = io.StringIO(data)
     sys.stdout = io.StringIO()
     try:
         solution.main()

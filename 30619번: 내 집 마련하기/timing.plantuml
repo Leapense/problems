@@ -1,0 +1,71 @@
+@startuml TD
+
+skinparam backgroundColor       #1E1E1E
+skinparam defaultFontName       "SF Pro Text"
+skinparam defaultFontSize       14
+skinparam defaultFontColor      #D0D0D0
+
+skinparam timing {
+  BackgroundColor              #2B2B2B
+  LineColor                    #98C1FE
+  LineThickness                2
+  BorderColor                  #666666
+  FontColor                    #D0D0D0
+}
+
+title **Timing Diagram – solution.py**
+
+robust "User" as U
+robust "sys.stdin" as IN
+robust "solution.py" as P
+robust "sys.stdout" as OUT
+
+@0
+U is idle
+IN is idle
+P is idle
+OUT is idle
+
+@1
+U is sendInput
+IN is receiving
+P is readInit
+
+@3
+IN is idle
+P is parseInit
+U is idle
+
+@4
+P is waitQuery
+
+@5
+IN is delivering
+P is readQ
+
+@6
+IN is idle
+P is processQ
+OUT is writing
+
+@7
+P is waitQuery
+OUT is idle
+
+@8
+IN is delivering
+P is readQ
+
+@9
+IN is idle
+P is processQ
+OUT is writing
+
+@10
+P is idle
+OUT is idle
+U is waitOutput
+
+@12
+U is idle
+@enduml

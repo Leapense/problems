@@ -1,0 +1,51 @@
+@startuml TD
+
+skinparam BackgroundColor #1e1e1e
+skinparam Shadowing false
+
+skinparam DefaultFontName "SF Pro Text"
+skinparam DefaultFontSize 14
+skinparam DefaultFontColor #d0d0d0
+
+skinparam ArrowColor #98C1FE
+skinparam ArrowFontColor #d0d0d0
+skinparam ArrowThickness 1
+
+skinparam activity {
+    BackgroundColor #2b2b2b
+    BorderColor #666666
+    FontColor #d0d0d0
+    StartColor #3c3c3c
+    EndColor #3c3c3c
+    DiamondBackgroundColor #2B2B2B
+    DiamondBorderColor #666666
+    DiamondFontColor #f8f8f2
+}
+
+skinparam note {
+    BackgroundColor #333333
+    BorderColor #666666
+    FontColor #d0d0d0
+}
+
+skinparam Dpi 150
+
+title **Activity Diagram - solution.py**
+
+start
+:Read **N**;
+:Read list **A<sub>orig</sub>**;
+:Read **M** (number of queries);
+
+repeat :Process each query;
+    :Read < L,R >;
+    :Copy **A<sub>orig</sub> → A**;
+    :Find all **positions** where **L ≤ A[pos] ≤ R**;
+    :Sort **positions** ↑;
+    :Make list **people = [L..R]**; sort **people** ↑;
+    :Pair-wise assign **people[i] → positions[i]**;
+    :Print current **A** line;
+
+repeat while (-- queries left --)
+end
+@enduml

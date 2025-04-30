@@ -1,0 +1,65 @@
+@startuml TD
+
+!define LIGHT_GRAY #D0D0D0
+!define BG_DARK    #1E1E1E
+!define PANEL_DARK #2B2B2B
+!define BORDER     #666666
+!define ACCENT     #98C1FE
+
+skinparam BackgroundColor BG_DARK
+skinparam Shadowing false
+
+skinparam DefaultFontName "SF Pro Text"
+skinparam DefaultFontSize 14
+skinparam DefaultFontColor LIGHT_GRAY
+
+skinparam sequence {
+  ArrowColor                      ACCENT
+  LifeLineBorderColor             BORDER
+  LifeLineBorderThickness         1
+  ActorBorderColor                BORDER
+  ParticipantBorderColor          BORDER
+  ParticipantBackgroundColor      PANEL_DARK
+  ActorBackgroundColor            PANEL_DARK
+  BoxBorderColor                  BORDER
+  GroupBackgroundColor            BG_DARK
+  GroupBorderColor                BORDER
+  DividerBorderColor              BORDER
+  DividerBackgroundColor          BG_DARK
+  SeparatorBorderColor            BORDER
+  NoteBackgroundColor             #333333
+  NoteBorderColor                 BORDER
+  NoteFontColor                   LIGHT_GRAY
+}
+
+title **Sequence Diagram - solution.py**
+
+actor User  as U
+participant "solution.py\n(main)" as P
+participant "sys.stdin/\nsys.stdout" as IO
+
+U -> IO : Provide raw input\n(N, A, M, queries)
+U -> P  : Launch program
+
+== Initial Input ==
+P -> IO : readline() × 3\n(N, A, M)
+IO --> P : strings
+
+P -> P : parse N, A_orig, M
+
+== Per-query loop ==
+loop M times
+  P -> IO : readline()  (L, R)
+  IO --> P : "L R"
+  P -> P  : *copy* A_orig → A
+  P -> P  : build positions list
+  P -> P  : sort positions ↑
+  P -> P  : build people list [L..R]\n& sort ↑
+  P -> P  : for i:\n  A[positions[i]] = people[i]
+  P -> IO : write() “A₁ A₂ … A_N\\n”
+end
+
+IO --> U : All output lines
+U --> U  : Display result(s)
+
+@enduml
