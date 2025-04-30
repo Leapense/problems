@@ -1,0 +1,45 @@
+@startuml TD
+
+skinparam BackgroundColor #1e1e1e
+skinparam ActivityBackgroundColor #252526
+skinparam ActivityBorderColor #0078d7
+skinparam ArrowColor #cccccc
+skinparam DefaultFontColor #ffffff
+skinparam NoteBackgroundColor #2d2d2d
+skinparam NoteBorderColor #cccccc
+skinparam Shadowing false
+skinparam ActivityStartColor #cccccc
+skinparam ActivityEndColor #cccccc
+
+skinparam ConditionStyle InsideDiamond
+skinparam DefaultFontSize 15
+skinparam DefaultFontName "Liga SFMono Nerd Font"
+
+start
+:Read x, y from input;
+if (x == y?) then (<color:green>yes)
+    :Output 0 moves;
+    end
+else (<color:red>no)
+    :g = gcd(x, y);
+    if (g > 1?) then (<color:green>yes)
+        :z = y - x;
+        :Output 1 move;
+        :Print z;
+        end
+    else (<color:red>no)
+        :p = smallest_prime_factor(y);
+        :z1 = (p - (x % p)) % p;
+        if (z1 == 0?) then (<color:green>yes)
+            :z1 = p;
+        endif
+        :x1 = x + z1;
+        :z2 = y - x1;
+        :Output 2 moves;
+        :Print z1;
+        :Print z2;
+        end
+    endif
+endif
+
+@enduml

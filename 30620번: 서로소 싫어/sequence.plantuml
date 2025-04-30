@@ -1,0 +1,59 @@
+@startuml TD
+
+skinparam backgroundColor #263238
+skinparam sequenceArrowColor #CFD8DC
+skinparam actorBorderColor #80CBC4
+skinparam actorBackgroundColor #37474F
+skinparam participantBackgroundColor #37474F
+skinparam participantBorderColor #80CBC4
+skinparam lifelineBorderColor #80CBC4
+skinparam lifelineBackgroundColor #37474F
+skinparam noteBackgroundColor #546E7A
+skinparam noteBorderColor #80CBC4
+skinparam defaultFontColor #CFD8DC
+skinparam SequenceGroupBackgroundColor #263238
+skinparam SequenceGroupBorderColor #CFD8DC
+skinparam defaultFontName "Roboto"
+
+actor "User" as U
+participant "main()" as M
+participant "getOperations(x,y)" as G
+participant "gcdll(x,y)" as C
+participant "smallest_prime_factor(y)" as S
+
+U -> M: run program with input x, y
+activate M
+
+M -> G: getOperations(x, y)
+activate G
+
+G -> C: gcdll(x, y)
+activate C
+C --> G: return g
+deactivate C
+
+alt g > 1
+    G --> G: compute z = y - x
+    G --> G: return {z}
+else
+    G -> S: smallest_prime_factor(y)
+    activate S
+    S --> G: return p
+    deactivate S
+
+    G --> G: z1 = (p - (x mod p)) mod p
+    G --> G: if (z1 == 0) z1 = p
+    G --> G: x1 = x + z1
+    G --> G: z2 = y - x1
+
+    G --> G: return {z1, z2}
+end
+
+deactivate G
+M <-- G: ops vector
+
+M -> U: print ops.size()
+M -> U: print each z in ops
+deactivate M
+
+@enduml
