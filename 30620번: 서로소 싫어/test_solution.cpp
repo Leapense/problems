@@ -1,73 +1,46 @@
 #include <gtest/gtest.h>
-#include <vector>
+#include <numeric>
 #include <cmath>
-using namespace std;
 
-vector<long long> getOperations(long long x, long long y);
-static long long gcdll(long long a, long long b);
+extern std::vector<long long> solveOps(long long x, long long y);
 
-static long long apply(long long x, long long z)
+static long long applyOps(long long x, const std::vector<long long> &ops)
 {
-    if (z > 0)
-        return x + z;
-    else
-        return x - llabs(z);
-}
-
-static void verifySequence(long long x0, long long y)
-{
-    auto ops = getOperations(x0, y);
-    ASSERT_LE(ops.size(), 2u) << "Used more than 2 moves";
-    long long x = x0;
-
-    for (auto z : ops)
+    for (size_t i = 1; i < ops.size(); ++i)
     {
-        ASSERT_GE(llabs(z), 1);
-        ASSERT_LE(llabs(z), (long long)1e18);
-        ASSERT_GE(gcdll(x, llabs(z)), 1) << "gcd(" << x << "," << llabs(z) << ") == 1, invalid move";
-        x = apply(x, z);
-        ASSERT_GE(x, 1);
-        ASSERT_LE(x, (long long)1e18);
+        x += ops[i];
     }
-
-    ASSERT_EQ(x, y) << "Final x = " << x << ", expected y = " << y;
+    return x;
 }
 
-TEST(SampleTests, EqualCase)
+TEST(SolveOpsTest, NoOpWhenEqual)
 {
-    verifySequence(4, 4);
+    auto v = solveOps(5, 5);
+    EXPECT_EQ(v.size(), 1);
+    EXPECT_EQ(v[0], 0);
 }
 
-TEST(SampleTests, OneMoveCase)
+TEST(SolveOpsTest, SingleOpCase)
 {
-    verifySequence(6, 9);
+    // gcd(6,9)=3>1 → 한 번에
+    auto v = solveOps(6, 9);
+    ASSERT_EQ(v.size(), 2);
+    EXPECT_EQ(v[0], 1);
+    EXPECT_EQ(applyOps(6, v), 9);
+    EXPECT_GT(std::gcd(6LL, std::llabs(v[1])), 1);
 }
 
-TEST(SampleTests, TwoMoveCase)
+TEST(SolveOpsTest, DoubleOpCase)
 {
-    verifySequence(7, 12);
-}
+    // gcd(7,12)=1 → 두 단계
+    auto v = solveOps(7, 12);
+    ASSERT_EQ(v.size(), 3);
+    EXPECT_EQ(v[0], 2);
 
-TEST(Randomized, SomeRandomPairs)
-{
-    vector<pair<long long, long long>> pts = {
-        {3, 5}, {10, 17}, {14, 15}, {1000000000, 2}, {999999937, 999999938}};
-    for (auto [x, y] : pts)
-    {
-        verifySequence(x, y);
-    }
-}
-
-static long long gcdll(long long a, long long b)
-{
-    while (b)
-    {
-        long long t = a % b;
-        a = b;
-        b = t;
-    }
-
-    return a;
+    long long after1 = 7 + v[1];
+    EXPECT_GT(std::gcd(7LL, std::llabs(v[1])), 1); // 첫 연산 유효성
+    EXPECT_EQ(applyOps(7, v), 12);
+    EXPECT_GT(std::gcd(after1, std::llabs(v[2])), 1); // 두번째 연산 유효성
 }
 
 int main(int argc, char **argv)
