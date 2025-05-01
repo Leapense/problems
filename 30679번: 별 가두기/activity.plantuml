@@ -1,0 +1,74 @@
+@startuml TD
+
+skinparam BackgroundColor #1e1e1e
+skinparam Shadowing false
+
+skinparam DefaultFontName "Apple SD Gothic Neo"
+skinparam DefaultFontColor #ececec
+skinparam DefaultFontSize 14
+
+skinparam ActivityBackgroundColor #2d2d2d
+skinparam ActivityBorderColor #ececec
+skinparam ActivityFontColor #ececec
+
+skinparam ActivityDiamondBackgroundColor #2D2D2D
+skinparam ActivityDiamondBorderColor     #0A84FF
+skinparam ActivityDiamondFontColor       #0A84FF
+
+skinparam ArrowColor               #FFD60A
+skinparam ArrowFontColor           #FFD60A
+
+skinparam PartitionBackgroundColor #2A2A2A
+skinparam PartitionBorderColor     #0A84FF
+skinparam PartitionFontColor       #ECECEC
+skinparam PartitionRoundCorner     8
+
+skinparam NoteBackgroundColor      #3A3A3C
+skinparam NoteBorderColor          #636366
+skinparam NoteFontColor            #ECECEC
+
+start
+
+:입력 읽기;
+note right
+N, M
+격자 A[N][M]
+end note
+
+:결과 리스트 result 초기화;
+
+partition "시작 행 반복" {
+    :start = 1 부터 N까지 반복;
+    fork
+        :vis 배열[N][M][4] 전부 false로 초기화;
+        :r = start, c = 1, dir = 0;
+    fork again
+    end fork
+
+    while (무한 루프) is (true)
+        if (vis[r][c][dir] == true) then (Yes)
+            :trapped = true;
+            break
+        else (No)
+            :vis[r][c][dir] = true;
+            :step = A[r][c];
+            :nr = r + dr[dir] * step;
+            :nc = c + dc[dir] * step;
+            if (nr, nc 격자 밖?) then (Yes)
+                :trapped = false;
+                break
+            else (No)
+                :r = nr, c = nc;
+                :dir = (dir+1) % 4;
+            endif
+        endif
+    endwhile
+
+    if (trapped) then (Yes)
+        :result 에 start 추가;
+    endif
+}
+
+:결과 출력;
+stop
+@enduml
