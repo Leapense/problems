@@ -1,0 +1,60 @@
+@startuml TD
+
+skinparam BackgroundColor #1e1e1e
+skinparam Shadowing false
+
+skinparam DefaultFontName "Apple SD Gothic Neo"
+skinparam DefaultFontColor #ececec
+skinparam DefaultFontSize 14
+
+skinparam ActivityBackgroundColor #2d2d2d
+skinparam ActivityBorderColor #ececec
+skinparam ActivityFontColor #ececec
+
+skinparam ActivityDiamondBackgroundColor #2D2D2D
+skinparam ActivityDiamondBorderColor     #0A84FF
+skinparam ActivityDiamondFontColor       #0A84FF
+
+skinparam ArrowColor               #FFD60A
+skinparam ArrowFontColor           #FFD60A
+
+skinparam PartitionBackgroundColor #2A2A2A
+skinparam PartitionBorderColor     #0A84FF
+skinparam PartitionFontColor       #ECECEC
+skinparam PartitionRoundCorner     8
+
+skinparam NoteBackgroundColor      #3A3A3C
+skinparam NoteBorderColor          #636366
+skinparam NoteFontColor            #ECECEC
+
+start
+
+:Read n;
+:Initialize evens = [];
+:Initialize odds = [];
+
+repeat
+    :Read x, y;
+    if ((x + y) % 2 == 1) then (odd)
+        :odds.add(current_index);
+    else (even)
+        :evens.add(current_index);
+    endif
+    :current_index++;
+repeat while (current_index <= n)
+
+if (evens not empty AND odds not empty) then (yes)
+    :start = evens[0];
+    :end = odds[0];
+    :perm = [start];
+    :perm += evens[1:];
+    :perm += (odds except end);
+    :perm += [end];
+    :Output "YES";
+    :Output perm;
+else (no)
+    :Output "NO";
+endif
+
+stop
+@enduml

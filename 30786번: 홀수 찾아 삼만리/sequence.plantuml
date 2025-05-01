@@ -1,0 +1,66 @@
+@startuml TD
+
+skinparam BackgroundColor #1e1e1e
+skinparam Shadowing false
+
+skinparam DefaultFontName "Apple SD Gothic Neo"
+skinparam DefaultFontColor #ececec
+skinparam DefaultFontSize 14
+
+skinparam ParticipantBackgroundColor #2d2d2d
+skinparam ParticipantBorderColor #ececec
+skinparam ParticipantFontColor #ececec
+skinparam ParticipantPadding 10
+
+skinparam SequenceBoxBorderColor #0a84ff
+skinparam SequenceBoxBackgroundColor #2a2a2a
+skinparam SequenceBoxFontColor #ececec
+skinparam SequenceDividerBackgroundColor #2a2a2a
+skinparam SequenceDividerBorderColor #ececec
+skinparam SequenceGroupBackgroundColor #2a2a2a
+skinparam SequenceGroupBorderColor #ececec
+
+skinparam ActorBorderColor #ececec
+skinparam ActorBackgroundColor #2d2d2d
+skinparam ActorFontColor #ececec
+
+skinparam ArrowColor #ffd60a
+skinparam ArrowFontColor #ffd60a
+
+skinparam NoteBackgroundColor #3a3a3c
+skinparam NoteBorderColor #636366
+skinparam NoteFontColor #ececec
+
+skinparam DefaultTextAlignment center
+
+skinparam SequenceLifeLineBorderColor #ececec
+
+autonumber
+actor User
+participant "solve()" as Solver
+participant "stdin" as Stdin
+participant "stdout" as Stdout
+
+User -> Solver: invoke solve()
+Solver -> Stdin: read n
+
+loop i = 1 to n
+    Solver -> Stdin: read x, y
+    alt (x+y) % 2 == 1
+        Solver -> Solver: odds.add(i)
+    else
+        Solver -> Solver: evens.add(i)
+    end
+end
+
+Solver -> Solver: if evens and odds non-empty?
+alt True
+    Solver -> Solver: start = events[0]
+    Solver -> Solver: end = odds[0]
+    Solver -> Solver: perm = [start] + evens[1:] + odds_except_end + [end]
+    Solver -> Stdout: print  "YES"
+    Solver -> Stdout: print perm
+else False
+    Solver -> Solver: print "NO"
+end
+@enduml
