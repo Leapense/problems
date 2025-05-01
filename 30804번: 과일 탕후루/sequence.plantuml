@@ -1,0 +1,86 @@
+@startuml TD
+
+skinparam BackgroundColor #1e1e1e
+skinparam Shadowing false
+
+skinparam DefaultFontName "Apple SD Gothic Neo"
+skinparam DefaultFontColor #ececec
+skinparam DefaultFontSize 14
+
+skinparam ParticipantBackgroundColor #2d2d2d
+skinparam ParticipantBorderColor #ececec
+skinparam ParticipantFontColor #ececec
+skinparam ParticipantPadding 10
+
+skinparam SequenceBoxBorderColor #0a84ff
+skinparam SequenceBoxBackgroundColor #2a2a2a
+skinparam SequenceBoxFontColor #ececec
+skinparam SequenceDividerBackgroundColor #2a2a2a
+skinparam SequenceDividerBorderColor #ececec
+skinparam SequenceGroupBackgroundColor #2a2a2a
+skinparam SequenceGroupBorderColor #ececec
+
+skinparam ActorBorderColor #ececec
+skinparam ActorBackgroundColor #2d2d2d
+skinparam ActorFontColor #ececec
+
+skinparam ArrowColor #ffd60a
+skinparam ArrowFontColor #ffd60a
+
+skinparam NoteBackgroundColor #3a3a3c
+skinparam NoteBorderColor #636366
+skinparam NoteFontColor #ececec
+
+skinparam DefaultTextAlignment center
+
+skinparam SequenceLifeLineBorderColor #ececec
+skinparam Padding 3
+
+autonumber
+participant Main
+participant InputReader
+participant FrequencyArray as Freq
+participant Output
+
+Main -> InputReader: read N
+Main -> InputReader: read S[0..N-1]
+
+activate Main
+Main -> Freq: initialize freq[0..9] = 0
+note right of Main: distinct = 0, left = 0, best = 0
+
+loop for right = 0 to N-1
+    Main -> Freq: freq[S[right]]++
+    alt if freq[S[right]] was 0
+        Main <-- Freq: freq incremented\nnew fruit type
+        Main -> Main: distinct++
+    else
+        Main <-- Freq: freq incremented
+    end
+
+    alt while distinct > 2
+        loop
+            Main -> Freq: freq[S[left]]--
+            alt if freq[S[left]] is now 0
+                Main <-- Freq: type removed
+                Main -> Main: distinct--
+            else
+                Main <-- Freq: count decreased
+            end
+            Main -> Main: left++
+            alt distinct still > 2
+            else
+                break
+            end
+        end
+    end
+
+    Main -> Main: windowSize = right - left + 1
+    alt if windowSize > best
+        Main -> Main: best = windowSize
+    end
+end
+
+Main -> Output: print(best)
+deactivate Main
+@enduml

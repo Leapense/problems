@@ -1,0 +1,70 @@
+@startuml TD
+
+skinparam BackgroundColor #1e1e1e
+skinparam Shadowing false
+
+skinparam DefaultFontName "Apple SD Gothic Neo"
+skinparam DefaultFontColor #ececec
+skinparam DefaultFontSize 14
+
+skinparam ActivityBackgroundColor #2d2d2d
+skinparam ActivityBorderColor #ececec
+skinparam ActivityFontColor #ececec
+
+skinparam ActivityDiamondBackgroundColor #2D2D2D
+skinparam ActivityDiamondBorderColor     #0A84FF
+skinparam ActivityDiamondFontColor       #0A84FF
+
+skinparam ArrowColor               #FFD60A
+skinparam ArrowFontColor           #FFD60A
+
+skinparam PartitionBackgroundColor #2A2A2A
+skinparam PartitionBorderColor     #0A84FF
+skinparam PartitionFontColor       #ECECEC
+skinparam PartitionRoundCorner     8
+
+skinparam NoteBackgroundColor      #3A3A3C
+skinparam NoteBorderColor          #636366
+skinparam NoteFontColor            #ECECEC
+skinparam Padding 3
+
+| Main |
+start
+
+:Read integer N;
+:Read array S[0..N-1];
+
+:freq ← array[0..9] initialized to 0;
+:distinct ← 0;
+:left ← 0;
+:best ← 0;
+
+:right ← 0;
+
+while (right < N) is (more)
+    :x ← S[right];
+    if (freq[x] == 0) then (new fruit)
+        :distinct ← distinct + 1;
+    endif
+    :freq[x] ← freq[x] + 1;
+
+    while (distinct > 2) is (too many types)
+        :y ← S[left];
+        :freq[y] ← freq[y] - 1;
+        if (freq[y] == 0) then (type removed)
+            :distinct ← distinct - 1;
+        endif
+        :left ← left + 1;
+    endwhile (≤2 types)
+
+    :windowSize ← right - left + 1;
+    if (windowSize > best) then (update)
+        :best ← windowSize;
+    endif
+
+    :right ← right + 1;
+endwhile
+
+:Print best;
+stop
+@enduml
