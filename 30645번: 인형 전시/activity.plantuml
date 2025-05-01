@@ -1,0 +1,34 @@
+@startuml TD
+
+|입력 단계|
+start
+:읽기 R, C;
+:읽기 N;
+:읽기 높이 배열 H[1..N];
+
+|빈도 계산|
+:freq 배열(1..maxH) 를 0 으로 초기화;
+:i = 1;
+while (i <= N?) is (true)
+    :freq[H[i]]++;
+    :i++;
+endwhile
+
+|가시성 합 계산|
+:visibleSum = 0;
+:i = 1;
+while (i <= maxH?) is (true)
+    if (freq[i] > 0?) then (yes)
+        :visibleSum += min(freq[i], C);
+    endif
+    :i++;
+endwhile
+
+|최종 계산|
+:capacity = R * C;
+:answer = min(visibleSum, capacity);
+
+|출력 단계|
+:출력 answer;
+stop
+@enduml

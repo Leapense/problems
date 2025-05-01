@@ -1,0 +1,46 @@
+@startuml TD
+
+skinparam DefaultFontName "Apple SD Gothic Neo"
+
+robust "입력 읽기" as IR
+robust "빈도 계산" as FC
+robust "가시성 합" as VS
+robust "최종 계산" as TC
+robust "출력 쓰기" as OW
+
+@0
+IR is "대기"
+@5
+IR is "읽기"
+@25
+IR is "완료"
+
+@25
+FC is "대기"
+@30
+FC is "계산"
+@50
+FC is "완료"
+
+@50
+VS is "대기"
+@55
+VS is "계산"
+@75
+VS is "완료"
+
+@75
+TC is "대기"
+@80
+TC is "계산"
+@90
+TC is "완료"
+
+@90
+OW is "대기"
+@95
+OW is "쓰기"
+@110
+OW is "완료"
+
+@enduml

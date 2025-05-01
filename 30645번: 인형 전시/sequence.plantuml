@@ -1,0 +1,35 @@
+@startuml TD
+actor User
+participant Program
+participant InputReader
+participant FrequencyCounter
+participant VisibleCalculator
+participant OutputWriter
+
+User -> Program: 실행()
+activate Program
+
+Program -> InputReader: read(R, C, N, H[])
+activate InputReader
+InputReader --> Program: R, C, N, H[]
+deactivate InputReader
+
+Program -> FrequencyCounter: countFrequencies(H[])
+activate FrequencyCounter
+FrequencyCounter --> Program: freq[]
+deactivate FrequencyCounter
+
+Program -> VisibleCalculator: computeVisibleSum(freq, C)
+activate VisibleCalculator
+VisibleCalculator --> Program: visibleSum
+deactivate VisibleCalculator
+
+Program -> Program: capacity = R * C\nanswer = min(visibleSum, capacity)
+
+Program -> OutputWriter: print(answer)
+activate OutputWriter
+OutputWriter --> User: answer 출력
+deactivate OutputWriter
+
+deactivate Program
+@enduml
