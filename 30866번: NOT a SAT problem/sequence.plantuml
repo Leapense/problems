@@ -1,0 +1,133 @@
+@startuml TD
+
+skinparam defaultFontName "SF Mono"
+skinparam defaultFontSize 11
+skinparam shadowing false
+
+skinparam backgroundColor #282C34
+skinparam DefaultFontColor #D4D4D4
+skinparam ArrowColor #A6ACB3
+skinparam TitleFontColor #E6E6E6
+skinparam NoteFontColor #D4D4D4
+skinparam NoteBackgroundColor #3C4048
+
+skinparam Sequence {
+    LifeLineBorderColor #6B717D
+    LifeLineBackgroundColor #3C4048
+
+    ParticipantBorderColor #6B717D
+    ParticipantBackgroundColor #3C4048
+    ParticipantFontColor #E6E6E6
+
+    ActorBorderColor #6B717D
+    ActorBackgroundColor #3C4048
+    ActorFontColor #E6E6E6
+
+    GroupBackgroundColor #282C34
+    GroupBorderColor #E6E6E6
+    MessageAlign center
+}
+
+title Java Code Logic: Sequence Diagram (Improved - Dark Mode)
+
+actor User
+participant "Main" as Main
+participant "BufferedReader (br)" as BR
+participant "StringTokenizer (st)" as ST
+participant "StringBuilder (sb)" as SB
+participant "System.out" as SysOut
+
+autonumber "<b>[0]"
+
+User -> Main : Start Execution
+activate Main
+
+Main -> BR : new BufferedReader(...)
+activate BR
+Main <-- BR : br instance
+deactivate BR
+
+Main -> BR : readLine() // Read N, M
+activate BR
+BR -> User : Request N and M line
+User --> BR : Provide N and M line
+BR --> Main : line1 (String)
+deactivate BR
+
+Main -> ST : new StringTokenizer(line1)
+activate ST
+Main <-- ST : st instance (for N, M)
+Main -> ST : nextToken() -> N (String)
+ST --> Main
+Main -> ST : nextToken() -> M (String)
+ST --> Main
+deactivate ST
+Main -> Main : Parse N, M; Initialize mark[], seenVars, chosenClause=null
+note right of Main : Internal setup complete
+
+loop M times (ci = 0 to M-1)
+    Main -> BR : readLine() // Read clause line
+    activate BR
+    BR -> User : Request clause line (ci)
+    User --> BR : Provide clause line (ci)
+    BR --> Main : clauseLine (String)
+    deactivate BR
+
+    Main -> ST : new StringTokenizer(clauseLine)
+    activate ST
+    Main <-- ST : st instance (for clause)
+    Main -> ST : nextToken() -> k (String)
+    ST --> Main
+    Main -> Main : Parse k; isTaut = false
+
+    loop k times (j = 0 to k-1)
+        Main -> ST : nextToken() -> a (String literal)
+        ST --> Main
+        Main -> Main : Process literal 'a':\nCalculate v, sign;\nCheck/Update mark[v];\nUpdate isTaut if needed;\nAdd v to seenVars
+        note right of Main : Tautology check logic for literal 'a'
+    end loop k
+    deactivate ST
+
+    Main -> Main : Reset mark[v] for v in seenVars;\nClear seenVars
+    note right of Main : Cleanup after processing clause (ci)
+
+    alt isTaut == false
+        Main -> Main : chosenClause = lits (current clause literals)
+        note right of Main : Found non-tautological clause.
+        break Loop M times
+    end
+end loop M
+
+alt chosenClause == null
+    Main -> SB : new StringBuilder()
+    activate SB
+    Main <-- SB : sb instance
+    Main -> SB : append("NO\\n")
+    Main -> SysOut : print(sb.toString())
+    activate SysOut
+    SysOut -> User : Display "NO"
+    deactivate SysOut
+    deactivate SB
+else chosenClause != null
+    Main -> Main : Initialize assign[] = false
+    Main -> Main : Calculate assignment based on chosenClause
+    note right of Main : Set assign[var] = true for negative literals in chosenClause
+
+    Main -> SB : new StringBuilder()
+    activate SB
+    Main <-- SB : sb instance
+    Main -> SB : append("YES\\n")
+    Main -> Main : Build assignment string (0s and 1s)
+    Main -> SB : append(assignment string)
+    Main -> SB : append('\\n')
+
+    Main -> SysOut : print(sb.toString())
+    activate SysOut
+    SysOut -> User : Display "YES" and assignment
+    deactivate SysOut
+    deactivate SB
+end alt
+
+deactivate Main
+
+@enduml

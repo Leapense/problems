@@ -1,0 +1,100 @@
+@startuml TD
+
+skinparam defaultFontName "SF Mono"
+skinparam defaultFontSize 11
+skinparam shadowing false
+
+skinparam backgroundColor #282C34
+skinparam defaultFontColor #D4D4D4
+skinparam ArrowColor #A6ACB3
+skinparam TitleFontColor #E6E6E6
+
+' Timing Diagram Specific Skinparams
+skinparam TimingDiagram {
+    FontColor #E6E6E6
+    BackgroundColor #3C4048
+    BorderColor #6B717D
+    LineColor #A6ACB3
+    StateFontColor #D4D4D4
+    StateFontSize 11
+    FontName "SF Mono"
+    FontName
+}
+
+title Java Code Logic: Timing Diagram (Dark Mode)
+
+' Declare participants with states
+robust "Main Logic" as Main
+robust "BufferedReader" as BR
+robust "StringTokenizer" as ST
+robust "User Input/Output" as UserIO
+
+@0
+Main is Initializing
+BR is Idle
+ST is Idle
+UserIO is Idle
+
+@10
+Main is "Reading N, M"
+Main -> BR : Request line
+BR is Reading
+UserIO -> BR : Provide N, M line
+BR is Idle
+BR --> Main : line1
+Main -> ST : Tokenize line1
+ST is Tokenizing
+ST --> Main : N, M tokens
+ST is Idle
+Main is "Processing Input"
+
+@20
+Main is "Clause Loop (Start)"
+note top of Main : Loop M times begins
+
+@+10
+Main is "Reading Clause"
+Main -> BR : Request line
+BR is Reading
+UserIO -> BR : Provide Clause line
+BR is Idle
+BR --> Main : clauseLine
+Main -> ST : Tokenize clauseLine
+ST is Tokenizing
+ST --> Main : k, literals...
+ST is Idle
+
+@+10
+Main is "Processing Literals & Tautology Check"
+note top of Main : Internal check using mark[] array.\nDetermines if clause is tautological.
+
+@+5
+Main is "Cleaning Mark Array"
+note bottom of Main : Resetting mark[] for next iteration.
+
+@+5
+Main is "Checking Loop Condition / Break"
+note top of Main : If non-tautological found, chosenClause is set and loop breaks.\nOtherwise, continues to next iteration or finishes.
+
+@60
+Main is "Non-Tautological Found"
+@+5
+Main is "Calculating Assignment"
+note top of Main : Based on literals in chosenClause.
+@+10
+Main is "Preparing YES Output"
+Main -> UserIO : Display "YES" + Assignment
+UserIO is Displaying
+
+@100
+Main is "Loop Finished (All Tautological)"
+@+5
+Main is "Preparing NO Output"
+Main -> UserIO : Display "NO"
+UserIO is Displaying
+
+@+10
+Main is Finished
+UserIO is Idle
+
+@enduml

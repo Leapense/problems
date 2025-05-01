@@ -1,0 +1,111 @@
+@startuml TD
+
+skinparam defaultFontName "SF Mono"
+skinparam defaultFontSize 11
+skinparam shadowing false
+
+skinparam BackgroundColor #282C34
+skinparam FontColor #D4D4D4
+skinparam ArrowColor #A6ACB3
+skinparam TitleFontColor #E6E6E6
+
+skinparam Activity {
+    BackgroundColor #3C4048
+    BorderColor #6B717D
+    FontColor #E6E6E6
+}
+
+skinparam Condition {
+    BackgroundColor #3C4048
+    BorderColor #6B717D
+    FontColor #E6E6E6
+}
+
+skinparam Start {
+    BorderColor #A6ACB3
+}
+
+skinparam End {
+    BorderColor #A6ACB3
+}
+
+
+
+start
+
+:Read N and M;
+:Initialize mark[N+1] to 0;
+:Initialize seenVars (ArrayList);
+:Initialize chosenClause = null;
+:Initialize ci = 0;
+
+while (ci < M?) is (<color:#87CEEB>yes</color>)
+    :Read clause k and literals lits[k];
+    :Initialize isTaut = false;
+    :Initialize j = 0;
+
+    while (j < k?) is (<color:#98FB98>yes</color>)
+        :Get literal a = lits[j];
+        :Get variable v = abs(a);
+        :Get sign = (a > 0) ? +1 : -1;
+
+        if (isTaut is false?)  then (<color:#98FB98>yes</color>)
+            if (mark[v] == 0?) then (<color:#98FB98>yes</color>)
+                :mark[v] = sign;
+                :Add v to seenVars;
+            else (<color:#FFA07A>no</color>)
+                if (mark[v] != sign?) then (<color:#98FB98>yes</color>)
+                    :isTaut = true;
+                else (<color:#FFA07A>no</color>)
+                endif
+            endif
+        else (<color:#FFA07A>no</color>)
+            ' Optimization: Skip check if already tautology
+        endif
+
+        :j = j + 1;
+    endwhile (<color:#FFA07A>no</color>)
+
+    :For each v in seenVars;
+        :mark[v] = 0;
+    :Clear seenVars;
+
+    if (isTaut is false?) then (<color:#98FB98>yes</color>)
+        :chosenClause = lits;
+        :break
+        stop
+    else (<color:#FFA07A>no</color>)
+        :ci = ci + 1;
+    endif
+endwhile (<color:#FFA07A>no</color>)
+
+if (chosenClause == null?) then (<color:#98FB98>yes</color>)
+    :Print "NO";
+else (<color:#FFA07A>no</color>)
+    :Initialize assign[N+1] to false;
+    :For each literal a in chosenClause;
+        if (a < 0?) then (<color:#98FB98>yes</color>)
+            :assign[-a] = true;
+        else (<color:#FFA07A>no</color>)
+    :End For Each;
+
+    :Print "YES";
+    :Initialize i = 1;
+
+    while (i <= N?) is (<color:#87CEEB>yes</color>)
+        if (assign[i] is true?) then (<color:#98FB98>yes</color>)
+            :Print '1';
+        else (<color:#FFA07A>no</color>)
+            :Print '0';
+        endif
+        if (i < N?) then (<color:#98FB98>yes</color>)
+            :Print ' ';
+        endif
+        :i = i + 1;
+    endwhile (<color:#FFA07A>no</color>)
+    :Print newline;
+endif
+
+stop
+
+@enduml
