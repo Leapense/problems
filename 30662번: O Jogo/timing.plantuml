@@ -1,0 +1,26 @@
+@startuml TD
+skinparam DefaultFontName "Apple SD Gothic Neo"
+skinparam Dpi 150
+binary "ana" as ANA
+binary "carlos" as CAR
+binary "sabrina" as SAB
+
+@0
+ANA is low
+CAR is low
+SAB is low
+
+@1
+@2
+SAB is high
+ANA is high
+
+@2.2
+SAB is low
+ANA is low
+
+CAR is low
+
+@3
+
+@enduml

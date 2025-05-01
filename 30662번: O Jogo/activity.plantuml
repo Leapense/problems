@@ -1,0 +1,45 @@
+@startuml TD
+
+skinparam DefaultFontName "Apple SD Gothic Neo"
+skinparam Dpi 150
+skinparam ConditionStyle InsideDiamond
+skinparam Padding 8
+
+start
+
+:전체 입력 줄 읽기 -> lines;
+
+repeat
+    :공백 줄 건너뛰기;
+    if (EOF?) then (yes)
+        stop
+    endif
+    :n <- int(lines[idx]);
+    :idx++;
+    if (n == 0?) then (yes)
+        stop
+    else (no)
+        :followers = {}\nlast_day = {}\ncount = {};
+        while (events 남음?) is (yes)
+            :day, rest 파싱;
+            switch (rest prefix?)
+            case ( SUBSCRIBE )
+                :a, b 추출;\nensure_user(a,b);\nfollowers[b].add(a);
+            case ( UNSUBSCRIBE )
+                :a, b 추출;\nensure_user(a,b);\nfollowers[b].discard(a);
+            case ( PUBLISH )
+                :author 추출;\nensure_user(author);
+                if (last_day[author] ≠ day?) then (yes)
+                    :count[author]++;\nlast_day[author] = day;
+                endif
+                :각 follower ∈ followers[author] 반복;
+                if (last_day[follower] ≠ day?) then (yes)
+                    :count[follower]++;\nlast_day[follower] = day;
+                endif
+            endswitch
+        endwhile (no)
+        :min_cnt = 최소(count.values);\nwinners = 알파벳순( count == min_cnt );
+        :outputs.append( join(winners) );
+    endif
+repeat while (true)
+@enduml

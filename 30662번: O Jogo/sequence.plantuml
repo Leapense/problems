@@ -1,0 +1,54 @@
+@startuml TD
+
+skinparam DefaultFontName "Apple SD Gothic Neo"
+skinparam Dpi 150
+
+autonumber
+actor Runner as "main()"
+participant Input as "lines[]"
+participant Parser as "process()"
+participant Followers as "followers{}"
+participant Users as "last_day / count"
+participant Outputs as "outputs[]"
+
+Runner -> Parser: process(lines)
+
+Parser -> Input: trim / read n
+loop 테스트케이스* (while n != 0)
+    Parser -> Input: skip blanks / read n
+    alt n == 0
+        Parser -> Outputs: (종료)
+        Runner <-- Outputs: list
+        return
+    else n > 0
+        Parser -> Followers: init(empty)
+        Parser -> Users: init(empty)
+
+        loop n events
+            Parser -> Input: read next line\n(day, rest)
+            alt SUBSCRIBE
+                Parser -> Users: ensure_user(a,b)
+                Parser -> Followers: add follower a -> b
+            else UNSUBSCRIBE
+                Parser -> Users: ensure_user(a,b)
+                Parser -> Followers: remove a from b
+            else PUBLISH
+                Parser -> Users: ensure_user(author)
+                Parser -> Users: update(author, day)
+                Parser -> Followers: get followers(author)
+                loop each follower
+                    Parser -> Users: ensure_user(f)
+                    Parser -> Users: update(f, day)
+                end
+            end
+        end
+
+        Parser -> Users: scan min(count)
+        Parser -> Outputs: append winners
+    end
+
+    Parser -> Input: read next n
+end
+
+Runner <-- Outputs: list
+@enduml
