@@ -1,0 +1,73 @@
+@startuml TD
+
+skinparam BackgroundColor #1e1e1e
+skinparam Shadowing false
+
+skinparam DefaultFontName "Apple SD Gothic Neo"
+skinparam DefaultFontColor #ececec
+skinparam DefaultFontSize 14
+
+skinparam ActivityBackgroundColor #2d2d2d
+skinparam ActivityBorderColor #ececec
+skinparam ActivityFontColor #ececec
+
+skinparam ActivityDiamondBackgroundColor #2D2D2D
+skinparam ActivityDiamondBorderColor     #0A84FF
+skinparam ActivityDiamondFontColor       #0A84FF
+
+skinparam ArrowColor               #FFD60A
+skinparam ArrowFontColor           #FFD60A
+
+skinparam PartitionBackgroundColor #2A2A2A
+skinparam PartitionBorderColor     #0A84FF
+skinparam PartitionFontColor       #ECECEC
+skinparam PartitionRoundCorner     8
+
+skinparam NoteBackgroundColor      #3A3A3C
+skinparam NoteBorderColor          #636366
+skinparam NoteFontColor            #ECECEC
+
+start
+
+:read N;
+:read arrays A[], B[], X[];
+
+:set maxAbsD = 0;
+:set parity = *undefined*;
+
+partition Loop {
+    :i = 0;
+    while (i < N?) is (yes)
+        :diff = B[i] - A[i];
+        if (diff % X[i] == 0?) then (no)
+            :print "-1";
+            stop
+        else (yes)
+            :Di = diff / X[i];
+            :absDi = |Di|;
+            if (absDi > maxAbsD?) then (yes)
+                :maxAbsD = absDi;
+            endif
+
+            if (parity is undefined?) then (yes)
+                :parity = Di mod 2;
+            else (no)
+                if (parity != (Di mod 2)?) then (yes)
+                    :print "-1";
+                    stop
+                endif
+            endif
+        endif
+        :i = i + 1;
+    endwhile
+}
+
+:k = maxAbsD;
+if ((k mod 2) != parity?) then (yes)
+    :k = k + 1;
+endif
+
+:print k;
+stop
+
+@enduml
