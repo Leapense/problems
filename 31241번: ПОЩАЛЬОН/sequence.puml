@@ -1,0 +1,32 @@
+@startuml PostmanSequenceDiagram
+
+skinparam DefaultFontName "Apple SD Gothic Neo"
+
+title Postman Function Execution Sequence
+
+actor Caller
+participant "postman(N, K, d_list)" as P
+
+Caller -> P : call postman(N, K, d_list)
+activate P
+
+P -> P : Initialize pos array (size N+1) with zeros
+P -> P : Calculate absolute positions:\nloop i from 2 to N:\n  pos[i] = pos[i-1] + d_list[i-2]
+
+P -> P : Initialize:\nl = K - 1\nr = K + 1\ncurrent = K\nans = 0
+
+loop while l >= 1 or r <= N
+    P -> P : Calculate dist_l:\nif l>=1: abs(pos[current] - pos[l])\nelse: infinity
+    P -> P : Calculate dist_r:\nif r<=N: abs(pos[r] - pos[current])\nelse: infinity
+
+    alt dist_l <= dist_r
+        P -> P : Move Left:\nans += dist_l\ncurrent = l\nl -= 1
+    else dist_l > dist_r
+        P -> P : Move Right:\nans += dist_r\ncurrent = r\nr += 1
+    end
+end loop
+
+P --> Caller : return ans
+deactivate P
+
+@enduml

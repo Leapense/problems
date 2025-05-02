@@ -1,0 +1,50 @@
+@startuml TD
+
+skinparam defaultFontName "Apple SD Gothic Neo"
+
+start
+
+:읽기 N, K, d_list;
+
+:pos = 리스트(크기 N+1) 생성 및 0으로 초기화;
+
+:i = 2;
+while (i <= N?) is (Yes)
+    :pos[i] = pos[i-1] + d_list[i-2];
+    :i = i + 1;
+endwhile (No)
+
+:l = K - 1;
+:r = K + 1;
+:current = K;
+:ans = 0;
+
+while (l >= 1 OR r <= N?) is (Yes)
+    if (l >= 1?) then (Yes)
+        :dist_l = abs(pos[current] - pos[l]);
+    else (No)
+        :dist_l = 무한대;
+    endif
+
+    if (r <= N?) then (Yes)
+        :dist_r = abs(pos[r] - pos[current]);
+    else (No)
+        :dist_r = 무한대;
+    endif
+
+    if (dist_l <= dist_r?) then (Yes, Go Left)
+        :ans = ans + dist_l;
+        :current = l;
+        :l = l - 1;
+    else (No, Go Right)
+        :ans = ans + dist_r;
+        :current = r;
+        :r = r + 1;
+    endif
+endwhile (No, All houses visited)
+
+:반환 ans;
+
+stop
+
+@enduml
