@@ -1,0 +1,29 @@
+@startuml TD
+
+skinparam DefaultFontName "Apple SD Gothic Neo"
+skinparam Dpi 120
+
+start
+:입력 n, m, Q;
+:grass[][] 모두 true 초기화;
+:remaining ← n * m;
+:pendingJobs ← 빈 리스트;
+
+' ====== 쿼리 루프 ======
+repeat
+    :다음 쿼리(type …) 입력;
+    if (type == 1?) then (예)
+        :Job(dy,dx,y,x) 를\npendingJobs 에 push;
+    else (아니오)  
+        :pendingJobs 의 Job들을\n순서대로 실행;
+        :pendingJobs.clear();
+        if (type == 2?) then (예)
+            :y,x 추가 입력;\n출력 ← grass[y][x] ? 0 : 1;
+        else (type == 3)
+            :출력 ← remaining;
+        endif
+    endif
+repeat while (쿼리 남음?)
+:버퍼에 쌓인 출력 모두 print;
+end
+@enduml
