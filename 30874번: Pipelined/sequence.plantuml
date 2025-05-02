@@ -1,0 +1,40 @@
+@startuml TD
+
+skinparam DefaultFontName "SF Mono"
+
+actor User
+participant "solution.py" as Solution
+participant "sys.stdin" as Stdin
+participant "stdout" as Stdout
+
+User -> Solution: run script
+activate Solution
+
+Solution -> Stdin: readline()  // read N
+activate Stdin
+Stdin --> Solution: N
+deactivate Stdin
+
+alt N == 0
+    Solution -> Stdout: print(0)
+    deactivate Solution
+    return
+end
+
+Solution -> Stdin: readline()  // read s list
+activate Stdin
+Stdin --> Solution: s_list
+deactivate Stdin
+
+Solution -> Solution: sort(s_list)
+
+loop for i, si in enumerate(s_list)
+    Solution -> Solution: finish = si + i
+    alt finish > answer
+        Solution -> Solution: answer = finish
+    end
+end
+
+Solution -> Stdout: print(answer)
+deactivate Solution
+@enduml

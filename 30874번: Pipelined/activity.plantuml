@@ -1,0 +1,30 @@
+@startuml TD
+
+skinparam DefaultFontName "SF Mono"
+
+start
+
+:Read N;
+if (N == 0?) then (yes)
+  :Print 0;
+  stop
+else (no)
+  :Read array s of length N;
+  :Sort s in non-decreasing order;
+  :answer = 0;
+  :i = 0;
+
+  while (i < N) is (more items?)
+    :si = s[i];
+    :finish = si + i;
+    if (finish > answer) then (yes)
+      :answer = finish;
+    endif
+    :i = i + 1;
+  endwhile
+
+  :Print answer;
+  stop
+endif
+
+@enduml
