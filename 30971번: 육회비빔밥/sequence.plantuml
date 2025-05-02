@@ -1,0 +1,41 @@
+@startuml TD
+
+skinparam backgroundColor #121212
+skinparam sequenceDiagramBackgroundColor #121212
+skinparam sequenceDiagramArrowColor #BB86FC
+
+skinparam sequenceDiagramActorBorderColor #BB86FC
+skinparam sequenceDiagramActorBackgroundColor #1E1E1E
+skinparam sequenceDiagramActorFontColor #FFFFFF
+
+skinparam sequenceDiagramParticipantBorderColor #BB86FC
+skinparam sequenceDiagramParticipantBackgroundColor #1E1E1E
+skinparam sequenceDiagramParticipantFontColor #FFFFFF
+skinparam sequenceDiagramParticipantFontName Roboto
+
+skinparam sequenceDiagramMessageFontColor #FFFFFF
+skinparam sequenceDiagramMessageFontName Roboto
+
+actor User
+participant InputReader
+participant DPManager
+participant OutputWriter
+participant Main
+
+User -> Main: start()
+Main -> InputReader: read N, K
+InputReader --> Main: N, K
+Main -> InputReader: read A[], B[], C[]
+InputReader --> Main: A[], B[], C[]
+Main -> DPManager: initialize dp[mask][last] = INF_NEG
+DPManager --> Main: dp table ready
+Main -> DPManager: set base cases\n(dp[1<<i][i] = 0)
+DPManager --> Main: base cases set
+Main -> DPManager: for each mask, last, nxt\ndo transitions
+DPManager --> Main: dp updated
+Main -> Main: compute ans = max(dp[FULL][*])
+Main -> OutputWriter: print ans (or -1)
+OutputWriter --> Main: done
+Main --> User: end
+
+@enduml

@@ -1,0 +1,45 @@
+@startuml TD
+
+skinparam BackgroundColor #121212
+skinparam RoundCorner 15
+skinparam Shadowing false
+skinparam DefaultFontName Roboto
+skinparam ArrowColor #BB86FC
+
+skinparam ActivityBackgroundColor #1E1E1E
+skinparam ActivityBorderColor #BB86FC
+skinparam ActivityFontColor #FFFFFF
+
+skinparam ConditionBackgroundColor #2C2C2C
+skinparam ConditionBorderColor #BB86FC
+skinparam ConditionFontColor #FFFFFF
+
+start
+:Read N, K;
+:Read arrays A[], B[], C[];
+:Compute FULL = (1 << N) - 1;
+:Set INF_NEG = Integer.MIN_VALUE / 2;
+:Initialize all dp[mask][last] = INF_NEG;
+:For i = 0 to N-1 → dp[1 << i][i] = 0;
+
+repeat
+    :mask = 1 ... FULL;
+    :last = 0 ... N-1;
+    if (dp[mask][last] > INF_NEG) then (valid state)
+        :for nxt = 0 ... N-1;
+        if ((mask & (1 << nxt)) == 0 and C[last] * C[nxt] ≤ K) then (can transition)
+            :nextMask = mask | (1 << nxt);
+            :gain = A[last] * B[nxt];
+            :dp[nextMask][nxt] = max(dp[nextMask][nxt], dp[mask][last] + gain);
+        endif
+    endif
+repeat while (mask < FULL)
+
+:Compute ans = max(dp[FULL][0..N-1]);
+if (ans < 0) then (no valid ordering)
+    :Print -1;
+else (found maximum)
+    :Pring ans;
+endif
+stop
+@enduml
