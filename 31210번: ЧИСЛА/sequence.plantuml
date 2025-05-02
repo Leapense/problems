@@ -1,0 +1,34 @@
+@startuml TD
+skinparam DefaultFontName "Apple SD Gothic Neo"
+skinparam Dpi 144
+
+actor UserIO
+
+participant Main
+participant Gen
+participant Select
+
+UserIO -> Main : 입력 sx, k
+activate Main
+
+Main -> Gen : generateUniform(n)
+activate Gen
+Gen --> Main : list_uniform
+deactivate Gen
+
+alt k == 1
+    Main -> Gen : generateOneDiff(n)
+    activate Gen
+    Gen --> Main : list_oneDiff
+    deactivate Gen
+end
+
+Main -> Select : mergeAndFilter(candidates, sx)
+activate Select
+Select --> Main : answer
+deactivate Select
+
+Main -> UserIO : 출력 answer
+deactivate Main
+
+@enduml

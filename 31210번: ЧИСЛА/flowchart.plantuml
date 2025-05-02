@@ -1,0 +1,52 @@
+@startuml TD
+
+skinparam DefaultFontName "Apple SD Gothic Neo"
+skinparam Dpi 144
+
+start
+
+:'sx', 'k' 입력;
+:set n = length(sx);
+:create empty list cand;
+
+repeat
+    :d = '1' to '9';
+    :cand += d * n;
+repeat while (d < '9');
+
+:cand += "1" * (n + 1);
+
+if (k == 1?) then (yes)
+    repeat
+        :d = '1'..'9';
+        :base = d * n;
+        repeat
+            :i = 0..n-1;
+            repeat
+                :e = '0'..'9';
+                if (e == d) then (skip)
+                elseif (i == 0 && d == '0') then (skip)
+                else
+                    :variant = base;
+                    :variant[i] = e;
+                    :cand += variant;
+                endif
+            repeat while (e < '9');
+        repeat while (i < n-1);
+    repeat while (d < '9');
+endif
+
+:set answer = "";
+:Iterate through candidates;
+repeat
+    :t = next candidate;
+    if (Check if t is a valid answer) then (yes)
+        if (answer is empty or t < answer) then (yes)
+            :answer = t;
+        endif
+    endif
+repeat while (more candidates)
+
+:출력 answer;
+stop
+@enduml
