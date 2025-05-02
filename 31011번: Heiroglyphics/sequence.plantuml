@@ -1,0 +1,21 @@
+@startuml TD
+
+skinparam DefaultFontName Roboto
+
+autonumber
+participant solve
+participant calculate_decipher_count
+participant count_matches
+
+solve -> calculate_decipher_count : vs, cs
+loop for each hieroglyph
+    calculate_decipher_count -> count_matches : pattern, VOWELS
+    count_matches --> calculate_decipher_count: v_i
+    calculate_decipher_count -> count_matches : pattern, ALL_KNOWN - VOWELS
+    count_matches --> calculate_decipher_count: c_i
+    calculate_decipher_count -> calculate_decipher_count : dp_c, dp_v update
+end
+calculate_decipher_count --> solve : valid
+solve --> solve : print result
+
+@enduml
