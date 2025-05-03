@@ -1,0 +1,74 @@
+@startuml TD
+
+skinparam DefaultFontName "SF Mono"
+' PlantUML v1.2024.3
+actor User
+participant Main
+participant checkReturnToOrigin
+participant PrefixCalc   as "Prefix\nCalculator"
+participant OriginCheck   as "Origin\nChecker"
+participant NetMoveCheck  as "NetMove\nChecker"
+participant SolutionCheck as "Solution\nChecker"
+
+User -> Main : 입력 N, K, S
+Main -> checkReturnToOrigin : call(N, K, S)
+activate checkReturnToOrigin
+
+checkReturnToOrigin -> PrefixCalc : compute prefixes
+activate PrefixCalc
+loop for each c in S
+    PrefixCalc -> PrefixCalc : update x,y\nstore (x,y)
+end
+PrefixCalc --> checkReturnToOrigin : prefixList
+deactivate PrefixCalc
+
+checkReturnToOrigin -> OriginCheck : any (0,0) in prefixList?
+activate OriginCheck
+OriginCheck --> checkReturnToOrigin : foundOrigin (bool)
+deactivate OriginCheck
+
+alt foundOrigin == true
+    checkReturnToOrigin --> Main : return true
+    deactivate checkReturnToOrigin
+    Main --> User : 출력 YES
+end
+
+checkReturnToOrigin -> NetMoveCheck : compute dx,dy
+activate NetMoveCheck
+NetMoveCheck --> checkReturnToOrigin : (dx,dy)
+deactivate NetMoveCheck
+
+checkReturnToOrigin -> NetMoveCheck : is (dx,dy)==(0,0)?
+activate NetMoveCheck
+NetMoveCheck --> checkReturnToOrigin : isZero (bool)
+deactivate NetMoveCheck
+
+alt isZero == true
+    checkReturnToOrigin --> Main : return false
+    deactivate checkReturnToOrigin
+    Main --> User : 출력 NO
+end
+
+checkReturnToOrigin -> SolutionCheck : solve for t over prefixes
+activate SolutionCheck
+loop for each (px,py) in prefixList
+    SolutionCheck -> SolutionCheck : check equations\nt*dx+px=0,\nt*dy+py=0
+    alt valid t found
+        SolutionCheck -> checkReturnToOrigin : found=true
+        break
+    else
+        SolutionCheck -> SolutionCheck : continue
+    end
+end
+deactivate SolutionCheck
+
+alt found == true
+    checkReturnToOrigin --> Main : return true
+    Main --> User : 출력 YES
+else
+    checkReturnToOrigin --> Main : return false
+    Main --> User : 출력 NO
+end
+deactivate checkReturnToOrigin
+
+@enduml

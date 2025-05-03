@@ -1,0 +1,82 @@
+@startuml tD
+' smetana 레이아웃 사용
+!pragma layout smetana
+
+start
+
+:입력 N, K, S;
+
+' 1) 한 사이클 내 모든 위치 계산
+:x = 0; y = 0;
+:prefixList = [] (벡터);
+repeat
+  :문자 c = S[i++];
+  if (c == 'U') then (yes)
+    :y++;
+  elseif (c == 'D') then (yes)
+    :y--;
+  elseif (c == 'L') then (yes)
+    :x--;
+  elseif (c == 'R') then (yes)
+    :x++;
+  endif
+  :prefixList.add((x,y));
+repeat while (i < N)
+
+' 2) 첫 사이클 내에서 원점 방문 체크
+if (prefixList 에 (0,0) 포함?) then (yes)
+  :return YES;
+  stop
+endif
+
+' 3) 순 이동량 계산
+:dx = x; dy = y;
+
+' 4) 순 이동량이 (0,0)이면 이후 반복해도 변화 없음
+if (dx == 0 and dy == 0) then (yes)
+  :return NO;
+  stop
+endif
+
+' 5) 각 prefix 위치마다 t 해를 검사
+:found = false;
+fork
+  repeat
+    :px, py = 하나 꺼내기;
+    if (dx == 0) then (yes)
+      if (px == 0 and dy != 0 and (-py) mod dy == 0) then (yes)
+        :t = -py/dy;
+        if (0 <= t < K) then (yes)
+          :found = true;
+          break
+        endif
+      endif
+    elseif (dy == 0) then (yes)
+      if (py == 0 and dx != 0 and (-px) mod dx == 0) then (yes)
+        :t = -px/dx;
+        if (0 <= t < K) then (yes)
+          :found = true;
+          break
+        endif
+      endif
+    else
+      if ((-px) mod dx == 0 and (-py) mod dy == 0 and -px/dx == -py/dy) then (yes)
+        :t = -px/dx;
+        if (0 <= t < K) then (yes)
+          :found = true;
+          break
+        endif
+      endif
+    endif
+  repeat while (남은 prefix)
+fork again
+
+if (found) then (yes)
+  :return YES;
+  stop
+endif
+
+:return NO;
+stop
+
+@enduml
