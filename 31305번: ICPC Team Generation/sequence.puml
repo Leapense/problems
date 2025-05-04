@@ -1,0 +1,34 @@
+@startuml TD
+
+skinparam DefaultFontName "Apple SD Gothic Neo"
+
+actor User
+participant "main()" as Main
+participant "max_teams()" as Solver
+participant "HyperedgeBuilder" as Builder
+participant "GreedyInit" as Greedy
+participant "DFS Module" as DFS
+
+User -> Main : start program\n(with stdin)
+Main -> Solver : max_teams(n, a, b)
+note right of Solver: 1) build hyperedges\n2) sort\n3) greedy init\n4) backtracking
+
+Solver -> Builder : buildHyperedges(n, a, b)
+Builder --> Solver : list of (mask, span)
+
+Solver -> Solver : sort hypers by span
+
+Solver -> Greedy : greedyInit(n, a, b)
+Greedy --> Solver : (used_mask, best0)
+
+Solver -> DFS : dfs(idx=0,\n used=used_mask,\n count=best0)
+activate DFS
+
+note over DFS: recursive branch-and-bound\n(includes & excludes edges)
+
+DFS --> Solver: best_count
+deactivate DFS
+
+Solver --> Main : return best_count
+Main --> User : print(best_count)\n(exit)
+@enduml

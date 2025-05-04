@@ -1,0 +1,60 @@
+@startuml TD
+
+skinparam DefaultFontName "Apple SD Gothic Neo"
+start
+
+:Read n, a[0..n-1], b[0..n-1];
+
+:Initialize list hypers = [];
+
+partition "Build Hyperedges" {
+  :for i in 0 .. n-1;
+  : for j in i+1 .. n-1;
+  :  for k in j+1 .. n-1;
+  if (a[k] ≤ i+1 and k+1 ≤ b[i]) then (yes)
+    :hypers.add( mask(i,j,k), span=k−i );
+  else (no)
+  endif
+}
+
+:sort hypers by span ascending;
+
+partition "Greedy Init" {
+    :used = 0;
+    :best = 0;
+    :i = 0;
+
+    while (i + 2 < n) is (true)
+        :mask = bits for i,i+1,i+2;
+        if ((used & mask) == 0 and a[i+2] <= i+1 and i+3 <= b[i]) then (yes)
+            :used |= mask;
+            :best += 1;
+            :i += 3;
+        else (no)
+            :i += 1;
+        endif
+    endwhile
+}
+
+:Call dfs(idx=0, used_mask=used, count=best);
+
+partition "DFS Backtracking" {
+  !define dfs(idx, used_mask, count)
+  if (idx ≥ |hypers| or remaining_players < 3) then (stop branch)
+    end
+  endif
+  ' Upper-bound pruning
+  if (count + (remaining//3) ≤ best) then (prune)
+    end
+  endif
+  ' 1) Include hypers[idx]
+  if ((used_mask & hypers[idx].mask) == 0) then (include)
+    dfs(idx+1, used_mask | hypers[idx].mask, count+1)
+  endif
+  ' 2) Exclude hypers[idx]
+  dfs(idx+1, used_mask, count)
+  !undef dfs
+}
+
+stop
+@enduml
