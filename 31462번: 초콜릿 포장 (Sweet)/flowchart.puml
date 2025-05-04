@@ -1,0 +1,39 @@
+@startuml TD
+!pragma layout smetana
+
+start
+:Read N;
+:Read entire grid into memory;
+if (N % 3 == 1?) then (yes)
+    :Output 0;
+    stop
+else (no)
+endif
+
+:Initialize i = 0;
+while (i < N-1?) is (true)
+    :Initialize j = 0;
+    while (j <= i?) is (true)
+        if (grid[i][j] != 'R' OR grid[i+1][j] != 'R' OR grid[i+1][j+1] != 'R') then (yes)
+            :Output 0;
+            stop
+        endif
+        :j = j + 1;
+    endwhile (false)
+
+    :Initialize j = 0;
+    while (j < i?) is (true)
+        if (grid[i][j] != 'B' OR grid[i+1][j] != 'B' OR grid[i+1][j+1] != 'B') then (yes)
+            :Output 0;
+            stop
+        endif
+        :j = j + 1;
+    endwhile (false)
+
+    :i = i + 1;
+endwhile (false)
+
+:Output 1;
+stop
+
+@enduml

@@ -1,0 +1,27 @@
+@startuml TD
+
+skinparam DefaultFontName "Apple SD Gothic Neo"
+
+actor User
+participant Main
+participant "isValidSweet()" as Checker
+
+User -> Main : enter N and grid
+Main -> Checker : isValidSweet(grid)
+activate Checker
+Checker -> Checker : if (N % 3 == 1)
+alt N % 3 == 1
+    Checker -> Main : return false
+else
+    loop for i=0 to N-2
+        alt upward triangles
+            Checker -> Checker : check R at (i,j),(i+1,j),(i+1,j+1)
+        else downward triangles
+            Checker -> Checker : check B at (i,j),(i,j+1),(i+1,j+1)
+        end
+    end
+    Checker -> Main : return true
+end
+deactivate Checker
+Main -> User : output result (0 or 1)
+@enduml
