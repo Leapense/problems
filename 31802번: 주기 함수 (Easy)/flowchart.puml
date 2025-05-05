@@ -1,0 +1,51 @@
+@startuml TD
+
+skinparam monochrom true
+skinparam defaultFontName "SF Mono"
+
+start
+
+:Read integers p;
+:Read array A[0..p-1];
+:Read integers a, b;
+
+if (a == b?) then (yes)
+    :print 0;
+    stop
+else (no)
+endif
+
+:Build prefix-sum array ps of size p+1;
+note right
+    ps[0] = 0
+    ps[i] = ps[i-1] + A[i-1], i <= i <= p
+end note
+
+:total_period <- ps[p];
+:L <- b - a;
+:r <- a mod p;
+:ans <- 0;
+
+:first_len = min(p - r, L);
+if (first_len > 0?) then (yes)
+    :ans += ps[r + first_len] - ps[r];
+    :L -= first_len;
+else (no)
+endif
+
+if (L >= p?) then (yes)
+    :full_cycles = L // p;
+    :ans += full_cycles * total_period;
+    :L -= full_cycles * p;
+else (no)
+endif
+
+if (L > 0?) then (yes)
+    :ans += ps[L];
+else (no)
+endif
+
+:print ans;
+stop
+
+@enduml
