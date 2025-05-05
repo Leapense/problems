@@ -1,0 +1,44 @@
+@startuml TD
+
+actor User
+participant "Main\n(Main.java)" as App
+participant "FastScanner" as Scan
+participant "HashMap\n<digit,str -> val>" as Map
+participant Stdout
+
+== Input Phase ==
+User -> App : (stdin) B, digit strings, X
+activate App
+
+App -> Scan : nextInt()
+Scan --> App : B
+
+loop read B digit strings
+    App -> Scan : next()
+    Scan --> App : "Di"
+    App -> Map : put("Di", i)
+end loop
+
+App -> Scan : next()
+Scan --> App : X
+deactivate Scan
+
+== Decoding Phase ==
+App -> App : value = 0;\ntoken = ""
+
+loop for ch in X
+    App -> App : token += ch
+    App -> Map : get(token)
+    alt token found
+        Map --> App : digitVal
+        App -> App : value = value * B + digitVal;\ntoken = ""
+    else not yet complete
+        Map --> App : null
+    end
+end loop
+
+== Output ==
+App -> Stdout : println(value)
+Stdout --> User : value shown
+deactivate App
+@enduml

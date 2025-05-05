@@ -1,0 +1,35 @@
+@startuml TD
+
+start
+:open stdin;
+:read B (base);
+
+:read B digit strings;
+:build HashMap;
+:key = digit strings;
+:val = numeric value;
+
+:read X (alien number);
+
+:value <- 0;
+:token <- "" (empty);
+
+repeat
+    :append next char of X into token;
+
+    if (token exists in HashMap?) then (yes)
+        :digit <- HashMap[token];
+        :value = value * B + digit;
+        :token <- "";
+    endif
+
+repeat while (more characters in X)
+
+if (token not empty?) then (error)
+    :throw IllegalStateException;
+endif
+
+:print value to stdout;
+
+stop
+@enduml
