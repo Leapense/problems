@@ -1,0 +1,52 @@
+@startuml TD
+
+skinparam BackgroundColor #0e0e0e
+skinparam DefaultTextAlignment center
+skinparam Shadowing false
+skinparam DefaultFontName "Apple SD Gothic Neo"
+
+skinparam Activity {
+    FontColor #dcdcdc
+    BackgroundColor #2d2d30
+    BorderColor #7f7f7f
+}
+
+skinparam Decision {
+    FontColor #dcdcdc
+    BackgroundColor #2d2d30
+    BorderColor #7f7f7f
+}
+skinparam Arrow {
+    Color #c586c0
+}
+skinparam Title {
+    FontColor #ffffff
+    BackgroundColor #0d0d0d
+    BorderColor #0d0d0d
+}
+
+start
+
+:read T;
+
+while (T > 0) is (yes)
+    :read n;
+    :read grid h[0..n-1][0..n-1];
+    :total = n * n;
+    :allocate seq[total];
+    :idx = 0;
+
+    :// build snake order into seq\n(even rows L->R, odd rows R->L);
+    :// count up = #{k|1<=k<total, seq[k]>seq[k-1]};
+    :down = total - 1 - up;
+
+    if (up > down?) then (yes)
+        :reverse seq;
+    endif
+
+    :print seq (space-separated);
+    :T = T - 1;
+endwhile (no)
+
+end
+@enduml
