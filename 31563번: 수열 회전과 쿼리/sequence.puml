@@ -1,0 +1,46 @@
+@startuml TD
+skinparam DefaultFontName "Apple SD Gothic Neo"
+title Sequence Diagram - 수열 회전과 쿼리 (solution.cpp)
+
+actor User
+participant "Main()\n(App)" as Main
+participant "PrefixSum\nModule" as Pref
+participant "QueryLoop" as Loop
+participant Stdout
+
+User -> Main : N, Q, \nA_1 ... A_N 입력
+activate Main
+
+Main -> Pref : buildPrefix(A)
+activate Pref
+Pref --> Main : pref[], total
+deactivate Pref
+
+Main -> Main : offset = 0
+Main -> Loop : start loop(Q)
+activate Loop
+
+loop for each query
+    Loop -> Main : read next (type,x,y)
+    alt type == 1 (right rot)
+        Loop -> Loop : k = x % N;\noffset = (offset - k + N) % N
+    else type == 2 (left rot)
+        Loop -> Loop : k = x % N;\noffset = (offset + k) % N
+    else type == 3 (sum)
+        Loop -> Loop : a = x - 1, b = y - 1;\n s = (offset + a) % N;\n e = (offset + b) % N
+        alt s <= e (no wrap)
+            Loop -> Pref : rangeSum(s, e)
+            Pref --> Loop : ans = pref[e + 1] - pref[s]
+        else wrap-around
+            Loop -> Pref : rangeSumWrap(s, e, total)
+            Pref --> Loop : ans = total - (pref[s] - pref[e + 1])
+        end
+        Loop -> Stdout : print(ans)
+    end
+end
+
+deactivate Loop
+Main --> User : 모든 결과 출력 완료
+
+deactivate Main
+@enduml

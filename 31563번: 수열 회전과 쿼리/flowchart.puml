@@ -1,0 +1,42 @@
+@startuml TD
+
+title 수열 회전과 쿼리 - solution.cpp Flowchart
+
+start
+
+:'stdin' 에서 N, Q 입력;
+:'stdin' 에서 배열 A[0..N-1] 입력;
+
+:'pref[0] = 0';
+:for i=0 .. N-1 \n  pref[i+1] = pref[i] + A[i];
+:total = pref[N];
+:offset = 0;
+
+repeat : Q 개의 쿼리 처리
+    :쿼리 (type, x, y) 입력;
+
+    if (type == 1 ?) then (yes)
+        :k = x mod N;
+        :offset = (offset - k + N) mod N;
+    elseif (type == 2 ?) then (yes)
+        :k = x mod N;
+        :offset = (offset + k) mod N;
+    else (type == 3 ?)
+        :a = x-1;
+        :b = y-1;
+        :s = (offset + a) mod N;
+        :e = (offset + b) mod N;
+
+        if (s <= e ?) then (yes)
+            :ans = pref[e+1] - pref[s];
+        else (wrap-around)
+            :ans = total - (pref[s] - pref[e+1]);
+        endif
+
+        :stdout에 ans 출력;
+    endif
+repeat while (--Q > 0)
+
+stop
+
+@enduml
