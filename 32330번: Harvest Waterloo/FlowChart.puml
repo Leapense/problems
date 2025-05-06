@@ -1,0 +1,32 @@
+@startuml TD
+title Grid Traversal
+
+start
+:Read grid dimensions (R, C);
+:Read grid data;
+:Read start position (sr, sc);
+:Initialize queue with start position;
+:Mark start position as visited;
+:Initialize total value;
+
+if (grid[sr][sc] in value_map) then
+    :Add value to total;
+endif
+
+while (queue is not empty) is
+    :Dequeue current position (r, c);
+    for each neighbor (dr, dc) is
+        :Calculate new position (nr, nc);
+        if (new position is within grid boundaries and not visited) then
+            :Mark new position as visited;
+            if (new position value is in value_map) then
+                :Add value to total;
+            endif
+            :Enqueue new position;
+        endif
+    endfor
+endwhile
+
+:Print total value;
+
+@enduml
