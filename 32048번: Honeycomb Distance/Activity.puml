@@ -1,0 +1,14 @@
+@startuml TD
+title Hex Distance Calculator
+
+start
+:Read number of test cases (n);
+while (n > 0) is (true)
+    :Read x and y coordinates;
+    :Calculate hex distance using formula;
+    :Print hex distance;
+    :Decrement n;
+endwhile (false)
+stop
+
+@enduml
