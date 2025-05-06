@@ -1,0 +1,28 @@
+@startuml TD
+skinparam backgroundColor #F2F2F2
+skinparam sequence {
+  ArrowColor #333333
+  ActorBorderColor #333333
+}
+
+actor "Input" as input
+actor "Main" as main
+actor "canAppearAfterDihedralActions" as dihedralActions
+
+main ->> input: Read n and m
+main ->> input: Read polygon (n integers)
+main ->> input: Read test sequence (m integers)
+
+main ->> dihedralActions: Call canAppearAfterDihedralActions(polygon, testSeq)
+activate dihedralActions
+dihedralActions ->> dihedralActions: Perform dihedral actions
+dihedralActions ->> main: Return result (true/false)
+deactivate dihedralActions
+
+alt result is true
+  main ->> main: Print 1
+else result is false
+  main ->> main: Print 0
+end
+
+@enduml

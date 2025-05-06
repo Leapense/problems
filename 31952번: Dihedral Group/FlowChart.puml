@@ -1,0 +1,18 @@
+@startuml TD
+
+skinparam BackgroundColor #F2F2F2
+
+start
+:Read n and m;
+:Read polygon (n integers);
+:Read test sequence (m integers);
+:Call canAppearAfterDihedralActions(polygon, testSeq);
+
+if (result is true) then
+    :Print 1;
+else
+    :Print 0;
+endif
+stop
+
+@enduml
