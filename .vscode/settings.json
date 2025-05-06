@@ -110,7 +110,7 @@
     "editor.fontFamily": "Liga SFMono Nerd Font, D2CodingLigature Nerd Font",
     "terminal.integrated.fontLigatures": true,
     "editor.fontLigatures": true,
-    "editor.fontSize": 13.5,
+    "editor.fontSize": 10.5,
     "terminal.integrated.fontSize": 13.125,
     "animations.Tabs": "Slide",
     "animations.Scrolling": "Slide",
