@@ -1,26 +1,28 @@
-#!/usr/bin/env python3
 import sys
 
-def main():
-    data = sys.stdin.read().split()
-    if not data:
-        return
-    s = int(data[0], 2)
-    d = int(data[1], 2)
-    m = int(data[2], 2)
+def bint():
+    return int(sys.stdin.readline().strip(), 2)
 
-    death1 = m.bit_length()
-    if d > death1:
-        print(bin(death1)[2:])
-        return
-    
-    M1 = (m >> d) + s
-    if M1.bit_length() > d:
+s = bint()
+d = bint()
+m = bint()
+
+day = 0
+bal = m
+seen = set()
+
+while True:
+    if bal == 0:
+        print(bin(day + 1)[2:])
+        break
+    dead_in = bal.bit_length() + 1
+    if dead_in <= d:
+        print(bin(day + dead_in)[2:])
+        break
+    day += d
+    bal_next = (bal >> d) + s
+    if bal_next == bal or bal_next in seen:
         print("Infinite money!")
-        return 
-
-    death2 = d + M1.bit_length()
-    print(bin(death2)[2:])
-
-if __name__ == "__main__":
-    main()
+        break
+    seen.add(bal)
+    bal = bal_next
