@@ -1,0 +1,87 @@
+@startuml TD
+
+skinparam Monochrome true
+skinparam DefaultFontName "SF Mono"
+
+title Algorithm Flowchart: Industry Improvements (Dark Mode)
+
+start
+
+:Initialize FastScanner for input;
+
+:Read n (number of boxes)
+Read k (max transport runs);
+
+:Declare w[] (array for box weights)
+Initialize low = 0
+Initialize high = 0;
+
+note right
+  Reads box weights, determines
+  min capacity (low = max individual weight)
+  and max capacity (high = sum of all weights).
+end note
+
+:i = 0;
+while (i < n) is (<font color=#FFFFFF>yes</font>)
+    :Read w[i] using FastScanner;
+    :low = max(low, w[i]);
+    :high = high + w[i];
+    :i++;
+endwhile (<font color=#FFFFFF>no</font>)
+
+:Set binary search range:
+left = low
+right = high
+ans = high (initial best guess for min capacity);
+
+note right
+  Binary search for the minimum capacity ('ans')
+  to transport all boxes within 'k' runs.
+end note
+
+while (left <= right) is (<font color=#FFFFFF>yes</font>)
+    :mid = left + (right - left) / 2 (current capacity to test);
+    partition "Determine if 'mid' is a feasible capacity" {
+        :runs = 1;
+        :current_load = 0
+        :possible_to_fit_all_boxes_individually = true;
+
+        :Initialize box_iterator for w;
+        while (box_iterator has next AND possible_to_fit_all_boxes_individually) is (<font color=#FFFFFF>yes</font>)
+            :current_box = box_iterator.next();
+            if (current_box > mid) then (<font color=#FFFFFF>yes, this box is too large for 'mid'</font>)
+                :possible_to_fit_all_boxes_individually = false;
+            else (<font color=#FFFFFF>no, this box fits</font>)
+                if (current_load + current_box > mid) then (<font color=#FFFFFF>yes, current load + box exceeds 'mid', new run needed</font>)
+                    :runs++;
+                    :current_load = 0;
+                endif
+                :current_load += current_box;
+            endif
+        endwhile (<font color=#FFFFFF>no, all boxes checked or one was found to be too large</font>)
+
+        if (possible_to_fit_all_boxes_individually) then (<font color=#FFFFFF>yes, all individual boxes fit 'mid'</font>)
+            if (runs <= k) then (<font color=#FFFFFF>yes, total runs are within limit 'k'</font>)
+                :State: mid is Feasible;
+            else (<font color=#FFFFFF>no, too many runs needed</font>)
+                :State: mid is Not Feasible (too many runs);
+            endif
+        else (<font color=#FFFFFF>no, at least one box was too large for 'mid'</font>)
+            :State: mid is Not Feasible (box too large);
+        endif
+    }
+
+    if (State was 'mid is Feasible'?) then (<font color=#FFFFFF>yes, 'mid' is a feasible capacity</font>)
+        :ans = mid (this capacity works, try for a smaller one)
+        right = mid - 1;
+    else (<font color=#FFFFFF>no, 'mid' is not a feasible capacity</font>)
+        :left = mid + 1 (capacity 'mid' is too small, try larger);
+    endif
+endwhile (<font color=#FFFFFF>no, binary search complete</font>)
+
+:Print ans (minimum required capacity);
+
+stop
+
+@enduml
