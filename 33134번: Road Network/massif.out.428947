@@ -1,0 +1,169 @@
+desc: (none)
+cmd: ./solution
+time_unit: i
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=2887549
+mem_heap_B=73728
+mem_heap_extra_B=8
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=2
+#-----------
+time=2889707
+mem_heap_B=81920
+mem_heap_extra_B=16
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=3
+#-----------
+time=2890018
+mem_heap_B=90112
+mem_heap_extra_B=24
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=4
+#-----------
+time=2890329
+mem_heap_B=98304
+mem_heap_extra_B=32
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=5
+#-----------
+time=2890751
+mem_heap_B=131072
+mem_heap_extra_B=40
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=2891069
+mem_heap_B=163840
+mem_heap_extra_B=48
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=7
+#-----------
+time=2891386
+mem_heap_B=196608
+mem_heap_extra_B=56
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=8
+#-----------
+time=2893736
+mem_heap_B=196624
+mem_heap_extra_B=64
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=9
+#-----------
+time=2894729
+mem_heap_B=196640
+mem_heap_extra_B=72
+mem_stacks_B=0
+heap_tree=detailed
+n4: 196640 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 98304 0x48F722A: _M_allocate_internal_buffer (fstream.tcc:61)
+  n1: 98304 0x48F722A: std::basic_filebuf<wchar_t, std::char_traits<wchar_t> >::_M_allocate_internal_buffer() (fstream.tcc:54)
+   n3: 98304 0x48F3612: __gnu_cxx::stdio_filebuf<wchar_t, std::char_traits<wchar_t> >::stdio_filebuf(_IO_FILE*, std::_Ios_Openmode, unsigned long) (stdio_filebuf.h:165)
+    n1: 32768 0x489E262: std::ios_base::sync_with_stdio(bool) (ios_init.cc:190)
+     n0: 32768 0x40046E: main (solution.cpp:37)
+    n1: 32768 0x489E282: std::ios_base::sync_with_stdio(bool) (ios_init.cc:191)
+     n0: 32768 0x40046E: main (solution.cpp:37)
+    n1: 32768 0x489E29C: std::ios_base::sync_with_stdio(bool) (ios_init.cc:192)
+     n0: 32768 0x40046E: main (solution.cpp:37)
+ n1: 73728 0x488705B: pool (eh_alloc.cc:235)
+  n1: 73728 0x488705B: UnknownInlinedFun (eh_alloc.cc:373)
+   n1: 73728 0x488705B: _GLOBAL__sub_I_eh_alloc.cc (eh_alloc.cc:456)
+    n1: 73728 0x4004536: call_init (dl-init.c:74)
+     n1: 73728 0x4004536: call_init (dl-init.c:26)
+      n1: 73728 0x400460C: _dl_init (dl-init.c:121)
+       n0: 73728 0x401C8DF: ??? (in /usr/lib64/ld-linux-x86-64.so.2)
+ n1: 24576 0x48F55F7: _M_allocate_internal_buffer (fstream.tcc:61)
+  n1: 24576 0x48F55F7: std::basic_filebuf<char, std::char_traits<char> >::_M_allocate_internal_buffer() (fstream.tcc:54)
+   n3: 24576 0x48F3432: __gnu_cxx::stdio_filebuf<char, std::char_traits<char> >::stdio_filebuf(_IO_FILE*, std::_Ios_Openmode, unsigned long) (stdio_filebuf.h:165)
+    n1: 8192 0x489E1A5: std::ios_base::sync_with_stdio(bool) (ios_init.cc:181)
+     n0: 8192 0x40046E: main (solution.cpp:37)
+    n1: 8192 0x489E1C5: std::ios_base::sync_with_stdio(bool) (ios_init.cc:182)
+     n0: 8192 0x40046E: main (solution.cpp:37)
+    n1: 8192 0x489E1E6: std::ios_base::sync_with_stdio(bool) (ios_init.cc:183)
+     n0: 8192 0x40046E: main (solution.cpp:37)
+ n0: 32 in 2 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=10
+#-----------
+time=2898472
+mem_heap_B=196640
+mem_heap_extra_B=72
+mem_stacks_B=0
+heap_tree=peak
+n4: 196640 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 98304 0x48F722A: _M_allocate_internal_buffer (fstream.tcc:61)
+  n1: 98304 0x48F722A: std::basic_filebuf<wchar_t, std::char_traits<wchar_t> >::_M_allocate_internal_buffer() (fstream.tcc:54)
+   n3: 98304 0x48F3612: __gnu_cxx::stdio_filebuf<wchar_t, std::char_traits<wchar_t> >::stdio_filebuf(_IO_FILE*, std::_Ios_Openmode, unsigned long) (stdio_filebuf.h:165)
+    n1: 32768 0x489E262: std::ios_base::sync_with_stdio(bool) (ios_init.cc:190)
+     n0: 32768 0x40046E: main (solution.cpp:37)
+    n1: 32768 0x489E282: std::ios_base::sync_with_stdio(bool) (ios_init.cc:191)
+     n0: 32768 0x40046E: main (solution.cpp:37)
+    n1: 32768 0x489E29C: std::ios_base::sync_with_stdio(bool) (ios_init.cc:192)
+     n0: 32768 0x40046E: main (solution.cpp:37)
+ n1: 73728 0x488705B: pool (eh_alloc.cc:235)
+  n1: 73728 0x488705B: UnknownInlinedFun (eh_alloc.cc:373)
+   n1: 73728 0x488705B: _GLOBAL__sub_I_eh_alloc.cc (eh_alloc.cc:456)
+    n1: 73728 0x4004536: call_init (dl-init.c:74)
+     n1: 73728 0x4004536: call_init (dl-init.c:26)
+      n1: 73728 0x400460C: _dl_init (dl-init.c:121)
+       n0: 73728 0x401C8DF: ??? (in /usr/lib64/ld-linux-x86-64.so.2)
+ n1: 24576 0x48F55F7: _M_allocate_internal_buffer (fstream.tcc:61)
+  n1: 24576 0x48F55F7: std::basic_filebuf<char, std::char_traits<char> >::_M_allocate_internal_buffer() (fstream.tcc:54)
+   n3: 24576 0x48F3432: __gnu_cxx::stdio_filebuf<char, std::char_traits<char> >::stdio_filebuf(_IO_FILE*, std::_Ios_Openmode, unsigned long) (stdio_filebuf.h:165)
+    n1: 8192 0x489E1A5: std::ios_base::sync_with_stdio(bool) (ios_init.cc:181)
+     n0: 8192 0x40046E: main (solution.cpp:37)
+    n1: 8192 0x489E1C5: std::ios_base::sync_with_stdio(bool) (ios_init.cc:182)
+     n0: 8192 0x40046E: main (solution.cpp:37)
+    n1: 8192 0x489E1E6: std::ios_base::sync_with_stdio(bool) (ios_init.cc:183)
+     n0: 8192 0x40046E: main (solution.cpp:37)
+ n0: 32 in 2 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=11
+#-----------
+time=2898472
+mem_heap_B=196624
+mem_heap_extra_B=64
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=12
+#-----------
+time=2898533
+mem_heap_B=196608
+mem_heap_extra_B=56
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=13
+#-----------
+time=2904606
+mem_heap_B=122880
+mem_heap_extra_B=48
+mem_stacks_B=0
+heap_tree=empty
