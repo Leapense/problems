@@ -1,0 +1,7 @@
+3
+ans is 42
+if ans is 42
+    print ans
+ans is 42
+if ans is not 42
+    print ans

@@ -1,0 +1,9 @@
+4
+i is 42
+while i
+    subtract i
+print i
+j is 1337
+while j
+    add j
+print j
