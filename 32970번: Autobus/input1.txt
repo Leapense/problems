@@ -1,0 +1,5 @@
+4
+Zagreb-Graz 15:30--23:59
+Graz-Wroclaw 10:42--19:15
+Zagreb-Graz 14:13--20:19
+Graz-Wroclaw 2:25--5:00
