@@ -1,0 +1,6 @@
+Used Memory Before (bytes): 2946792
+Used Memory Before (MB): 2
+YES
+Used Memory After (bytes): 2946792
+Used Memory After (MB): 2
+Memory used by logic (approx MB): 0
