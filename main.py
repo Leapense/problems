@@ -1,128 +1,105 @@
-#!/usr/bin/env python3
-# coding: utf-8
-"""
-one_by_one_learn.py  (stdin 지원판)
-"""
+import os, sys, subprocess, tempfile, threading, time, shutil
+import psutil
 
-import argparse, json, re, subprocess, time, psutil, sys
-from pathlib import Path
-import torch, torch.nn as nn, torch.optim as optim
+def detect_lang(path:str)->str|None:
+    ext = os.path.splitext(path)[1].lower()
+    return {
+        '.c'   :'c',
+        '.cpp' :'cpp', '.cc':'cpp', '.cxx':'cpp',
+        '.java':'java',
+        '.py'  :'python',
+    }.get(ext)
 
-# ──────────────────  (1) 컴파일 관련  ──────────────────
-def detect_lang(src: Path):
-    return {'.cpp':'cpp','.cc':'cpp','.cxx':'cpp',
-            '.java':'java',
-            '.py':'python'}.get(src.suffix.lower(), 'python')
-
-def compile_src(src: Path):
+def compile_source(src:str) -> dict:
     lang = detect_lang(src)
-    if lang == 'cpp':
-        exe = src.with_suffix('')
-        subprocess.run(['g++','-O2','-std=c++26',str(src),'-o',str(exe)], check=True)
-        return exe, lang, src.parent
-    elif lang == 'java':
-        subprocess.run(['javac', src.name],
-                       cwd=src.parent, check=True)
-        return src.stem, 'java', src.parent   # (exe, lang, work_dir)
-    else:  # python
-        return src, lang, src.parent
+    if lang is None:
+        raise ValueError(f'지원하지 않는 확장자: {src}')
+    
+    if lang in ('c','cpp'):
+        exe = tempfile.mktemp(prefix='prog_', dir='.')          # 임시 실행 파일 경로
+        cmd = ['gcc' if lang=='c' else 'g++', src,
+               '-O2','-std=c17' if lang=='c' else '-std=c++26',
+               '-Wall','-pipe','-o', exe]
+        subprocess.check_call(cmd)
+        return {'lang':lang, 'run_path':exe}
 
-# ──────────────────  (2) 실행 + 메모리 측정  ──────────────────
-def run_and_peak(exe, lang, src_dir: Path, input_bytes=None, timeout=30):
-    cmd = [str(exe)] if lang=='cpp' else \
-          ['java', exe] if lang=='java' else \
-          ['python3', str(exe)]
+    # Java
+    if lang=='java':
+        subprocess.check_call(['javac', src])
+        main_class = os.path.splitext(os.path.basename(src))[0]
+        return {'lang':'java', 'run_path':main_class}
 
-    proc = subprocess.Popen(cmd,
-                            cwd=str(src_dir),
-                            stdin=subprocess.PIPE,
-                            stdout=subprocess.PIPE,
-                            stderr=subprocess.PIPE)
+    # Python (컴파일 없음)
+    return {'lang':'python', 'run_path':src}
 
-    # ── 표준 입력 전달 ────────────────────────────────
-    if input_bytes:
-        proc.stdin.write(input_bytes)
-        proc.stdin.flush()
-        proc.stdin.close()   # EOF 알림
-        proc.stdin = None    # ★ flush of closed file 방지 ★
+def run_with_memory(cmd:list, input_data:str='',
+                    timeout:int=10)->tuple[int,str,str,int]:
+    """
+    cmd            : 실행 커맨드(list)
+    input_data     : stdin 으로 보낼 문자열
+    return         : (exit_code, stdout, stderr, peak_rss_bytes)
+    """
+    proc   = subprocess.Popen(cmd,
+                              stdin=subprocess.PIPE,
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.PIPE,
+                              text=True)
+    ps_proc = psutil.Process(proc.pid)
+    peak    = 0
 
-    # ── 메모리 샘플링 루프 ────────────────────────────
-    import psutil, time
-    peak = 0; p = psutil.Process(proc.pid); t0 = time.time()
-    while proc.poll() is None:
-        try: peak = max(peak, p.memory_info().rss)
-        except psutil.NoSuchProcess: break
-        if time.time() - t0 > timeout:
-            proc.kill(); break
-        time.sleep(0.05)
+    # 모니터링 스레드
+    def monitor():
+        nonlocal peak
+        try:
+            while proc.poll() is None:
+                peak = max(peak, ps_proc.memory_info().rss)
+                time.sleep(0.05)
+        except psutil.NoSuchProcess:
+            pass
 
-    out, err = proc.communicate()
-    return peak/1024**2, out.decode(), err.decode()
+    threading.Thread(target=monitor, daemon=True).start()
 
-# ──────────────────  (3) Feature 추출  ──────────────────
-LANG2OH = {'cpp':[1,0,0],'java':[0,1,0],'python':[0,0,1]}
-def extract_feat(src: Path):
-    code = src.read_text(errors='ignore')
-    return [code.count('\n')+1,
-            len(code),
-            len(re.findall(r'//|#',code))] + LANG2OH[detect_lang(src)]
+    try:
+        stdout, stderr = proc.communicate(input=input_data, timeout=timeout)
+    except subprocess.TimeoutExpired:
+        proc.kill()
+        stdout, stderr = proc.communicate()
 
-# ──────────────────  (4) PyTorch 모델  ──────────────────
-class MLP(nn.Module):
-    def __init__(self,d_in):
-        super().__init__()
-        self.m = nn.Sequential(
-            nn.Linear(d_in,64), nn.ReLU(),
-            nn.Linear(64,32), nn.ReLU(),
-            nn.Linear(32,1))
-    def forward(self,x): return self.m(x)
+    # 혹시 모를 종료 직전 값 반영
+    try:
+        peak = max(peak, ps_proc.memory_info().rss)
+    except psutil.Error:
+        pass
 
-# ──────────────────  (5) main  ──────────────────
+    return proc.returncode, stdout, stderr, peak
+
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument('--file', required=True, help='측정할 소스 파일')
-    ap.add_argument('--stdin', help='따옴표로 감싼 문자열 입력')
-    ap.add_argument('--stdin-file', help='입력 내용이 적힌 파일 경로')
-    ap.add_argument('--dataset', default='memory_dataset.json')
-    ap.add_argument('--epochs', type=int, default=300)
-    args = ap.parse_args()
+    if len(sys.argv) < 2:
+        print('사용법: python3 main.py <소스파일> [<입력파일>]')
+        sys.exit(1)
+    
+    src_file = sys.argv[1]
+    input_data = open(sys.argv[2]).read() if len(sys.argv) >= 3 else ''
+    info = compile_source(src_file)
+    lang, run_path = info['lang'], info['run_path']
 
-    # 입력 만들기
-    if args.stdin:
-        input_bytes = args.stdin.encode()
-    elif args.stdin_file:
-        input_bytes = Path(args.stdin_file).read_bytes()
-    else:
-        input_bytes = None
+    cmd = {
+        'c'     : [run_path],
+        'cpp'   : [run_path],
+        'java'  : ['java', run_path],
+        'python': ['python3', run_path],
+    }[lang]
 
-    src = Path(args.file).resolve()
-    exe, lang, src_dir = compile_src(src)
-    peak, stdout_txt, stderr_txt = run_and_peak(exe, lang, src_dir, input_bytes)
-    feat = extract_feat(src)
-    print(f'📏 {src.name}  peak={peak:.2f} MB  feat={feat}')
-    if stderr_txt:
-        print(f'⚠️ stderr: {stderr_txt.splitlines()[:3]}')
+    code, out, err, mem = run_with_memory(cmd, input_data)
 
-    # ----- 데이터셋 누적 -----
-    ds = Path(args.dataset)
-    data = json.loads(ds.read_text()) if ds.exists() else []
-    data.append({'feat':feat,'peak':peak})
-    ds.write_text(json.dumps(data,indent=2))
-    print(f'✅ 누적 샘플 수 = {len(data)} (→ {ds})')
+    print(f'=====  실행 결과  =====')
+    print(f'   언어        : {lang}')
+    print(f'   종료코드    : {code}')
+    print(f'   Peak Memory : {mem/1024/1024:.2f} MB')
+    print('>>> stdout -------------------------------')
+    print(out.rstrip())
+    print('>>> stderr -------------------------------')
+    print(err.rstrip())
 
-    # ----- 학습 -----
-    if len(data) < 2:
-        print('ℹ️  샘플 2개 이상 필요 → 학습 건너뜀'); return
-    X = torch.tensor([d['feat'] for d in data],dtype=torch.float32)
-    y = torch.tensor([[d['peak']] for d in data],dtype=torch.float32)
-
-    model = MLP(X.shape[1]); opt = torch.optim.Adam(model.parameters(),1e-3)
-    for ep in range(args.epochs):
-        opt.zero_grad(); loss = nn.MSELoss()(model(X),y)
-        loss.backward(); opt.step()
-        if (ep+1)%50==0 or ep==0:
-            print(f'Epoch {ep+1}/{args.epochs}  MSE={loss.item():.3f}')
-    torch.save({'state':model.state_dict(),'dim':X.shape[1]},'mem_predictor.pt')
-    print('💾 mem_predictor.pt 저장 완료')
-
-if __name__ == '__main__': main()
+if __name__ == '__main__':
+    main()
