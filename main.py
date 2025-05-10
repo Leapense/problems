@@ -3,7 +3,7 @@
 
 import os, sys, time, threading, subprocess, tempfile, platform, resource
 import psutil                                       # pip install psutil
-
+import shlex
 # ─── GUI 라이브러리 ───────────────────────────────────────────────
 import ttkbootstrap as tb                           # pip install ttkbootstrap
 from ttkbootstrap import ttk
@@ -11,6 +11,7 @@ from ttkbootstrap.scrolled import ScrolledText
 from tkinter import filedialog, messagebox
 import tkinter.font as tkfont
 import tkinter as tk
+from ttkbootstrap.toast import ToastNotification
 
 # ─── 언어 판별 & 컴파일 ──────────────────────────────────────────
 def detect_lang(path: str) -> str | None:
@@ -34,11 +35,17 @@ def compile_source(src: str):
         cmd = ['gcc' if lang == 'c' else 'g++', src,
                '-O2', '-std=c17' if lang == 'c' else '-std=c++26',
                '-Wall', '-pipe', '-o', exe]
-        subprocess.check_call(cmd)
+        res = subprocess.run(cmd, capture_output=True, text=True)
+        if res.returncode != 0:
+            raise RuntimeError(f"gcc/g++ compile error\n\n"
+                               f"$ {' '.join(map(shlex.quote, cmd))}\n"
+                               f"{res.stderr.strip()}")
         return lang, exe, workdir
 
     if lang == 'java':
-        subprocess.check_call(['javac', src])
+        res = subprocess.run(['javac', src], capture_output=True, text=True)
+        if res.returncode != 0:
+            raise RuntimeError(f"javac error\n\n{res.stderr.strip()}")
         main_class = os.path.splitext(os.path.basename(src))[0]
         return lang, main_class, workdir
 
@@ -164,7 +171,13 @@ class App(tb.Window):
         self.app_cfg = {'theme':'darkly', 'font_size':12, 'timeout':10, 'base_font':'Apple SD Gothic Neo', 'mono_font':'SF Mono'}
         super().__init__(themename=self.app_cfg['theme'])
         self.title('MultiRunMem GUI')
-        self.geometry('820x600')
+        self.geometry('860x660')
+
+        self.code_font = tkfont.Font(
+            name='CodeFont',
+            family=self.app_cfg['mono_font'],
+            size=10                     # 기본 크기
+        )
 
         self._apply_base_font()
 
@@ -215,11 +228,13 @@ class App(tb.Window):
         self.run_btn.pack(pady=4)
 
         # ── 결과 탭 ───────────────────────────────
-        nb = ttk.Notebook(self)
-        self.out_box = ScrolledText(nb, font='CodeFont');    nb.add(self.out_box, text='Output')
-        self.err_box = ScrolledText(nb, fg='red', font='CodeFont'); nb.add(self.err_box, text='Error')
-        self.log_box = ScrolledText(nb, fg='gray', font='CodeFont'); nb.add(self.log_box, text='Log')
-        nb.pack(fill='both', expand=True, padx=8, pady=4)
+        self.nb = ttk.Notebook(self)
+        self.out_box = ScrolledText(self.nb, font='CodeFont');    self.nb.add(self.out_box, text='Output')
+        self.err_box = ScrolledText(self.nb, fg='red', font='CodeFont'); self.nb.add(self.err_box, text='Error')
+        self.log_box = ScrolledText(self.nb, fg='gray', font='CodeFont'); self.nb.add(self.log_box, text='Log')
+        self.nb.pack(fill='both', expand=True, padx=8, pady=4)
+
+        self._toast = None
 
     # ── 설정 창 열기 ─────────────────
     def open_settings(self):
@@ -242,12 +257,7 @@ class App(tb.Window):
             self._apply_base_font()
 
         if changed_mono:
-            try:
-                mono_font = tkfont.nametofont('CodeFont')
-            except tk.TclError:
-                mono_font = tkfont.Font(name='CodeFont', family=self.app_cfg['mono_font'], size=10)
-            else:
-                mono_font.configure(family=self.app_cfg['mono_font'])
+            self.code_font.configure(family=self.app_cfg['mono_font'])
 
         # timeout 은 run_with_memory 호출 때 사용
         self._log('Settings updated.')
@@ -301,6 +311,8 @@ class App(tb.Window):
                    'python':['python3', exe]}[lang]
 
             code, out, err, peak, t = run_with_memory(cmd, stdin_data, cwd=cwd)
+            if code != 0:
+                raise RuntimeError(f"Program exited with code {code}\n\n{err.strip()}")
             self.after(0, self._done, code, out, err, peak, t)
         except Exception as e:
             self.after(0, self._error, e)
@@ -320,9 +332,12 @@ class App(tb.Window):
 
     def _error(self, err: Exception):
         self._set_busy(False)
-        self.err_box.insert('end', str(err))
+        msg = str(err)
+        self.err_box.insert('end', msg+'\n')
         self.err_box.see('end')
         self.status['text'] = 'Error'
+
+        self.nb.select(self.err_box)
 
     def _done(self, code, out, err, peak, elapsed):
         self._set_busy(False)
@@ -331,6 +346,7 @@ class App(tb.Window):
         self.status['text'] = (f'Exit:{code}, '
                                f'Peak:{peak/1024/1024:.2f} MB, '
                                f'{elapsed:.2f}s')
+        self.nb.select(self.out_box)
         self._log('Done.')
 
 # ─── 실행 ──────────────────────────────────────────────────────
