@@ -9,6 +9,8 @@ import ttkbootstrap as tb                           # pip install ttkbootstrap
 from ttkbootstrap import ttk
 from ttkbootstrap.scrolled import ScrolledText
 from tkinter import filedialog, messagebox
+import tkinter.font as tkfont
+import tkinter as tk
 
 # ─── 언어 판별 & 컴파일 ──────────────────────────────────────────
 def detect_lang(path: str) -> str | None:
@@ -103,17 +105,83 @@ def run_with_memory(cmd: list, stdin_data: str = '',
 
     return proc.returncode, out, err, peak, elapsed
 
+# Settings 팝업
+class SettingsDialog(tb.Toplevel):
+    def __init__(self, parent, cfg: dict, theme_names: list[str], callback):
+        super().__init__(parent)
+        self.title("Preferences")
+        self.resizable(False, False)
+        self.grab_set()
+        self.callback = callback
+        self.cfg_copy = cfg.copy()
+
+        ttk.Label(self, text="Theme:").grid(row=0, column=0, sticky='e', padx=6, pady=6)
+        self.theme_var = tb.StringVar(value=cfg['theme'])
+        ttk.Combobox(self, textvariable=self.theme_var, values=theme_names, state='readonly', width=18).grid(row=0, column=1, padx=6, pady=6)
+
+        ttk.Label(self, text="Base font size:").grid(row=1, column=0, sticky='e', padx=6, pady=6)
+        self.font_var = tb.IntVar(value=cfg['font_size'])
+        ttk.Spinbox(self, from_=8, to=24, textvariable=self.font_var, width=6).grid(row=1, column=1, sticky='w', padx=6, pady=6)
+
+        ttk.Label(self, text="Timeout (sec):").grid(row=2, column=0, sticky='e', padx=6, pady=6)
+        self.to_var = tb.IntVar(value=cfg['timeout'])
+        ttk.Spinbox(self, from_=1, to=60, textvariable=self.to_var, width=6).grid(row=2, column=1, sticky='w', padx=6, pady=6)
+
+        familes = sorted(tkfont.families())
+
+        ttk.Label(self, text="Base font:").grid(row=3, column=0, sticky='e', padx=6, pady=6)
+        self.base_var = tb.StringVar(value=cfg['base_font'])
+        ttk.Combobox(self, textvariable=self.base_var, values=familes, state='readonly', width=22).grid(row=3, column=1, padx=6, pady=6)
+
+        ttk.Label(self, text="Mono font:").grid(row=4, column=0, sticky='e', padx=6, pady=6)
+        self.mono_var = tb.StringVar(value=cfg['mono_font'])
+        ttk.Combobox(self, textvariable=self.mono_var, values=familes, state='readonly', width=22).grid(row=4, column=1, padx=6, pady=6)
+
+
+
+        btn_fr = ttk.Frame(self); btn_fr.grid(columnspan=2, pady=8)
+        ttk.Button(btn_fr, text="Cancel", command=self.destroy).pack(side='right', padx=4)
+        ttk.Button(btn_fr, text="OK", bootstyle='primary', command=self._ok).pack(side='right')
+
+        self.columnconfigure(1, weight=1)
+        self.bind('<Return>', lambda *_: self._ok())
+
+    def _ok(self):
+        self.cfg_copy.update({
+            'theme' : self.theme_var.get(),
+            'font_size' : self.font_var.get(),
+            'timeout' : self.to_var.get(),
+            'base_font' : self.base_var.get(),
+            'mono_font' : self.mono_var.get()
+        })
+        self.callback(self.cfg_copy)
+        self.destroy()
+
+
 # ─── GUI 클래스 ─────────────────────────────────────────────────
 class App(tb.Window):
     def __init__(self):
-        super().__init__(themename="darkly")        # darkly 테마
+        self.app_cfg = {'theme':'darkly', 'font_size':12, 'timeout':10, 'base_font':'Apple SD Gothic Neo', 'mono_font':'SF Mono'}
+        super().__init__(themename=self.app_cfg['theme'])
         self.title('MultiRunMem GUI')
         self.geometry('820x600')
 
-        import tkinter.font as tkfont
-        base = tkfont.nametofont('TkDefaultFont')
-        base.configure(family='Apple SD Gothic Neo', size=11)
-        mono = tkfont.Font(name='CodeFont', family='SF Mono', size=11)
+        self._apply_base_font()
+
+        menubar = tb.Menu(self)
+        file_m = tb.Menu(menubar, tearoff=0)
+        file_m.add_command(label='Exit', command=self.quit)
+        menubar.add_cascade(label='File', menu=file_m)
+
+        set_m = tb.Menu(menubar, tearoff=0)
+        set_m.add_command(label='Preferences...', command=self.open_settings)
+        menubar.add_cascade(label='Settings', menu=set_m)
+
+        help_m = tb.Menu(menubar, tearoff=0)
+        help_m.add_command(label='About', command=lambda:messagebox.showinfo('About', 'MultiRunMem GUI\nⓒ 2024'))
+        menubar.add_cascade(label='Help', menu=help_m)
+
+        self.config(menu=menubar)
 
         # ── 상단 파일 입력부 ──────────────────────
         top = ttk.Frame(self); top.pack(fill='x', padx=8, pady=4)
@@ -153,6 +221,41 @@ class App(tb.Window):
         self.log_box = ScrolledText(nb, fg='gray', font='CodeFont'); nb.add(self.log_box, text='Log')
         nb.pack(fill='both', expand=True, padx=8, pady=4)
 
+    # ── 설정 창 열기 ─────────────────
+    def open_settings(self):
+        SettingsDialog(self, self.app_cfg,
+                       theme_names=tb.Style().theme_names(),
+                       callback=self.apply_settings)
+
+    def apply_settings(self, new_cfg:dict):
+        """SettingsDialog -> OK 눌렀을 때 호출"""
+        changed_theme = new_cfg['theme'] != self.app_cfg['theme']
+        changed_font  = new_cfg['font_size'] != self.app_cfg['font_size']
+        changed_base = new_cfg['base_font'] != self.app_cfg['base_font']
+        changed_mono = new_cfg['mono_font'] != self.app_cfg['mono_font']
+        self.app_cfg.update(new_cfg)
+
+        if changed_theme:
+            tb.Style().theme_use(self.app_cfg['theme'])
+
+        if changed_font or changed_base:
+            self._apply_base_font()
+
+        if changed_mono:
+            try:
+                mono_font = tkfont.nametofont('CodeFont')
+            except tk.TclError:
+                mono_font = tkfont.Font(name='CodeFont', family=self.app_cfg['mono_font'], size=10)
+            else:
+                mono_font.configure(family=self.app_cfg['mono_font'])
+
+        # timeout 은 run_with_memory 호출 때 사용
+        self._log('Settings updated.')
+
+    def _apply_base_font(self):
+        base = tkfont.nametofont('TkDefaultFont')
+        base.configure(size=self.app_cfg['font_size'], family=self.app_cfg['base_font'])
+        # Treeview/Entry 등에도 자동 전파
 
     # ── 파일 다이얼로그 ──────────────────────────
     def pick_src(self):
