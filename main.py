@@ -7,6 +7,7 @@ import shlex
 import fnmatch
 from functools import partial
 import pathlib
+import datetime
 # ─── GUI 라이브러리 ───────────────────────────────────────────────
 import ttkbootstrap as tb                           # pip install ttkbootstrap
 from ttkbootstrap import ttk
@@ -226,6 +227,12 @@ class PathBar(ttk.Frame): # ttk.Frame을 사용 (ttkbootstrap의 Frame)
 
 # File Picker 팝업
 class CustomFileDialog(tb.Toplevel):
+    _col_caption = {
+        "name": "Name",
+        "date": "Date modified",
+        "type": "Type",
+        "size": "Size"
+    }
     def __init__(self, parent, title="Select File", initialdir=None, filetypes=None, callback=None):
         super().__init__(parent)
         self.title(title)
@@ -264,17 +271,31 @@ class CustomFileDialog(tb.Toplevel):
 
         toolbar.columnconfigure(3, weight=1)
 
+        tree_frame = ttk.Frame(self)
+        tree_frame.pack(fill='both', expand=True)
+
         columns = ("name", "date", "type", "size")
-        self.tree = ttk.Treeview(self, columns=columns, show="headings", height=20)
-        self.tree.heading("name", text="Name")
-        self.tree.heading("date", text="Date modified")
-        self.tree.heading("type", text="Type")
-        self.tree.heading("size", text="Size")
+        self.tree = ttk.Treeview(tree_frame, columns=columns, show="headings")
+        self.tree.tag_configure('odd',  background='#272727', foreground='#e4e4e4')  # 다크테마 예시
+        self.tree.tag_configure('even', background='#252525', foreground='#e4e4e4')
+
+        vsb = ttk.Scrollbar(tree_frame, orient="vertical", command=self.tree.yview)
+        hsb = ttk.Scrollbar(tree_frame, orient="horizontal", command=self.tree.xview)
+        self.tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+
+        self.tree.grid(row=0, column=0, sticky='nsew')
+        vsb.grid(row=0, column=1, sticky='ns')
+        hsb.grid(row=1, column=0, sticky='ew')
+        tree_frame.rowconfigure(0, weight=1)
+        tree_frame.columnconfigure(0, weight=1)
+
+        for col in columns:
+            self.tree.heading(col, text=self._col_caption[col],
+                              command=lambda c=col: self._sort_by_column(c))
         self.tree.column("name", width=320)
         self.tree.column("date", width=160)
         self.tree.column("type", width=120)
         self.tree.column("size", width=80, anchor='e')
-        self.tree.pack(fill='both', expand=True, padx=0, pady=0)
 
         self.tree.bind("<Double-1>", self.on_double_click)
         self.tree.bind("<<TreeviewSelect>>", self.on_select)
@@ -287,6 +308,7 @@ class CustomFileDialog(tb.Toplevel):
         ttk.Button(btn_frame, text="Cancel", command=self.destroy, style="darkly").pack(side='right', padx=4)
         ttk.Button(btn_frame, text="OK", command=self.on_ok, style="darkly").pack(side='right')
 
+        self._current_sort = ("name", False)
         self.populate()
         self.update_nav_buttons()
 
@@ -307,18 +329,66 @@ class CustomFileDialog(tb.Toplevel):
             elif search and search not in name.lower():
                 continue
         total_size = 0
+        row_idx = 0
         for d in sorted(dirs):
+            tag = 'even' if row_idx % 2 else 'odd'
             dt = self._format_time(os.path.getmtime(os.path.join(self.current_dir, d)))
-            self.tree.insert("", "end", values=(d, dt, "Directory", ""))
+            self.tree.insert("", "end", values=(d, dt, "Directory", ""), tags=(tag,))
+            row_idx += 1
         for f in sorted(files):
+            tag = 'even' if row_idx % 2 else 'odd'
             fpath = os.path.join(self.current_dir, f)
             size = os.path.getsize(fpath)
             total_size += size
             dt = self._format_time(os.path.getmtime(fpath))
             ext = os.path.splitext(f)[1].lower()
             typ = self._file_type(ext)
-            self.tree.insert("", "end", values=(f, dt, typ, self._format_size(size)))
+            self.tree.insert("", "end", values=(f, dt, typ, self._format_size(size)), tags=(tag,))
+            row_idx += 1
         self.status['text'] = f"{len(dirs)+len(files)} items | {self._format_size(total_size)} Total"
+
+        col, rev = self._current_sort
+        self._sort_by_column(col, keep_direction=True)
+
+    def _sort_by_column(self, col, keep_direction=False):
+        if keep_direction:
+            reverse = self._current_sort[1]
+        else:
+            reverse = not self._current_sort[1] if self._current_sort[0] == col else False
+        self._current_sort = (col, reverse)
+
+        def sort_key(item_id):
+            value = self.tree.set(item_id, col)
+            if col == "size":
+                return self._str_size_to_int(value)
+            if col == "date":
+                try:
+                    return datetime.datetime.strptime(value, "%Y-%m-%d %H:%M")
+                except ValueError:
+                    return datetime.datetime.min
+            return value.lower()
+        
+        items = self.tree.get_children("")
+        sorted_items = sorted(items, key=sort_key, reverse=reverse)
+
+        for idx, item_id in enumerate(sorted_items):
+            self.tree.move(item_id, "", idx)
+
+        for c in self.tree["columns"]:
+            text = self._col_caption[c]
+            if c == col:
+                text += " ▲" if not reverse else " ▼"
+            self.tree.heading(c, text=text, command=lambda c=c: self._sort_by_column(c))
+
+    @staticmethod
+    def _str_size_to_int(txt):
+        if not txt:
+            return 0
+        num, unit = txt.split()
+        num = float(num)
+        unit = unit.upper()
+        factor = {"B":1, "KB":1024, "MB":1024**2, "GB":1024**3, "TB":1024**4}
+        return int(num * factor.get(unit, 1))            
 
     def _file_type(self, ext):
         if ext in (".md",):
@@ -488,6 +558,7 @@ class App(tb.Window):
                         foreground="white",
                         padding=6,
                         relief="raised")
+        
 
         self._apply_base_font()
 
@@ -683,7 +754,7 @@ class App(tb.Window):
         self.err_box.insert('end', err)
         self.status['text'] = (f'Exit:{code}, '
                                f'Peak:{peak/1024/1024:.2f} MB, '
-                               f'{elapsed:.2f}s')
+                               f'{(elapsed * 1000.0):.2f}ms')
         self.nb.select(self.out_box)
         self._log('Done.')
 
