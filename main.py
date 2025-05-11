@@ -245,11 +245,11 @@ class CustomFileDialog(tb.Toplevel):
         toolbar = ttk.Frame(self)
         toolbar.pack(fill='x', padx=0, pady=0)
 
-        self.prev_btn = ttk.Button(toolbar, text="◀", width=3, command=self.go_prev)
+        self.prev_btn = ttk.Button(toolbar, text="◀", width=3, command=self.go_prev, style="darkly")
         self.prev_btn.grid(row=0, column=0, padx=2, pady=4, sticky='ns')
-        self.next_btn = ttk.Button(toolbar, text="▶", width=3, command=self.go_next)
+        self.next_btn = ttk.Button(toolbar, text="▶", width=3, command=self.go_next, style="darkly")
         self.next_btn.grid(row=0, column=1, padx=2, pady=4, sticky='ns')
-        self.refresh_btn = ttk.Button(toolbar, text="⟳", width=3, command=self.refresh)
+        self.refresh_btn = ttk.Button(toolbar, text="⟳", width=3, command=self.refresh, style="darkly")
         self.refresh_btn.grid(row=0, column=2, padx=2, pady=4, sticky='ns')
 
         self.pathbar = PathBar(toolbar, self.current_dir, self.change_dir)
@@ -284,8 +284,8 @@ class CustomFileDialog(tb.Toplevel):
 
         btn_frame = ttk.Frame(self)
         btn_frame.pack(fill='x', pady=4)
-        ttk.Button(btn_frame, text="Cancel", command=self.destroy).pack(side='right', padx=4)
-        ttk.Button(btn_frame, text="OK", command=self.on_ok).pack(side='right')
+        ttk.Button(btn_frame, text="Cancel", command=self.destroy, style="darkly").pack(side='right', padx=4)
+        ttk.Button(btn_frame, text="OK", command=self.on_ok, style="darkly").pack(side='right')
 
         self.populate()
         self.update_nav_buttons()
@@ -450,8 +450,8 @@ class SettingsDialog(tb.Toplevel):
 
 
         btn_fr = ttk.Frame(self); btn_fr.grid(columnspan=2, pady=8)
-        ttk.Button(btn_fr, text="Cancel", command=self.destroy).pack(side='right', padx=4)
-        ttk.Button(btn_fr, text="OK", bootstyle='primary', command=self._ok).pack(side='right')
+        ttk.Button(btn_fr, text="Cancel", command=self.destroy, style="darkly").pack(side='right', padx=4)
+        ttk.Button(btn_fr, text="OK", command=self._ok, style="darkly").pack(side='right')
 
         self.columnconfigure(1, weight=1)
         self.bind('<Return>', lambda *_: self._ok())
@@ -501,7 +501,7 @@ class App(tb.Window):
         menubar.add_cascade(label='Settings', menu=set_m)
 
         help_m = tb.Menu(menubar, tearoff=0)
-        help_m.add_command(label='About', command=lambda:messagebox.showinfo('About', 'MultiRunMem GUI\nⓒ 2024'))
+        help_m.add_command(label='About', command=lambda:messagebox.showinfo('About', 'MultiRunMem GUI\nⓒ 2025'))
         menubar.add_cascade(label='Help', menu=help_m)
 
         self.config(menu=menubar)
@@ -513,13 +513,13 @@ class App(tb.Window):
         ttk.Label(top, text='Source:').grid(row=0, column=0, sticky='w')
         ttk.Entry(top, textvariable=self.src_var, width=60)\
             .grid(row=0, column=1, sticky='we')
-        ttk.Button(top, text='...', command=self.pick_src)\
+        ttk.Button(top, text='...', command=self.pick_src, style="darkly")\
             .grid(row=0, column=2, padx=4)
 
         ttk.Label(top, text='Input File:').grid(row=1, column=0, sticky='w')
         ttk.Entry(top, textvariable=self.in_var, width=60)\
             .grid(row=1, column=1, sticky='we')
-        ttk.Button(top, text='...', command=self.pick_in)\
+        ttk.Button(top, text='...', command=self.pick_in, style="darkly")\
             .grid(row=1, column=2, padx=4)
         # ── 상태 바 ───────────────────────────────
         self.status = ttk.Label(self, text='Ready', anchor='w')
@@ -531,17 +531,26 @@ class App(tb.Window):
         self.stdin_box = ScrolledText(self, height=6, font='CodeFont')
         self.stdin_box.pack(fill='both', padx=8, pady=(0, 6))
 
+        btn_frame = ttk.Frame(self)
+        btn_frame.pack(fill='x', pady=4)
+
         # ── RUN 버튼 ─────────────────────────────
-        self.run_btn = ttk.Button(self, text='RUN',
-                                  bootstyle='primary',
+        self.run_btn = ttk.Button(btn_frame, text='RUN',
+                                  style='darkly',
                                   command=self.run_clicked)
-        self.run_btn.pack(pady=4)
+        self.run_btn.pack(side='left', padx=8, pady=4)
+
+        self.clean_btn = ttk.Button(btn_frame, text='Clear stdin',
+                                    style='darkly',
+                                    command=self.clean_clicked)
+        
+        self.clean_btn.pack(side='left', padx=8, pady=4)
 
         # ── 결과 탭 ───────────────────────────────
-        self.nb = ttk.Notebook(self)
-        self.out_box = ScrolledText(self.nb, font='CodeFont');    self.nb.add(self.out_box, text='Output')
-        self.err_box = ScrolledText(self.nb, fg='red', font='CodeFont'); self.nb.add(self.err_box, text='Error')
-        self.log_box = ScrolledText(self.nb, fg='gray', font='CodeFont'); self.nb.add(self.log_box, text='Log')
+        self.nb = ttk.Notebook(self, style="darkly")
+        self.out_box = ScrolledText(self.nb, font='CodeFont');  self.nb.add(self.out_box, text='Output')
+        self.err_box = ScrolledText(self.nb, bootstyle='danger', font='CodeFont'); self.nb.add(self.err_box, text='Error')
+        self.log_box = ScrolledText(self.nb, bootstyle='info', font='CodeFont'); self.nb.add(self.log_box, text='Log')
         self.nb.pack(fill='both', expand=True, padx=8, pady=4)
 
         self._toast = None
@@ -624,6 +633,10 @@ class App(tb.Window):
         threading.Thread(target=self._worker,
                          args=(src, stdin_data),
                          daemon=True).start()
+        
+    def clean_clicked(self):
+        self.stdin_box.delete('1.0', tk.END)
+
 
     # ── 백그라운드 작업 ──────────────────────────
     def _worker(self, src, stdin_data):
