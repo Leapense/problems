@@ -233,6 +233,7 @@ class CustomFileDialog(tb.Toplevel):
         "type": "Type",
         "size": "Size"
     }
+    PLACEHOLDER = "Search files.."
     def __init__(self, parent, title="Select File", initialdir=None, filetypes=None, callback=None):
         super().__init__(parent)
         self.title(title)
@@ -262,12 +263,12 @@ class CustomFileDialog(tb.Toplevel):
         self.pathbar = PathBar(toolbar, self.current_dir, self.change_dir)
         self.pathbar.grid(row=0, column=3, sticky='ew', padx=(2,0), pady=2)
 
-        search_entry = ttk.Entry(toolbar, textvariable=self.search_var, width=24)
-        search_entry.grid(row=0, column=4, padx=8, pady=4, sticky='ns')
-        search_entry.insert(0, "Search files..")
-        search_entry.bind("<FocusIn>", lambda e: search_entry.delete(0, 'end'))
-        search_entry.bind("<FocusOut>", lambda e: search_entry.insert(0, "Search files..") if not search_entry.get() else None)
-        search_entry.bind("<KeyRelease>", lambda e: self.populate())
+        self.search_entry = ttk.Entry(toolbar, textvariable=self.search_var, width=24)
+        self.search_entry.grid(row=0, column=4, padx=8, pady=4, sticky='ns')
+        self.search_entry.insert(0, self.PLACEHOLDER)
+        self.search_entry.bind("<FocusIn>", self._clear_placeholder)
+        self.search_entry.bind("<FocusOut>", self._add_placeholder)
+        self.search_entry.bind("<KeyRelease>", lambda e: self.populate())
 
         toolbar.columnconfigure(3, weight=1)
 
@@ -312,22 +313,42 @@ class CustomFileDialog(tb.Toplevel):
         self.populate()
         self.update_nav_buttons()
 
+    def _clear_placeholder(self, event):
+        if self.search_var.get() == self.PLACEHOLDER:
+            self.search_entry.delete(0, 'end')
+
+    def _add_placeholder(self, event):
+        if not self.search_var.get().strip():
+            self.search_entry.delete(0, 'end')
+            self.search_entry.insert(0, self.PLACEHOLDER)
+
+    def reset_search(self):
+        self.search_var.set("")
+        self.search_entry.delete(0, 'end')
+        self.search_entry.insert(0, self.PLACEHOLDER)
+        self.populate()
+
     def populate(self):
         self.tree.delete(*self.tree.get_children())
-        search = self.search_var.get().strip().lower()
+        raw = self.search_var.get().strip()
+        if raw.lower() == self.PLACEHOLDER.lower():
+            search = ""
+        else:
+            search = raw.lower()
         try:
             entries = os.listdir(self.current_dir)
         except Exception:
             entries = []
         dirs, files = [], []
         for name in entries:
+            if search and search not in name.lower():
+                continue
             path = os.path.join(self.current_dir, name)
             if os.path.isdir(path):
                 dirs.append(name)
             elif self._match_filetypes(name):
                 files.append(name)
-            elif search and search not in name.lower():
-                continue
+            
         total_size = 0
         row_idx = 0
         for d in sorted(dirs):
@@ -423,6 +444,7 @@ class CustomFileDialog(tb.Toplevel):
             return
         name = self.tree.item(item[0], "values")[0]
         path = os.path.join(self.current_dir, name)
+        
         if os.path.isdir(path):
             self.change_dir(path)
         else:
@@ -452,6 +474,7 @@ class CustomFileDialog(tb.Toplevel):
     def change_dir(self, new_dir):
         new_dir = os.path.abspath(new_dir)
         if new_dir != self.current_dir:
+            self.reset_search()
             if self.history_index < len(self.history) - 1:
                 self.history = self.history[:self.history_index+1]
             self.history.append(new_dir)
