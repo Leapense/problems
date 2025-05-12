@@ -1,6 +1,6 @@
 .quick-input-widget .monaco-list-rows {
 	background: transparent !important;
-	font-family: 'Liga SFMono Nerd Font' !important;
+	font-family: 'IBM Plex Sans' !important;
 }
 
 /* Left sidebar */
@@ -9,7 +9,7 @@
 	height: 32px !important;
 	line-height: 32px !important;
 	font-size: 17px !important;
-	font-family: 'Liga SFMono Nerd Font' !important;
+	font-family: 'IBM Plex Sans' !important;
 }
 .sidebar .explorer-folders-view .monaco-inputbox {
 	margin-top: 4px !important;
