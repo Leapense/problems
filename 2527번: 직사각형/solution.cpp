@@ -10,10 +10,10 @@ char intersectionType(const Rect& A, const Rect& B)
     long long w = min(A.p, B.p) - max(A.x, B.x);
     long long h = min(A.q, B.q) - max(A.y, B.y);
     
-    if (w > 0 && h > 0) return 'a';
-    if (w == 0 && h == 0) return 'c';
-    if ((w == 0) ^ (h == 0)) return 'b';
-    return 'd';
+    if (w > 0 && h > 0) return 'a';                                     // 직사각형
+    if (w == 0 && h == 0) return 'c';                                   // 점
+    if ((w == 0 && h > 0) || (h == 0 && w > 0)) return 'b';             // 선분 : 한 축은 0, 다른 축은 양수
+    return 'd';                                                         // 겹치지 않음
 }
 
 int main()
