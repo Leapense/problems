@@ -121,7 +121,11 @@ class PathBar(ttk.Frame): # ttk.Frame을 사용 (ttkbootstrap의 Frame)
     def __init__(self, parent, path, callback, style="flatly"): # style 매개변수 추가 및 기본값 설정
         super().__init__(parent)
         self.callback = callback
+        self.sep = " > "
+        self.max_parts = 5
         self.style_name = style # self.style_name 인스턴스 변수 설정
+
+        
 
         # 기본 폰트 및 밑줄 폰트 설정
         default_font_str = None
@@ -161,69 +165,88 @@ class PathBar(ttk.Frame): # ttk.Frame을 사용 (ttkbootstrap의 Frame)
         self.underline_font = tkfont.Font(**self.base_font.actual())
         self.underline_font.configure(underline=True)
 
+        self.canvas = tk.Canvas(self, highlightthickness=0, height=self.base_font.metrics("linespace") + 4)
+        self.hsb = ttk.Scrollbar(self, orient='horizontal', command=self.canvas.xview)
+        self.canvas.configure(xscrollcommand=self.hsb.set)
+        self.canvas.pack(fill='x', side='top', expand=True)
+        self._hsb_visible = False
+
+        self.inner = ttk.Frame(self.canvas)
+        self._window = self.canvas.create_window((0,0), window=self.inner, anchor='nw')
+
         self.set_path(path)
 
-    def _on_label_enter(self, event, label):
-        label.configure(font=self.underline_font, cursor="hand2")
+        self.inner.bind("<Configure>", self._on_frame_configure)
+        self.canvas.bind("<Configure>", self._on_canvas_configure)
 
-    def _on_label_leave(self, event, label):
-        label.configure(font=self.base_font, cursor="")
+    def _on_frame_configure(self, event):
+        # inner frame 의 너비가 변경되면 canvas scrollregion 갱신
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+        inner_w = self.canvas.bbox("all")[2] if self.canvas.bbox("all") else 0
+        canvas_w = self.canvas.winfo_width()
+        if inner_w > canvas_w and not self._hsb_visible:
+            self.hsb.pack(fill='x', side='bottom')
+            self._hsb_visible = True
+        elif inner_w <= canvas_w and self._hsb_visible:
+            self.hsb.pack_forget()
+            self._hsb_visible = False
 
-    def _on_label_click(self, path_to_send, event):
-        self.callback(path_to_send)
+    def _on_canvas_configure(self, event):
+        # canvas 가 리사이즈 되면 inner frame 너비를 최소 canvas 와 같게
+        canvas_w = event.width
+        self.canvas.itemconfig(self._window, width=canvas_w)
 
-    def set_path(self, path):
-        for widget in self.winfo_children():
-            widget.destroy()
+    def set_path(self, path:str):
+        # 이전 라벨들 제거
+        for w in self.inner.winfo_children():
+            w.destroy()
 
-        if not path:
-            return
+        # 파트 분리
+        p = pathlib.Path(os.path.normpath(path))
+        parts = p.parts or (path,)
 
-        normalized_path = os.path.normpath(path)
-        p = pathlib.Path(normalized_path)
-        path_parts = p.parts
+        # 너무 많은 파트를 중간 “…” 로 생략
+        if len(parts) > self.max_parts:
+            visible = [parts[0], '…'] + list(parts[-(self.max_parts-1):])
+        else:
+            visible = parts
 
-        if not path_parts:
-            if normalized_path == ".":
-                path_parts = (".",)
+        # 라벨 생성
+        for i, text in enumerate(visible):
+            # ellipsis (“…”) 클릭 시 전체 메뉴 노출
+            if text == "…":
+                lbl = ttk.Label(self.inner, text=text, font=self.base_font, bootstyle=self.style_name)
+                lbl.bind("<Button-1>", self._show_full_menu)
             else:
-                return
+                # 정상 경로 파트
+                lbl = ttk.Label(self.inner, text=text, font=self.base_font, bootstyle=self.style_name)
+                # 마우스 오버 시 밑줄, 클릭 가능한 커서
+                lbl.bind("<Enter>",  lambda e, l=lbl: l.configure(font=self.underline_font, cursor="hand2"))
+                lbl.bind("<Leave>",  lambda e, l=lbl: l.configure(font=self.base_font,      cursor=""))
+                # 클릭시 해당 경로로 이동
+                # 실제 경로 조합
+                full_path = os.path.join(*parts[: parts.index(text)+1 ])
+                lbl.bind("<Button-1>", partial(self._on_label_click, full_path))
 
-        current_accumulated_path = ""
-        for i, part_text in enumerate(path_parts):
-            if i == 0:
-                current_accumulated_path = part_text
-            else:
-                current_accumulated_path = os.path.join(current_accumulated_path, part_text)
+            lbl.pack(side='left', padx=(2,0))
+            # 뒤에 구분자
+            if i < len(visible)-1:
+                sep_lbl = ttk.Label(self.inner, text=self.sep, font=self.base_font, bootstyle=self.style_name)
+                sep_lbl.pack(side='left', padx=0)
 
-            # ttk.Label은 from ttkbootstrap import ttk 때문에 ttkbootstrap.Label을 가리킴
-            label_part = ttk.Label(
-                self,
-                text=part_text,
-                font=self.base_font
-            )
-            # ttkbootstrap의 Label은 bootstyle 옵션을 가짐
-            if hasattr(label_part, 'configure'): # configure_get() 사용 권장
-                try:
-                    label_part.configure(bootstyle=self.style_name)
-                except tk.TclError: # 유효하지 않은 bootstyle 이름일 경우 대비
-                    pass # 기본 스타일 유지
+    def _show_full_menu(self, event):
+        """… 라벨 클릭 시 전체 경로 파트를 메뉴로 보여줌"""
+        menu = tk.Menu(self, tearoff=0)
+        p = pathlib.Path(self.callback.__self__.current_dir)  # 현재 경로
+        all_parts = p.parts
+        for idx, part in enumerate(all_parts):
+            full_p = os.path.join(*all_parts[:idx+1])
+            menu.add_command(label=full_p, command=partial(self._on_label_click, full_p))
+        # 마우스 우클릭 위치에 메뉴 띄우기
+        menu.tk_popup(event.x_root, event.y_root)
 
-            label_part.pack(side="left", padx=1, pady=2)
-
-            label_part.bind("<Button-1>", partial(self._on_label_click, current_accumulated_path))
-            label_part.bind("<Enter>", partial(self._on_label_enter, label=label_part))
-            label_part.bind("<Leave>", partial(self._on_label_leave, label=label_part))
-
-            if i < len(path_parts) - 1:
-                sep_text = ">"
-                separator = ttk.Label(self, text=f" {sep_text} ", font=self.base_font)
-                if hasattr(separator, 'configure'):
-                    try:
-                        separator.configure(bootstyle=self.style_name)
-                    except tk.TclError:
-                        pass
-                separator.pack(side="left", padx=1, pady=2)
+    def _on_label_click(self, path, event=None):
+        self.callback(path)
 
 # File Picker 팝업
 class CustomFileDialog(tb.Toplevel):
@@ -234,17 +257,38 @@ class CustomFileDialog(tb.Toplevel):
         "size": "Size"
     }
     PLACEHOLDER = "Search files.."
+    EXT_COLORS = {
+        '.py': '#B0F7B4',
+        '.cpp': '#B0D0F7',
+        '.c': '#B0D0F7',
+        '.java': '#f2b468',
+        '.md': '#9468f2',
+    }
     def __init__(self, parent, title="Select File", initialdir=None, filetypes=None, callback=None):
         super().__init__(parent)
         self.title(title)
         self.resizable(True, True)
         self.grab_set()
-        self.geometry("900x700")
+        self.geometry("1200x700")
         self.callback = callback
         self.filetypes = filetypes or [("All files", "*.*")]
+        self.current_dir = os.path.abspath(initialdir or os.getcwd())
         self.selected_file = None
 
-        self.current_dir = os.path.abspath(initialdir or os.getcwd())
+        side = ttk.Frame(self); side.pack(side='left', fill='y', padx=4, pady=4)
+        ttk.Label(side, text="Bookmarks").pack(anchor='nw')
+        self.bm_list = []
+        self.bm_var = tb.StringVar(value=self.bm_list)
+        self.bm_lb = tk_list = tk.Listbox(side, listvariable=self.bm_var, height=8, exportselection=False)
+        tk_list.pack(fill='both', expand=False)
+        tk_list.bind("<<ListboxSelect>>", self._on_bm_select)
+        btn_fr = ttk.Frame(side); btn_fr.pack(fill='x', pady=(2,10))
+        ttk.Button(btn_fr, text="+", width=2, command=self._add_bookmark, style='darkly', cursor="hand2").pack(side='left', padx=2, pady=2)
+        ttk.Button(btn_fr, text="-", width=2, command=self._remove_bookmark, style='darkly', cursor="hand2").pack(side='left', padx=2, pady=2)
+
+        self.show_hidden = tb.BooleanVar(value=False)
+        ttk.Checkbutton(side, text="Show hidden", variable=self.show_hidden,
+                        bootstyle="round-toggle", command=self.populate).pack(anchor='w')
 
         self.history = [self.current_dir]
         self.history_index = 0
@@ -261,7 +305,7 @@ class CustomFileDialog(tb.Toplevel):
         self.refresh_btn.grid(row=0, column=2, padx=2, pady=4, sticky='ns')
 
         self.pathbar = PathBar(toolbar, self.current_dir, self.change_dir)
-        self.pathbar.grid(row=0, column=3, sticky='ew', padx=(2,0), pady=2)
+        self.pathbar.grid(row=0, column=3, sticky='ew', padx=(2,0), pady=0)
 
         self.search_entry = ttk.Entry(toolbar, textvariable=self.search_var, width=24)
         self.search_entry.grid(row=0, column=4, padx=8, pady=4, sticky='ns')
@@ -277,8 +321,12 @@ class CustomFileDialog(tb.Toplevel):
 
         columns = ("name", "date", "type", "size")
         self.tree = ttk.Treeview(tree_frame, columns=columns, show="headings")
-        self.tree.tag_configure('odd',  background='#272727', foreground='#e4e4e4')  # 다크테마 예시
-        self.tree.tag_configure('even', background='#252525', foreground='#e4e4e4')
+        self.tree.tag_configure('odd',  background='#272727')  # 다크테마 예시
+        self.tree.tag_configure('even', background='#252525')
+
+        for ext, clr in self.EXT_COLORS.items():
+            tag = f"ext_{ext}"
+            self.tree.tag_configure(tag, foreground=clr)
 
         vsb = ttk.Scrollbar(tree_frame, orient="vertical", command=self.tree.yview)
         hsb = ttk.Scrollbar(tree_frame, orient="horizontal", command=self.tree.xview)
@@ -312,6 +360,29 @@ class CustomFileDialog(tb.Toplevel):
         self._current_sort = ("name", False)
         self.populate()
         self.update_nav_buttons()
+
+    def on_cb_change(self, newdir):
+        print("CD:", newdir)
+        self.pathbar.set_path(newdir)
+
+    def _add_bookmark(self):
+        p = self.current_dir
+        if p not in self.bm_list:
+            self.bm_list.append(p)
+            self.bm_var.set(self.bm_list)
+
+    def _remove_bookmark(self):
+        sel = self.bm_lb.curselection()
+        if not sel: return
+        idx = sel[0]
+        del self.bm_list[idx]
+        self.bm_var.set(self.bm_list)
+
+    def _on_bm_select(self, ev):
+        sel = self.bm_lb.curselection()
+        if not sel: return
+        path = self.bm_list[sel[0]]
+        self.change_dir(path)
 
     def _clear_placeholder(self, event):
         if self.search_var.get() == self.PLACEHOLDER:
@@ -364,7 +435,10 @@ class CustomFileDialog(tb.Toplevel):
             dt = self._format_time(os.path.getmtime(fpath))
             ext = os.path.splitext(f)[1].lower()
             typ = self._file_type(ext)
-            self.tree.insert("", "end", values=(f, dt, typ, self._format_size(size)), tags=(tag,))
+            tags = [tag]
+            if ext in self.EXT_COLORS:
+                tags.append(f"ext_{ext}")
+            self.tree.insert("", "end", values=(f, dt, typ, self._format_size(size)), tags=tuple(tags))
             row_idx += 1
         self.status['text'] = f"{len(dirs)+len(files)} items | {self._format_size(total_size)} Total"
 
@@ -540,6 +614,10 @@ class SettingsDialog(tb.Toplevel):
         self.mono_var = tb.StringVar(value=cfg['mono_font'])
         ttk.Combobox(self, textvariable=self.mono_var, values=familes, state='readonly', width=22).grid(row=4, column=1, padx=6, pady=6)
 
+        ttk.Label(self, text="Memory Limit (MB):").grid(row=5, column=0, sticky='e', padx=6, pady=6)
+        self.mem_var = tb.IntVar(value=cfg.get('mem_limit_mb', 0))
+        ttk.Spinbox(self, from_=0, to=10240, textvariable=self.mem_var, width=6).grid(row=5, column=1, sticky='w', padx=6, pady=6)
+
 
 
         btn_fr = ttk.Frame(self); btn_fr.grid(columnspan=2, pady=8)
@@ -555,16 +633,119 @@ class SettingsDialog(tb.Toplevel):
             'font_size' : self.font_var.get(),
             'timeout' : self.to_var.get(),
             'base_font' : self.base_var.get(),
-            'mono_font' : self.mono_var.get()
+            'mono_font' : self.mono_var.get(),
+            'mem_limit_mb': self.mem_var.get()
         })
         self.callback(self.cfg_copy)
         self.destroy()
 
+class PluginBase:
+    def on_start(self, proc: psutil.Process):
+        pass
+
+    def on_sample(self):
+        pass
+
+    def on_finish(self) -> dict:
+        return {}
+    
+class MemoryLimitPlugin(PluginBase):
+    def __init__(self, limit_bytes: int, parent_window):
+        self.limit = limit_bytes
+        self.parent = parent_window
+        self.peak = 0
+        self.proc = None
+
+    def on_start(self, proc: psutil.Process):
+        self.proc = proc
+        try:
+            rss0 = proc.memory_info().rss
+            self.peak = rss0
+        except psutil.Error:
+            self.peak = 0
+
+    def on_sample(self):
+        if not self.proc:
+            return
+        try:
+            rss = self.proc.memory_info().rss
+            # 피크 갱신
+            if rss > self.peak:
+                self.peak = rss
+            # limit 초과 시 알람 + 강제 종료
+            if self.limit > 0 and self.peak > self.limit:
+                self.proc.kill()
+                ToastNotification(
+                    title="Memory Limit Exceeded",
+                    message=(
+                        f"Peak RSS {self.peak/1024**2:.1f} MB  >  "
+                        f"Limit {self.limit/1024**2:.1f} MB"
+                    ),
+                    duration=3000,
+                    alert=True
+                ).show_toast(self.parent)
+        except psutil.Error:
+            pass
+
+    def on_finish(self):
+        # 종료 직후 한 번 더 체크
+        try:
+            rss = self.proc.memory_info().rss
+            if rss > self.peak:
+                self.peak = rss
+        except:
+            pass
+        return {"peak_rss": f"{self.peak/1024**2:.1f} MB"}
+    
+
+class CpuUsagePlugin(PluginBase):
+    """CPU 평균/최대 사용률 측정"""
+    def __init__(self):
+        self.proc = None
+        self.max_pct = 0.0
+        self.start_cpu_time = 0.0
+        self.start_wall = 0.0
+
+    def on_start(self, proc: psutil.Process):
+        self.proc = proc
+        # 시작 시점 전체 CPU 시간(user+sys) 과 wall-clock 시간 기록
+        times = proc.cpu_times()
+        self.start_cpu_time = times.user + times.system
+        self.start_wall = time.time()
+        # cpu_percent() 첫 호출은 baseline 설정용
+        try:
+            proc.cpu_percent(interval=None)
+        except psutil.Error:
+            pass
+
+    def on_sample(self):
+        if not self.proc:
+            return
+        try:
+            pct = self.proc.cpu_percent(interval=None)
+            if pct > self.max_pct:
+                self.max_pct = pct
+        except psutil.Error:
+            pass
+
+    def on_finish(self):
+        end_wall = time.time()
+        elapsed = end_wall - self.start_wall
+        try:
+            times = self.proc.cpu_times()
+            total_cpu = (times.user + times.system) - self.start_cpu_time
+            avg_pct = (total_cpu / elapsed * 100) if elapsed > 0 else 0.0
+        except psutil.Error:
+            avg_pct = 0.0
+        return {
+            "cpu_avg%": round(avg_pct, 1),
+            "cpu_max%": round(self.max_pct, 1)
+        }
 
 # ─── GUI 클래스 ─────────────────────────────────────────────────
 class App(tb.Window):
     def __init__(self):
-        self.app_cfg = {'theme':'darkly', 'font_size':12, 'timeout':10, 'base_font':'Apple SD Gothic Neo', 'mono_font':'SF Mono'}
+        self.app_cfg = {'theme':'darkly', 'font_size':12, 'timeout':10, 'base_font':'Apple SD Gothic Neo', 'mono_font':'SF Mono', 'mem_limit_mb': 0,}
         super().__init__(themename=self.app_cfg['theme'])
         self.title('MultiRunMem GUI')
         self.geometry('860x660')
@@ -741,11 +922,38 @@ class App(tb.Window):
                    'cpp':   [exe],
                    'java':  ['java', exe],
                    'python':['python3', exe]}[lang]
+            
+            proc = subprocess.Popen(
+                cmd, cwd=cwd, text=True,
+                stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE
+            )
+
+            self._current_proc = proc
+            ps_proc = psutil.Process(proc.pid)
+
+            plugins = [
+                MemoryLimitPlugin(self.app_cfg['mem_limit_mb'] * 1024 ** 2, self),
+                CpuUsagePlugin(),
+            ]
+            for pl in plugins:
+                pl.on_start(ps_proc)
+
+            def monitor_loop():
+                while proc.poll() is None:
+                    for pl in plugins:
+                        pl.on_sample()
+                    time.sleep(0.05)
+                threading.Thread(target=monitor_loop, daemon=True).start()
 
             code, out, err, peak, t = run_with_memory(cmd, stdin_data, cwd=cwd)
             if code != 0:
                 raise RuntimeError(f"Program exited with code {code}\n\n{err.strip()}")
-            self.after(0, self._done, code, out, err, peak, t)
+            
+            metrics = {}
+            for pl in plugins:
+                metrics.update(pl.on_finish())
+
+            self.after(0, self._done, code, out, err, peak, t, metrics)
         except Exception as e:
             self.after(0, self._error, e)
 
@@ -771,13 +979,14 @@ class App(tb.Window):
 
         self.nb.select(self.err_box)
 
-    def _done(self, code, out, err, peak, elapsed):
+    def _done(self, code, out, err, peak, elapsed, metrics:dict):
         self._set_busy(False)
         self.out_box.insert('end', out)
         self.err_box.insert('end', err)
-        self.status['text'] = (f'Exit:{code}, '
-                               f'Peak:{peak/1024/1024:.2f} MB, '
-                               f'{(elapsed * 1000.0):.2f}ms')
+        msg = f"Exit:{code} | "
+        msg += " | ".join(f"{k}: {v if isinstance(v, str) else round(v, 2)}" for k,v in metrics.items())
+        msg += f" | Elapsed Time(ms): {(elapsed * 1000.0):.2f} ms"
+        self.status['text'] = msg
         self.nb.select(self.out_box)
         self._log('Done.')
 
