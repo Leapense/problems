@@ -5,6 +5,264 @@
   font-family: 'MesloLGS NF', 'SF Mono', monospace;
 } 
 
+/* -----------------------------------------------------------------
+ *  👋 Smooth Animations (No-Bounce)
+ * ----------------------------------------------------------------- */
+
+/* 1) Activity Bar 아이콘  ────────────────────────────────────────── */
+.monaco-workbench .activitybar>.content :not(.monaco-menu)>.monaco-action-bar .action-item {
+  transition: background-color .25s ease,   /* 색상 전환 */
+              transform        .25s ease;   /* 스케일 업 */
+}
+.monaco-workbench .activitybar>.content :not(.monaco-menu)>.monaco-action-bar .action-item:hover,
+.monaco-workbench .activitybar>.content :not(.monaco-menu)>.monaco-action-bar .action-item:focus {
+  transform: scale(1.06);                   /* 살짝 확대 */
+}
+
+/* 2) 사이드바 리스트 행  ────────────────────────────────────────── */
+.monaco-list.mouse-support .monaco-list-row {
+  transition: background-color .18s ease-in-out,
+              padding-left     .18s ease-in-out;       /* 들여쓰기 애니메이션 */
+}
+.monaco-list.mouse-support .monaco-list-row:hover:not(.selected) {
+  padding-left: 6px;                                    /* 살짝 들여쓰기 */
+}
+
+/* 3) 퀵-픽(명령 팔레트) 페이드 & 슬라이드 ───────────────────────── */
+.quick-input-widget {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity .22s ease-out,
+              transform .22s ease-out;
+}
+.quick-input-widget.show-file-icons {                   /* 열릴 때 */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 4) 터미널 탭 활성 인디케이터   ---------------------------------- */
+.monaco-workbench .pane-body.integrated-terminal .terminal-tabs-entry.is-active:before {
+  transition: width .25s ease-out;                      /* 부드러운 확장 */
+  width: 3px;                                           /* [NEW] */
+  background: var(--vscode-terminal-ansiBlue);          /* [NEW] */
+}
+.monaco-workbench .pane-body.integrated-terminal .terminal-tabs-entry:not(.is-active):before {
+  width: 0px;
+}
+
+/* 5) 에디터 라인-번호 강조(이미 존재) — 타이밍만 조정 -------------- */
+.line-numbers.active-line-number {
+  transform: scale(1.25) translateX(-3px);
+  animation: .18s ease-out scaleSize;
+}
+
+/* -----------------------------------------------------------------
+ *  ✨ optional : 전체 Fade-in(앱 시작 시)
+ * ----------------------------------------------------------------- */
+body {                                /* 부드러운 첫 등장 */
+  opacity: 0;
+  animation: appFadeIn .4s ease-out .1s forwards;
+}
+@keyframes appFadeIn {
+  to { opacity: 1; }
+}
+
+/* ================================================================
+ *   ◼︎  VS Code Context-Menu (우-클릭·드롭다운) Smooth Animation
+ *       – 1depth · 2depth 양방향 지원, No-Bounce
+ * ================================================================ */
+
+/* ────────────────────────────────────────────────────────────────
+ *  1) 루트 메뉴(첫 레이어)
+ * ----------------------------------------------------------------
+ *  VS Code 가 body 바로 아래
+ *  <div class="context-view monaco-menu-container" …>  로 삽입
+ *  ─→ 여기서 Zoom + Fade
+ */
+body > .context-view.monaco-menu-container {
+  animation: ctxMenuIn .20s ease-out both !important;
+  transform-origin: top left !important;
+  will-change: transform, opacity;
+}
+
+/* ────────────────────────────────────────────────────────────────
+ *  2) 서브메뉴(2-depth 이상)
+ * ----------------------------------------------------------------
+ *  (1) 기본 : 부모의 오른쪽(→)에 열릴 때
+ *  (2) 화면 우측이라 VS Code 가 right:0 을 줘서
+ *      왼쪽(←)으로 열릴 때 → 스타일 속성에 right:가 포함됨
+ */
+
+/* 기본 ‑→ 방향 */
+body > .context-view.monaco-menu-container
+      .monaco-menu .monaco-action-bar {
+  animation: ctxSubInRight .18s ease-out both !important;
+  transform-origin: left top !important;
+}
+
+/* ← 방향 (컨테이너 style 속성에 right: 존재) */
+body > .context-view.monaco-menu-container[style*="right"]
+      .monaco-menu .monaco-action-bar {
+  animation: ctxSubInLeft .18s ease-out both !important;
+  transform-origin: right top !important;
+}
+
+/* ────────────────────────────────────────────────────────────────
+ *  3) Hover 부드럽게
+ * ---------------------------------------------------------------- */
+body > .context-view.monaco-menu-container .action-item {
+  transition: background-color .15s ease-in-out,
+              color            .15s ease-in-out;
+}
+
+/* ────────────────────────────────────────────────────────────────
+ *  4) Keyframes
+ * ---------------------------------------------------------------- */
+@keyframes ctxMenuIn {             /* 1-depth */
+  0%   { opacity: 0; transform: translateY(-6px) scale(.96); }
+  100% { opacity: 1; transform: translateY(0)    scale(1);   }
+}
+
+@keyframes ctxSubInRight {         /* 2-depth → */
+  0%   { opacity: 0; transform: translateX(-6px); }
+  100% { opacity: 1; transform: translateX(0);    }
+}
+
+@keyframes ctxSubInLeft {          /* 2-depth ← */
+  0%   { opacity: 0; transform: translateX( 6px); }
+  100% { opacity: 1; transform: translateX(0);    }
+}
+
+/* =============================================================== */
+/*                ◼︎  Command-Center Smooth Animation             */
+/* =============================================================== */
+
+/* 1) 기본 상태 --------------------------------------------------- */
+.monaco-workbench .part.titlebar .command-center {
+  /* 크기를 max-width 로 제어 → 트랜지션 가능 */
+  max-width: 520px;                  /* 평상시 폭 */
+  transition: 
+    max-width      .28s ease,        /* 폭 변화 */
+    background     .22s ease-in-out, /* 배경색 페이드 */
+    box-shadow     .22s ease-in-out; /* 그림자 페이드 */
+}
+
+/* 2) 포커스(클릭·단축키) 받았을 때 ------------------------------- */
+.monaco-workbench .part.titlebar .command-center:focus-within {
+  max-width: 520px;                              /* 부드럽게 확장 */
+  background: var(--vscode-input-background);    /* 살짝 강조 */
+  box-shadow: 0 2px 10px 2px rgba(0,0,0,.20);    /* 위로 뜨는 느낌 */
+}
+
+/* 3) Command Center 내부 입력창(= monaco-inputbox) 자기 애니메이션 */
+.monaco-workbench .part.titlebar .command-center .monaco-inputbox>.input {
+  transition: padding .22s ease-in-out;
+}
+.monaco-workbench .part.titlebar .command-center:focus-within 
+  .monaco-inputbox>.input {
+  padding-left: 14px;        /* 포커스 시 글자 위치 살짝 오른쪽 */
+}
+
+/* 4) “⌘ / Ctrl” 아이콘(🔍 비슷한 search 아이콘) 살짝 페이드 ------- */
+.monaco-workbench .part.titlebar .command-center .codicon {
+  transition: opacity .22s ease;
+}
+.monaco-workbench .part.titlebar .command-center:focus-within .codicon {
+  opacity: .55;               /* 입력 중엔 이 아이콘을 살짝 숨김 */
+}
+
+/* =================================================================
+ *   ◼︎  Suggest-Widget  (IntelliSense)  Smooth Drop-In
+ * ================================================================= */
+
+/* 1) 팝업 전체 : 등장 애니메이션 --------------------------------- */
+.monaco-editor .editor-widget.suggest-widget.visible {
+  animation: suggestIn .18s ease-out both !important;  /* 드롭 + 페이드 */
+  transform-origin: top center !important;             /* 위쪽 기준 */
+  will-change: transform, opacity;
+}
+
+/* 2) 세부 정보(우측 documentation 패널)도 페이드 ----------------- */
+.monaco-editor .editor-widget.suggest-widget.visible .details {
+  animation: suggestDetails .20s ease-out both !important;
+  transform-origin: left top;
+}
+
+/* 3) 리스트 행 Hover 색 전환 부드럽게 ---------------------------- */
+.monaco-editor .suggest-widget .monaco-list-row {
+  transition: background-color .15s ease-in-out,
+              color            .15s ease-in-out;
+}
+
+/* --------------------  Keyframes  ------------------------------ */
+@keyframes suggestIn {             /* 메인 박스 */
+  0%   { opacity: 0; transform: translateY(-6px) scale(.95); }
+  100% { opacity: 1; transform: translateY(0)    scale(1);   }
+}
+
+@keyframes suggestDetails {        /* 우측 details 패널 */
+  0%   { opacity: 0; transform: translateX(6px); }
+  100% { opacity: 1; transform: translateX(0);   }
+}
+
+/* =============================================================== */
+/*          ◼︎  Sidebar (Explorer 등) Slide-In / Out              */
+/* =============================================================== */
+
+/* 1) 공통 세팅 --------------------------------------------------- */
+.monaco-workbench .part.sidebar {
+  will-change: transform, opacity;        /* 애니 최적화 */
+  transition: 
+    transform .24s ease-out,
+    opacity   .24s ease-out;
+}
+
+/* 2) 왼쪽 배치(기본)  -------------------------------------------- */
+.monaco-workbench .part.sidebar:not(.hidden)[position="left"] {
+  transform: translateX(0);     /* 정상 위치 */
+  opacity: 1;
+}
+.monaco-workbench .part.sidebar.hidden[position="left"] {
+  transform: translateX(-100%); /* 왼쪽 밖으로 밀어내기 */
+  opacity: 0;
+}
+
+/* 3) 오른쪽 배치 (View: Move Side Bar Right 했을 때) ------------- */
+.monaco-workbench .part.sidebar:not(.hidden)[position="right"] {
+  transform: translateX(0);
+  opacity: 1;
+}
+.monaco-workbench .part.sidebar.hidden[position="right"] {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+/* 4) 사이드바 안의 헤더/액션도 살짝 지연 페이드 ------------------- */
+.monaco-workbench .part.sidebar .title,
+.monaco-workbench .part.sidebar .composite.title,
+.monaco-workbench .part.sidebar .composite.title-actions {
+  transition: opacity .18s ease-in-out .05s;
+}
+.monaco-workbench .part.sidebar.hidden .title,
+.monaco-workbench .part.sidebar.hidden .composite.title,
+.monaco-workbench .part.sidebar.hidden .composite.title-actions {
+  opacity: 0;
+}
+
+/* 5) 하단 Panel(터미널·디버그 콘솔) Slide-Up --------------------- */
+.monaco-workbench .part.panel {
+  will-change: transform, opacity;
+  transition: transform .25s ease-out, opacity .25s ease-out;
+}
+.monaco-workbench .part.panel.hidden {
+  transform: translateY(100%);   /* 아래로 내려가며 사라짐 */
+  opacity: 0;
+}
+.monaco-workbench .part.panel:not(.hidden) {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 /* ------------ Title Bar ------------ */
 .monaco-workbench .part.titlebar {
   border-bottom: 1px solid #181C20 !important;
