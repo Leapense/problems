@@ -8,6 +8,11 @@ import fnmatch
 from functools import partial
 import pathlib
 import datetime
+import matplotlib
+matplotlib.use('TkAgg')
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+
 # ─── GUI 라이브러리 ───────────────────────────────────────────────
 import ttkbootstrap as tb                           # pip install ttkbootstrap
 from ttkbootstrap import ttk
@@ -766,20 +771,47 @@ class App(tb.Window):
 
         self._apply_base_font()
 
+        self._large_font_var      = tb.BooleanVar(value=False)
+        self._high_contrast_var   = tb.BooleanVar(value=False)
+
         menubar = tb.Menu(self)
         file_m = tb.Menu(menubar, tearoff=0)
-        file_m.add_command(label='Exit', command=self.quit)
+        file_m.add_command(label='Open Source...', accelerator='Ctrl+O', command=self.pick_src)
+        file_m.add_command(label='Open Input...', accelerator='Ctrl+I', command=self.pick_in)
+        file_m.add_separator()
+        file_m.add_command(label='Exit', accelerator='Ctrl+Q', command=self.quit)
         menubar.add_cascade(label='File', menu=file_m)
 
         set_m = tb.Menu(menubar, tearoff=0)
         set_m.add_command(label='Preferences...', command=self.open_settings)
         menubar.add_cascade(label='Settings', menu=set_m)
 
+        # View menu (our new accessibility toggles)
+        view_m = tb.Menu(menubar, tearoff=0)
+        view_m.add_checkbutton(label='Large Font', accelerator='Ctrl+Plus / Ctrl+Minus',
+                               variable=self._large_font_var,
+                               command=self._toggle_large_font)
+        view_m.add_checkbutton(label='High Contrast',
+                               variable=self._high_contrast_var,
+                               command=self._toggle_high_contrast)
+        menubar.add_cascade(label='View', menu=view_m)
+
         help_m = tb.Menu(menubar, tearoff=0)
         help_m.add_command(label='About', command=lambda:messagebox.showinfo('About', 'MultiRunMem GUI\nⓒ 2025'))
         menubar.add_cascade(label='Help', menu=help_m)
 
         self.config(menu=menubar)
+
+        self.bind_all('<Control-o>', lambda e: self.pick_src())
+        self.bind_all('<Control-i>', lambda e: self.pick_in())
+        self.bind_all('<Control-r>', lambda e: self.run_clicked())
+        self.bind_all('<Control-q>', lambda e: self.quit())
+
+        self.bind_all('<Control-plus>',  lambda e: self._adjust_font_size(+2))
+        self.bind_all('<Control-minus>', lambda e: self._adjust_font_size(-2))
+
+        self.bind_all('<F6>',       self._cycle_tab_forward)
+        self.bind_all('<Shift-F6>', self._cycle_tab_backward)
 
         # ── 상단 파일 입력부 ──────────────────────
         top = ttk.Frame(self); top.pack(fill='x', padx=8, pady=4)
@@ -826,9 +858,129 @@ class App(tb.Window):
         self.out_box = ScrolledText(self.nb, font='CodeFont');  self.nb.add(self.out_box, text='Output')
         self.err_box = ScrolledText(self.nb, bootstyle='danger', font='CodeFont'); self.nb.add(self.err_box, text='Error')
         self.log_box = ScrolledText(self.nb, bootstyle='info', font='CodeFont'); self.nb.add(self.log_box, text='Log')
+
+        self.stats_frame = ttk.Frame(self.nb)
+        self.nb.add(self.stats_frame, text='Stats')
+
+        self.stats_time = []
+        self.stats_cpu = []
+        self.stats_mem = []
+
+        self.fig = Figure(figsize=(5,2.5), dpi=100)
+        self.ax_cpu = self.fig.add_subplot(211)
+        self.ax_mem = self.fig.add_subplot(212)
+
+        self.line_cpu, = self.ax_cpu.plot([], [], label='CPU %', color='tab:orange')
+        self.line_mem, = self.ax_mem.plot([], [], label='RSS (MB)', color='tab:green')
+
+        self.ax_cpu.set_ylabel('CPU %')
+        self.ax_mem.set_ylabel('RSS (MB)')
+        self.ax_mem.set_xlabel('Time (s)')
+        self.ax_cpu.set_xlim(0,10); self.ax_cpu.set_ylim(0,100)
+        self.ax_mem.set_xlim(0,10); self.ax_mem.set_ylim(0,100)
+
+        self.ax_cpu.legend(loc='upper right', fontsize='small')
+        self.ax_mem.legend(loc='upper right', fontsize='small')
+
+        self.canvas_plot = FigureCanvasTkAgg(self.fig, master=self.stats_frame)
+        self.canvas_plot.draw()
+        self.canvas_plot.get_tk_widget().pack(fill='both', expand=True)
+
         self.nb.pack(fill='both', expand=True, padx=8, pady=4)
 
+        self._stats_after_id = None
+        # sampling interval (ms)
+        self.sampling_ms = 100
+
         self._toast = None
+
+    def _cycle_tab_forward(self, event=None):
+        tabs = self.nb.tabs()
+        if not tabs: return
+        idx = tabs.index(self.nb.select())
+        self.nb.select(tabs[(idx + 1) % len(tabs)])
+
+    def _cycle_tab_backward(self, event=None):
+        tabs = self.nb.tabs()
+        if not tabs: return
+        idx = tabs.index(self.nb.select())
+        self.nb.select(tabs[(idx - 1) % len(tabs)])
+
+    def _toggle_large_font(self):
+        """Switch between normal and large-base‐font mode."""
+        base = tkfont.nametofont('TkDefaultFont')
+        if self._large_font_var.get():
+            base.configure(size=max(base.cget('size'), 16))
+        else:
+            # revert to user‐configured app_cfg size
+            base.configure(size=self.app_cfg['font_size'])
+
+    def _adjust_font_size(self, delta: int):
+        """Ctrl+Plus / Ctrl+Minus to nudge the font size."""
+        cur = self.app_cfg['font_size'] = max(8, self.app_cfg['font_size'] + delta)
+        if not self._large_font_var.get():
+            nametofont = tkfont.nametofont('TkDefaultFont')
+            nametofont.configure(size=cur)
+
+    def _toggle_high_contrast(self):
+        """Switch to a high‐contrast ttkbootstrap theme or back."""
+        if self._high_contrast_var.get():
+            tb.Style().theme_use('cyborg')   # built‐in high‐contrast dark theme
+        else:
+            tb.Style().theme_use(self.app_cfg['theme'])
+
+    def _start_stats(self):
+        self.stats_time.clear()
+        self.stats_cpu.clear()
+        self.stats_mem.clear()
+        self._stats_start = time.time()
+        if self._stats_after_id:
+            self.after_cancel(self._stats_after_id)
+        self._stats_after_id = self.after(self.sampling_ms, self._update_stats)
+
+    def _update_stats(self):
+        """Sample current CPU% and RSS, update plots, and reschedule."""
+        proc = getattr(self, '_current_proc', None)
+        if proc and proc.poll() is None:
+            ps_proc = psutil.Process(proc.pid)
+            now = time.time() - self._stats_start
+            try:
+                cpu_pct = ps_proc.cpu_percent(interval=None)
+                rss_mb  = ps_proc.memory_info().rss / (1024**2)
+            except psutil.Error:
+                cpu_pct, rss_mb = 0.0, 0.0
+
+            # append data
+            self.stats_time.append(now)
+            self.stats_cpu.append(cpu_pct)
+            self.stats_mem.append(rss_mb)
+
+            # update line data
+            self.line_cpu.set_data(self.stats_time, self.stats_cpu)
+            self.line_mem.set_data(self.stats_time, self.stats_mem)
+
+            # rescale X axis
+            xmax = max(10, now)
+            self.ax_cpu.set_xlim(0, xmax)
+            self.ax_mem.set_xlim(0, xmax)
+            # optionally autoscale RSS Y
+            ymax_mem = max(self.stats_mem) * 1.2 if self.stats_mem else 100
+            self.ax_mem.set_ylim(0, max(ymax_mem, 1))
+
+            # redraw
+            self.canvas_plot.draw()
+
+            # schedule next
+            self._stats_after_id = self.after(self.sampling_ms, self._update_stats)
+        else:
+            # process ended → stop scheduling
+            self._stats_after_id = None
+
+    def _cancel_stats(self):
+        """Cancel the scheduled after-loop if any."""
+        if self._stats_after_id:
+            self.after_cancel(self._stats_after_id)
+            self._stats_after_id = None
 
     # ── 설정 창 열기 ─────────────────
     def open_settings(self):
@@ -905,6 +1057,8 @@ class App(tb.Window):
         self._clear_io()
         self._log('Start...')
 
+        self._start_stats()
+
         threading.Thread(target=self._worker,
                          args=(src, stdin_data),
                          daemon=True).start()
@@ -971,6 +1125,7 @@ class App(tb.Window):
         self.log_box.see('end')
 
     def _error(self, err: Exception):
+        self._cancel_stats()
         self._set_busy(False)
         msg = str(err)
         self.err_box.insert('end', msg+'\n')
@@ -980,6 +1135,7 @@ class App(tb.Window):
         self.nb.select(self.err_box)
 
     def _done(self, code, out, err, peak, elapsed, metrics:dict):
+        self._cancel_stats()
         self._set_busy(False)
         self.out_box.insert('end', out)
         self.err_box.insert('end', err)
