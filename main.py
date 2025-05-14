@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # multi_run_mem_gui.py  –  ttkbootstrap(darkly) + 정확한 RSS + Java cwd fix
 
+import re
 import os, sys, time, threading, subprocess, tempfile, platform, resource, json
 import psutil                                       # pip install psutil
 import shlex
@@ -12,6 +13,7 @@ import matplotlib
 matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
+from typing import Optional
 
 # ─── GUI 라이브러리 ───────────────────────────────────────────────
 import ttkbootstrap as tb                           # pip install ttkbootstrap
@@ -97,7 +99,7 @@ def run_with_memory(cmd: list, stdin_data: str = '',
                 for ch in ps_proc.children(recursive=True):
                     rss_total += ch.memory_info().rss
                 peak = max(peak, rss_total)
-                time.sleep(0.015)                   # 15 ms 간격
+                time.sleep(0.05)                   # 15 ms 간격
         except psutil.Error:
             pass
     threading.Thread(target=monitor, daemon=True).start()
@@ -754,49 +756,96 @@ class MemoryLimitPlugin(PluginBase):
     def __init__(self, limit_bytes: int, parent_window):
         self.limit = limit_bytes
         self.parent = parent_window
-        self.peak = 0
-        self.proc = None
+        self.peak_rss_sampled_bytes = 0
+        self.peak_vmhwm_bytes = 0
+        self.proc: Optional[psutil.Process] = None
+        self.is_linux = (os.name == 'posix')
+
+    def _get_vmhwm(self, pid: int) -> Optional[int]:
+        if not self.is_linux:
+            return None
+        try:
+            with open(f"/proc/{pid}/status", 'r') as f:
+                for line in f:
+                    if line.startswith("VmHWM:"):
+                        match = re.search(r'(\d+)\s*kB', line)
+                        if match:
+                            return int(match.group(1)) * 1024
+            return None
+        except (FileNotFoundError, IOError, ValueError, AttributeError):
+            return None
 
     def on_start(self, proc: psutil.Process):
         self.proc = proc
+        self.peak_rss_sampled_bytes = 0
+        self.peak_vmhwm_bytes = 0
         try:
-            rss0 = proc.memory_info().rss
-            self.peak = rss0
+            rss_now = self.proc.memory_info().rss
+            self.peak_rss_sampled_bytes = rss_now
+
+            vmhwm_now = self._get_vmhwm(self.proc.pid)
+            if vmhwm_now is not None:
+                self.peak_vmhwm_bytes = vmhwm_now
         except psutil.Error:
-            self.peak = 0
+            pass
 
     def on_sample(self):
-        if not self.proc:
+        if not self.proc or not self.proc.is_running():
             return
+        
+        current_peak_for_limit_check = 0
+        peak_metric_name = "Peak RSS (sampled)"
+
         try:
-            rss = self.proc.memory_info().rss
-            # 피크 갱신
-            if rss > self.peak:
-                self.peak = rss
-            # limit 초과 시 알람 + 강제 종료
-            if self.limit > 0 and self.peak > self.limit:
+            rss_now = self.proc.memory_info().rss
+            if rss_now > self.peak_rss_sampled_bytes:
+                self.peak_rss_sampled_bytes = rss_now
+            
+            current_peak_for_limit_check = self.peak_rss_sampled_bytes
+
+            vmhwm_now = self._get_vmhwm(self.proc.pid)
+            if vmhwm_now is not None:
+                self.peak_vmhwm_bytes = max(self.peak_vmhwm_bytes, vmhwm_now)
+                current_peak_for_limit_check = self.peak_vmhwm_bytes
+                peak_metric_name = "VmHWM"
+
+            if self.limit > 0 and current_peak_for_limit_check > self.limit:
                 self.proc.kill()
                 ToastNotification(
                     title="Memory Limit Exceeded",
                     message=(
-                        f"Peak RSS {self.peak/1024**2:.1f} MB  >  "
-                        f"Limit {self.limit/1024**2:.1f} MB"
+                        f"{peak_metric_name} {current_peak_for_limit_check / (1024**2):.2f} MB > "
+                        f"Limit {self.limit_bytes / (1024**2):.2f} MB"
                     ),
                     duration=3000,
                     alert=True
                 ).show_toast(self.parent)
         except psutil.Error:
+            self.proc = None
+        except Exception:
             pass
 
     def on_finish(self):
-        # 종료 직후 한 번 더 체크
-        try:
-            rss = self.proc.memory_info().rss
-            if rss > self.peak:
-                self.peak = rss
-        except:
-            pass
-        return {"peak_rss": f"{self.peak/1024**2:.1f} MB"}
+        if self.proc and self.proc.is_running():
+            try:
+                rss_final = self.proc.memory_info().rss
+                if rss_final > self.peak_rss_sampled_bytes:
+                    self.peak_rss_sampled_bytes = rss_final
+                vmhwm_final = self._get_vmhwm(self.proc.pid)
+                if vmhwm_final is not None and vmhwm_final > self.peak_vmhwm_bytes:
+                    self.peak_vmhwm_bytes = vmhwm_final
+            except psutil.Error:
+                pass
+
+        results = {
+            "peak_rss_sampled": f"{self.peak_rss_sampled_bytes / (1024 ** 2):.2f} MB"
+        }
+        if self.is_linux and self.peak_vmhwm_bytes > 0:
+            results["peak_vmhwm"] = f"{self.peak_vmhwm_bytes / (1024 ** 2):.2f} MB"
+        elif self.is_linux:
+            results["peak_vmhwm"] = "N/A (Linux, but unreadable)"
+        
+        return results
     
 
 class CpuUsagePlugin(PluginBase):
@@ -955,33 +1004,6 @@ class App(tb.Window):
         self.err_box = ScrolledText(self.nb, bootstyle='danger', font='CodeFont'); self.nb.add(self.err_box, text='Error')
         self.log_box = ScrolledText(self.nb, bootstyle='info', font='CodeFont'); self.nb.add(self.log_box, text='Log')
 
-        self.stats_frame = ttk.Frame(self.nb)
-        self.nb.add(self.stats_frame, text='Stats')
-
-        self.stats_time = []
-        self.stats_cpu = []
-        self.stats_mem = []
-
-        self.fig = Figure(figsize=(5,2.5), dpi=100)
-        self.ax_cpu = self.fig.add_subplot(211)
-        self.ax_mem = self.fig.add_subplot(212)
-
-        self.line_cpu, = self.ax_cpu.plot([], [], label='CPU %', color='tab:orange')
-        self.line_mem, = self.ax_mem.plot([], [], label='RSS (MB)', color='tab:green')
-
-        self.ax_cpu.set_ylabel('CPU %')
-        self.ax_mem.set_ylabel('RSS (MB)')
-        self.ax_mem.set_xlabel('Time (s)')
-        self.ax_cpu.set_xlim(0,10); self.ax_cpu.set_ylim(0,100)
-        self.ax_mem.set_xlim(0,10); self.ax_mem.set_ylim(0,100)
-
-        self.ax_cpu.legend(loc='upper right', fontsize='small')
-        self.ax_mem.legend(loc='upper right', fontsize='small')
-
-        self.canvas_plot = FigureCanvasTkAgg(self.fig, master=self.stats_frame)
-        self.canvas_plot.draw()
-        self.canvas_plot.get_tk_widget().pack(fill='both', expand=True)
-
         self.nb.pack(fill='both', expand=True, padx=8, pady=4)
 
         self._stats_after_id = None
@@ -1024,53 +1046,6 @@ class App(tb.Window):
             tb.Style().theme_use('cyborg')   # built‐in high‐contrast dark theme
         else:
             tb.Style().theme_use(self.app_cfg['theme'])
-
-    def _start_stats(self):
-        self.stats_time.clear()
-        self.stats_cpu.clear()
-        self.stats_mem.clear()
-        self._stats_start = time.time()
-        if self._stats_after_id:
-            self.after_cancel(self._stats_after_id)
-        self._stats_after_id = self.after(self.sampling_ms, self._update_stats)
-
-    def _update_stats(self):
-        """Sample current CPU% and RSS, update plots, and reschedule."""
-        proc = getattr(self, '_current_proc', None)
-        if proc and proc.poll() is None:
-            ps_proc = psutil.Process(proc.pid)
-            now = time.time() - self._stats_start
-            try:
-                cpu_pct = ps_proc.cpu_percent(interval=None)
-                rss_mb  = ps_proc.memory_info().rss / (1024**2)
-            except psutil.Error:
-                cpu_pct, rss_mb = 0.0, 0.0
-
-            # append data
-            self.stats_time.append(now)
-            self.stats_cpu.append(cpu_pct)
-            self.stats_mem.append(rss_mb)
-
-            # update line data
-            self.line_cpu.set_data(self.stats_time, self.stats_cpu)
-            self.line_mem.set_data(self.stats_time, self.stats_mem)
-
-            # rescale X axis
-            xmax = max(10, now)
-            self.ax_cpu.set_xlim(0, xmax)
-            self.ax_mem.set_xlim(0, xmax)
-            # optionally autoscale RSS Y
-            ymax_mem = max(self.stats_mem) * 1.2 if self.stats_mem else 100
-            self.ax_mem.set_ylim(0, max(ymax_mem, 1))
-
-            # redraw
-            self.canvas_plot.draw()
-
-            # schedule next
-            self._stats_after_id = self.after(self.sampling_ms, self._update_stats)
-        else:
-            # process ended → stop scheduling
-            self._stats_after_id = None
 
     def _cancel_stats(self):
         """Cancel the scheduled after-loop if any."""
@@ -1153,8 +1128,6 @@ class App(tb.Window):
         self._clear_io()
         self._log('Start...')
 
-        self._start_stats()
-
         threading.Thread(target=self._worker,
                          args=(src, stdin_data),
                          daemon=True).start()
@@ -1178,8 +1151,8 @@ class App(tb.Window):
                 stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE
             )
 
-            self._current_proc = proc
             ps_proc = psutil.Process(proc.pid)
+            self._current_proc = proc
 
             plugins = [
                 MemoryLimitPlugin(self.app_cfg['mem_limit_mb'] * 1024 ** 2, self),
@@ -1188,17 +1161,10 @@ class App(tb.Window):
             for pl in plugins:
                 pl.on_start(ps_proc)
 
-            def monitor_loop():
-                while proc.poll() is None:
-                    for pl in plugins:
-                        pl.on_sample()
-                    time.sleep(0.05)
-                threading.Thread(target=monitor_loop, daemon=True).start()
-
             code, out, err, peak, t = run_with_memory(cmd, stdin_data, cwd=cwd)
             if code != 0:
                 raise RuntimeError(f"Program exited with code {code}\n\n{err.strip()}")
-            
+
             metrics = {}
             for pl in plugins:
                 metrics.update(pl.on_finish())
@@ -1239,7 +1205,6 @@ class App(tb.Window):
         msg += " | ".join(f"{k}: {v if isinstance(v, str) else round(v, 2)}" for k,v in metrics.items())
         msg += f" | Elapsed Time(ms): {(elapsed * 1000.0):.2f} ms"
         self.status['text'] = msg
-        self.nb.select(self.out_box)
         self._log('Done.')
 
 # ─── 실행 ──────────────────────────────────────────────────────
