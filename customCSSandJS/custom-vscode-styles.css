@@ -205,62 +205,106 @@ body > .context-view.monaco-menu-container .action-item {
   100% { opacity: 1; transform: translateX(0);   }
 }
 
-/* =============================================================== */
-/*          ◼︎  Sidebar (Explorer 등) Slide-In / Out              */
-/* =============================================================== */
+/* ===============================================================
+ *   ◼︎  Sidebar – 최종 부드러운 Slide-In / Out
+ * =============================================================== */
 
-/* 1) 공통 세팅 --------------------------------------------------- */
-.monaco-workbench .part.sidebar {
-  will-change: transform, opacity;        /* 애니 최적화 */
+/* 0) 공통 옵션 : width 애니메이션 최적화 ------------------------- */
+.monaco-split-view2.horizontal 
+  > .monaco-scrollable-element         /* 스크롤 래퍼 */
+  > .split-view-container              /* 실제 flex 컨테이너 */
+  > .split-view-view     /* 2nd = Sidebar View     */
+{
+  /*   ← “사이드바” 라고 가정 (1st = 에디터 그룹) */
+
+  will-change: width, opacity, left;
+  overflow: hidden;                    /* 내용 잘림 방지 */
+  transition:
+    width   .24s ease-out,
+    opacity .18s ease-out,
+    left    .24s ease-out;
+}
+
+/* 1) 열려 있을 때 ------------------------------------------------ */
+.monaco-split-view2.horizontal
+  > .monaco-scrollable-element
+  > .split-view-container
+  > .split-view-view:not(.hidden) {
+  opacity: 1;
+  /* width 값은 VS Code 가 inline-style 로 넣음 → 그대로 애니메이션 */
+}
+
+/* 2) 닫힐 때 (VS Code 가 .hidden 추가) --------------------------- */
+.monaco-split-view2.horizontal
+  > .monaco-scrollable-element
+  > .split-view-container
+  > .split-view-view.hidden {
+  /* display: none 으로 바뀌면 애니메이션 자체가 끊기니 막아준다 */
+  display: flex !important;            /* flex(원본값) 유지 */
+  width: 0 !important;                 /* 0 으로 슬라이드아웃        */
+  opacity: 0;
+  pointer-events: none;                /* 클릭 막기(선택)            */
+}
+
+/* ===============================================================
+ *   ◼︎  Editor Tabs  (파일 탭)  Smooth Hover & Active Indicator
+ * =============================================================== */
+
+/* 1) 탭 기본 세팅 ---------------------------------------------- */
+.monaco-workbench .part.editor .tabs-container .tab {
+  position: relative;                        /* ::before 포지셔닝용 */
   transition: 
-    transform .24s ease-out,
-    opacity   .24s ease-out;
+    background-color .18s ease-in-out,       /* 색상 부드럽게 */
+    color            .18s ease-in-out,
+    transform        .18s ease-out;          /* 살짝 띄우기 */
 }
 
-/* 2) 왼쪽 배치(기본)  -------------------------------------------- */
-.monaco-workbench .part.sidebar:not(.hidden)[position="left"] {
-  transform: translateX(0);     /* 정상 위치 */
+/* 2) Hover : 가볍게 떠오르면서 색상 변화 ------------------------ */
+.monaco-workbench .part.editor .tabs-container .tab:hover:not(.active):not(.dragged) {
+  transform: translateY(-2px);               /* 위로 2px */
+  background: var(--vscode-list-hoverBackground);
+}
+
+/* 3) Active Indicator (아래 바)  ------------------------------- */
+.monaco-workbench .part.editor .tabs-container .tab::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;               /* width 대신 left/right → 가운데 축소/확장 */
+  bottom: 0;
+  height: 2px;
+  background: var(--vscode-tab-activeBorder, var(--vscode-editor-foreground));
+  transform: scaleX(0);                       /* 처음엔 0 → 보이지 않음 */
+  transform-origin: center bottom;
+  transition: transform .25s ease-out;        /* 가로 확장 */
+}
+
+/* active 됐을 때 100% 확장 */
+.monaco-workbench .part.editor .tabs-container .tab.active::before {
+  transform: scaleX(1);
+}
+
+/* 4) 더블클릭(핀 고정) 등 ‘pinned’ 상태 살짝 강조 --------------- */
+.monaco-workbench .part.editor .tabs-container .tab.pinned:not(.active) {
+  opacity: .8;
+  transition: opacity .2s ease-in-out;
+}
+.monaco-workbench .part.editor .tabs-container .tab.pinned:not(.active):hover {
   opacity: 1;
 }
-.monaco-workbench .part.sidebar.hidden[position="left"] {
-  transform: translateX(-100%); /* 왼쪽 밖으로 밀어내기 */
-  opacity: 0;
-}
 
-/* 3) 오른쪽 배치 (View: Move Side Bar Right 했을 때) ------------- */
-.monaco-workbench .part.sidebar:not(.hidden)[position="right"] {
-  transform: translateX(0);
-  opacity: 1;
+/* 5) “닫기(✕)” 아이콘 페이드 ------------------------------------ */
+.monaco-workbench .part.editor .tabs-container .tab .action-label.codicon {
+  transition: opacity .2s ease;
 }
-.monaco-workbench .part.sidebar.hidden[position="right"] {
-  transform: translateX(100%);
-  opacity: 0;
+.monaco-workbench .part.editor .tabs-container .tab:not(:hover) .action-label.codicon {
+  opacity: 0;                                 /* 기본은 숨김 */
 }
-
-/* 4) 사이드바 안의 헤더/액션도 살짝 지연 페이드 ------------------- */
-.monaco-workbench .part.sidebar .title,
-.monaco-workbench .part.sidebar .composite.title,
-.monaco-workbench .part.sidebar .composite.title-actions {
-  transition: opacity .18s ease-in-out .05s;
+.monaco-workbench .part.editor .tabs-container .tab:hover .action-label.codicon {
+  opacity: .7;                                /* Hover 시 살짝 보임 */
 }
-.monaco-workbench .part.sidebar.hidden .title,
-.monaco-workbench .part.sidebar.hidden .composite.title,
-.monaco-workbench .part.sidebar.hidden .composite.title-actions {
-  opacity: 0;
-}
-
-/* 5) 하단 Panel(터미널·디버그 콘솔) Slide-Up --------------------- */
-.monaco-workbench .part.panel {
-  will-change: transform, opacity;
-  transition: transform .25s ease-out, opacity .25s ease-out;
-}
-.monaco-workbench .part.panel.hidden {
-  transform: translateY(100%);   /* 아래로 내려가며 사라짐 */
-  opacity: 0;
-}
-.monaco-workbench .part.panel:not(.hidden) {
-  transform: translateY(0);
-  opacity: 1;
+.monaco-workbench .part.editor .tabs-container .tab:hover .action-label.codicon:hover {
+  opacity: 1;                                 /* 아이콘 위에선 또렷하게 */
 }
 
 /* ------------ Title Bar ------------ */
