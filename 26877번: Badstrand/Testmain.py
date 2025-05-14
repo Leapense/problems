@@ -1,7 +1,7 @@
 import io, sys, importlib
 
 def run_io(inp: str) -> str:
-    import main
+    import main as main
     importlib.reload(main)
 
     backup_stdin, backup_stdout = sys.stdin, sys.stdout

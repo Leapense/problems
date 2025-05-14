@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # multi_run_mem_gui.py  –  ttkbootstrap(darkly) + 정확한 RSS + Java cwd fix
 
-import os, sys, time, threading, subprocess, tempfile, platform, resource
+import os, sys, time, threading, subprocess, tempfile, platform, resource, json
 import psutil                                       # pip install psutil
 import shlex
 import fnmatch
@@ -269,6 +269,7 @@ class CustomFileDialog(tb.Toplevel):
         '.java': '#f2b468',
         '.md': '#9468f2',
     }
+    CFG_PATH = pathlib.Path.home() / ".custom_file_dialog.json"
     def __init__(self, parent, title="Select File", initialdir=None, filetypes=None, callback=None):
         super().__init__(parent)
         self.title(title)
@@ -277,8 +278,19 @@ class CustomFileDialog(tb.Toplevel):
         self.geometry("1200x700")
         self.callback = callback
         self.filetypes = filetypes or [("All files", "*.*")]
-        self.current_dir = os.path.abspath(initialdir or os.getcwd())
         self.selected_file = None
+
+        state = self._load_state()
+        self.history = state.get("history", [])
+        self._last_child = state.get("last_child", {})
+
+        self.current_dir = os.path.abspath(initialdir or os.getcwd())
+
+        if not self.history:
+            self.history = [self.current_dir]
+        
+        self.history_index = len(self.history) - 1
+        
 
         side = ttk.Frame(self); side.pack(side='left', fill='y', padx=4, pady=4)
         ttk.Label(side, text="Bookmarks").pack(anchor='nw')
@@ -295,8 +307,9 @@ class CustomFileDialog(tb.Toplevel):
         ttk.Checkbutton(side, text="Show hidden", variable=self.show_hidden,
                         bootstyle="round-toggle", command=self.populate).pack(anchor='w')
 
-        self.history = [self.current_dir]
-        self.history_index = 0
+        if not self.history:
+            self.history = [self.current_dir]
+        self.history_index = len(self.history) - 1
         self.search_var = tb.StringVar()
 
         toolbar = ttk.Frame(self)
@@ -308,6 +321,9 @@ class CustomFileDialog(tb.Toplevel):
         self.next_btn.grid(row=0, column=1, padx=2, pady=4, sticky='ns')
         self.refresh_btn = ttk.Button(toolbar, text="⟳", width=3, command=self.refresh, style="darkly")
         self.refresh_btn.grid(row=0, column=2, padx=2, pady=4, sticky='ns')
+
+        self.clear_btn = ttk.Button(toolbar, text="🧹", width=3, command=self.clear_history, style="darkly")
+        self.clear_btn.grid(row=0, column=6, padx=(2,8), pady=4)
 
         self.pathbar = PathBar(toolbar, self.current_dir, self.change_dir)
         self.pathbar.grid(row=0, column=3, sticky='ew', padx=(2,0), pady=0)
@@ -364,7 +380,35 @@ class CustomFileDialog(tb.Toplevel):
 
         self._current_sort = ("name", False)
         self.populate()
+        self._restore_selection()
         self.update_nav_buttons()
+
+    def clear_history(self):
+        if not tk.messagebox.askyesno(
+            "히스토리 삭제",
+            "모든 탐색 기록을 삭제할까요?\n(뒤로/앞으로 목록과 폴더 포커스 정보가 사라집니다)",
+            parent=self
+        ):
+            return
+        
+        self.history = [self.current_dir]
+        self.history_index = 0
+        self._last_child.clear()
+
+        if self.CFG_PATH.exists():
+            try:
+                self.CFG_PATH.unlink()
+            except Exception as e:
+                print("CFG 파일 삭제 실패: ", e)
+            
+        self._save_state()
+        self.update_nav_buttons()
+        tk.messagebox.showinfo("완료", "탐색 히스토리가 삭제되었습니다.", parent=self)
+
+    def _enter_directory(self, child_name):
+        self._last_child[self.current_dir] = child_name
+        new_path = os.path.join(self.current_dir, child_name)
+        self.change_dir(new_path)
 
     def on_cb_change(self, newdir):
         print("CD:", newdir)
@@ -450,6 +494,17 @@ class CustomFileDialog(tb.Toplevel):
         col, rev = self._current_sort
         self._sort_by_column(col, keep_direction=True)
 
+    def _restore_selection(self):
+        last_child = self._last_child.get(self.current_dir)
+        if not last_child:
+            return
+        for iid in self.tree.get_children():
+            if self.tree.set(iid, "name") == last_child:
+                self.tree.selection_set(iid)
+                self.tree.focus(iid)
+                self.tree.see(iid)
+                break
+
     def _sort_by_column(self, col, keep_direction=False):
         if keep_direction:
             reverse = self._current_sort[1]
@@ -525,7 +580,7 @@ class CustomFileDialog(tb.Toplevel):
         path = os.path.join(self.current_dir, name)
         
         if os.path.isdir(path):
-            self.change_dir(path)
+            self._enter_directory(name)
         else:
             self.selected_file = path
             self.on_ok()
@@ -546,6 +601,7 @@ class CustomFileDialog(tb.Toplevel):
         if self.selected_file and os.path.isfile(self.selected_file):
             if self.callback:
                 self.callback(self.selected_file)
+            self._save_state()
             self.destroy()
         else:
             tb.messagebox.showwarning("No file selected", "Please select a file.")
@@ -553,6 +609,9 @@ class CustomFileDialog(tb.Toplevel):
     def change_dir(self, new_dir):
         new_dir = os.path.abspath(new_dir)
         if new_dir != self.current_dir:
+            prev_dir = self.current_dir
+            self._last_child[prev_dir] = os.path.basename(new_dir)
+
             self.reset_search()
             if self.history_index < len(self.history) - 1:
                 self.history = self.history[:self.history_index+1]
@@ -561,7 +620,39 @@ class CustomFileDialog(tb.Toplevel):
             self.current_dir = new_dir
             self.pathbar.set_path(self.current_dir)  # PathBar 갱신
             self.populate()
+            self._restore_selection()
             self.update_nav_buttons()
+
+            self._save_state()
+
+    def _save_state(self):
+        try:
+            with self.CFG_PATH.open("w", encoding="utf-8") as fp:
+                json.dump({
+                    "history":   self.history[-100:],
+                    "last_child": self._last_child
+                }, fp, indent=2)
+        except Exception as e:
+            print("history 저장 실패:", e)
+
+    def _load_state(self):
+        try:
+            with self.CFG_PATH.open("r", encoding="utf-8") as fp:
+                return json.load(fp)
+        except Exception:
+            return {}
+        
+    def _load_state(self):
+        print("📂  state file:", self.CFG_PATH)
+        if self.CFG_PATH.exists():
+            try:
+                with self.CFG_PATH.open("r", encoding="utf-8") as fp:
+                    data = json.load(fp)
+                    print("✅  loaded:", data)  # → 내용 확인
+                    return data
+            except Exception as e:
+                print("⚠️  load error:", e)
+        return {}
 
     def go_prev(self):
         if self.history_index > 0:
@@ -569,6 +660,7 @@ class CustomFileDialog(tb.Toplevel):
             self.current_dir = self.history[self.history_index]
             self.pathbar.set_path(self.current_dir)
             self.populate()
+            self._restore_selection()
             self.update_nav_buttons()
 
     def go_next(self):
@@ -585,6 +677,10 @@ class CustomFileDialog(tb.Toplevel):
     def update_nav_buttons(self):
         self.prev_btn['state'] = 'normal' if self.history_index > 0 else 'disabled'
         self.next_btn['state'] = 'normal' if self.history_index < len(self.history) - 1 else 'disabled'
+    
+    def destroy(self):
+        self._save_state()
+        super().destroy()
     
 
 # Settings 팝업
