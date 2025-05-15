@@ -14,6 +14,7 @@ matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 from typing import Optional
+from difflib import unified_diff
 
 # ─── GUI 라이브러리 ───────────────────────────────────────────────
 import ttkbootstrap as tb                           # pip install ttkbootstrap
@@ -960,7 +961,7 @@ class App(tb.Window):
 
         # ── 상단 파일 입력부 ──────────────────────
         top = ttk.Frame(self); top.pack(fill='x', padx=8, pady=4)
-        self.src_var, self.in_var = tb.StringVar(), tb.StringVar()
+        self.src_var, self.in_var, self.expected_var = tb.StringVar(), tb.StringVar(), tb.StringVar()
 
         ttk.Label(top, text='Source:').grid(row=0, column=0, sticky='w')
         ttk.Entry(top, textvariable=self.src_var, width=60)\
@@ -973,6 +974,14 @@ class App(tb.Window):
             .grid(row=1, column=1, sticky='we')
         ttk.Button(top, text='...', command=self.pick_in, style="darkly")\
             .grid(row=1, column=2, padx=4)
+        
+        ttk.Label(top, text='Expected Output File:').grid(row=2, column=0, sticky='w')
+        ttk.Entry(top, textvariable=self.expected_var, width=60)\
+            .grid(row=2, column=1, sticky='we')
+        ttk.Button(top, text='...', command=self.pick_expected, style="darkly").grid(row=2, column=2, padx=4)
+
+        top.columnconfigure(1, weight=1)
+
         # ── 상태 바 ───────────────────────────────
         self.status = ttk.Label(self, text='Ready', anchor='w')
         self.status.pack(side='bottom', fill='x', padx=8, pady=4)
@@ -1003,6 +1012,7 @@ class App(tb.Window):
         self.out_box = ScrolledText(self.nb, font='CodeFont');  self.nb.add(self.out_box, text='Output')
         self.err_box = ScrolledText(self.nb, bootstyle='danger', font='CodeFont'); self.nb.add(self.err_box, text='Error')
         self.log_box = ScrolledText(self.nb, bootstyle='info', font='CodeFont'); self.nb.add(self.log_box, text='Log')
+        self.compare_box = ScrolledText(self.nb, font='CodeFont'); self.nb.add(self.compare_box, text='Compare Output')
 
         self.nb.pack(fill='both', expand=True, padx=8, pady=4)
 
@@ -1112,6 +1122,19 @@ class App(tb.Window):
             filetypes=[('All', '*.*')],
             callback=on_file_selected
         )
+
+    def pick_expected(self):
+        def on_file_selected(path):
+            self.expected_var.set(path)
+            self._file_dialog = None
+
+        self._file_dialog = CustomFileDialog(
+            self,
+            title="Choose expected output",
+            initialdir=os.path.dirname(self.expected_var.get() or os.getcwd()),
+            filetypes=[('All', '*.*')],
+            callback=on_file_selected
+        )
         
     # ── RUN 클릭 ────────────────────────────────
     def run_clicked(self):
@@ -1206,6 +1229,29 @@ class App(tb.Window):
         msg += f" | Elapsed Time(ms): {(elapsed * 1000.0):.2f} ms"
         self.status['text'] = msg
         self._log('Done.')
+
+        self.after(0, self.compare_output)
+
+    def compare_output(self):
+        expected_path = self.expected_var.get().strip()
+        if not expected_path or not os.path.isfile(expected_path):
+            self.compare_box.insert('end', '[비교 실패] 기대 출력 파일을 선택하세요.')
+            return
+        
+        actual = self.out_box.get('1.0', 'end-1c').strip().splitlines()
+        with open(expected_path, 'r', encoding='utf-8') as f:
+            expected = f.read().strip().splitlines()
+
+        diff = list(unified_diff(expected, actual, fromfile='Expected', tofile='Actual', lineterm=''))
+        result = ""
+        if not diff:
+            result += "✅ PASS (출력이 완전히 일치합니다)\n"
+        else:
+            result += "❌ FAIL (출력이 다릅니다)\n"
+            result += "\n".join(diff)
+        self.compare_box.delete('1.0', 'end')
+        self.compare_box.insert('end', result)
+        self.nb.select(self.compare_box)
 
 # ─── 실행 ──────────────────────────────────────────────────────
 if __name__ == '__main__':
