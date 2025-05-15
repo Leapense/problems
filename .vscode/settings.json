@@ -104,5 +104,6 @@
 	},
 	"[dockercompose]": {
 		"editor.tabSize": 4
-	}
+	},
+	"sonarlint.pathToCompileCommands": "${workspaceFolder}/build/compile_commands.json"
 }
