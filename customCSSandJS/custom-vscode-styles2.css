@@ -63,7 +63,7 @@
   padding:0px 0 56px !important;
 }
 .monaco-workbench .part.sidebar .monaco-list{
-  width:92% !important;margin:0 auto !important;background:transparent !important;
+  width:92% !important;margin:0 auto !important;
 }
 
 /* row states (hover/selected) — use list variables */
