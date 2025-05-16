@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # multi_run_mem_gui.py  –  ttkbootstrap(darkly) + 정확한 RSS + Java cwd fix
 
+from itertools import zip_longest
 import re
 import os, sys, time, threading, subprocess, tempfile, platform, resource, json
 import psutil                                       # pip install psutil
@@ -1232,27 +1233,61 @@ class App(tb.Window):
 
         self.after(0, self.compare_output)
 
+    _token_pat = re.compile(r'\{([^{}]+?)\}')
+
+    @staticmethod
+    def _line_to_regex(exp_line:str)->re.Pattern:
+        if exp_line.startswith('re:'):
+            pat = exp_line[3:]
+            return re.compile(pat)
+        parts, pos = [], 0
+        for m in App._token_pat.finditer(exp_line):
+            parts.append(re.escape(exp_line[pos:m.start()]))
+            alts = [re.escape(s) for s in m.group(1).split('|')]
+            parts.append('(?:' + '|'.join(alts) + ')')
+            pos = m.end()
+        parts.append(re.escape(exp_line[pos:]))
+
+        return re.compile('^' + ''.join(parts) + '$')
+    
+    @staticmethod
+    def _normalize(line:str)->str:
+        return re.sub(r'\s+', ' ', line.rstrip())
+
     def compare_output(self):
         expected_path = self.expected_var.get().strip()
         if not expected_path or not os.path.isfile(expected_path):
             self.compare_box.insert('end', '[비교 실패] 기대 출력 파일을 선택하세요.')
             return
         
-        actual = self.out_box.get('1.0', 'end-1c').strip().splitlines()
+        # actual = self.out_box.get('1.0', 'end-1c').strip().splitlines()
         with open(expected_path, 'r', encoding='utf-8') as f:
-            expected = f.read().strip().splitlines()
+            expected = [ln.rstrip('\n\r') for ln in f.readlines()]
+        
+        actual = [ln.rstrip('\n\r') for ln in self.out_box.get('1.0', 'end-1c').splitlines()]
 
-        diff = list(unified_diff(expected, actual, fromfile='Expected', tofile='Actual', lineterm=''))
-        result = ""
-        if not diff:
-            result += "✅ PASS (출력이 완전히 일치합니다)\n"
-        else:
-            result += "❌ FAIL (출력이 다릅니다)\n"
-            result += "\n".join(diff)
+        for idx,(e,a) in enumerate(zip_longest(expected, actual), start=1):
+            if e is None:
+                self._fail(idx, '출력 라인 수가 더 깁니다.', expected, actual); return
+            if a is None:
+                self._fail(idx, '출력 라인 수가 부족합니다.', expected, actual); return
+            
+            pat = self._line_to_regex(self._normalize(e))
+            if not pat.fullmatch(self._normalize(a)):
+                self._fail(idx, f'라인 {idx} 불일치', expected, actual); return
+
+        result = '✅ PASS (모든 라인이 규칙과 일치)\n'
         self.compare_box.delete('1.0', 'end')
         self.compare_box.insert('end', result)
         self.nb.select(self.compare_box)
-
+    
+    def _fail(self, line_num:int, why:str, exp:list[str], act:list[str]):
+        diff = unified_diff(exp, act, fromfile='Expected', tofile='Actual', lineterm='')
+        msg = f'❌ FAIL — {why}\n\n' + '\n'.join(diff)
+        self.compare_box.delete('1.0', 'end')
+        self.compare_box.insert('end', msg)
+        self.nb.select(self.compare_box)
+        
 # ─── 실행 ──────────────────────────────────────────────────────
 if __name__ == '__main__':
     
