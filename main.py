@@ -900,7 +900,7 @@ class App(tb.Window):
         self.app_cfg = {'theme':'darkly', 'font_size':12, 'timeout':10, 'base_font':'Apple SD Gothic Neo', 'mono_font':'SF Mono', 'mem_limit_mb': 0,}
         super().__init__(themename=self.app_cfg['theme'])
         self.title('MultiRunMem GUI')
-        self.geometry('860x660')
+        self.geometry('950x660')
 
         self.code_font = tkfont.Font(
             name='CodeFont',
