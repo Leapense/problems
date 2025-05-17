@@ -13,7 +13,7 @@
 }
 
 @keyframes fadeScaleIn{
-  0%{opacity:0;transform:scale(.92) translateY(4px);} 100%{opacity:1;transform:scale(1) translateY(0);} }
+  0%{opacity:0;transform:scale(.97);} 100%{opacity:1;transform:scale(1);} }
 @keyframes slideUpIn{
   0%{opacity:0;transform:translateY(6px);} 100%{opacity:1;transform:translateY(0);} }
 @keyframes pop{
@@ -81,132 +81,9 @@
   background:var(--vscode-list-activeSelectionBackground) !important;
   color:var(--vscode-list-activeSelectionForeground) !important;
 }
-
-.select-box-dropdown-container .monaco-list{
-  background:transparent !important;
-}
-
-.select-box-dropdown-container .monaco-list-row{
-  padding:6px 16px !important;
-  transition:background .18s var(--vscode-easing,cubic-bezier(.4,0,.2,1));
-}
-
+.monaco-workbench .part.sidebar.
 .monaco-workbench .part.sidebar .title-actions .actions-container{display:none!important;}
 .codicon-tree-item-expanded:before{color:var(--vscode-sideBar-foreground)!important;}
-
-/*****************************************************************
- * SETTINGS EDITOR — 투명/글래스 스타일 오버라이드 차단 & 재정의
- *****************************************************************/
-
-
-/* 2) Settings 리스트 행 • Hover / Selected 컬러 부드럽게 */
-.settings-editor .monaco-list-row {
-  border-radius: 6px !important;
-  transition: background .18s cubic-bezier(.4,0,.2,1);
-}
-.settings-editor .monaco-list-row:hover {
-  background: var(--vscode-list-hoverBackground) !important;
-}
-.settings-editor .monaco-list-row.selected,
-.settings-editor .monaco-list-row.selected.focused {
-  background: var(--vscode-list-activeSelectionBackground) !important;
-  color: var(--vscode-list-activeSelectionForeground) !important;
-}
-
-/* 3) Settings 드롭다운 (select-box) 에는 글래스 대신 ‘패널’ 톤 적용 */
-.settings-editor .select-box-dropdown-container {
-  backdrop-filter: none !important;          /* 글래스 해제 */
-  background: var(--vscode-editorWidget-background) !important;
-  border: 1px solid var(--vscode-editorWidget-border, #0000) !important;
-  box-shadow: 0 4px 16px rgba(0,0,0,.12) !important;
-}
-
-/*****************************************************************
- * STEP 1: 전역 드롭다운 기본(panel) 스타일
- *****************************************************************/
-.monaco-select-box-dropdown-container {
-  /* 기본 VSCode 패널 배경 & 그림자 */
-  background: var(--vscode-editorWidget-background, var(--vscode-editor-background)) !important;
-  backdrop-filter: none !important;
-  border: 1px solid var(--vscode-editorWidget-border, #0000) !important;
-  box-shadow: 0 4px 16px rgba(0,0,0,.12) !important;
-}
-
-/* 내부 리스트 배경도 패널 배경으로 */
-.monaco-select-box-dropdown-container .monaco-list-rows {
-  background: var(--vscode-editorWidget-background, var(--vscode-editor-background)) !important;
-}
-
-/*****************************************************************
- * STEP 2: Quick Input (⌘P / Ctrl+P) 에만 글래스 재적용
- *****************************************************************/
-.quick-input-widget .monaco-select-box-dropdown-container {
-  background: rgba(var(--vscode-editor-background,255,255,255), .82) !important;
-  backdrop-filter: blur(42px) saturate(170%) !important;
-  border: 1px solid var(--vscode-focusBorder) !important;
-  box-shadow:
-    0 6px 28px rgba(var(--vscode-editor-foreground,90,90,120),.14),
-    0 1.5px 4px rgba(var(--vscode-editor-foreground,90,90,120),.10) !important;
-}
-.quick-input-widget .monaco-select-box-dropdown-container .monaco-list-rows {
-  background: transparent !important; /* 원래 투명 리스트 사용 */
-}
-
-
-/*****************************************************************
- * ④ SELECT-BOX 설명 패널도 패널 톤으로 감싸기
- *****************************************************************/
-
-/* (a) 리스트와 분리해 주던 <hr> 을 다시 살리되, 색깔만 패널 경계색으로 교체 */
-.monaco-select-box-dropdown-container hr {
-  display: block !important;
-  border: none !important;
-  border-top: 1px solid var(--vscode-editorWidget-border, var(--vscode-focusBorder)) !important;
-  margin: 4px 0 !important;
-}
-
-/* (b) 설명영역(Details Pane)에 배경·패딩·경계 적용 */
-.monaco-select-box-dropdown-container .select-box-details-pane {
-  background: var(--vscode-editorWidget-background, var(--vscode-editor-background)) !important;
-  padding: 8px 12px !important;
-  /* 위에서 선언한 hr 과 자연스럽게 이어지도록 border-radius는 생략 */
-}
-
-/* (c) 설명 텍스트 색 보정 */
-.monaco-select-box-dropdown-container .select-box-details-pane .select-box-description-markdown {
-  color: var(--vscode-descriptionForeground) !important;
-  opacity: .9 !important;
-}
-
-/*****************************************************************
- * ⑦ SETTINGS 행 전체 칠하기 (가짜 배경 레이어 사용)
- *****************************************************************/
-.settings-editor .settings-tree-container .monaco-list-row.selected,
-.settings-editor .settings-tree-container .monaco-list-row.selected.focused {
-  /* 내부 컨테이너 대신 행 자체에 색을 둘 것 – 투명 유지 */
-  background: transparent !important;
-}
-
-.settings-editor .settings-tree-container .monaco-list-row.selected::before,
-.settings-editor .settings-tree-container .monaco-list-row.selected.focused::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;   /* 행 전체 덮기 */
-  background: var(--vscode-list-activeSelectionBackground);
-  z-index: -1;                           /* 실제 내용보다 뒤로 */
-  border-radius: 6px !important;                    /* 카드와 동일한 둥근 모서리 */
-}
-
-/* (옵션) Hover 도 같은 방식으로 칠하고 싶다면 ↓ 추가 */
-.settings-editor .settings-tree-container .monaco-list-row:hover::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: var(--vscode-list-hoverBackground);
-  z-index: -1;
-  border-radius: 6px !important;
-}
-
 
 /*──────────────── TITLEBAR ────────────────────────────────*/
 .monaco-workbench .part.titlebar{
@@ -259,37 +136,4 @@
 .notifications-toasts .monaco-list-row{
   animation:pop var(--vscode-dur-med) var(--vscode-easing);
 }
-
-/*****************************************************************
- * CONTEXT MENU — 1단계만 애니메이션, 2단계(서브) 복원하기
- *****************************************************************/
-
-/* ① 2단계(서브) 메뉴는 기본 동작으로 돌려놓기 */
-.context-view .monaco-menu-container:not(:first-child) {
-  /* 서브메뉴 컨테이너에는 애니/트랜스폼 없애기 */
-  opacity: 1 !important;
-  transform: none !important;
-  animation: none !important;
-}
-
-/* ② 최상위 컨텍스트 메뉴(첫 번째 자식)에만 애니메이션 */
-.context-view > .monaco-menu-container {
-  opacity: 0;
-  transform: scale(0.96);
-  transform-origin: top center;
-  animation: contextMenuScaleIn .28s var(--vscode-easing, cubic-bezier(.4,0,.2,1)) forwards !important;
-}
-
-/* ③ keyframes 그대로 재사용 */
-@keyframes contextMenuScaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
 
