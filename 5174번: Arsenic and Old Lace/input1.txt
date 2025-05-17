@@ -1,0 +1,13 @@
+2
+5 5
+ynnnn
+nnyyn
+ynynn
+nnnny
+ynyyy
+ynyny
+3 3
+yyn
+nyy
+yny
+ynn
