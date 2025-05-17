@@ -1,0 +1,8 @@
+Data Set 1:
+0.00
+
+Data Set 2:
+Oh no!
+
+Data Set 3:
+20.55
