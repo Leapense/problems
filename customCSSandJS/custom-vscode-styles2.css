@@ -40,7 +40,6 @@
 
 /*──────────────── SIDEBAR ─────────────────────────────────*/
 .monaco-workbench .part.sidebar{
-  background:rgba(var(--vscode-sideBar-background,248,249,251),.88) !important;
   border-right:1px solid var(--vscode-sideBar-border,transparent) !important;
   box-shadow:2px 0 12px rgba(var(--vscode-editor-foreground,80,80,100),.04) !important;
   backdrop-filter:blur(42px) saturate(170%)!important;
