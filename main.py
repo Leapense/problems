@@ -898,14 +898,34 @@ class CpuUsagePlugin(PluginBase):
 class App(tb.Window):
     def __init__(self):
         self.app_cfg = {'theme':'darkly', 'font_size':12, 'timeout':10, 'base_font':'Apple SD Gothic Neo', 'mono_font':'SF Mono', 'mem_limit_mb': 0,}
-        super().__init__(themename=self.app_cfg['theme'])
-        self.title('MultiRunMem GUI')
-        self.geometry('950x660')
 
+        # ① Window 생성 시 className 지정 → WM_CLASS(multirunmem)
+        super().__init__(
+            themename=self.app_cfg['theme'],
+            title='MultiRunMem GUI',
+            size=(950, 660),
+        )
+
+        # ② 아이콘 파일을 PhotoImage 로 로드해서 인스턴스 변수에 보존
+        assets = pathlib.Path(__file__).parent / 'MultiMemGUI_icon'
+        self._icon_dark  = tk.PhotoImage(file=str(assets/'dark-icon.png'))
+        self._icon_light = tk.PhotoImage(file=str(assets/'light-icon.png'))
+
+        # ③ 초기 아이콘 설정 (True = 모든 toplevel에 적용)
+        use_dark = self.prefers_dark_gsettings()  # 또는 portal/KDE 감지 함수
+        self.iconphoto(True,
+            self._icon_dark if use_dark else self._icon_light
+        )
         self.code_font = tkfont.Font(
             name='CodeFont',
             family=self.app_cfg['mono_font'],
             size=10                     # 기본 크기
+        )
+
+        self.base_font = tkfont.Font(
+            name='BaseFont',
+            family=self.app_cfg['base_font'],
+            size=12
         )
 
         style = ttk.Style()
@@ -947,6 +967,7 @@ class App(tb.Window):
         help_m.add_command(label='About', command=lambda:messagebox.showinfo('About', 'MultiRunMem GUI\nⓒ 2025'))
         menubar.add_cascade(label='Help', menu=help_m)
 
+        menubar.configure(font='BaseFont')
         self.config(menu=menubar)
 
         self.bind_all('<Control-o>', lambda e: self.pick_src())
@@ -1022,6 +1043,17 @@ class App(tb.Window):
         self.sampling_ms = 100
 
         self._toast = None
+
+    def prefers_dark_gsettings(self):
+        try:
+            out = subprocess.check_output(
+                shlex.split('gsettings get org.gnome.desktop.interface color-scheme'),
+                text=True
+            ).strip().strip("'")
+            return out == 'prefer-dark'
+        except Exception:
+            # GNOME 40 이전이거나 키가 없으면 fallback
+            return None
 
     def _cycle_tab_forward(self, event=None):
         tabs = self.nb.tabs()
