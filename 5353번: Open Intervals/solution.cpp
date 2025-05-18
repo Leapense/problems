@@ -9,13 +9,15 @@ int main()
     while (true)
     {
         int n;
-        if (!(cin >> n) || n == 0) {
+        if (!(cin >> n) || n == 0)
+        {
             break;
         }
 
         vector<pair<int, int>> intervals;
         intervals.reserve(n);
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++)
+        {
             int a, b;
             cin >> a >> b;
             intervals.emplace_back(b, a);
@@ -25,8 +27,10 @@ int main()
 
         int count = 0;
         int last_end = -1;
-        for (auto& [end, start] : intervals) {
-            if (start > last_end) {
+        for (auto &[end, start] : intervals)
+        {
+            if (start >= last_end)
+            {
                 ++count;
                 last_end = end;
             }
