@@ -1,0 +1,3 @@
+Possible key lengths between 4 and 20: 4 8 16
+Possible key lengths between 4 and 20: 6
+No guesses found.
