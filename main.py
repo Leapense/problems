@@ -943,29 +943,29 @@ class App(tb.Window):
 
         menubar = tb.Menu(self)
         file_m = tb.Menu(menubar, tearoff=0)
-        file_m.add_command(label='Open Source...', accelerator='Ctrl+O', command=self.pick_src)
-        file_m.add_command(label='Open Input...', accelerator='Ctrl+I', command=self.pick_in)
+        file_m.add_command(label='Open Source...', accelerator='Ctrl+O', command=self.pick_src, font="BaseFont")
+        file_m.add_command(label='Open Input...', accelerator='Ctrl+I', command=self.pick_in, font="BaseFont")
         file_m.add_separator()
-        file_m.add_command(label='Exit', accelerator='Ctrl+Q', command=self.quit)
-        menubar.add_cascade(label='File', menu=file_m)
+        file_m.add_command(label='Exit', accelerator='Ctrl+Q', command=self.quit, font="BaseFont")
+        menubar.add_cascade(label='File', menu=file_m, font="BaseFont")
 
         set_m = tb.Menu(menubar, tearoff=0)
-        set_m.add_command(label='Preferences...', command=self.open_settings)
-        menubar.add_cascade(label='Settings', menu=set_m)
+        set_m.add_command(label='Preferences...', command=self.open_settings, font="BaseFont")
+        menubar.add_cascade(label='Settings', menu=set_m, font="BaseFont")
 
         # View menu (our new accessibility toggles)
         view_m = tb.Menu(menubar, tearoff=0)
         view_m.add_checkbutton(label='Large Font', accelerator='Ctrl+Plus / Ctrl+Minus',
-                               variable=self._large_font_var,
+                               variable=self._large_font_var, font="BaseFont",
                                command=self._toggle_large_font)
         view_m.add_checkbutton(label='High Contrast',
                                variable=self._high_contrast_var,
-                               command=self._toggle_high_contrast)
-        menubar.add_cascade(label='View', menu=view_m)
+                               command=self._toggle_high_contrast, font="BaseFont")
+        menubar.add_cascade(label='View', menu=view_m, font="BaseFont")
 
         help_m = tb.Menu(menubar, tearoff=0)
-        help_m.add_command(label='About', command=lambda:messagebox.showinfo('About', 'MultiRunMem GUI\nⓒ 2025'))
-        menubar.add_cascade(label='Help', menu=help_m)
+        help_m.add_command(label='About', command=lambda:messagebox.showinfo('About', 'MultiRunMem GUI\nⓒ 2025'), font="BaseFont")
+        menubar.add_cascade(label='Help', menu=help_m, font="BaseFont")
 
         menubar.configure(font='BaseFont')
         self.config(menu=menubar)
@@ -986,26 +986,26 @@ class App(tb.Window):
         self.src_var, self.in_var, self.expected_var = tb.StringVar(), tb.StringVar(), tb.StringVar()
 
         ttk.Label(top, text='Source:').grid(row=0, column=0, sticky='w')
-        ttk.Entry(top, textvariable=self.src_var, width=60)\
+        ttk.Entry(top, textvariable=self.src_var, width=60, font="BaseFont")\
             .grid(row=0, column=1, sticky='we')
         ttk.Button(top, text='...', command=self.pick_src, style="darkly")\
             .grid(row=0, column=2, padx=4)
 
         ttk.Label(top, text='Input File:').grid(row=1, column=0, sticky='w')
-        ttk.Entry(top, textvariable=self.in_var, width=60)\
+        ttk.Entry(top, textvariable=self.in_var, width=60, font="BaseFont")\
             .grid(row=1, column=1, sticky='we')
         ttk.Button(top, text='...', command=self.pick_in, style="darkly")\
             .grid(row=1, column=2, padx=4)
         
         ttk.Label(top, text='Expected Output File:').grid(row=2, column=0, sticky='w')
-        ttk.Entry(top, textvariable=self.expected_var, width=60)\
+        ttk.Entry(top, textvariable=self.expected_var, width=60, font="BaseFont")\
             .grid(row=2, column=1, sticky='we')
         ttk.Button(top, text='...', command=self.pick_expected, style="darkly").grid(row=2, column=2, padx=4)
 
         top.columnconfigure(1, weight=1)
 
         # ── 상태 바 ───────────────────────────────
-        self.status = ttk.Label(self, text='Ready', anchor='w')
+        self.status = ttk.Label(self, text='Ready', anchor='w', font="CodeFont")
         self.status.pack(side='bottom', fill='x', padx=8, pady=4)
         top.columnconfigure(1, weight=1)
 
