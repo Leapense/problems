@@ -297,7 +297,7 @@ class CustomFileDialog(tb.Toplevel):
         
 
         side = ttk.Frame(self); side.pack(side='left', fill='y', padx=4, pady=4)
-        ttk.Label(side, text="Bookmarks").pack(anchor='nw')
+        ttk.Label(side, text="Bookmarks", font="BaseFont").pack(anchor='nw')
         self.bm_list = []
         self.bm_var = tb.StringVar(value=self.bm_list)
         self.bm_lb = tk_list = tk.Listbox(side, listvariable=self.bm_var, height=8, exportselection=False)
@@ -332,7 +332,7 @@ class CustomFileDialog(tb.Toplevel):
         self.pathbar = PathBar(toolbar, self.current_dir, self.change_dir)
         self.pathbar.grid(row=0, column=3, sticky='ew', padx=(2,0), pady=0)
 
-        self.search_entry = ttk.Entry(toolbar, textvariable=self.search_var, width=24)
+        self.search_entry = ttk.Entry(toolbar, textvariable=self.search_var, width=24, font="BaseFont")
         self.search_entry.grid(row=0, column=4, padx=8, pady=4, sticky='ns')
         self.search_entry.insert(0, self.PLACEHOLDER)
         self.search_entry.bind("<FocusIn>", self._clear_placeholder)
@@ -374,7 +374,7 @@ class CustomFileDialog(tb.Toplevel):
         self.tree.bind("<Double-1>", self.on_double_click)
         self.tree.bind("<<TreeviewSelect>>", self.on_select)
 
-        self.status = ttk.Label(self, text="", anchor='w')
+        self.status = ttk.Label(self, text="", anchor='w', font="BaseFont")
         self.status.pack(side='bottom', fill='x', padx=8, pady=2)
 
         btn_frame = ttk.Frame(self)
@@ -697,29 +697,29 @@ class SettingsDialog(tb.Toplevel):
         self.callback = callback
         self.cfg_copy = cfg.copy()
 
-        ttk.Label(self, text="Theme:").grid(row=0, column=0, sticky='e', padx=6, pady=6)
+        ttk.Label(self, text="Theme:", font="BaseFont").grid(row=0, column=0, sticky='e', padx=6, pady=6)
         self.theme_var = tb.StringVar(value=cfg['theme'])
         ttk.Combobox(self, textvariable=self.theme_var, values=theme_names, state='readonly', width=18).grid(row=0, column=1, padx=6, pady=6)
 
-        ttk.Label(self, text="Base font size:").grid(row=1, column=0, sticky='e', padx=6, pady=6)
+        ttk.Label(self, text="Base font size:", font="BaseFont").grid(row=1, column=0, sticky='e', padx=6, pady=6)
         self.font_var = tb.IntVar(value=cfg['font_size'])
         ttk.Spinbox(self, from_=8, to=24, textvariable=self.font_var, width=6).grid(row=1, column=1, sticky='w', padx=6, pady=6)
 
-        ttk.Label(self, text="Timeout (sec):").grid(row=2, column=0, sticky='e', padx=6, pady=6)
+        ttk.Label(self, text="Timeout (sec):", font="BaseFont").grid(row=2, column=0, sticky='e', padx=6, pady=6)
         self.to_var = tb.IntVar(value=cfg['timeout'])
         ttk.Spinbox(self, from_=1, to=60, textvariable=self.to_var, width=6).grid(row=2, column=1, sticky='w', padx=6, pady=6)
 
         familes = sorted(tkfont.families())
 
-        ttk.Label(self, text="Base font:").grid(row=3, column=0, sticky='e', padx=6, pady=6)
+        ttk.Label(self, text="Base font:", font="BaseFont").grid(row=3, column=0, sticky='e', padx=6, pady=6)
         self.base_var = tb.StringVar(value=cfg['base_font'])
         ttk.Combobox(self, textvariable=self.base_var, values=familes, state='readonly', width=22).grid(row=3, column=1, padx=6, pady=6)
 
-        ttk.Label(self, text="Mono font:").grid(row=4, column=0, sticky='e', padx=6, pady=6)
+        ttk.Label(self, text="Mono font:", font="BaseFont").grid(row=4, column=0, sticky='e', padx=6, pady=6)
         self.mono_var = tb.StringVar(value=cfg['mono_font'])
         ttk.Combobox(self, textvariable=self.mono_var, values=familes, state='readonly', width=22).grid(row=4, column=1, padx=6, pady=6)
 
-        ttk.Label(self, text="Memory Limit (MB):").grid(row=5, column=0, sticky='e', padx=6, pady=6)
+        ttk.Label(self, text="Memory Limit (MB):", font="BaseFont").grid(row=5, column=0, sticky='e', padx=6, pady=6)
         self.mem_var = tb.IntVar(value=cfg.get('mem_limit_mb', 0))
         ttk.Spinbox(self, from_=0, to=10240, textvariable=self.mem_var, width=6).grid(row=5, column=1, sticky='w', padx=6, pady=6)
 
@@ -840,7 +840,7 @@ class MemoryLimitPlugin(PluginBase):
                 pass
 
         results = {
-            "peak_rss_sampled": f"{self.peak_rss_sampled_bytes / (1024 ** 2):.2f} MB"
+            "peak_rss": f"{self.peak_rss_sampled_bytes / (1024 ** 2):.2f} MB"
         }
         if self.is_linux and self.peak_vmhwm_bytes > 0:
             results["peak_vmhwm"] = f"{self.peak_vmhwm_bytes / (1024 ** 2):.2f} MB"
@@ -982,6 +982,8 @@ class App(tb.Window):
         self.bind_all('<Shift-F6>', self._cycle_tab_backward)
 
         # ── 상단 파일 입력부 ──────────────────────
+        self.last_dir = os.getcwd()
+
         top = ttk.Frame(self); top.pack(fill='x', padx=8, pady=4)
         self.src_var, self.in_var, self.expected_var = tb.StringVar(), tb.StringVar(), tb.StringVar()
 
@@ -1132,13 +1134,14 @@ class App(tb.Window):
     def pick_src(self):
         def on_file_selected(path):
             self.src_var.set(path)
+            self.last_dir = os.path.dirname(path)
             self._file_dialog = None  # release reference
 
         # Keep a reference!
         self._file_dialog = CustomFileDialog(
             self,
             title="Choose source",
-            initialdir=os.path.dirname(self.src_var.get() or os.getcwd()),
+            initialdir=self.last_dir,
             filetypes=[('Source', '*.c *.cpp *.cc *.cxx *.java *.py'), ('All', '*.*')],
             callback=on_file_selected
         )
@@ -1146,12 +1149,13 @@ class App(tb.Window):
     def pick_in(self):
         def on_file_selected(path):
             self.in_var.set(path)
+            self.last_dir = os.path.dirname(path)
             self._file_dialog = None
         
         self._file_dialog = CustomFileDialog(
             self,
             title="Choose input",
-            initialdir=os.path.dirname(self.in_var.get() or os.getcwd()),
+            initialdir=self.last_dir,
             filetypes=[('All', '*.*')],
             callback=on_file_selected
         )
@@ -1159,12 +1163,13 @@ class App(tb.Window):
     def pick_expected(self):
         def on_file_selected(path):
             self.expected_var.set(path)
+            self.last_dir = os.path.dirname(path)
             self._file_dialog = None
 
         self._file_dialog = CustomFileDialog(
             self,
             title="Choose expected output",
-            initialdir=os.path.dirname(self.expected_var.get() or os.getcwd()),
+            initialdir=self.last_dir,
             filetypes=[('All', '*.*')],
             callback=on_file_selected
         )
