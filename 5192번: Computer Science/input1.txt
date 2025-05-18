@@ -1,0 +1,22 @@
+2
+3 3
+usc
+great
+sucks
+2
+i am a student at [usc,2] a great school
+i also think that [ucla,3] sucks
+3
+we are usc the university of southern california
+we are located in the same town as [ucla,3]
+we have many excellent [students,1]
+2
+we are ucla
+we are a great great school
+1 2
+usc
+1
+empty page
+2
+[link,1] usc usc [usc,1] text text text text text
+usc usc usc usc usc usc usc usc usc usc usc usc
