@@ -1313,7 +1313,23 @@ class App(tb.Window):
             
             pat = self._line_to_regex(self._normalize(e))
             if not pat.fullmatch(self._normalize(a)):
-                self._fail(idx, f'라인 {idx} 불일치', expected, actual); return
+                self._fail(idx, f'라인 {idx} 불일치', expected, actual)
+                if msgbox.askyesno(
+                    "테스트 실패",
+                    "기대 출력값과 예상 출력값이 다릅니다.\n그래도 해당 코드 내용을 복사하시겠습니까?",
+                    parent=self
+                ):
+                    text_to_copy = self.src_var.get()
+                    try:
+                        with open(text_to_copy, 'r', encoding='utf-8') as f:
+                            content = f.read()
+                    except Exception as e:
+                        msgbox.showerror("오류", f"파일을 읽는 중 에러가 발생했습니다:\n{e}", parent=self)
+                        return
+                    pyperclip.copy(content)
+                    msgbox.showinfo("클립보드 복사", "소스 코드가 클립보드에 복사되었습니다.\n온라인 백준 코딩 사이트에서 제출해보시고, 수정 및 다음 진행을 해주세요.",  parent=self)
+                    self.nb.select(self.compare_box)
+                return
 
         result = '✅ PASS (모든 라인이 규칙과 일치)\n'
         self.compare_box.delete('1.0', 'end')
