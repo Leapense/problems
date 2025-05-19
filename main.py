@@ -11,6 +11,7 @@ from functools import partial
 import pathlib
 import datetime
 import matplotlib
+import pyperclip
 matplotlib.use('TkAgg')
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
@@ -21,7 +22,8 @@ from difflib import unified_diff
 import ttkbootstrap as tb                           # pip install ttkbootstrap
 from ttkbootstrap import ttk
 from ttkbootstrap.scrolled import ScrolledText
-from tkinter import filedialog, messagebox
+from tkinter import filedialog
+import tkinter.messagebox as msgbox
 import tkinter.font as tkfont
 import tkinter as tk
 from ttkbootstrap.toast import ToastNotification
@@ -388,7 +390,7 @@ class CustomFileDialog(tb.Toplevel):
         self.update_nav_buttons()
 
     def clear_history(self):
-        if not tk.messagebox.askyesno(
+        if not msgbox.askyesno(
             "히스토리 삭제",
             "모든 탐색 기록을 삭제할까요?\n(뒤로/앞으로 목록과 폴더 포커스 정보가 사라집니다)",
             parent=self
@@ -407,7 +409,7 @@ class CustomFileDialog(tb.Toplevel):
             
         self._save_state()
         self.update_nav_buttons()
-        tk.messagebox.showinfo("완료", "탐색 히스토리가 삭제되었습니다.", parent=self)
+        msgbox.showinfo("완료", "탐색 히스토리가 삭제되었습니다.", parent=self)
 
     def _enter_directory(self, child_name):
         self._last_child[self.current_dir] = child_name
@@ -608,7 +610,7 @@ class CustomFileDialog(tb.Toplevel):
             self._save_state()
             self.destroy()
         else:
-            tb.messagebox.showwarning("No file selected", "Please select a file.")
+            msgbox.showwarning("No file selected", "Please select a file.")
 
     def change_dir(self, new_dir):
         new_dir = os.path.abspath(new_dir)
@@ -1316,6 +1318,22 @@ class App(tb.Window):
         result = '✅ PASS (모든 라인이 규칙과 일치)\n'
         self.compare_box.delete('1.0', 'end')
         self.compare_box.insert('end', result)
+        if msgbox.askyesno(
+            "테스트 성공",
+            "해당 소스 코드를 클립보드 복사하시겠습니까?",
+            parent=self
+        ):
+            # StringVar에서 실제 텍스트 가져오기
+            text_to_copy = self.src_var.get()
+            try:
+                with open(text_to_copy, 'r', encoding='utf-8') as f:
+                    content = f.read()
+            except Exception as e:
+                msgbox.showerror("오류", f"파일을 읽는 중 에러가 발생했습니다:\n{e}", parent=self)
+                return
+            pyperclip.copy(content)
+            msgbox.showinfo("클립보드 복사", "소스 코드가 클립보드에 복사되었습니다.", parent=self)
+            
         self.nb.select(self.compare_box)
     
     def _fail(self, line_num:int, why:str, exp:list[str], act:list[str]):
