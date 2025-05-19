@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 # multi_run_mem_gui.py  –  ttkbootstrap(darkly) + 정확한 RSS + Java cwd fix
 
+import importlib
 from itertools import zip_longest
 import re
+import shutil
 import os, sys, time, threading, subprocess, tempfile, platform, resource, json
+import webbrowser
 import psutil                                       # pip install psutil
 import shlex
 import fnmatch
@@ -1033,6 +1036,12 @@ class App(tb.Window):
         
         self.clean_btn.pack(side='left', padx=8, pady=4)
 
+        self.lizard_btn = ttk.Button(btn_frame, text='Analyze the code',
+                                     style='darkly',
+                                     command=self.analysis_clicked)
+        
+        self.lizard_btn.pack(side='left', padx=8, pady=4)
+
         # ── 결과 탭 ───────────────────────────────
         self.nb = ttk.Notebook(self, style="darkly")
         self.out_box = ScrolledText(self.nb, font='CodeFont');  self.nb.add(self.out_box, text='Output')
@@ -1180,7 +1189,7 @@ class App(tb.Window):
     def run_clicked(self):
         src = self.src_var.get().strip()
         if not src:
-            messagebox.showwarning('Warn', '소스 파일을 선택하세요')
+            msgbox.showwarning('Warn', '소스 파일을 선택하세요')
             return
 
         stdin_data = (open(self.in_var.get()).read()
@@ -1197,6 +1206,58 @@ class App(tb.Window):
         
     def clean_clicked(self):
         self.stdin_box.delete('1.0', tk.END)
+
+    def analysis_clicked(self):
+        src_path = self.src_var.get().strip()
+
+        if not src_path or not os.path.isfile(src_path):
+            msgbox.showerror("경로 오류", "분석할 소스 코드 파일 경로가 잘못되었습니다.", parent=self)
+            return
+        
+        if importlib.util.find_spec("lizard") is None:
+            if not msgbox.askyesno("lizard 미설치",
+                                   "lizard 파이썬 패키지가 설치돼 있지 않습니다.\n"
+                                   "지금 바로 설치하시겠습니까?",
+                                   parent=self):
+                return
+            try:
+                subprocess.check_call([sys.executable, "-m", "pip", "install", "--user", "lizard"])
+            except subprocess.CalledProcessError as e:
+                msgbox.showerror("설치 실패", f"lizard 설치 중 오류가 발생했습니다:\n{e}", parent=self)
+                return
+            
+        tmp_html = tempfile.NamedTemporaryFile(suffix=".html", delete=False)
+        tmp_html_path = tmp_html.name
+        tmp_html.close()
+
+        try:
+            lizard_cmd = shutil.which("lizard")
+            if lizard_cmd:
+                cmd = [lizard_cmd, "--html", src_path]
+            else:
+                # PATH 에 없으면 현재 파이썬으로 모듈 실행
+                cmd = [sys.executable, "-m", "lizard", "--html", src_path]
+
+                with open(tmp_html_path, "w", encoding="utf-8") as out_html:
+                    proc = subprocess.run(
+                        cmd,
+                        stdout=out_html,
+                        stderr=subprocess.PIPE,
+                        text=True
+                    )
+        except FileNotFoundError:
+            msgbox.showerror("실행 실패", "lizard 명령어를 찾을 수 없습니다.\n터미널에서 `lizard --version` 으로 확인해주세요.", parent=self)
+            os.unlink(tmp_html_path)
+            return
+        
+        if proc.returncode != 0:
+            msgbox.showerror("분석 실패", f"lizard 실행 중 오류가 발생했습니다:\n{proc.stderr}",
+                             parent=self)
+            os.unlink(tmp_html_path)
+            return
+        
+        webbrowser.open_new_tab(f"file://{tmp_html_path}")
+        msgbox.showinfo("완료", "코드 분석 결과가 브라우저 새 탭으로 열렸습니다!", parent=self)
 
 
     # ── 백그라운드 작업 ──────────────────────────
