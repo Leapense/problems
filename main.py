@@ -279,7 +279,7 @@ class CustomFileDialog(tb.Toplevel):
         '.md': '#9468f2',
     }
     CFG_PATH = pathlib.Path.home() / ".custom_file_dialog.json"
-    def __init__(self, parent, title="Select File", initialdir=None, filetypes=None, callback=None):
+    def __init__(self, parent, title="Select File", initialdir=None, filetypes=None, callback=None, copy_cfg=None):
         super().__init__(parent)
         self.title(title)
         self.resizable(True, True)
@@ -309,12 +309,12 @@ class CustomFileDialog(tb.Toplevel):
         tk_list.pack(fill='both', expand=False)
         tk_list.bind("<<ListboxSelect>>", self._on_bm_select)
         btn_fr = ttk.Frame(side); btn_fr.pack(fill='x', pady=(2,10))
-        ttk.Button(btn_fr, text="+", width=2, command=self._add_bookmark, style='darkly', cursor="hand2").pack(side='left', padx=2, pady=2)
-        ttk.Button(btn_fr, text="-", width=2, command=self._remove_bookmark, style='darkly', cursor="hand2").pack(side='left', padx=2, pady=2)
+        ttk.Button(btn_fr, text="+", width=2, command=self._add_bookmark, bootstyle='secondary', cursor="hand2").pack(side='left', padx=2, pady=2)
+        ttk.Button(btn_fr, text="-", width=2, command=self._remove_bookmark, bootstyle='secondary', cursor="hand2").pack(side='left', padx=2, pady=2)
 
-        self.show_hidden = tb.BooleanVar(value=False)
+        """ self.show_hidden = tb.BooleanVar(value=False)
         ttk.Checkbutton(side, text="Show hidden", variable=self.show_hidden,
-                        bootstyle="round-toggle", command=self.populate).pack(anchor='w')
+                        bootstyle="round-toggle", command=self.populate).pack(anchor='w') """
 
         if not self.history:
             self.history = [self.current_dir]
@@ -324,14 +324,14 @@ class CustomFileDialog(tb.Toplevel):
         toolbar = ttk.Frame(self)
         toolbar.pack(fill='x', padx=0, pady=0)
 
-        self.prev_btn = ttk.Button(toolbar, text="◀", width=3, command=self.go_prev, style="darkly")
+        self.prev_btn = ttk.Button(toolbar, text="◀", width=3, command=self.go_prev, bootstyle='secondary')
         self.prev_btn.grid(row=0, column=0, padx=2, pady=4, sticky='ns')
-        self.next_btn = ttk.Button(toolbar, text="▶", width=3, command=self.go_next, style="darkly")
+        self.next_btn = ttk.Button(toolbar, text="▶", width=3, command=self.go_next, bootstyle='secondary')
         self.next_btn.grid(row=0, column=1, padx=2, pady=4, sticky='ns')
-        self.refresh_btn = ttk.Button(toolbar, text="⟳", width=3, command=self.refresh, style="darkly")
+        self.refresh_btn = ttk.Button(toolbar, text="⟳", width=3, command=self.refresh, bootstyle='secondary')
         self.refresh_btn.grid(row=0, column=2, padx=2, pady=4, sticky='ns')
 
-        self.clear_btn = ttk.Button(toolbar, text="🧹", width=3, command=self.clear_history, style="darkly")
+        self.clear_btn = ttk.Button(toolbar, text="🧹", width=3, command=self.clear_history, bootstyle='secondary')
         self.clear_btn.grid(row=0, column=6, padx=(2,8), pady=4)
 
         self.pathbar = PathBar(toolbar, self.current_dir, self.change_dir)
@@ -351,8 +351,6 @@ class CustomFileDialog(tb.Toplevel):
 
         columns = ("name", "date", "type", "size")
         self.tree = ttk.Treeview(tree_frame, columns=columns, show="headings")
-        self.tree.tag_configure('odd',  background='#272727')  # 다크테마 예시
-        self.tree.tag_configure('even', background='#252525')
 
         for ext, clr in self.EXT_COLORS.items():
             tag = f"ext_{ext}"
@@ -384,8 +382,8 @@ class CustomFileDialog(tb.Toplevel):
 
         btn_frame = ttk.Frame(self)
         btn_frame.pack(fill='x', pady=4)
-        ttk.Button(btn_frame, text="Cancel", command=self.destroy, style="darkly").pack(side='right', padx=4)
-        ttk.Button(btn_frame, text="OK", command=self.on_ok, style="darkly").pack(side='right')
+        ttk.Button(btn_frame, text="Cancel", command=self.destroy, bootstyle='secondary').pack(side='right', padx=4)
+        ttk.Button(btn_frame, text="OK", command=self.on_ok, bootstyle='info').pack(side='right')
 
         self._current_sort = ("name", False)
         self.populate()
@@ -652,12 +650,12 @@ class CustomFileDialog(tb.Toplevel):
             return {}
         
     def _load_state(self):
-        print("📂  state file:", self.CFG_PATH)
+        #print("📂  state file:", self.CFG_PATH)
         if self.CFG_PATH.exists():
             try:
                 with self.CFG_PATH.open("r", encoding="utf-8") as fp:
                     data = json.load(fp)
-                    print("✅  loaded:", data)  # → 내용 확인
+                    #print("✅  loaded:", data)  # → 내용 확인
                     return data
             except Exception as e:
                 print("⚠️  load error:", e)
@@ -731,8 +729,8 @@ class SettingsDialog(tb.Toplevel):
 
 
         btn_fr = ttk.Frame(self); btn_fr.grid(columnspan=2, pady=8)
-        ttk.Button(btn_fr, text="Cancel", command=self.destroy, style="darkly").pack(side='right', padx=4)
-        ttk.Button(btn_fr, text="OK", command=self._ok, style="darkly").pack(side='right')
+        ttk.Button(btn_fr, text="Cancel", command=self.destroy, style=self.cfg_copy['theme']).pack(side='right', padx=4)
+        ttk.Button(btn_fr, text="OK", command=self._ok, style=self.cfg_copy['theme']).pack(side='right')
 
         self.columnconfigure(1, weight=1)
         self.bind('<Return>', lambda *_: self._ok())
@@ -969,7 +967,7 @@ class App(tb.Window):
         menubar.add_cascade(label='View', menu=view_m, font="BaseFont")
 
         help_m = tb.Menu(menubar, tearoff=0)
-        help_m.add_command(label='About', command=lambda:messagebox.showinfo('About', 'MultiRunMem GUI\nⓒ 2025'), font="BaseFont")
+        help_m.add_command(label='About', command=lambda:msgbox.showinfo('About', 'MultiRunMem GUI\nⓒ 2025'), font="BaseFont")
         menubar.add_cascade(label='Help', menu=help_m, font="BaseFont")
 
         menubar.configure(font='BaseFont')
@@ -995,19 +993,19 @@ class App(tb.Window):
         ttk.Label(top, text='Source:').grid(row=0, column=0, sticky='w')
         ttk.Entry(top, textvariable=self.src_var, width=60, font="BaseFont")\
             .grid(row=0, column=1, sticky='we')
-        ttk.Button(top, text='...', command=self.pick_src, style="darkly")\
+        ttk.Button(top, text='...', command=self.pick_src, bootstyle='secondary')\
             .grid(row=0, column=2, padx=4)
 
         ttk.Label(top, text='Input File:').grid(row=1, column=0, sticky='w')
         ttk.Entry(top, textvariable=self.in_var, width=60, font="BaseFont")\
             .grid(row=1, column=1, sticky='we')
-        ttk.Button(top, text='...', command=self.pick_in, style="darkly")\
+        ttk.Button(top, text='...', command=self.pick_in, bootstyle='secondary')\
             .grid(row=1, column=2, padx=4)
         
         ttk.Label(top, text='Expected Output File:').grid(row=2, column=0, sticky='w')
         ttk.Entry(top, textvariable=self.expected_var, width=60, font="BaseFont")\
             .grid(row=2, column=1, sticky='we')
-        ttk.Button(top, text='...', command=self.pick_expected, style="darkly").grid(row=2, column=2, padx=4)
+        ttk.Button(top, text='...', command=self.pick_expected, bootstyle='secondary').grid(row=2, column=2, padx=4)
 
         top.columnconfigure(1, weight=1)
 
@@ -1026,31 +1024,30 @@ class App(tb.Window):
 
         # ── RUN 버튼 ─────────────────────────────
         self.run_btn = ttk.Button(btn_frame, text='RUN',
-                                  style='darkly',
+                                  bootstyle='success',
                                   command=self.run_clicked)
         self.run_btn.pack(side='left', padx=8, pady=4)
 
         self.clean_btn = ttk.Button(btn_frame, text='Clear stdin',
-                                    style='darkly',
+                                    bootstyle='secondary',
                                     command=self.clean_clicked)
         
         self.clean_btn.pack(side='left', padx=8, pady=4)
 
         self.lizard_btn = ttk.Button(btn_frame, text='Analyze the code',
-                                     style='darkly',
+                                     bootstyle='info',
                                      command=self.analysis_clicked)
         
         self.lizard_btn.pack(side='left', padx=8, pady=4)
 
         # ── 결과 탭 ───────────────────────────────
-        self.nb = ttk.Notebook(self, style="darkly")
+        self.nb = ttk.Notebook(self, style=self.app_cfg['theme'])
         self.out_box = ScrolledText(self.nb, font='CodeFont');  self.nb.add(self.out_box, text='Output')
         self.err_box = ScrolledText(self.nb, bootstyle='danger', font='CodeFont'); self.nb.add(self.err_box, text='Error')
         self.log_box = ScrolledText(self.nb, bootstyle='info', font='CodeFont'); self.nb.add(self.log_box, text='Log')
         self.compare_box = ScrolledText(self.nb, font='CodeFont'); self.nb.add(self.compare_box, text='Compare Output')
 
         self.nb.pack(fill='both', expand=True, padx=8, pady=4)
-
         self._stats_after_id = None
         # sampling interval (ms)
         self.sampling_ms = 100
@@ -1111,7 +1108,7 @@ class App(tb.Window):
 
     # ── 설정 창 열기 ─────────────────
     def open_settings(self):
-        SettingsDialog(self, self.app_cfg,
+        SettingsDialog(self, self.app_cfg.copy(),
                        theme_names=tb.Style().theme_names(),
                        callback=self.apply_settings)
 
@@ -1129,16 +1126,32 @@ class App(tb.Window):
         if changed_font or changed_base:
             self._apply_base_font()
 
+        if changed_font:
+            self.code_font.configure(size=self.app_cfg['font_size'])
+
         if changed_mono:
             self.code_font.configure(family=self.app_cfg['mono_font'])
 
         # timeout 은 run_with_memory 호출 때 사용
         self._log('Settings updated.')
+        self._update_settings()
+
+    def _update_settings(self):
+        self.theme_var = tb.StringVar(value=self.app_cfg['theme'])
+        self.font_var = tb.IntVar(value=self.app_cfg['font_size'])
+        self.base_var = tb.StringVar(value=self.app_cfg['base_font'])
+        self.mono_var = tb.StringVar(value=self.app_cfg['mono_font'])
 
     def _apply_base_font(self):
-        base = tkfont.nametofont('TkDefaultFont')
-        base.configure(size=self.app_cfg['font_size'], family=self.app_cfg['base_font'])
-        # Treeview/Entry 등에도 자동 전파
+        tkfont.nametofont('TkDefaultFont').configure(
+            size=self.app_cfg['font_size'],
+            family=self.app_cfg['base_font'],
+        )
+        # your menus/labels refer to the named BaseFont
+        tkfont.nametofont('BaseFont').configure(
+            size=self.app_cfg['font_size'],
+            family=self.app_cfg['base_font'],
+        )
 
     # ── 파일 다이얼로그 ──────────────────────────
     
@@ -1154,7 +1167,8 @@ class App(tb.Window):
             title="Choose source",
             initialdir=self.last_dir,
             filetypes=[('Source', '*.c *.cpp *.cc *.cxx *.java *.py'), ('All', '*.*')],
-            callback=on_file_selected
+            callback=on_file_selected,
+            copy_cfg=self.app_cfg
         )
 
     def pick_in(self):
@@ -1168,7 +1182,8 @@ class App(tb.Window):
             title="Choose input",
             initialdir=self.last_dir,
             filetypes=[('All', '*.*')],
-            callback=on_file_selected
+            callback=on_file_selected,
+            copy_cfg=self.app_cfg
         )
 
     def pick_expected(self):
@@ -1182,7 +1197,8 @@ class App(tb.Window):
             title="Choose expected output",
             initialdir=self.last_dir,
             filetypes=[('All', '*.*')],
-            callback=on_file_selected
+            callback=on_file_selected,
+            copy_cfg=self.app_cfg
         )
         
     # ── RUN 클릭 ────────────────────────────────
