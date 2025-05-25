@@ -2,7 +2,7 @@
 .mac,
 .windows,
 .linux {
-  font-family: 'SF Mono', 'Apple SD Gothic Neo', monospace;
+  font-family: 'SF Mono', 'SF Pro Display', 'Apple SD Gothic Neo', monospace;
 } 
 
 /* ------------ Title Bar ------------ */
