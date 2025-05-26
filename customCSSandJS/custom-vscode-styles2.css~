@@ -2,7 +2,7 @@
 .mac,
 .windows,
 .linux {
-  font-family: 'SFMono Nerd Font', 'Apple SD Gothic Neo', monospace;
+  font-family: 'MesloLGS NF', 'SF Mono', monospace;
 } 
 
 /* ------------ Title Bar ------------ */
