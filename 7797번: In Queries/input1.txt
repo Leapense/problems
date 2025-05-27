@@ -1,0 +1,24 @@
+3
+1 1 1 5 6
+9
+max 5
+remove 2
+remove 4
+min 2
+insert 2 4 6 3 10
+range 4 1 5
+insert 0 0 0 0 0
+remove 7
+max 3
+3 3 3 3 3
+2
+remove 1
+insert 1 1 1 1 1
+2 4 3 10 2
+6
+remove 1
+remove 2
+insert 2 2 2 2 2
+remove 1
+remove 10
+max 3
