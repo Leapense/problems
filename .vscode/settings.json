@@ -95,7 +95,11 @@
 		"typeindex": "cpp",
 		"typeinfo": "cpp",
 		"valarray": "cpp",
-		"variant": "cpp"
+		"variant": "cpp",
+		"flat_map": "cpp",
+		"flat_set": "cpp",
+		"queue": "cpp",
+		"stack": "cpp"
 	},
 	"python.REPL.enableREPLSmartSend": false,
 	"editor.indentSize": "tabSize",
