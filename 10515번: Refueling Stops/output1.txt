@@ -1,0 +1,3 @@
+Case #1: 449 800 1200
+Case #2: 100 600 1100
+Case #3: out of petrol
