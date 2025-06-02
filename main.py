@@ -52,7 +52,7 @@ def compile_source(src: str):
     if lang in ('c', 'cpp'):
         exe = tempfile.mktemp(prefix='prog_', dir=workdir)
         cmd = ['gcc' if lang == 'c' else 'g++', src,
-               '-O2', '-std=c17' if lang == 'c' else '-std=c++26',
+               '-O2', '-std=c23' if lang == 'c' else '-std=c++26',
                '-Wall', '-pipe', '-o', exe]
         res = subprocess.run(cmd, capture_output=True, text=True)
         if res.returncode != 0:
