@@ -1425,9 +1425,8 @@ class App(tb.Window):
                 msgbox.showerror("오류", f"파일을 읽는 중 에러가 발생했습니다:\n{e}", parent=self)
                 return
             pyperclip.copy(content)
-            msgbox.showinfo("클립보드 복사", "소스 코드가 클립보드에 복사되었습니다.", parent=self)
             
-        self.nb.select(self.compare_box)
+        # self.nb.select(self.compare_box)
     
     def _fail(self, line_num:int, why:str, exp:list[str], act:list[str]):
         diff = unified_diff(exp, act, fromfile='Expected', tofile='Actual', lineterm='')
