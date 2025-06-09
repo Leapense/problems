@@ -11,6 +11,10 @@
     # pkgs.python311Packages.pip
     # pkgs.nodejs_20
     # pkgs.nodePackages.nodemon
+    pkgs.gcc14
+    pkgs.python312
+    pkgs.adoptopenjdk-hotspot-bin-15
+    pkgs.python312Packages.pip
   ];
 
   # Sets environment variables in the workspace
