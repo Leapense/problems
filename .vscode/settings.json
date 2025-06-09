@@ -109,5 +109,7 @@
 	"[dockercompose]": {
 		"editor.tabSize": 4
 	},
-	"sonarlint.pathToCompileCommands": "${workspaceFolder}/build/compile_commands.json"
+	"sonarlint.pathToCompileCommands": "${workspaceFolder}/build/compile_commands.json",
+	"IDX.aI.enableInlineCompletion": true,
+	"IDX.aI.enableCodebaseIndexing": true
 }
