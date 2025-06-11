@@ -1,0 +1,1 @@
+python3 main2.py "/home/user/problems/12804번: Gregory and Bank/solution.cpp" -t 2 --mem-limit 256 --batch "12804번: Gregory and Bank"
