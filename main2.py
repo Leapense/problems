@@ -69,7 +69,7 @@ def find_expected_for_input(in_path: Path) -> Optional[str]:
     if 'input' in stem.name.lower():
         try:
             # Handle names like "input1", "input_1", "input.1"
-            base_name = re.sub(r'^input', 'output', stem.name, 1, re.IGNORECASE)
+            base_name = re.sub(r'^input', 'output', stem.name, count=1, flags=re.IGNORECASE)
             out_stem = stem.with_name(base_name)
             input_output_match = next((str(out_stem.with_suffix(ext)) for ext in EXP_EXTS
                                        if out_stem.with_suffix(ext).exists()), None)
