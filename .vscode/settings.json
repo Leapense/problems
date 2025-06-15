@@ -111,5 +111,6 @@
 	},
 	"sonarlint.pathToCompileCommands": "${workspaceFolder}/build/compile_commands.json",
 	"IDX.aI.enableInlineCompletion": true,
-	"IDX.aI.enableCodebaseIndexing": true
+	"IDX.aI.enableCodebaseIndexing": true,
+	"C_Cpp.errorSquiggles": "disabled"
 }
