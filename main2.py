@@ -110,7 +110,7 @@ def compile_source(src: str) -> Generator[tuple[str, str, str], None, None]:
                 'gcc' if lang == 'c' else 'g++',
                 src, '-O2',
                 # Use more common standards for better compatibility
-                '-std=c17' if lang == 'c' else '-std=c++17',
+                '-std=c23' if lang == 'c' else '-std=c++26',
                 '-Wall', '-Wextra', '-pipe', '-o', exe,
             ]
             res = subprocess.run(cmd, capture_output=True, text=True, check=False)
@@ -150,7 +150,7 @@ def _linux_vmhwm(pid: int) -> int:
 def run_with_metrics(cmd: List[str],
                      stdin_data: str,
                      cwd: Optional[str],
-                     timeout: int,
+                     timeout: float,
                      mem_limit_bytes: int = 0):
     start_wall = time.perf_counter()
     peak_rss = 0
@@ -332,7 +332,7 @@ def parse_args():
     grp.add_argument('-i', '--input', help='File to feed to stdin')
     grp.add_argument('--stdin', help='Literal string to feed to stdin')
     p.add_argument('-e', '--expected', help='Expected output file')
-    p.add_argument('-t', '--timeout', type=int, default=10,
+    p.add_argument('-t', '--timeout', type=float, default=10,
                    help='Timeout seconds (default 10)')
     p.add_argument('--mem-limit', type=int, default=0,
                    help='Memory limit in MB (0 = no limit)')
