@@ -120,7 +120,7 @@ def compile_source(src: str) -> Generator[tuple[str, str, str], None, None]:
 
         elif lang == 'java':
             # Run javac from the source file's directory
-            res = subprocess.run(['javac', src], cwd=workdir, capture_output=True, text=True, check=False)
+            res = subprocess.run(['javac', Path(src).absolute()], cwd=workdir, capture_output=True, text=True, check=False)
             if res.returncode:
                 raise RuntimeError(f"javac error:\n{res.stderr.strip()}")
             yield lang, Path(src).stem, workdir
@@ -376,7 +376,7 @@ def main():
     # Set up test cases
     tests: List[tuple[str, Optional[str]]] = []
     if args.batch:
-        batch_dir = Path(args.batch)
+        batch_dir = Path(args.batch).absolute()
         if not batch_dir.is_dir():
             print(f"[error] Batch directory not found: {batch_dir}", file=sys.stderr)
             sys.exit(1)
