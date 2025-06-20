@@ -126,7 +126,7 @@ def compile_source(src: str) -> Generator[tuple[str, str, str], None, None]:
             yield lang, Path(src).stem, workdir
 
         else:  # python – no compilation
-            yield lang, src, workdir
+            yield lang, Path(src).absolute(), workdir
 
     finally:
         if exe_to_cleanup and exe_to_cleanup.exists():
