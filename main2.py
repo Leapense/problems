@@ -348,7 +348,7 @@ def parse_args():
 # ─── Main ──────────────────────────────────────────────────────────
 def main():
     args = parse_args()
-    src_path = Path(args.source)
+    src_path = Path(args.source).absolute()
     overall_success = True
 
     # Prepare stdin data for single-run mode
