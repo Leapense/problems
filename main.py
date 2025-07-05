@@ -1338,9 +1338,61 @@ class App(tb.Window):
             with open(src_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             pyperclip.copy(content)
-            ToastNotification("Copied", "Source code copied to clipboard.", duration=2000, bootstyle='success').show_toast()
+            CustomToast("Copied", "Source code copied to clipboard.", duration=2000, bootstyle='success')
         except Exception as e:
             msgbox.showerror("Error", f"Failed to read and copy source file:\n{e}", parent=self)
+
+class CustomToast(tb.Toplevel):
+    def __init__(self, title, message, duration=3000, bootstyle='primary', parent=None):
+        super().__init__(alpha=0.0, parent=parent)
+        self.duration = duration
+        self.overrideredirect(False)
+        self.wm_attributes("-type", "splash")
+        self.wm_title(title)
+
+        main_frame = ttk.Frame(self,
+                               bootstyle=bootstyle, padding=10)
+        main_frame.pack(fill='both', expand=True)
+
+        title_label = ttk.Label(main_frame, text=title, font="-weight bold", bootstyle=f'inverse-{bootstyle}')
+        title_label.pack(anchor='nw', fill='x')
+
+        message_label = ttk.Label(main_frame, text=message, bootstyle=f'inverse-{bootstyle}')
+        message_label.pack(anchor='nw', pady=(5, 0), fill='x')
+        self.update_idletasks()
+
+        if parent:
+            screen_width = parent.winfo_screenwidth()
+            screen_height = parent.winfo_screenheight()
+        else:
+            screen_width = self.winfo_screenwidth()
+            screen_height = self.winfo_screenheight()
+
+        width = self.winfo_width()
+        height = self.winfo_height()
+        x = screen_width - width - 20
+        y = screen_height - height - 50
+
+        self.geometry(f'{width}x{height}+{x}+{y}')
+        self.fade_in()
+        self.after(self.duration, self.fade_out)
+
+    def fade_in(self):
+        alpha = self.attributes('-alpha')
+        if alpha < 0.9:
+            alpha += 0.08
+            self.attributes('-alpha', alpha)
+            self.after(15, self.fade_in)
+
+    def fade_out(self):
+        alpha = self.attributes('-alpha')
+        if alpha > 0.0:
+            alpha -= 0.08
+            self.attributes('-alpha', alpha)
+            self.after(15, self.fade_out)
+        else:
+            self.destroy()
+
 
 # ─── 실행 ──────────────────────────────────────────────────────
 if __name__ == '__main__':
