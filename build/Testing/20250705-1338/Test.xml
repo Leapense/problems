@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="(empty)"
+	BuildStamp="20250705-1338-Experimental"
+	Name="(empty)"
+	Generator="ctest-3.31.6"
+	CompilerName=""
+	CompilerVersion=""
+	OSName="Linux"
+	Hostname="gigachad-linux"
+	OSRelease="6.15.4-200.fc42.x86_64"
+	OSVersion="#1 SMP PREEMPT_DYNAMIC Fri Jun 27 15:32:46 UTC 2025"
+	OSPlatform="x86_64"
+	Is64Bits="1"
+	VendorString="AuthenticAMD"
+	VendorID="Advanced Micro Devices"
+	FamilyID="25"
+	ModelID="80"
+	ModelName="AMD Ryzen 5 5600H with Radeon Graphics"
+	ProcessorCacheSize="512"
+	NumberOfLogicalCPU="12"
+	NumberOfPhysicalCPU="6"
+	TotalVirtualMemory="8191"
+	TotalPhysicalMemory="13815"
+	LogicalProcessorsPerPhysical="2"
+	ProcessorClockFrequency="3210.73"
+	>
+	<Testing>
+		<StartDateTime>Jul 05 22:40 KST</StartDateTime>
+		<StartTestTime>1751722800</StartTestTime>
+		<TestList/>
+		<EndDateTime>Jul 05 22:40 KST</EndDateTime>
+		<EndTestTime>1751722800</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>
