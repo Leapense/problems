@@ -967,7 +967,7 @@ class App(tb.Window):
                         'base_font':'Apple SD Gothic Neo', 'mono_font':'SF Mono', 
                         'mem_limit_mb': 0}
         
-        super().__init__(themename=self.app_cfg['theme'], title='MultiRunMem GUI',
+        super().__init__(themename=self.app_cfg['theme'], title='백준 문제 테스트 프로그램',
                          size=(1000, 850), minsize=(700, 550))
 
         self._setup_fonts()
@@ -1041,7 +1041,7 @@ class App(tb.Window):
         menubar.add_cascade(label='Settings', menu=set_m)
         
         help_m = tb.Menu(menubar, tearoff=0)
-        help_m.add_command(label='About', command=lambda:msgbox.showinfo('About', 'MultiRunMem GUI\nⓒ 2024. All rights reserved.'))
+        help_m.add_command(label='About', command=lambda:msgbox.showinfo('About', '백준 문제 테스트 프로그램\nⓒ 2025. All rights reserved.'))
         menubar.add_cascade(label='Help', menu=help_m)
 
     def _setup_layout(self):
@@ -1188,7 +1188,7 @@ class App(tb.Window):
     def run_clicked(self):
         src = self.src_var.get().strip()
         if not src:
-            msgbox.showwarning('Warning', '소스 파일을 선택하세요', parent=self)
+            CustomToast('Warning', '소스 파일을 선택하세요', duration=2000, bootstyle='warning')
             return
 
         stdin_data = (open(self.in_var.get(), 'r', encoding='utf-8').read()
@@ -1289,7 +1289,7 @@ class App(tb.Window):
         src_path = self.src_var.get().strip()
 
         if not src_path or not os.path.isfile(src_path):
-            msgbox.showerror("경로 오류", "분석할 소스 코드 파일 경로가 잘못되었습니다.", parent=self)
+            CustomToast("경로 오류", "분석할 소스 코드 파일 경로가 잘못되었습니다.", duration=2000, bootstyle='danger')
             return
         
         if importlib.util.find_spec("lizard") is None:
@@ -1301,7 +1301,7 @@ class App(tb.Window):
             try:
                 subprocess.check_call([sys.executable, "-m", "pip", "install", "--user", "lizard"])
             except subprocess.CalledProcessError as e:
-                msgbox.showerror("설치 실패", f"lizard 설치 중 오류가 발생했습니다:\n{e}", parent=self)
+                CustomToast("설치 실패", f"lizard 설치 중 오류가 발생했습니다:\n{e}", duration=2000, bootstyle='danger')
                 return
             
         tmp_html = tempfile.NamedTemporaryFile(suffix=".html", delete=False, mode='w', encoding='utf-8')
@@ -1316,15 +1316,15 @@ class App(tb.Window):
             tmp_html.close()
 
             if proc.returncode != 0:
-                msgbox.showerror("분석 실패", f"lizard 실행 중 오류가 발생했습니다:\n{proc.stderr}", parent=self)
+                CustomToast("분석 실패", f"lizard 실행 중 오류가 발생했습니다:\n{proc.stderr}", duration=2000, bootstyle='danger')
                 os.unlink(tmp_html_path)
                 return
             
             webbrowser.open_new_tab(pathlib.Path(tmp_html_path).as_uri())
-            msgbox.showinfo("완료", "코드 분석 결과가 브라우저 새 탭으로 열렸습니다!", parent=self)
+            CustomToast("완료", "코드 분석 결과가 브라우저 새 탭으로 열렸습니다!", duration=2000, bootstyle='success')
 
         except Exception as e:
-            msgbox.showerror("실행 실패", f"lizard 실행 중 예외가 발생했습니다: {e}", parent=self)
+            CustomToast("실행 실패", f"lizard 실행 중 예외가 발생했습니다: {e}", duration=2000, bootstyle='danger')
             if os.path.exists(tmp_html_path):
                 os.unlink(tmp_html_path)
     
