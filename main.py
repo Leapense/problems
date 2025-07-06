@@ -272,7 +272,7 @@ class PathBar(ttk.Frame): # ttk.Frame을 사용 (ttkbootstrap의 Frame)
     def _on_label_click(self, path, event=None):
         self.callback(path)
 
-# File Picker 팝업
+# File Picker 팝업 (재디자인 버전)
 class CustomFileDialog(tb.Toplevel):
     _col_caption = {
         "name": "Name",
@@ -280,7 +280,7 @@ class CustomFileDialog(tb.Toplevel):
         "type": "Type",
         "size": "Size"
     }
-    PLACEHOLDER = "Search files.."
+    PLACEHOLDER = "Search current directory..."
     EXT_COLORS = {
         '.py': '#B0F7B4',
         '.cpp': '#B0D0F7',
@@ -289,82 +289,117 @@ class CustomFileDialog(tb.Toplevel):
         '.md': '#9468f2',
     }
     CFG_PATH = pathlib.Path.home() / ".custom_file_dialog.json"
+
     def __init__(self, parent, title="Select File", initialdir=None, filetypes=None, callback=None, copy_cfg=None):
         super().__init__(parent)
         self.title(title)
         self.resizable(True, True)
         self.grab_set()
-        self.geometry("1200x700")
+        self.geometry("1000x650")
+        self.minsize(600, 400)
+
         self.callback = callback
         self.filetypes = filetypes or [("All files", "*.*")]
-        self.selected_file = None
+        self.selected_file = tb.StringVar()
 
+        # --- 상태 및 데이터 로드 ---
         state = self._load_state()
         self.history = state.get("history", [])
         self._last_child = state.get("last_child", {})
+        self.bookmarks = state.get("bookmarks", [])
 
-        self.current_dir = os.path.abspath(initialdir or os.getcwd())
-
-        if not self.history:
-            self.history = [self.current_dir]
-        
-        self.history_index = len(self.history) - 1
-        
-
-        side = ttk.Frame(self); side.pack(side='left', fill='y', padx=4, pady=4)
-        ttk.Label(side, text="Bookmarks", font="BaseFont").pack(anchor='nw')
-        self.bm_list = []
-        self.bm_var = tb.StringVar(value=self.bm_list)
-        self.bm_lb = tk_list = tk.Listbox(side, listvariable=self.bm_var, height=8, exportselection=False)
-        tk_list.pack(fill='both', expand=False)
-        tk_list.bind("<<ListboxSelect>>", self._on_bm_select)
-        btn_fr = ttk.Frame(side); btn_fr.pack(fill='x', pady=(2,10))
-        ttk.Button(btn_fr, text="+", width=2, command=self._add_bookmark, bootstyle='secondary', cursor="hand2").pack(side='left', padx=2, pady=2)
-        ttk.Button(btn_fr, text="-", width=2, command=self._remove_bookmark, bootstyle='secondary', cursor="hand2").pack(side='left', padx=2, pady=2)
-
-        """ self.show_hidden = tb.BooleanVar(value=False)
-        ttk.Checkbutton(side, text="Show hidden", variable=self.show_hidden,
-                        bootstyle="round-toggle", command=self.populate).pack(anchor='w') """
+        self.current_dir = os.path.abspath(initialdir or state.get("last_dir", os.getcwd()))
+        if not os.path.isdir(self.current_dir):
+            self.current_dir = os.getcwd()
 
         if not self.history:
             self.history = [self.current_dir]
         self.history_index = len(self.history) - 1
-        self.search_var = tb.StringVar()
+        
+        # --- 메인 레이아웃 (PanedWindow) ---
+        main_pane = ttk.PanedWindow(self, orient='horizontal')
+        main_pane.pack(fill='both', expand=True, padx=10, pady=5)
 
-        toolbar = ttk.Frame(self)
-        toolbar.pack(fill='x', padx=0, pady=0)
+        # --- 1. 왼쪽 패널 (북마크) ---
+        left_pane = self._setup_left_pane(main_pane)
+        main_pane.add(left_pane, weight=1)
 
-        self.prev_btn = ttk.Button(toolbar, text="◀", width=3, command=self.go_prev, bootstyle='secondary')
-        self.prev_btn.grid(row=0, column=0, padx=2, pady=4, sticky='ns')
-        self.next_btn = ttk.Button(toolbar, text="▶", width=3, command=self.go_next, bootstyle='secondary')
-        self.next_btn.grid(row=0, column=1, padx=2, pady=4, sticky='ns')
-        self.refresh_btn = ttk.Button(toolbar, text="⟳", width=3, command=self.refresh, bootstyle='secondary')
-        self.refresh_btn.grid(row=0, column=2, padx=2, pady=4, sticky='ns')
+        # --- 2. 오른쪽 패널 (파일 목록) ---
+        right_pane = ttk.Frame(main_pane)
+        main_pane.add(right_pane, weight=4)
 
-        self.clear_btn = ttk.Button(toolbar, text="🧹", width=3, command=self.clear_history, bootstyle='secondary')
-        self.clear_btn.grid(row=0, column=6, padx=(2,8), pady=4)
+        self._setup_toolbar(right_pane)
+        self._setup_treeview(right_pane)
+        self._setup_bottom_bar(right_pane)
+
+        # --- 초기화 ---
+        self._current_sort = ("name", False)
+        self._populate_bookmarks()
+        self.populate()
+        self._restore_selection()
+        self.update_nav_buttons()
+
+    def _setup_left_pane(self, parent):
+        """북마크 및 시스템 폴더를 표시하는 왼쪽 패널 구성"""
+        frame = ttk.Labelframe(parent, text="Places", padding=5)
+        
+        # 북마크 Treeview
+        self.bookmark_tree = ttk.Treeview(frame, show="tree", selectmode="browse")
+        self.bookmark_tree.pack(fill='both', expand=True)
+        self.bookmark_tree.bind("<<TreeviewSelect>>", self._on_bm_select)
+
+        # 북마크 관리 버튼
+        btn_fr = ttk.Frame(frame)
+        btn_fr.pack(fill='x', pady=(5, 0))
+        ttk.Button(btn_fr, text="+", width=2, command=self._add_bookmark, bootstyle='secondary-link').pack(side='left', padx=2)
+        ttk.Button(btn_fr, text="-", width=2, command=self._remove_bookmark, bootstyle='secondary-link').pack(side='left', padx=2)
+        
+        return frame
+
+    def _setup_toolbar(self, parent):
+        """상단 툴바 구성 (네비게이션, 경로, 검색)"""
+        toolbar = ttk.Frame(parent)
+        toolbar.pack(fill='x', pady=(0, 5))
+        toolbar.columnconfigure(1, weight=1)
+
+        nav_frame = ttk.Frame(toolbar)
+        nav_frame.grid(row=0, column=0, padx=(0, 5))
+        self.prev_btn = ttk.Button(nav_frame, text="<", width=3, command=self.go_prev, bootstyle='secondary-link')
+        self.prev_btn.pack(side='left')
+        self.next_btn = ttk.Button(nav_frame, text=">", width=3, command=self.go_next, bootstyle='secondary-link')
+        self.next_btn.pack(side='left')
+        ttk.Button(nav_frame, text="↑", width=3, command=self.go_up, bootstyle='secondary-link').pack(side='left')
+        ttk.Button(nav_frame, text="↻", width=3, command=self.refresh, bootstyle='secondary-link').pack(side='left')
 
         self.pathbar = PathBar(toolbar, self.current_dir, self.change_dir)
-        self.pathbar.grid(row=0, column=3, sticky='ew', padx=(2,0), pady=0)
+        self.pathbar.grid(row=0, column=1, sticky='ew')
 
-        self.search_entry = ttk.Entry(toolbar, textvariable=self.search_var, width=24, font="BaseFont")
-        self.search_entry.grid(row=0, column=4, padx=8, pady=4, sticky='ns')
+        self.search_var = tb.StringVar()
+        search_frame = ttk.Frame(toolbar)
+        search_frame.grid(row=0, column=2, padx=5)
+        self.search_entry = ttk.Entry(search_frame, textvariable=self.search_var, width=25)
+        self.search_entry.pack(side='left')
         self.search_entry.insert(0, self.PLACEHOLDER)
         self.search_entry.bind("<FocusIn>", self._clear_placeholder)
         self.search_entry.bind("<FocusOut>", self._add_placeholder)
         self.search_entry.bind("<KeyRelease>", lambda e: self.populate())
+        ttk.Label(search_frame, text="🔍").pack(side='left', padx=(0, 5))
 
-        toolbar.columnconfigure(3, weight=1)
-
-        tree_frame = ttk.Frame(self)
+    def _setup_treeview(self, parent):
+        """파일/폴더 목록을 표시하는 Treeview 구성"""
+        tree_frame = ttk.Frame(parent)
         tree_frame.pack(fill='both', expand=True)
+        tree_frame.rowconfigure(0, weight=1)
+        tree_frame.columnconfigure(0, weight=1)
 
         columns = ("name", "date", "type", "size")
-        self.tree = ttk.Treeview(tree_frame, columns=columns, show="headings")
-
+        self.tree = ttk.Treeview(tree_frame, columns=columns, show="headings", selectmode="browse")
+        
+        # 아이콘 태그
+        self.tree.tag_configure('folder')
+        self.tree.tag_configure('file')
         for ext, clr in self.EXT_COLORS.items():
-            tag = f"ext_{ext}"
-            self.tree.tag_configure(tag, foreground=clr)
+            self.tree.tag_configure(f"ext_{ext}", foreground=clr)
 
         vsb = ttk.Scrollbar(tree_frame, orient="vertical", command=self.tree.yview)
         hsb = ttk.Scrollbar(tree_frame, orient="horizontal", command=self.tree.xview)
@@ -373,155 +408,130 @@ class CustomFileDialog(tb.Toplevel):
         self.tree.grid(row=0, column=0, sticky='nsew')
         vsb.grid(row=0, column=1, sticky='ns')
         hsb.grid(row=1, column=0, sticky='ew')
-        tree_frame.rowconfigure(0, weight=1)
-        tree_frame.columnconfigure(0, weight=1)
 
         for col in columns:
-            self.tree.heading(col, text=self._col_caption[col],
-                              command=lambda c=col: self._sort_by_column(c))
-        self.tree.column("name", width=320)
-        self.tree.column("date", width=160)
-        self.tree.column("type", width=120)
-        self.tree.column("size", width=80, anchor='e')
+            self.tree.heading(col, text=self._col_caption[col], command=lambda c=col: self._sort_by_column(c))
+        
+        self.tree.column("name", width=350, stretch=True)
+        self.tree.column("date", width=150, stretch=False)
+        self.tree.column("type", width=120, stretch=False)
+        self.tree.column("size", width=100, anchor='e', stretch=False)
 
         self.tree.bind("<Double-1>", self.on_double_click)
         self.tree.bind("<<TreeviewSelect>>", self.on_select)
 
-        self.status = ttk.Label(self, text="", anchor='w', font="BaseFont")
-        self.status.pack(side='bottom', fill='x', padx=8, pady=2)
+    def _setup_bottom_bar(self, parent):
+        """하단 파일 이름 입력 및 버튼 영역 구성"""
+        bottom_frame = ttk.Frame(parent)
+        bottom_frame.pack(fill='x', pady=(5, 0))
+        bottom_frame.columnconfigure(1, weight=1)
 
-        btn_frame = ttk.Frame(self)
-        btn_frame.pack(fill='x', pady=4)
-        ttk.Button(btn_frame, text="Cancel", command=self.destroy, bootstyle='secondary').pack(side='right', padx=4)
-        ttk.Button(btn_frame, text="OK", command=self.on_ok, bootstyle='info').pack(side='right')
-
-        self._current_sort = ("name", False)
-        self.populate()
-        self._restore_selection()
-        self.update_nav_buttons()
-
-    def clear_history(self):
-        if not msgbox.askyesno(
-            "히스토리 삭제",
-            "모든 탐색 기록을 삭제할까요?\n(뒤로/앞으로 목록과 폴더 포커스 정보가 사라집니다)",
-            parent=self
-        ):
-            return
+        ttk.Label(bottom_frame, text="File name:").grid(row=0, column=0, padx=(0, 5), pady=5)
+        ttk.Entry(bottom_frame, textvariable=self.selected_file).grid(row=0, column=1, sticky='ew', pady=5)
         
-        self.history = [self.current_dir]
-        self.history_index = 0
-        self._last_child.clear()
+        btn_frame = ttk.Frame(bottom_frame)
+        btn_frame.grid(row=0, column=2, padx=(10, 0))
+        ttk.Button(btn_frame, text="OK", command=self.on_ok, bootstyle='primary').pack(side='left')
+        ttk.Button(btn_frame, text="Cancel", command=self.destroy, bootstyle='secondary').pack(side='left', padx=5)
 
-        if self.CFG_PATH.exists():
-            try:
-                self.CFG_PATH.unlink()
-            except Exception as e:
-                print("CFG 파일 삭제 실패: ", e)
-            
-        self._save_state()
-        self.update_nav_buttons()
-        msgbox.showinfo("완료", "탐색 히스토리가 삭제되었습니다.", parent=self)
+    # --- 북마크 관련 메서드 ---
+    def _populate_bookmarks(self):
+        self.bookmark_tree.delete(*self.bookmark_tree.get_children())
+        
+        # 시스템 기본 폴더 추가
+        places = {
+            "Home": pathlib.Path.home(),
+            "Documents": pathlib.Path.home() / "Documents",
+            "Downloads": pathlib.Path.home() / "Downloads",
+            "Desktop": pathlib.Path.home() / "Desktop"
+        }
+        sys_node = self.bookmark_tree.insert("", "end", text=" Quick Access", open=True)
+        for name, path in places.items():
+            if path.exists():
+                self.bookmark_tree.insert(sys_node, "end", text=f" {name}", values=[str(path)])
 
-    def _enter_directory(self, child_name):
-        self._last_child[self.current_dir] = child_name
-        new_path = os.path.join(self.current_dir, child_name)
-        self.change_dir(new_path)
-
-    def on_cb_change(self, newdir):
-        print("CD:", newdir)
-        self.pathbar.set_path(newdir)
+        # 사용자 지정 북마크 추가
+        if self.bookmarks:
+            bm_node = self.bookmark_tree.insert("", "end", text=" Bookmarks", open=True)
+            for path_str in self.bookmarks:
+                path = pathlib.Path(path_str)
+                if path.exists():
+                    self.bookmark_tree.insert(bm_node, "end", text=f" {path.name}", values=[str(path)])
 
     def _add_bookmark(self):
         p = self.current_dir
-        if p not in self.bm_list:
-            self.bm_list.append(p)
-            self.bm_var.set(self.bm_list)
+        if p not in self.bookmarks:
+            self.bookmarks.append(p)
+            self._populate_bookmarks()
 
     def _remove_bookmark(self):
-        sel = self.bm_lb.curselection()
-        if not sel: return
-        idx = sel[0]
-        del self.bm_list[idx]
-        self.bm_var.set(self.bm_list)
+        sel_id = self.bookmark_tree.selection()
+        if not sel_id: return
+        
+        # 시스템 폴더는 삭제 불가
+        if self.bookmark_tree.parent(sel_id[0]) == "": return
 
-    def _on_bm_select(self, ev):
-        sel = self.bm_lb.curselection()
-        if not sel: return
-        path = self.bm_list[sel[0]]
-        self.change_dir(path)
+        path_to_remove = self.bookmark_tree.item(sel_id[0], "values")[0]
+        if path_to_remove in self.bookmarks:
+            self.bookmarks.remove(path_to_remove)
+            self._populate_bookmarks()
 
-    def _clear_placeholder(self, event):
-        if self.search_var.get() == self.PLACEHOLDER:
-            self.search_entry.delete(0, 'end')
+    def _on_bm_select(self, event):
+        sel_id = self.bookmark_tree.selection()
+        if not sel_id: return
+        
+        values = self.bookmark_tree.item(sel_id[0], "values")
+        if values:
+            self.change_dir(values[0])
 
-    def _add_placeholder(self, event):
-        if not self.search_var.get().strip():
-            self.search_entry.delete(0, 'end')
-            self.search_entry.insert(0, self.PLACEHOLDER)
-
-    def reset_search(self):
-        self.search_var.set("")
-        self.search_entry.delete(0, 'end')
-        self.search_entry.insert(0, self.PLACEHOLDER)
-        self.populate()
-
+    # --- 파일 목록 채우기 및 정렬 ---
     def populate(self):
         self.tree.delete(*self.tree.get_children())
-        raw = self.search_var.get().strip()
-        if raw.lower() == self.PLACEHOLDER.lower():
-            search = ""
-        else:
-            search = raw.lower()
+        search_term = self.search_var.get().strip().lower()
+        if search_term == self.PLACEHOLDER.lower():
+            search_term = ""
+
         try:
-            entries = os.listdir(self.current_dir)
-        except Exception:
+            entries = sorted(os.listdir(self.current_dir), key=str.lower)
+        except OSError:
             entries = []
+        
         dirs, files = [], []
         for name in entries:
-            if search and search not in name.lower():
+            if search_term and search_term not in name.lower():
                 continue
-            path = os.path.join(self.current_dir, name)
-            if os.path.isdir(path):
-                dirs.append(name)
-            elif self._match_filetypes(name):
-                files.append(name)
             
-        total_size = 0
-        row_idx = 0
-        for d in sorted(dirs):
-            tag = 'even' if row_idx % 2 else 'odd'
-            dt = self._format_time(os.path.getmtime(os.path.join(self.current_dir, d)))
-            self.tree.insert("", "end", values=(d, dt, "Directory", ""), tags=(tag,))
-            row_idx += 1
-        for f in sorted(files):
-            tag = 'even' if row_idx % 2 else 'odd'
-            fpath = os.path.join(self.current_dir, f)
-            size = os.path.getsize(fpath)
-            total_size += size
-            dt = self._format_time(os.path.getmtime(fpath))
+            full_path = os.path.join(self.current_dir, name)
+            try:
+                if os.path.isdir(full_path):
+                    dirs.append(name)
+                elif self._match_filetypes(name):
+                    files.append(name)
+            except OSError:
+                continue
+
+        for d in dirs:
+            path = os.path.join(self.current_dir, d)
+            mtime = self._format_time(os.path.getmtime(path))
+            self.tree.insert("", "end", values=(f" {d}", mtime, "Folder", ""), tags=('folder',))
+        
+        for f in files:
+            path = os.path.join(self.current_dir, f)
+            size = os.path.getsize(path)
+            mtime = self._format_time(os.path.getmtime(path))
             ext = os.path.splitext(f)[1].lower()
-            typ = self._file_type(ext)
-            tags = [tag]
+            ftype = self._file_type(ext)
+            
+            tags = ['file']
             if ext in self.EXT_COLORS:
                 tags.append(f"ext_{ext}")
-            self.tree.insert("", "end", values=(f, dt, typ, self._format_size(size)), tags=tuple(tags))
-            row_idx += 1
-        self.status['text'] = f"{len(dirs)+len(files)} items | {self._format_size(total_size)} Total"
+            
+            self.tree.insert("", "end", values=(f" {f}", mtime, ftype, self._format_size(size)), tags=tuple(tags))
 
         col, rev = self._current_sort
         self._sort_by_column(col, keep_direction=True)
 
-    def _restore_selection(self):
-        last_child = self._last_child.get(self.current_dir)
-        if not last_child:
-            return
-        for iid in self.tree.get_children():
-            if self.tree.set(iid, "name") == last_child:
-                self.tree.selection_set(iid)
-                self.tree.focus(iid)
-                self.tree.see(iid)
-                break
-
+    # ... (기존 _sort_by_column, _str_size_to_int, _file_type, _format_time, _match_filetypes, _format_size 메서드는 그대로 유지) ...
     def _sort_by_column(self, col, keep_direction=False):
         if keep_direction:
             reverse = self._current_sort[1]
@@ -529,8 +539,12 @@ class CustomFileDialog(tb.Toplevel):
             reverse = not self._current_sort[1] if self._current_sort[0] == col else False
         self._current_sort = (col, reverse)
 
-        def sort_key(item_id):
-            value = self.tree.set(item_id, col)
+        # 데이터 가져오기 (이름 앞 공백 제거)
+        items = [(self.tree.set(k, col).strip(), k) for k in self.tree.get_children('')]
+
+        # 정렬 키 함수
+        def sort_key(item):
+            value = item[0]
             if col == "size":
                 return self._str_size_to_int(value)
             if col == "date":
@@ -538,14 +552,16 @@ class CustomFileDialog(tb.Toplevel):
                     return datetime.datetime.strptime(value, "%Y-%m-%d %H:%M")
                 except ValueError:
                     return datetime.datetime.min
-            return value.lower()
-        
-        items = self.tree.get_children("")
-        sorted_items = sorted(items, key=sort_key, reverse=reverse)
+            # 폴더/파일 구분 정렬: 폴더가 항상 위로 오도록
+            is_folder = self.tree.set(item[1], "type") == "Folder"
+            return (not is_folder, value.lower())
 
-        for idx, item_id in enumerate(sorted_items):
-            self.tree.move(item_id, "", idx)
+        items.sort(key=sort_key, reverse=reverse)
 
+        for i, (val, k) in enumerate(items):
+            self.tree.move(k, '', i)
+
+        # 헤더에 정렬 방향 표시
         for c in self.tree["columns"]:
             text = self._col_caption[c]
             if c == col:
@@ -556,11 +572,14 @@ class CustomFileDialog(tb.Toplevel):
     def _str_size_to_int(txt):
         if not txt:
             return 0
-        num, unit = txt.split()
-        num = float(num)
-        unit = unit.upper()
-        factor = {"B":1, "KB":1024, "MB":1024**2, "GB":1024**3, "TB":1024**4}
-        return int(num * factor.get(unit, 1))            
+        try:
+            num, unit = txt.split()
+            num = float(num)
+            unit = unit.upper()
+            factor = {"B":1, "KB":1024, "MB":1024**2, "GB":1024**3, "TB":1024**4}
+            return int(num * factor.get(unit, 1))
+        except (ValueError, IndexError):
+            return 0
 
     def _file_type(self, ext):
         if ext in (".md",):
@@ -570,12 +589,13 @@ class CustomFileDialog(tb.Toplevel):
         elif ext:
             return f"{ext[1:].upper()} file"
         else:
-            return "Unknown file"
+            return "File"
 
     def _format_time(self, t):
         return time.strftime("%Y-%m-%d %H:%M", time.localtime(t))
 
     def _match_filetypes(self, filename):
+        if self.filetypes[0][1] == "*.*": return True
         for desc, patterns in self.filetypes:
             for pat in patterns.split():
                 if fnmatch.fnmatch(filename, pat):
@@ -583,94 +603,97 @@ class CustomFileDialog(tb.Toplevel):
         return False
 
     def _format_size(self, size):
+        if size is None: return ""
         for unit in ['B','KB','MB','GB']:
             if size < 1024.0:
                 return f"{size:.0f} {unit}"
             size /= 1024.0
-        return f"{size:.0f} TB"
+        return f"{size:.1f} TB"
 
+    # --- 이벤트 핸들러 및 네비게이션 ---
     def on_double_click(self, event):
-        item = self.tree.selection()
-        if not item:
-            return
-        name = self.tree.item(item[0], "values")[0]
-        path = os.path.join(self.current_dir, name)
+        item_id = self.tree.focus()
+        if not item_id: return
         
-        if os.path.isdir(path):
+        values = self.tree.item(item_id, "values")
+        name = values[0].strip()
+        
+        if values[2] == "Folder":
             self._enter_directory(name)
         else:
-            self.selected_file = path
+            self.selected_file.set(name)
             self.on_ok()
 
     def on_select(self, event):
-        item = self.tree.selection()
-        if not item:
-            self.selected_file = None
-            return
-        name = self.tree.item(item[0], "values")[0]
-        path = os.path.join(self.current_dir, name)
-        if os.path.isfile(path):
-            self.selected_file = path
+        item_id = self.tree.focus()
+        if not item_id: return
+        
+        values = self.tree.item(item_id, "values")
+        name = values[0].strip()
+        
+        if values[2] != "Folder":
+            self.selected_file.set(name)
         else:
-            self.selected_file = None
+            self.selected_file.set("")
 
     def on_ok(self):
-        if self.selected_file and os.path.isfile(self.selected_file):
+        file_name = self.selected_file.get().strip()
+        if not file_name:
+            msgbox.showwarning("No file selected", "Please select a file from the list.", parent=self)
+            return
+            
+        full_path = os.path.join(self.current_dir, file_name)
+        if os.path.isfile(full_path):
             if self.callback:
-                self.callback(self.selected_file)
-            self._save_state()
+                self.callback(full_path)
             self.destroy()
         else:
-            msgbox.showwarning("No file selected", "Please select a file.")
+            msgbox.showerror("Invalid File", f"The file '{file_name}' does not exist.", parent=self)
 
+    def go_up(self):
+        new_dir = os.path.dirname(self.current_dir)
+        if new_dir != self.current_dir:
+            self.change_dir(new_dir)
+    
+    # ... (기존 change_dir, _save_state, _load_state, go_prev, go_next, refresh, update_nav_buttons, destroy 등은 유지) ...
+    # 단, _save_state에 bookmarks와 last_dir 저장 로직 추가
     def change_dir(self, new_dir):
         new_dir = os.path.abspath(new_dir)
+        if not os.path.isdir(new_dir): return
+        
         if new_dir != self.current_dir:
-            prev_dir = self.current_dir
-            self._last_child[prev_dir] = os.path.basename(new_dir)
-
-            self.reset_search()
             if self.history_index < len(self.history) - 1:
                 self.history = self.history[:self.history_index+1]
             self.history.append(new_dir)
             self.history_index += 1
+            
             self.current_dir = new_dir
-            self.pathbar.set_path(self.current_dir)  # PathBar 갱신
+            self.pathbar.set_path(self.current_dir)
             self.populate()
             self._restore_selection()
             self.update_nav_buttons()
-
-            self._save_state()
 
     def _save_state(self):
         try:
             with self.CFG_PATH.open("w", encoding="utf-8") as fp:
                 json.dump({
-                    "history":   self.history[-100:],
-                    "last_child": self._last_child
+                    "history": self.history[-100:],
+                    "last_child": self._last_child,
+                    "bookmarks": self.bookmarks,
+                    "last_dir": self.current_dir
                 }, fp, indent=2)
         except Exception as e:
-            print("history 저장 실패:", e)
+            print("Dialog state 저장 실패:", e)
 
     def _load_state(self):
-        try:
-            with self.CFG_PATH.open("r", encoding="utf-8") as fp:
-                return json.load(fp)
-        except Exception:
-            return {}
-        
-    def _load_state(self):
-        #print("📂  state file:", self.CFG_PATH)
         if self.CFG_PATH.exists():
             try:
                 with self.CFG_PATH.open("r", encoding="utf-8") as fp:
-                    data = json.load(fp)
-                    #print("✅  loaded:", data)  # → 내용 확인
-                    return data
-            except Exception as e:
-                print("⚠️  load error:", e)
+                    return json.load(fp)
+            except Exception:
+                return {}
         return {}
-
+    
     def go_prev(self):
         if self.history_index > 0:
             self.history_index -= 1
@@ -686,6 +709,7 @@ class CustomFileDialog(tb.Toplevel):
             self.current_dir = self.history[self.history_index]
             self.pathbar.set_path(self.current_dir)
             self.populate()
+            self._restore_selection()
             self.update_nav_buttons()
 
     def refresh(self):
@@ -698,6 +722,34 @@ class CustomFileDialog(tb.Toplevel):
     def destroy(self):
         self._save_state()
         super().destroy()
+
+    # --- 나머지 헬퍼 메서드 ---
+    def _enter_directory(self, child_name):
+        self._last_child[self.current_dir] = child_name
+        new_path = os.path.join(self.current_dir, child_name)
+        self.change_dir(new_path)
+
+    def _clear_placeholder(self, event):
+        if self.search_var.get() == self.PLACEHOLDER:
+            self.search_entry.delete(0, 'end')
+            self.search_entry.config(bootstyle='')
+
+    def _add_placeholder(self, event):
+        if not self.search_var.get().strip():
+            self.search_entry.delete(0, 'end')
+            self.search_entry.insert(0, self.PLACEHOLDER)
+            self.search_entry.config(bootstyle='secondary')
+
+    def _restore_selection(self):
+        last_child = self._last_child.get(self.current_dir)
+        if not last_child: return
+        
+        for iid in self.tree.get_children():
+            if self.tree.set(iid, "name").strip() == last_child:
+                self.tree.selection_set(iid)
+                self.tree.focus(iid)
+                self.tree.see(iid)
+                break
     
 
 # Settings 팝업
@@ -916,7 +968,7 @@ class App(tb.Window):
                         'mem_limit_mb': 0}
         
         super().__init__(themename=self.app_cfg['theme'], title='MultiRunMem GUI',
-                         size=(1000, 900), minsize=(800, 600))
+                         size=(1000, 850), minsize=(700, 550))
 
         self._setup_fonts()
         self._setup_icons()
@@ -932,11 +984,12 @@ class App(tb.Window):
 
         # --- UI 구성 ---
         self._setup_menubar()
-        self._setup_layout()
+        self._setup_layout() # 이제 이 함수가 모든 것을 처리합니다.
         self._setup_bindings()
         
         self.status.config(text='Ready')
 
+    # ... (_setup_fonts, _setup_icons, _setup_style, _setup_menubar 메서드는 이전과 동일) ...
     def _setup_fonts(self):
         # 시스템 기본 폰트가 없을 경우 대비
         default_base = 'Segoe UI' if os.name == 'nt' else 'SF Pro' if sys.platform == 'darwin' else 'Noto Sans'
@@ -993,63 +1046,83 @@ class App(tb.Window):
 
     def _setup_layout(self):
         # --- 메인 PanedWindow (상하 분할) ---
-        main_pane = ttk.PanedWindow(self, orient='vertical')
-        main_pane.pack(fill='both', expand=True, padx=10, pady=5)
+        main_pane_v = ttk.PanedWindow(self, orient='vertical')
+        main_pane_v.pack(fill='both', expand=True, padx=10, pady=(5,0))
 
-        # --- 상단 패널 (설정 및 입력) ---
-        config_frame = ttk.Frame(main_pane)
-        main_pane.add(config_frame, weight=1)
+        # --- 1. 상단 패널 ---
+        config_frame = ttk.Frame(main_pane_v)
+        main_pane_v.add(config_frame, weight=1)
+
+        # 상단 패널을 다시 좌우로 분할
+        main_pane_h = ttk.PanedWindow(config_frame, orient='horizontal')
+        main_pane_h.pack(fill='both', expand=True)
+
+        # 1a. 왼쪽 패널 (파일 선택, 수동 입력)
+        left_pane = ttk.Frame(main_pane_h, padding=5)
+        main_pane_h.add(left_pane, weight=3)
+
+        file_selection_lf = ttk.Labelframe(left_pane, text="File Selection", padding=(10, 5))
+        file_selection_lf.pack(fill='x', pady=(0, 5))
+        self._create_file_selection_widgets(file_selection_lf)
         
-        self._setup_file_selection_ui(config_frame)
-        self._setup_stdin_ui(config_frame)
-        self._setup_action_buttons_ui(config_frame)
+        stdin_lf = ttk.Labelframe(left_pane, text="Manual Stdin (if no input file)", padding=(10, 5))
+        stdin_lf.pack(fill='both', expand=True)
+        self._create_stdin_widgets(stdin_lf)
 
-        # --- 하단 패널 (결과) ---
-        results_frame = ttk.Frame(main_pane)
-        main_pane.add(results_frame, weight=3)
+        # 1b. 오른쪽 패널 (실행 버튼)
+        right_pane = ttk.Frame(main_pane_h, padding=5)
+        main_pane_h.add(right_pane, weight=1)
+        
+        action_lf = ttk.Labelframe(right_pane, text="Actions", padding=(10, 5))
+        action_lf.pack(fill='both', expand=True)
+        self._create_action_buttons(action_lf)
+
+        # --- 2. 하단 패널 (결과) ---
+        results_frame = ttk.Frame(main_pane_v)
+        main_pane_v.add(results_frame, weight=2)
         self._setup_results_ui(results_frame)
         
-        # --- 상태바 ---
+        # --- 3. 상태바 ---
         self._setup_statusbar()
 
-    def _setup_file_selection_ui(self, parent):
-        lf = ttk.Labelframe(parent, text="File Selection", padding=(10, 5))
-        lf.pack(fill='x', padx=5, pady=5)
+    def _create_file_selection_widgets(self, parent):
+        parent.columnconfigure(1, weight=1)
+        ttk.Label(parent, text='Source:').grid(row=0, column=0, sticky='w', padx=5, pady=3)
+        ttk.Entry(parent, textvariable=self.src_var).grid(row=0, column=1, sticky='ew', padx=5, pady=3)
+        ttk.Button(parent, text='...', width=3, bootstyle='secondary', command=lambda: self._pick_file(self.src_var, "Choose source file", [('Source', '*.c *.cpp *.java *.py'), ('All', '*.*')])).grid(row=0, column=2, padx=(0,5), pady=3)
         
-        lf.columnconfigure(1, weight=1)
-
-        ttk.Label(lf, text='Source:').grid(row=0, column=0, sticky='w', padx=5, pady=3)
-        ttk.Entry(lf, textvariable=self.src_var).grid(row=0, column=1, sticky='ew', padx=5, pady=3)
-        ttk.Button(lf, text='...', width=3, bootstyle='secondary', command=lambda: self._pick_file(self.src_var, "Choose source file", [('Source', '*.c *.cpp *.java *.py'), ('All', '*.*')])).grid(row=0, column=2, padx=(0,5), pady=3)
-
-        ttk.Label(lf, text='Input:').grid(row=1, column=0, sticky='w', padx=5, pady=3)
-        ttk.Entry(lf, textvariable=self.in_var).grid(row=1, column=1, sticky='ew', padx=5, pady=3)
-        ttk.Button(lf, text='...', width=3, bootstyle='secondary', command=lambda: self._pick_file(self.in_var, "Choose input file")).grid(row=1, column=2, padx=(0,5), pady=3)
-
-        ttk.Label(lf, text='Expected:').grid(row=2, column=0, sticky='w', padx=5, pady=3)
-        ttk.Entry(lf, textvariable=self.expected_var).grid(row=2, column=1, sticky='ew', padx=5, pady=3)
-        ttk.Button(lf, text='...', width=3, bootstyle='secondary', command=lambda: self._pick_file(self.expected_var, "Choose expected output file")).grid(row=2, column=2, padx=(0,5), pady=3)
-
-    def _setup_stdin_ui(self, parent):
-        lf = ttk.Labelframe(parent, text="Manual Stdin (if no input file)", padding=(10, 5))
-        lf.pack(fill='x', expand=False, padx=5, pady=5)
+        ttk.Label(parent, text='Input:').grid(row=1, column=0, sticky='w', padx=5, pady=3)
+        ttk.Entry(parent, textvariable=self.in_var).grid(row=1, column=1, sticky='ew', padx=5, pady=3)
+        ttk.Button(parent, text='...', width=3, bootstyle='secondary', command=lambda: self._pick_file(self.in_var, "Choose input file")).grid(row=1, column=2, padx=(0,5), pady=3)
         
-        self.stdin_box = ScrolledText(lf, height=5, font='CodeFont', wrap='word')
-        self.stdin_box.pack(fill='x', expand=True)
+        ttk.Label(parent, text='Expected:').grid(row=2, column=0, sticky='w', padx=5, pady=3)
+        ttk.Entry(parent, textvariable=self.expected_var).grid(row=2, column=1, sticky='ew', padx=5, pady=3)
+        ttk.Button(parent, text='...', width=3, bootstyle='secondary', command=lambda: self._pick_file(self.expected_var, "Choose expected output file")).grid(row=2, column=2, padx=(0,5), pady=3)
 
-    def _setup_action_buttons_ui(self, parent):
-        action_frame = ttk.Frame(parent)
-        action_frame.pack(fill='x', padx=5, pady=(5, 10))
+    def _create_stdin_widgets(self, parent):
+        self.stdin_box = ScrolledText(parent, height=5, font='CodeFont', wrap='word')
+        self.stdin_box.pack(fill='both', expand=True)
 
-        self.run_btn = ttk.Button(action_frame, text='▶ RUN', bootstyle='success', command=self.run_clicked)
-        self.run_btn.pack(side='left', padx=5, ipady=5)
+    def _create_action_buttons(self, parent):
+        self.run_btn = ttk.Button(parent, text='▶ RUN', bootstyle='success', command=self.run_clicked)
+        self.run_btn.pack(side='top', fill='x', pady=5, ipady=5)
+        
+        self.clear_btn = ttk.Button(parent, text='Clear Stdin', bootstyle='secondary-outline', command=self.clean_clicked)
+        self.clear_btn.pack(side='top', fill='x', pady=5)
+        
+        self.analyze_btn = ttk.Button(parent, text='Analyze Code', bootstyle='info-outline', command=self.analysis_clicked)
+        self.analyze_btn.pack(side='top', fill='x', pady=5)
+    
+    def _setup_bindings(self):
+        self.bind_all('<Control-o>', lambda e: self._pick_file(self.src_var, "Choose source file", [('Source', '*.c *.cpp *.java *.py'), ('All', '*.*')]))
+        self.bind_all('<Control-i>', lambda e: self._pick_file(self.in_var, "Choose input file"))
+        self.bind_all('<Control-r>', lambda e: self.run_clicked())
+        self.bind_all('<Control-q>', lambda e: self.quit())
 
-        ttk.Button(action_frame, text='Clear Stdin', bootstyle='secondary-outline', command=self.clean_clicked).pack(side='left', padx=5)
-        ttk.Button(action_frame, text='Analyze Code', bootstyle='info-outline', command=self.analysis_clicked).pack(side='left', padx=5)
-
+    # ... (나머지 모든 메서드는 이전과 동일하게 유지) ...
     def _setup_results_ui(self, parent):
         self.nb = ttk.Notebook(parent)
-        self.nb.pack(fill='both', expand=True)
+        self.nb.pack(fill='both', expand=True, pady=(3,0))
 
         self.out_box = self._create_scrolled_text_tab('Output', 'primary')
         self.err_box = self._create_scrolled_text_tab('Error', 'danger')
@@ -1072,12 +1145,6 @@ class App(tb.Window):
         
         self.progressbar = ttk.Progressbar(status_frame, mode='indeterminate', length=150)
         self.progressbar.pack(side='right', padx=5)
-
-    def _setup_bindings(self):
-        self.bind_all('<Control-o>', lambda e: self._pick_file(self.src_var, "Choose source file", [('Source', '*.c *.cpp *.java *.py'), ('All', '*.*')]))
-        self.bind_all('<Control-i>', lambda e: self._pick_file(self.in_var, "Choose input file"))
-        self.bind_all('<Control-r>', lambda e: self.run_clicked())
-        self.bind_all('<Control-q>', self.quit)
 
     def _pick_file(self, target_var: tb.StringVar, title: str, filetypes: Optional[list] = None):
         """파일 선택 다이얼로그를 열고 결과를 변수에 저장하는 헬퍼 함수"""
@@ -1185,11 +1252,13 @@ class App(tb.Window):
     def _error(self, err: Exception):
         self._set_busy(False)
         msg = str(err)
+        self.err_box.delete('1.0', 'end') # Clear previous error
         self.err_box.insert('end', msg + '\n')
         self.err_box.see('end')
         self.status.config(text='Execution failed!')
         self._log(f'Error: {msg}')
-        self.nb.select(self.err_box.master) # 에러 탭으로 자동 전환
+        # [수정] ScrolledText 위젯 대신 그것을 담고 있는 부모 Frame을 선택합니다.
+        self.nb.select(self.err_box.master)
 
     def _done(self, code, out, err, elapsed, metrics: dict):
         self._set_busy(False)
@@ -1205,13 +1274,14 @@ class App(tb.Window):
         self._log(f'Execution finished. Status: {final_status}')
         
         if code != 0:
+            # [수정] ScrolledText 위젯 대신 그것을 담고 있는 부모 Frame을 선택합니다.
             self.nb.select(self.err_box.master)
         else:
+            # [수정] ScrolledText 위젯 대신 그것을 담고 있는 부모 Frame을-을 선택합니다.
             self.nb.select(self.out_box.master)
 
-        self.after(100, self.compare_output) # 약간의 딜레이 후 비교 실행
+        self.after(100, self.compare_output)
 
-    # ... (clean_clicked, analysis_clicked, compare_output 등 나머지 메서드는 변경 없이 유지) ...
     def clean_clicked(self):
         self.stdin_box.delete('1.0', tk.END)
 
@@ -1329,6 +1399,7 @@ class App(tb.Window):
         msg = f'❌ FAIL (at line {line_num}): {why}\n\n' + '\n'.join(diff)
         self.compare_box.delete('1.0', 'end')
         self.compare_box.insert('end', msg)
+        # [수정] ScrolledText 위젯 대신 그것을 담고 있는 부모 Frame을 선택합니다.
         self.nb.select(self.compare_box.master)
         self._log(f"Comparison result: FAIL - {why}")
 
@@ -1338,6 +1409,7 @@ class App(tb.Window):
             with open(src_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             pyperclip.copy(content)
+            # CustomToast 또는 해결된 ToastNotification 사용
             CustomToast("Copied", "Source code copied to clipboard.", duration=2000, bootstyle='success')
         except Exception as e:
             msgbox.showerror("Error", f"Failed to read and copy source file:\n{e}", parent=self)
