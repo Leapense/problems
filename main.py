@@ -1092,6 +1092,8 @@ class App(tb.Window):
     def __init__(self):
         self.app_cfg = {'theme':'darkly', 'font_size':11, 'timeout':10, 'base_font':'Apple SD Gothic Neo', 'mono_font':'SF Mono', 'mem_limit_mb': 0}
         super().__init__(themename=self.app_cfg['theme'], title='백준 문제 테스트 프로그램', size=(1000, 850), minsize=(700, 550))
+        self.base_font = tkfont.Font(name="BaseFont")
+        self.code_font = tkfont.Font(name="CodeFont")
         self._setup_fonts()
         self._setup_icons()
         self._setup_style()
@@ -1111,15 +1113,38 @@ class App(tb.Window):
         self._toggle_batch_mode()
 
     def _setup_fonts(self):
-        default_base = 'Segoe UI' if os.name == 'nt' else 'SF Pro' if sys.platform == 'darwin' else 'Noto Sans'
-        default_mono = 'Consolas' if os.name == 'nt' else 'SF Mono' if sys.platform == 'darwin' else 'Noto Sans Mono'
-        self.app_cfg['base_font'] = self.app_cfg.get('base_font', default_base)
-        self.app_cfg['mono_font'] = self.app_cfg.get('mono_font', default_mono)
-        self.base_font = tkfont.Font(name='BaseFont', family=self.app_cfg['base_font'], size=self.app_cfg['font_size'])
-        self.code_font = tkfont.Font(name='CodeFont', family=self.app_cfg['mono_font'], size=self.app_cfg['font_size']-1)
-        tkfont.nametofont('TkDefaultFont').config(family=self.app_cfg['base_font'], size=self.app_cfg['font_size'])
-        tkfont.nametofont('TkTextFont').config(family=self.app_cfg['base_font'], size=self.app_cfg['font_size'])
-        tkfont.nametofont('TkFixedFont').config(family=self.app_cfg['mono_font'], size=self.app_cfg['font_size']-1)
+        """시스템에 존재하는 폰트를 우선순위에 따라 안전하게 설정합니다."""
+        
+        available_fonts = set(tkfont.families())
+
+        def find_available_font(preferred_fonts):
+            for font in preferred_fonts:
+                if font in available_fonts:
+                    return font
+            if 'mono' in preferred_fonts[0].lower(): return 'TkFixedFont' 
+            else: return 'TkDefaultFont'
+
+        preferred_base_fonts = ['Segoe UI', 'Malgun Gothic', 'SF Pro', 'Apple SD Gothic Neo', 'Helvetica Neue', 'Noto Sans', 'Ubuntu', 'Cantarell', 'DejaVu Sans']
+        preferred_mono_fonts = ['Consolas', 'Cascadia Code', 'Courier New', 'SF Mono', 'Menlo', 'Noto Sans Mono', 'Ubuntu Mono', 'DejaVu Sans Mono', 'Liberation Mono']
+
+        base_font_from_cfg = self.app_cfg.get('base_font')
+        final_base_font = base_font_from_cfg if base_font_from_cfg and base_font_from_cfg in available_fonts else find_available_font(preferred_base_fonts)
+
+        mono_font_from_cfg = self.app_cfg.get('mono_font')
+        final_mono_font = mono_font_from_cfg if mono_font_from_cfg and mono_font_from_cfg in available_fonts else find_available_font(preferred_mono_fonts)
+            
+        self.app_cfg['base_font'] = final_base_font
+        self.app_cfg['mono_font'] = final_mono_font
+        
+        font_size = self.app_cfg.get('font_size', 11)
+
+        # --- "생성" 대신 "설정(configure)" 사용 ---
+        self.base_font.config(family=final_base_font, size=font_size)
+        self.code_font.config(family=final_mono_font, size=font_size - 1)
+        
+        tkfont.nametofont('TkDefaultFont').config(family=final_base_font, size=font_size)
+        tkfont.nametofont('TkTextFont').config(family=final_base_font, size=font_size)
+        tkfont.nametofont('TkFixedFont').config(family=final_mono_font, size=font_size - 1)
 
     def _setup_icons(self):
         try:
@@ -1403,17 +1428,16 @@ class App(tb.Window):
             for file in files:
                 if file.startswith('prog_'):
                     os.remove(os.path.join(root, file))
-                    
+
         return is_pass[0]
 
     def _worker_core(self, src, stdin_data, on_done_callback, on_error_callback):
         try:
             lang, exe, cwd = compile_source(src)
             if lang == 'java':
-                cmd = ['java', '-cp', cwd, exe]
+                cmd = ['java', exe]
             else:
                 cmd = [exe] if lang in ('c', 'cpp') else [sys.executable, exe]
-            
             plugins = [MemoryLimitPlugin(self.app_cfg['mem_limit_mb'] * 1024**2, self), CpuUsagePlugin()]
             code, out, err, elapsed, metrics = run_with_memory(cmd, stdin_data, cwd=cwd, timeout=self.app_cfg['timeout'], plugins=plugins)
             on_done_callback(code, out, err, elapsed, metrics)
