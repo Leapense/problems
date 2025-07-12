@@ -55,7 +55,7 @@ def compile_source(src: str):
         # C++26, C23은 아직 일부 컴파일러에서 완전 지원되지 않으므로 안정적인 버전으로 조정
         cmd = ['gcc' if lang == 'c' else 'g++', src,
                '-O2', '-std=c23' if lang == 'c' else '-std=c++26',
-               '-Wall', '-pipe', '-o', exe]
+               '-Wall', '-lm', '-pipe', '-o', exe]
         res = subprocess.run(cmd, capture_output=True, text=True)
         if res.returncode != 0:
             raise RuntimeError(f"gcc/g++ compile error\n\n"
