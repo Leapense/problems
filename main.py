@@ -1312,7 +1312,7 @@ class App(tb.Window):
         self._file_dialog = CustomFileDialog(
             self,
             title="Select Test Case Folder",
-            initialdir=self.last_dir,
+            initialdir=os.path.dirname(self.last_dir),
             select_mode='folder',
             callback=on_folder_selected
         )
