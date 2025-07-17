@@ -279,7 +279,9 @@ class MainWindow(Gtk.Window):
                 self._toast('pip error', str(e), 'danger'); return
             
         tmp_html = tempfile.NamedTemporaryFile(delete=False, suffix='.html'); tmp_html.close()
-        cmd = [shutil.which('lizard') or sys.executable, '-m', 'lizard', '--html', src]
+        cmd = [shutil.which('lizard'), '-m', '--html', src]
+        if cmd[0] is None:
+            cmd = [shutil.which('lizard') or sys.executable, '-m', 'lizard', '--html', src]
         proc = subprocess.run(cmd, stdout=open(tmp_html.name, 'w'),
                             stderr=subprocess.PIPE, text=True)
         if proc.returncode != 0:
@@ -495,18 +497,43 @@ class MainWindow(Gtk.Window):
             with open(expected_path, 'r', encoding='utf-8') as f:
                 expected = [ln.rstrip('\n\r') for ln in f.readlines()]
         except Exception as e:
-            self.compare_buf.set_text(f'⚠️ Cannot read expected file: {e}'); return False
+            GLib.idle_add(self._toast, 'Error', f'Cannot read expected file: {e}', 'danger')
+            return False
 
         actual_lines = [ln.rstrip('\n\r') for ln in actual.splitlines()]
+        diff_info = None
+        ok = True
         for idx, (e_line, a_line) in enumerate(itertools.zip_longest(expected, actual_lines), 1):
             if e_line is None:
-                return self._cmp_fail(idx, 'Actual longer than expected.', expected, actual_lines, is_batch)
+                ok = False
+                diff_info = ('Actual longer than expected.', expected, actual_lines, idx)
+                break
             if a_line is None:
-                return self._cmp_fail(idx, 'Actual shorter than expected.', expected, actual_lines, is_batch)
+                ok = False
+                diff_info = ('Actual shorter than expected.', expected, actual_lines, idx)
+                break
             if not _line_to_regex(_normalize(e_line)).fullmatch(_normalize(a_line)):
-                return self._cmp_fail(idx, 'Content mismatch.', expected, actual_lines, is_batch)
-        self.compare_buf.set_text('✅ PASS – output matches expected.')
-        return True
+                ok = False
+                diff_info = ('Content mismatch.', expected, actual_lines, idx)
+                break
+
+        def ui_update():
+            self.compare_buf.set_text(
+                '✅ PASS – output matches expected.' if ok else
+                self._build_diff_text(diff_info)
+            )
+            if not ok and not is_batch:
+                self.nb.set_current_page(self.nb.page_num(self.err_buf))
+            return False
+        GLib.idle_add(ui_update)
+        return ok
+    
+    def _build_diff_text(self, diff_info):
+        why, exp, act, line_no = diff_info
+        diff = '\n'.join(difflib.unified_diff(
+            exp, act, fromfile='Expected', tofile='Actual', lineterm=''
+        ))
+        return f'❌ FAIL (line {line_no}): {why}\n\n{diff}'
 
     def _cmp_fail(self, line_no: int, why: str, exp: list[str], act: list[str], is_batch: bool):
         diff = '\n'.join(difflib.unified_diff(exp, act, fromfile='Expected', tofile='Actual', lineterm=''))
