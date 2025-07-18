@@ -132,8 +132,11 @@ class MainWindow(Gtk.Window):
         self.run_btn.connect('clicked', self.on_run_single)
         self.batch_btn = Gtk.Button(label='▶ Run Batch')
         self.batch_btn.connect('clicked', self.on_run_batch)
+        self.reload_btn = Gtk.Button(label='⟳ Reload Source Code')
+        self.reload_btn.connect('clicked', self.on_reload_code)
         btn_box.pack_start(self.run_btn, False, False, 0)
         btn_box.pack_start(self.batch_btn, False, False, 0)
+        btn_box.pack_start(self.reload_btn, False, False, 0)
 
         self.nb = Gtk.Notebook()
         vbox.pack_start(self.nb, True, True, 0)
@@ -408,6 +411,10 @@ class MainWindow(Gtk.Window):
             self.batch_entry.set_text(dlg.get_filename())
         dlg.destroy()
 
+    def on_reload_code(self, _btn):
+        if not self.src_entry.get_text() == "":
+            self._load_source_preview(self.src_entry.get_text())
+
     def _load_source_preview(self, path:str):
         try:
             with open(path, 'r', encoding='utf-8', errors='replace') as f:
@@ -460,6 +467,13 @@ class MainWindow(Gtk.Window):
             plugins = [MemoryLimitPlugin(self.mem_limit_bytes), CpuUsagePlugin()]
             code, out, err, elapsed, metrics = run_with_memory(
                 cmd, stdin_text, cwd=cwd, timeout=self.timeout_sec, plugins=plugins)
+            # 실행 후, prog_ 로 시작하는 임시 파일 삭제
+            for tmp in glob.glob(os.path.join(cwd, 'prog_*')):
+                try:
+                    os.remove(tmp)
+                except OSError:
+                    pass
+
         except Exception as e:
             GLib.idle_add(self._toast, 'Error', str(e), 'danger'); return False
 
@@ -487,6 +501,7 @@ class MainWindow(Gtk.Window):
     def _batch_finished(self, passed: int, total: int):
         self._toast('Done', f'Batch finished: {passed}/{total} passed.',
                     'success' if passed == total else 'warning')
+        
         self.status_lbl.set_text('Ready')
         self.run_btn.set_sensitive(True); self.batch_btn.set_sensitive(True)
 
