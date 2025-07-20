@@ -475,7 +475,8 @@ class MainWindow(Gtk.Window):
                     pass
 
         except Exception as e:
-            GLib.idle_add(self._toast, 'Error', str(e), 'danger'); return False
+            GLib.idle_add(self.err_buf.set_text, str(e))
+            return False
 
         def ui():
             self.out_buf.set_text(out); self.err_buf.set_text(err)
@@ -494,9 +495,15 @@ class MainWindow(Gtk.Window):
                 stdin = f.read()
             ok = self._run_single_case(src_path, stdin, out_path, True)
             if ok: passed += 1
-            GLib.idle_add(self.status_lbl.set_text,
+            if passed > 0:
+                GLib.idle_add(self.status_lbl.set_text,
                           f'Batch {idx}/{total} – Passed {passed}')
-        GLib.idle_add(self._batch_finished, passed, total)
+                GLib.idle_add(self._batch_finished, passed, total)
+            else:
+                GLib.idle_add(self._toast, 'Error', f'There are some error occured. Please check out the error tab!', 'danger')
+                GLib.idle_add(self.status_lbl.set_text, 'Ready')
+                self.run_btn.set_sensitive(True)
+                self.batch_btn.set_sensitive(True)
 
     def _batch_finished(self, passed: int, total: int):
         self._toast('Done', f'Batch finished: {passed}/{total} passed.',
