@@ -495,15 +495,13 @@ class MainWindow(Gtk.Window):
                 stdin = f.read()
             ok = self._run_single_case(src_path, stdin, out_path, True)
             if ok: passed += 1
-            if passed > 0:
-                GLib.idle_add(self.status_lbl.set_text,
-                          f'Batch {idx}/{total} – Passed {passed}')
-                GLib.idle_add(self._batch_finished, passed, total)
             else:
-                GLib.idle_add(self._toast, 'Error', f'There are some error occured. Please check out the error tab!', 'danger')
-                GLib.idle_add(self.status_lbl.set_text, 'Ready')
-                self.run_btn.set_sensitive(True)
-                self.batch_btn.set_sensitive(True)
+                pass
+            GLib.idle_add(
+                self.status_lbl.set_text,
+                f'Batch {idx}/{total} - Passed {passed}'
+            )
+        GLib.idle_add(self._batch_finished, passed, total)
 
     def _batch_finished(self, passed: int, total: int):
         self._toast('Done', f'Batch finished: {passed}/{total} passed.',
