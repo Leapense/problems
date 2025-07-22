@@ -1,0 +1,46 @@
+# ▶ 출발 방향을 동쪽으로
+right
+
+# ▶ 첫 번째 자갈(왼쪽 끝) 발견까지 동쪽 스캔
+init:
+pebble left0
+move
+jump init
+left0:
+jump Lshift          # 첫 라운드로 진입
+
+# ────────────── 라운드 시작: 왼쪽 끝을 1칸 동쪽으로 ──────────────
+Lshift:
+get                  # 기존 왼쪽 끝 자갈 제거
+move                 # 한 칸 동쪽
+put                  # 새 왼쪽 끝 자갈 배치
+move                 # 자갈을 지나 한 칸 더 동쪽 ➜ 스캔 시작
+
+# ▶ 오른쪽 끝 찾기(동쪽 스캔)
+scanE:
+pebble Rfound
+move
+jump scanE
+Rfound:              # 오른쪽 끝 도착
+get
+left
+left                 # 서쪽 바라보기
+move                 # 한 칸 서쪽(새 오른쪽 끝 후보)
+pebble mid           # 이미 자갈이 있으면 두 끝이 만난 것 → 종료
+put                  # 없으면 새 오른쪽 끝 자갈 놓기
+move                 # 자갈을 지나 한 칸 더 서쪽 ➜ 반대 스캔 시작
+
+# ▶ 왼쪽 끝 찾기(서쪽 스캔)
+scanW:
+pebble Lfound
+move
+jump scanW
+Lfound:              # 왼쪽 끝 도착 (서쪽 바라보는 상태)
+left
+left                 # 다시 동쪽을 보도록 회전
+jump Lshift          # 다음 라운드
+
+# ────────────── 두 끝이 만났을 때 ──────────────
+mid:
+halt                 # 정확히 가운데 칸에서 종료
+
