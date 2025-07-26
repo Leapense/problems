@@ -1,38 +1,224 @@
+/* ======================================================================
+ * macOS‑style Dark Theme for VS Code – Custom CSS
+ *
+ * This stylesheet tunes VS Code’s UI to more closely match the dark mode
+ * aesthetic found in recent macOS releases (Big Sur, Monterey, Ventura).
+ * It defines a coherent palette of dark greys and subtle blues, applies
+ * appropriate fonts, and tweaks various UI elements such as tabs, panels
+ * and the status bar. To use this file, load it through your VS Code
+ * custom CSS extension.
+ *
+ * Author: OpenAI ChatGPT – July 2025
+ * ======================================================================
+ */
+
+/* ========== Color Variables ========== */
 /*
-  macos_dark_mode_v2.css
+ * These CSS variables are inspired by macOS’s dark mode colour scheme.
+ * You can adjust the values here to fine‑tune the look to your liking.
+ */
+:root {
+  /* Accent colour used for active elements, selections and highlights */
+  --color-accent:        #0a84ff;             /* macOS system blue */
 
-  Updated version of the macOS‑style dark theme for VS Code.  
-  This revision refines the tab appearance to more closely resemble macOS tabs: active tabs have rounded top corners and a subtle contrasting background, while inactive tabs remain flat.  
-  It also adds optional settings to hide the native title bar and menu bar, which improves the resemblance to macOS when combined with the `"window.titleBarStyle": "custom"` and `"window.menuBarVisibility": "hidden"` settings in VS Code.  
+  /* Base backgrounds */
+  --color-bg:            #1e1e1e;             /* primary editor & workbench */
+  --color-sidebar:       #2c2c2e;             /* activity bar & side panels */
+  --color-panel:         #1f1f20;             /* bottom panels (terminal/debug) */
 
-  See the original macos_dark_mode.css for a description of the colour variables and general styling.  
-*/
+  /* Lines and dividers */
+  --color-border:        #3a3a3c;             /* separators, outlines */
 
-@import url("macos_dark_mode.css");
+  /* Interactive states */
+  --color-hover:         rgba(58, 120, 255, 0.15); /* subtle hover highlight */
+  --color-selection:     rgba(10, 132, 255, 0.32); /* text selection */
 
-/* Rounded active tabs and subtle contrast */
-.monaco-workbench .editor-group-container .tab {
-  border-radius: 4px 4px 0 0 !important;
-  margin-top: 4px !important;
-  padding-top: 2px !important;
+  /* Font families */
+  /* UI: use a common sans serif that resembles the macOS system font */
+  --font-ui:             "SF Pro Display", "Apple SD Gothic Neo", "Ubuntu", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  /* Code: use a monospaced font of your choice; Nerd fonts include icons */
+  --font-code:           "SF Mono", "JetBrains Mono", "Source Code Pro", monospace;
+
+  /* Transition curves */
+  --transition-fast:     0.15s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
-.monaco-workbench .editor-group-container .tab.active {
-  background-color: #333333 !important;
-  border-bottom: 2px solid var(--accent-color) !important;
+
+/* ========== Global UI Font ========== */
+/*
+ * Apply the UI font to the workbench and its children. Exclude codicons,
+ * which should retain their own icon font for correct rendering.
+ */
+.monaco-shell,
+.monaco-workbench {
+  font-family: var(--font-ui) !important;
 }
 
-/* Top border for the tab bar to separate from the activity bar */
-.monaco-workbench .editor-group-container .tabs-container {
-  box-shadow: inset 0 -1px 0 0 var(--border-color);
+/* ========== Code Font Overrides ========== */
+/*
+ * Force the monospaced code font in editor content, gutters and tokens.
+ * This ensures a consistent coding experience regardless of UI font.
+ */
+.monaco-editor .view-lines,
+.monaco-editor .view-lines * {
+  font-family: var(--font-code) !important;
+}
+.monaco-editor .margin,
+.monaco-editor .margin * {
+  font-family: var(--font-code) !important;
+}
+.monaco-editor .mtk {
+  font-family: var(--font-code) !important;
+}
+/* Do not override the codicon font */
+.monaco-editor .codicon {
+  font-family: codicon !important;
 }
 
-/* Slightly more translucent overlay for command palette */
+/* ========== Workbench Background & Text ========== */
+/*
+ * Set the primary background and foreground colours. The dark background
+ * helps reduce eye strain, while white text ensures sufficient contrast.
+ */
+.monaco-workbench {
+  background-color: var(--color-bg) !important;
+  color: #ffffff;
+}
+
+/* ========== Activity Bar & Sidebar ========== */
+/*
+ * Colour the activity bar and side panels using a slightly lighter shade
+ * than the main background. Add subtle borders to separate them from the
+ * editor area. Hover states are softened via transitions.
+ */
+.monaco-workbench .part.activitybar,
+.monaco-workbench .part.sidebar {
+  background-color: var(--color-sidebar) !important;
+  border-right: 1px solid var(--color-border) !important;
+  transition: background-color var(--transition-fast);
+}
+
+/* ========== Editor Tabs & Grid ========== */
+/*
+ * Style the editor tabs to blend with the dark environment. Active tabs
+ * receive the accent underline similar to macOS. Inactive tabs are faded.
+ */
+.monaco-workbench .part.editor > .content .editor-group-container {
+  background-color: var(--color-bg);
+}
+.editor .tab.active:not(.pinned) {
+  background-color: var(--color-sidebar) !important;
+  color: #ffffff !important;
+  border-bottom: 2px solid var(--color-accent) !important;
+}
+.editor .tab:not(.active):not(.dirty):not(.hovered) {
+  opacity: 0.6;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+}
+
+/* ========== Panel (Terminal, Debug Console) ========== */
+/*
+ * Terminal and debug panels use their own dark shade with a top border for
+ * separation. These subtle differences help delineate the workspace.
+ */
+.monaco-workbench .part.panel {
+  background-color: var(--color-panel) !important;
+  border-top: 1px solid var(--color-border) !important;
+}
+
+/* ========== Status Bar ========== */
+/*
+ * The status bar at the bottom of the window uses the same colour as the
+ * sidebar for consistency. A border line ensures it doesn’t blend into
+ * panels above.
+ */
+.monaco-workbench .part.statusbar {
+  background: var(--color-sidebar) !important;
+  border-top: 1px solid var(--color-border) !important;
+  transition: transform var(--transition-fast);
+}
+
+/* ========== Selection & Scrollbar ========== */
+/*
+ * Colour selected text and highlights with a semi‑transparent accent. The
+ * scrollbars adopt the border colour and brighten on hover.
+ */
+.monaco-editor .selected-text,
+.monaco-editor .selectionHighlight {
+  background-color: var(--color-selection) !important;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-hover);
+}
+
+/* ========== Context Menu ========== */
+/*
+ * Ensure context menus use the UI font for readability. Adjust the font
+ * size to more closely resemble macOS system context menus.
+ */
+.context-view.monaco-menu .monaco-action-bar.horizontal .action-item {
+  font-family: var(--font-ui) !important;
+  font-size: 13px;
+}
+
+/* ========== Fade‑in Animation ========== */
+/*
+ * Apply a subtle fade when the workbench loads, providing a polished
+ * startup feel akin to native apps on macOS.
+ */
+@keyframes fadeInWorkbench {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.monaco-workbench {
+  animation: fadeInWorkbench 0.3s ease-out;
+}
+
+/* === Command Palette(Quick Open) 화면 정중앙 배치 === */
 .monaco-workbench .quick-input-widget {
-  background-color: rgba(34, 34, 34, 0.75) !important;
-  backdrop-filter: blur(16px);
+  position: fixed !important;      /* 뷰포트 기준으로 고정 */
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: min(640px, 80vw) !important;   /* 화면이 작은 경우 대비 */
+  z-index: 1000 !important;        /* 다른 패널 위에 오도록 */
 }
 
-/* Increase font size for status bar to improve readability */
-.monaco-workbench .part.statusbar .statusbar-item {
-  font-size: 12px !important;
+/* 결과 목록 높이 제한(옵션) */
+.monaco-workbench .quick-input-widget .quick-input-list {
+  max-height: 60vh !important;
 }
+
+@keyframes cursorGlow {
+  0%   { box-shadow: 0 0 0 0 #0a84ff; }
+  50%  { box-shadow: 0 0 6px 2px #0a84ff; }
+  100% { box-shadow: 0 0 0 0 #0a84ff; }
+}
+.monaco-editor .cursor {
+  background: #0a84ff !important;     /* 커서 색상 */
+  animation: cursorGlow 1.2s ease-in-out infinite !important;
+  mix-blend-mode: lighten;            /* 어두운 배경에서 더 선명하게 */
+}
+
+/* ===== Frosted pinned tab ===================================== */
+.monaco-workbench .editor .tab.pinned {
+  /* 반투명 + 블러 */
+  background-color: rgba(30, 30, 30, 0.55) !important;  /* 필요 시 색상 조정 */
+  backdrop-filter: blur(6px) saturate(140%) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(140%) !important; /* 크로스 브라우저 */
+
+  /* 겹침 현상 방지 */
+  overflow: visible;    /* 그림자/블러 잘리면 해제 */
+  z-index: 2;           /* 일반 탭 위로 */
+}
+
+/* 선택된(활성) 고정 탭 전용 스타일 – 선택사항 */
+.monaco-workbench .editor .tab.pinned.active {
+  backdrop-filter: blur(6px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(140%) !important;
+  background-color: rgba(44, 44, 46, 0.65) !important;
+}
+
