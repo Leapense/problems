@@ -143,18 +143,18 @@ class MainWindow(Gtk.Window):
 
         self.out_buf = GtkSource.Buffer()
         out_view = GtkSource.View(buffer=self.out_buf, monospace=True)
-        out_scrolled_win = Gtk.ScrolledWindow()
-        out_scrolled_win.add(out_view)
+        self.out_scrolled_win = Gtk.ScrolledWindow()
+        self.out_scrolled_win.add(out_view)
 
         self.err_buf = GtkSource.Buffer()
         err_view = GtkSource.View(buffer=self.err_buf, monospace=True)
-        err_scrolled_win = Gtk.ScrolledWindow()
-        err_scrolled_win.add(err_view)
+        self.err_scrolled_win = Gtk.ScrolledWindow()
+        self.err_scrolled_win.add(err_view)
 
         self.compare_buf = GtkSource.Buffer()
         cmp_view = GtkSource.View(buffer=self.compare_buf, monospace=True)
-        cmp_scrolled_win = Gtk.ScrolledWindow()
-        cmp_scrolled_win.add(cmp_view)
+        self.cmp_scrolled_win = Gtk.ScrolledWindow()
+        self.cmp_scrolled_win.add(cmp_view)
 
         lm = GtkSource.LanguageManager()
         self.source_buf = GtkSource.Buffer()
@@ -164,10 +164,10 @@ class MainWindow(Gtk.Window):
         self.source_view.set_highlight_current_line(True)
         self.source_view.set_wrap_mode(Gtk.WrapMode.NONE)
 
-        source_scrolled_win = Gtk.ScrolledWindow()
-        source_scrolled_win.set_hexpand(True)
-        source_scrolled_win.set_vexpand(True)
-        source_scrolled_win.add(self.source_view)
+        self.source_scrolled_win = Gtk.ScrolledWindow()
+        self.source_scrolled_win.set_hexpand(True)
+        self.source_scrolled_win.set_vexpand(True)
+        self.source_scrolled_win.add(self.source_view)
 
         scheme_manager = GtkSource.StyleSchemeManager.get_default()
         scheme = scheme_manager.get_scheme('vsdark')
@@ -187,10 +187,10 @@ class MainWindow(Gtk.Window):
 
         self.analysis_box = Gtk.Box()
 
-        self.nb.append_page(source_scrolled_win, Gtk.Label(label='Source'))
-        self.nb.append_page(out_scrolled_win, Gtk.Label(label='Output'))
-        self.nb.append_page(err_scrolled_win, Gtk.Label(label='Error'))
-        self.nb.append_page(cmp_scrolled_win, Gtk.Label(label='Compare'))
+        self.nb.append_page(self.source_scrolled_win, Gtk.Label(label='Source'))
+        self.nb.append_page(self.out_scrolled_win, Gtk.Label(label='Output'))
+        self.nb.append_page(self.err_scrolled_win, Gtk.Label(label='Error'))
+        self.nb.append_page(self.cmp_scrolled_win, Gtk.Label(label='Compare'))
         self.nb.append_page(self.analysis_box, Gtk.Label(label='Analysis'))
 
         status_box = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=6)
@@ -479,8 +479,11 @@ class MainWindow(Gtk.Window):
             return False
 
         def ui():
-            self.out_buf.set_text(out); self.err_buf.set_text(err)
-            self.status_lbl.set_text(f'Exit {code} | {elapsed*1000:.1f} ms')
+            self.out_buf.set_text(out)
+            self.err_buf.set_text(err)
+            self.status_lbl.set_text(f"Exit {code} | {elapsed*1000:.1f} ms")
+            return False
+
         GLib.idle_add(ui)
 
         if expected_path:
@@ -543,7 +546,7 @@ class MainWindow(Gtk.Window):
                 self._build_diff_text(diff_info)
             )
             if not ok and not is_batch:
-                self.nb.set_current_page(self.nb.page_num(self.err_buf))
+                self.nb.set_current_page(self.nb.page_num(self.cmp_scrolled_win))
             return False
         GLib.idle_add(ui_update)
         return ok
@@ -559,7 +562,7 @@ class MainWindow(Gtk.Window):
         diff = '\n'.join(difflib.unified_diff(exp, act, fromfile='Expected', tofile='Actual', lineterm=''))
         self.compare_buf.set_text(f'❌ FAIL (line {line_no}): {why}\n\n{diff}')
         if not is_batch:
-            self.nb.set_current_page(2)
+            self.nb.set_current_page(self.nb.page_num(self.cmp_scrolled_win))
         return False
 
     # ── 단순 입력 팝업 ───────────────────────────────────────
