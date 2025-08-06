@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+static int sgn(double x, double eps) { return (x > eps) - (x < -eps); }
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int t;
+    cin >> t;
+    const double eps = 1e-12;
+    cout << fixed << setprecision(10);
+
+    while (t--) {
+        double a1, b1, a2, b2, z;
+        cin >> a1 >> b1 >> a2 >> b2 >> z;
+
+        double remain = z;
+        double phase_len = 12.0;
+        bool day = true;
+        double rel_speed = a1 - a2;
+        double rel_height = 0.0;
+        double answer = 0.0;
+
+        while (remain > eps) {
+            double step = min(remain, phase_len);
+            if (abs(rel_speed) < eps) {
+                if (rel_height > eps) answer += step;
+            } else {
+                double h0 = rel_height;
+                double h1 = h0 + rel_speed * step;
+                int s0 = sgn(h0, eps);
+                int s1 = sgn(h1, eps);
+
+                if (s0 == 0) s0 = sgn(rel_speed, eps);
+                if (s1 == 0) s1 = sgn(rel_speed, eps);
+
+                if (s0 == s1) {
+                    if (s0 > 0) answer += step;
+                } else {
+                    double tc = -h0 / rel_speed;
+                    if (s0 > 0) answer += tc;
+                    if (s1 > 0) answer += step - tc;
+                }
+            }
+
+            rel_height += rel_speed * step;
+            remain -= step;
+            phase_len -= step;
+
+            if (phase_len < eps) {
+                day = !day;
+                rel_speed = day ? (a1 - a2) : (b2 - b1);
+                phase_len = 12.0;
+            }
+        }
+        cout << answer << '\n';
+    }
+    return 0;
+}
