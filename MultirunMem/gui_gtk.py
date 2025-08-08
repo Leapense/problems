@@ -68,17 +68,11 @@ class MainWindow(Gtk.Window):
         self.set_decorated(False)                # 네이티브 프레임 숨김
         self.connect('destroy', Gtk.main_quit)
 
-        self.mem_limit_bytes = 0                 # 0 == unlimited
-        self.timeout_sec = 10
-
         self._build_ui_with_overlay()
 
         self._apply_css()
         # self._build_header()
         # self._build_body()
-
-        # 드래그 변수
-        self._drag_info = None
 
     def apply_settings(self, new_cfg: dict):
         self.app_cfg.update(new_cfg)
@@ -88,12 +82,23 @@ class MainWindow(Gtk.Window):
         # 폰트
         base_desc = f"{new_cfg['base_font']} {new_cfg['font_size']}"
         mono_desc = f"{new_cfg['mono_font']} {new_cfg['font_size']}"
-        self.modify_font(Pango.FontDescription(base_desc))
-        self.source_view.modify_font(Pango.FontDescription(mono_desc))
+        try:
+            self.override_font(Pango.FontDescription(base_desc))
+        except Exception:
+            pass
+        try:
+            self.source_view.override_font(Pango.FontDescription(mono_desc))
+        except Exception:
+            pass
+        
         # GtkSource style
         scheme_mgr = GtkSource.StyleSchemeManager()
         scheme = scheme_mgr.get_scheme(new_cfg['style_scheme'])
-        if scheme: self.source_buf.set_style_scheme(scheme)
+        if scheme:
+            self.source_buf.set_style_scheme(scheme)
+            self.out_buf.set_style_scheme(scheme)
+            self.err_buf.set_style_scheme(scheme)
+            self.compare_buf.set_style_scheme(scheme)
         self._toast('Prefs', 'Settings applied.', 'info')
 
     def _build_ui_with_overlay(self):
@@ -101,6 +106,7 @@ class MainWindow(Gtk.Window):
         self.add(overlay)
 
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=8)
+        self.content_box = vbox
         vbox.set_margin_top(44)
         vbox.set_margin_bottom(12)
         vbox.set_margin_start(12)
@@ -223,16 +229,31 @@ class MainWindow(Gtk.Window):
         header_event_box.set_hexpand(True)
 
         # 3. 드래그 이벤트를 header(Gtk.Box)가 아닌 header_event_box에 연결합니다.
-        header_event_box.add_events(Gdk.EventMask.BUTTON_PRESS_MASK | Gdk.EventMask.BUTTON1_MOTION_MASK)
-        header_event_box.connect('button-press-event', self._start_drag)
-        header_event_box.connect('motion-notify-event', self._on_drag)
+        header_event_box.add_events(Gdk.EventMask.BUTTON_PRESS_MASK)
+        header_event_box.connect('button-press-event', self._on_header_button)
 
         # 4. Gtk.Box를 EventBox 안에 넣습니다.
         header_event_box.add(header)
 
         # 5. Overlay에는 EventBox를 추가합니다.
         overlay.add_overlay(header_event_box)
-        # --- [수정 끝] ---
+        
+        def _sync_margin(_w, alloc):
+            try:
+                top = max(alloc.height, 32) + 12
+                self.content_box.set_margin_top(top)
+            except Exception:
+                pass
+        header_event_box.connect('size-allocate', _sync_margin)
+
+    def _on_header_button(self, _w, event):
+        if event.type == Gdk.EventType._2BUTTON_PRESS and event.button == Gdk.BUTTON_PRIMARY:
+            self._toggle_max()
+            return True
+        if event.type == Gdk.EventType.BUTTON_PRESS and event.button == Gdk.BUTTON_PRIMARY:
+            self.begin_move_drag(event.button, int(event.x_root), int(event.y_root), event.time)
+            return True
+        return False
 
     def _make_light(self, parent, color: str, cb):
         ev = Gtk.EventBox()
@@ -247,16 +268,6 @@ class MainWindow(Gtk.Window):
         style_context.add_class(color)
 
         parent.pack_start(ev, False, False, 0)
-
-    def _start_drag(self, _w, event):
-        if event.button == Gdk.BUTTON_PRIMARY:
-            self._drag_info = (event.x_root, event.y_root, self.get_position())
-
-    def _on_drag(self, _w, event):
-        if not self._drag_info:
-            return
-        x0, y0, (win_x, win_y) = self._drag_info
-        self.move(int(win_x + (event.x_root - x0)), int(win_y + (event.y_root - y0)))
 
     def _toggle_max(self, *_):
         if self.is_maximized():
@@ -281,16 +292,26 @@ class MainWindow(Gtk.Window):
             except subprocess.CalledProcessError as e:
                 self._toast('pip error', str(e), 'danger'); return
             
+        if getattr(self, '_last_lizard_html', 'None'):
+            try:
+                if os.path.exists(self._last_lizard_html):
+                    os.unlink(self._last_lizard_html)
+            except Exception:
+                pass
         tmp_html = tempfile.NamedTemporaryFile(delete=False, suffix='.html'); tmp_html.close()
-        cmd = [shutil.which('lizard'), '-m', '--html', src]
-        if cmd[0] is None:
-            cmd = [shutil.which('lizard') or sys.executable, '-m', 'lizard', '--html', src]
-        proc = subprocess.run(cmd, stdout=open(tmp_html.name, 'w'),
-                            stderr=subprocess.PIPE, text=True)
+        lizard_exe = shutil.which('lizard')
+        if lizard_exe:
+            cmd = [lizard_exe, '--html', src]
+        else:
+            cmd = [sys.executable, '-m', 'lizard', '--html', src]
+        with open(tmp_html.name, 'w') as outfp:
+            proc = subprocess.run(cmd, stdout=outfp, stderr=subprocess.PIPE, text=True)
+
         if proc.returncode != 0:
             os.unlink(tmp_html.name)
             self._toast('Analysis failed', proc.stderr.strip() or 'lizard error', 'danger')
             return
+        self._last_lizard_html = tmp_html.name
         
         for child in self.analysis_box.get_children():
             self.analysis_box.remove(child)
@@ -306,7 +327,12 @@ class MainWindow(Gtk.Window):
             self.analysis_box.pack_start(view, True, True, 0)
 
             # plain-text 버전 얻기
-            cmd_txt = [shutil.which('lizard') or sys.executable, '-m', 'lizard', src]
+            lizard_exe = shutil.which('lizard')
+            if lizard_exe:
+                cmd_txt = [lizard_exe, src]
+            else:
+                cmd_txt = [sys.executable, '-m', 'lizard', src]
+                
             txt = subprocess.check_output(cmd_txt, text=True, stderr=subprocess.STDOUT)
             buf.set_text(txt)
 
