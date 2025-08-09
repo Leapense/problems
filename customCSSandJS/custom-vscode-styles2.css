@@ -1,224 +1,399 @@
-/* ======================================================================
- * macOS‑style Dark Theme for VS Code – Custom CSS
+/* VS Code Custom CSS for Fedora 42 using Custom CSS and JS Loader
  *
- * This stylesheet tunes VS Code’s UI to more closely match the dark mode
- * aesthetic found in recent macOS releases (Big Sur, Monterey, Ventura).
- * It defines a coherent palette of dark greys and subtle blues, applies
- * appropriate fonts, and tweaks various UI elements such as tabs, panels
- * and the status bar. To use this file, load it through your VS Code
- * custom CSS extension.
+ * This stylesheet is intended for use with the "Custom CSS and JS Loader"
+ * extension in Visual Studio Code. It modifies several UI elements,
+ * such as the title bar, activity bar, sidebar, quick input (command
+ * palette) and editor tokens, to provide a modern appearance with
+ * subtle gradients and neon‑style highlights.
  *
- * Author: OpenAI ChatGPT – July 2025
- * ======================================================================
+ * To use this file:
+ * 1. Save it somewhere on your system (e.g. ~/.config/vscode-custom.css).
+ * 2. In VS Code, open your Settings (JSON) and add the file URI to
+ *    `vscode_custom_css.imports`, for example:
+ *        "vscode_custom_css.imports": ["file://${userHome}/.config/vscode-custom.css"]
+ *    According to the extension documentation, the entries must be file
+ *    URIs rather than plain paths【936791142106433†L54-L67】.
+ * 3. On Linux, ensure VS Code can modify its own files by running:
+ *        sudo chown -R $(whoami) "$(which code)"
+ *        sudo chown -R $(whoami) /usr/share/code
+ *    as the extension warns that the extension needs write permissions
+ *    to VS Code’s installation folder【936791142106433†L95-L106】.
+ * 4. Run the “Enable Custom CSS and JS” command from the command palette
+ *    and restart VS Code.
+ *
+ * The colours used here are inspired by the SynthWave ’84 and Moonlight
+ * themes. Feel free to adjust variables below to suit your preferences.
  */
 
-/* ========== Color Variables ========== */
-/*
- * These CSS variables are inspired by macOS’s dark mode colour scheme.
- * You can adjust the values here to fine‑tune the look to your liking.
- */
+/* ========== Variables ========== */
+/* Fallback font family. Nerd fonts include icon glyphs used by many themes. */
 :root {
-  /* Accent colour used for active elements, selections and highlights */
-  --color-accent:        #0a84ff;             /* macOS system blue */
-
-  /* Base backgrounds */
-  --color-bg:            #1e1e1e;             /* primary editor & workbench */
-  --color-sidebar:       #2c2c2e;             /* activity bar & side panels */
-  --color-panel:         #1f1f20;             /* bottom panels (terminal/debug) */
-
-  /* Lines and dividers */
-  --color-border:        #3a3a3c;             /* separators, outlines */
-
-  /* Interactive states */
-  --color-hover:         rgba(58, 120, 255, 0.15); /* subtle hover highlight */
-  --color-selection:     rgba(10, 132, 255, 0.32); /* text selection */
-
-  /* Font families */
-  /* UI: use a common sans serif that resembles the macOS system font */
-  --font-ui:             "SF Pro Display", "Apple SD Gothic Neo", "Ubuntu", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  /* Code: use a monospaced font of your choice; Nerd fonts include icons */
-  --font-code:           "SF Mono", "JetBrains Mono", "Source Code Pro", monospace;
-
-  /* Transition curves */
-  --transition-fast:     0.15s cubic-bezier(0.4, 0.0, 0.2, 1);
+  --vscode-custom-font: "MesloLGS NF", "Fira Code Nerd Font", "Fira Code", monospace;
+  /* Neon accent colours */
+  --accent-green: #03edf9;
+  --accent-pink: #fc28a8;
+  --accent-purple: #753a88;
+  --accent-orange: #ff2f84;
+  /* Background colours */
+  --editor-bg: rgb(30, 32, 40);
+  --status-gradient-start: #2C5364;
+  --status-gradient-mid: #203A43;
+  --status-gradient-end: #0F2027;
+  --border-radius: 11px;
+  --container-padding: 4px;
 }
 
-/* ========== Global UI Font ========== */
-/*
- * Apply the UI font to the workbench and its children. Exclude codicons,
- * which should retain their own icon font for correct rendering.
- */
-.monaco-shell,
-.monaco-workbench {
-  font-family: var(--font-ui) !important;
+/* ========== Global font ========== */
+.mac,
+.windows,
+.linux {
+  font-family: var(--vscode-custom-font);
 }
 
-/* ========== Code Font Overrides ========== */
-/*
- * Force the monospaced code font in editor content, gutters and tokens.
- * This ensures a consistent coding experience regardless of UI font.
- */
-.monaco-editor .view-lines,
-.monaco-editor .view-lines * {
-  font-family: var(--font-code) !important;
-}
-.monaco-editor .margin,
-.monaco-editor .margin * {
-  font-family: var(--font-code) !important;
-}
-.monaco-editor .mtk {
-  font-family: var(--font-code) !important;
-}
-/* Do not override the codicon font */
-.monaco-editor .codicon {
-  font-family: codicon !important;
+/* ========== Title bar adjustments ========== */
+.monaco-workbench .part.titlebar {
+  border-bottom: 1px solid var(--vscode-contrastBorder) !important;
 }
 
-/* ========== Workbench Background & Text ========== */
-/*
- * Set the primary background and foreground colours. The dark background
- * helps reduce eye strain, while white text ensures sufficient contrast.
- */
-.monaco-workbench {
-  background-color: var(--color-bg) !important;
-  color: #ffffff;
+.monaco-workbench .part.titlebar .window-title {
+  font-size: 13px !important;
 }
 
-/* ========== Activity Bar & Sidebar ========== */
-/*
- * Colour the activity bar and side panels using a slightly lighter shade
- * than the main background. Add subtle borders to separate them from the
- * editor area. Hover states are softened via transitions.
- */
-.monaco-workbench .part.activitybar,
-.monaco-workbench .part.sidebar {
-  background-color: var(--color-sidebar) !important;
-  border-right: 1px solid var(--color-border) !important;
-  transition: background-color var(--transition-fast);
+/* ========== Activity bar customisation ========== */
+/* Center icons vertically and apply a subtle highlight when hovered or active. */
+.monaco-workbench .activitybar > .content {
+  justify-content: center;
 }
 
-/* ========== Editor Tabs & Grid ========== */
-/*
- * Style the editor tabs to blend with the dark environment. Active tabs
- * receive the accent underline similar to macOS. Inactive tabs are faded.
- */
-.monaco-workbench .part.editor > .content .editor-group-container {
-  background-color: var(--color-bg);
-}
-.editor .tab.active:not(.pinned) {
-  background-color: var(--color-sidebar) !important;
-  color: #ffffff !important;
-  border-bottom: 2px solid var(--color-accent) !important;
-}
-.editor .tab:not(.active):not(.dirty):not(.hovered) {
-  opacity: 0.6;
-  backdrop-filter: blur(24px) !important;
-  -webkit-backdrop-filter: blur(24px) !important;
+.monaco-workbench .activitybar > .content .monaco-action-bar .action-item {
+  /* Use only vertical spacing.  Horizontal margins can misalign the icons relative
+   * to the left border of the Activity Bar. */
+  margin: 4px 0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
 }
 
-/* ========== Panel (Terminal, Debug Console) ========== */
-/*
- * Terminal and debug panels use their own dark shade with a top border for
- * separation. These subtle differences help delineate the workspace.
- */
-.monaco-workbench .part.panel {
-  background-color: var(--color-panel) !important;
-  border-top: 1px solid var(--color-border) !important;
+.monaco-workbench .activitybar > .content .monaco-action-bar .action-item:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
 }
 
-/* ========== Status Bar ========== */
-/*
- * The status bar at the bottom of the window uses the same colour as the
- * sidebar for consistency. A border line ensures it doesn’t blend into
- * panels above.
- */
+/* Highlight the active activity bar icon with a neon gradient bar. */
+.monaco-workbench .activitybar > .content .monaco-action-bar .action-item.checked {
+  position: relative;
+  box-shadow: inset 0 -5px 25px #fc28a825;
+}
+
+.monaco-workbench .activitybar > .content .monaco-action-bar .action-item.checked::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--accent-green), var(--accent-pink)) !important;
+  opacity: 1;
+}
+
+/* ========== Sidebar list styling ========== */
+/* Round the corners of sidebar list items and remove default outline when focused. */
+/* Round list items without changing their intrinsic width or padding.
+ * The earlier version of this rule explicitly set widths and margins,
+ * which could misalign file/folder icons in the Explorer.  By only
+ * setting the border radius we preserve VS Code’s default spacing. */
+.monaco-list.mouse-support .monaco-list-row {
+  border-radius: 6px;
+}
+
+.monaco-workbench .part.sidebar .monaco-list:not(.element-focused):focus:before {
+  outline-color: transparent !important;
+}
+
+/* ========== Command palette / Quick input ========== */
+/* Give the command palette rounded corners and drop shadow for better visibility. */
+.quick-input-titlebar {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.quick-input-widget {
+  background-color: var(--vscode-quickInput-background) !important;
+  border-radius: 14px !important;
+  min-height: 58px !important;
+  box-shadow: 0 2px 10px 4px var(--vscode-widget-shadow) !important;
+}
+
+.quick-input-list .monaco-list-row:hover:not(.selected):not(.focused) {
+  background-color: var(--vscode-quickInputList-focusBackground) !important;
+}
+
+/* ========== Editor syntax highlighting (neon glow) ========== */
+/* Apply glow effects to various syntax token classes.  The classes `.mtk1`…`.mtk13`
+ * correspond to token groups in the Monaco editor.  Colours and shadows are based
+ * on the example neon glow file by hanjeahwan【590227032583913†L0-L48】.  Feel free
+ * to tweak the colours to fit your theme. */
+.mtk1 {
+  color: #f8f8f2;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0), 0 0 3px rgba(0, 0, 0, 0), 0 0 5px rgba(0, 0, 0, 0), 0 0 8px #f8f8f2;
+}
+
+.mtk4 {
+  color: #fdfdfd;
+  text-shadow: 0 0 2px var(--accent-green)75, 0 0 4px var(--accent-green)75, 0 0 6px var(--accent-green)75, 0 0 8px var(--accent-green)75;
+}
+
+.mtk5 {
+  color: #ae81ff;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0), 0 0 4px rgba(0, 0, 0, 0), 0 0 6px rgba(0, 0, 0, 0), 0 0 8px rgba(174, 129, 255, 0.5);
+}
+
+.mtk6 {
+  color: #ff2f84;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0), 0 0 4px rgba(0, 0, 0, 0), 0 0 6px rgba(0, 0, 0, 0), 0 0 8px rgba(255, 47, 132, 0.5);
+}
+
+.mtk7 {
+  color: #66d9ef;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0), 0 0 4px rgba(0, 0, 0, 0), 0 0 6px rgba(0, 0, 0, 0), 0 0 8px rgba(102, 217, 239, 0.5);
+}
+
+.mtk8 {
+  color: #b9e85b;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0), 0 0 4px rgba(0, 0, 0, 0), 0 0 6px rgba(0, 0, 0, 0), 0 0 8px rgba(185, 232, 91, 0.5);
+}
+
+.mtk9 {
+  color: #fd971f;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0), 0 0 4px rgba(0, 0, 0, 0), 0 0 6px rgba(0, 0, 0, 0), 0 0 8px rgba(253, 151, 31, 0.5);
+}
+
+.mtk13 {
+  color: #f9c74b;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0), 0 0 4px rgba(0, 0, 0, 0), 0 0 6px rgba(0, 0, 0, 0), 0 0 8px rgba(249, 199, 75, 0.5);
+}
+
+/* ========== Editor & tab bar backgrounds ========== */
+/* Apply a dark background to the editor with a subtle gradient for a modern look【590227032583913†L48-L55】. */
+.monaco-editor {
+  background: var(--editor-bg) !important;
+}
+
+/* Add a gradient bar under the active tab similar to the neon example【590227032583913†L67-L90】. */
+.monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab.sizing-fit.active {
+  box-shadow: inset 0 -5px 25px #fc28a825;
+  position: relative;
+}
+
+.monaco-workbench .part.editor > .content .editor-group-container > .title .tabs-container > .tab.sizing-fit.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, var(--accent-purple), var(--accent-orange)) !important;
+  opacity: 1;
+  z-index: 6;
+}
+
+/* ========== Status bar gradient ========== */
+/* Give the status bar a multi‑stop gradient reminiscent of certain themes【590227032583913†L138-L140】. */
 .monaco-workbench .part.statusbar {
-  background: var(--color-sidebar) !important;
-  border-top: 1px solid var(--color-border) !important;
-  transition: transform var(--transition-fast);
+  background: linear-gradient(to right, var(--status-gradient-start), var(--status-gradient-mid), var(--status-gradient-end)) !important;
 }
 
-/* ========== Selection & Scrollbar ========== */
-/*
- * Colour selected text and highlights with a semi‑transparent accent. The
- * scrollbars adopt the border colour and brighten on hover.
- */
-.monaco-editor .selected-text,
-.monaco-editor .selectionHighlight {
-  background-color: var(--color-selection) !important;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-hover);
+/* ========== Miscellaneous adjustments ========== */
+/* Animate the lightbulb suggestion icon to pulse with neon colours【590227032583913†L143-L172】.  This is purely decorative. */
+@keyframes neonFlash {
+  0%, 100% {
+    text-shadow: 0 0 1vw #FA1C16, 0 0 3vw #FA1C16, 0 0 10vw #FA1C16, 0 0 10vw #FA1C16, 0 0 0.4vw #FED128;
+    color: #FED128;
+  }
+  50% {
+    text-shadow: 0 0 0.5vw #800E0B, 0 0 1.5vw #800E0B, 0 0 5vw #800E0B, 0 0 5vw #800E0B, 0 0 0.2vw #800E0B;
+    color: #806914;
+  }
 }
 
-/* ========== Context Menu ========== */
-/*
- * Ensure context menus use the UI font for readability. Adjust the font
- * size to more closely resemble macOS system context menus.
- */
-.context-view.monaco-menu .monaco-action-bar.horizontal .action-item {
-  font-family: var(--font-ui) !important;
-  font-size: 13px;
+@keyframes fluxFlash {
+  0%, 100% {
+    text-shadow: 0 0 1vw #1041FF, 0 0 3vw #1041FF, 0 0 10vw #1041FF, 0 0 10vw #1041FF, 0 0 0.4vw #8BFDFE;
+    color: #28D7FE;
+  }
+  50% {
+    text-shadow: 0 0 0.5vw #082180, 0 0 1.5vw #082180, 0 0 5vw #082180, 0 0 5vw #082180, 0 0 0.2vw #082180;
+    color: #146C80;
+  }
 }
 
-/* ========== Fade‑in Animation ========== */
-/*
- * Apply a subtle fade when the workbench loads, providing a polished
- * startup feel akin to native apps on macOS.
- */
-@keyframes fadeInWorkbench {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-.monaco-workbench {
-  animation: fadeInWorkbench 0.3s ease-out;
+.monaco-workbench .contentWidgets .codicon-lightbulb,
+.monaco-workbench .markers-panel-container .codicon-lightbulb {
+  animation: neonFlash 1s ease infinite;
 }
 
-/* === Command Palette(Quick Open) 화면 정중앙 배치 === */
-.monaco-workbench .quick-input-widget {
-  position: fixed !important;      /* 뷰포트 기준으로 고정 */
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  width: min(640px, 80vw) !important;   /* 화면이 작은 경우 대비 */
-  z-index: 1000 !important;        /* 다른 패널 위에 오도록 */
+.monaco-workbench .contentWidgets .codicon-lightbulb-autofix,
+.monaco-workbench .markers-panel-container .codicon-lightbulb-autofix {
+  animation: fluxFlash 1s ease infinite;
 }
 
-/* 결과 목록 높이 제한(옵션) */
-.monaco-workbench .quick-input-widget .quick-input-list {
-  max-height: 60vh !important;
+/* Suggest Widget */
+.editor-widget.suggest-widget {
+  background-color: #eee4;
+  padding: var(--container-padding) !important;
+  box-sizing: content-box !important;
+  border-radius: var(--border-radius) !important;
+  box-shadow: inset 0 0 0 1px #fff, 2px 2px 10px #0002 !important;
+  border: 1px solid #0005 !important;
+  backdrop-filter: blur(10px) sepia(5%);
 }
 
-@keyframes cursorGlow {
-  0%   { box-shadow: 0 0 0 0 #0a84ff; }
-  50%  { box-shadow: 0 0 6px 2px #0a84ff; }
-  100% { box-shadow: 0 0 0 0 #0a84ff; }
-}
-.monaco-editor .cursor {
-  background: #0a84ff !important;     /* 커서 색상 */
-  animation: cursorGlow 1.2s ease-in-out infinite !important;
-  mix-blend-mode: lighten;            /* 어두운 배경에서 더 선명하게 */
+/* Suggest Widget - Dark Mode */
+.vs-dark .editor-widget.suggest-widget {
+  background-color: #0003;
+  box-shadow: inset 0 0 0 1px #fff3, 1px 1px 10px #0008 !important;
+  border: 1px solid #0009;
 }
 
-/* ===== Frosted pinned tab ===================================== */
-.monaco-workbench .editor .tab.pinned {
-  /* 반투명 + 블러 */
-  background-color: rgba(30, 30, 30, 0.55) !important;  /* 필요 시 색상 조정 */
-  backdrop-filter: blur(6px) saturate(140%) !important;
-  -webkit-backdrop-filter: blur(6px) saturate(140%) !important; /* 크로스 브라우저 */
+/* Suggest Widget Resize Right Vertical Bar */
+.editor-widget.suggest-widget .monaco-sash.vertical {
+  margin-left: calc(var(--container-padding) * 2) !important;
 
-  /* 겹침 현상 방지 */
-  overflow: visible;    /* 그림자/블러 잘리면 해제 */
-  z-index: 2;           /* 일반 탭 위로 */
 }
 
-/* 선택된(활성) 고정 탭 전용 스타일 – 선택사항 */
-.monaco-workbench .editor .tab.pinned.active {
-  backdrop-filter: blur(6px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(6px) saturate(140%) !important;
-  background-color: rgba(44, 44, 46, 0.65) !important;
+.editor-widget.suggest-widget .monaco-sash.vertical::before {
+  border-radius: 10px !important;
 }
 
+/* Suggest Widget Resize Bottom Horizontal Bar */
+.editor-widget.suggest-widget .monaco-sash.orthogonal-edge-south.horizontal {
+  margin-top: calc(var(--container-padding) * 2) !important;
+}
+
+.editor-widget.suggest-widget .monaco-sash.orthogonal-edge-north.horizontal::before,
+.editor-widget.suggest-widget .monaco-sash.orthogonal-edge-south.horizontal::before {
+  border-radius: 10px !important;
+}
+
+/* Suggest Widget List Item */
+.editor-widget.suggest-widget .monaco-list-rows .monaco-list-row {
+  padding: 0 2px !important;
+  height: auto !important;
+  border-radius: calc(var(--border-radius) - var(--container-padding)) !important;
+}
+
+/* Suggest Widget List Item Focused */
+/* Suggest Widget List Item Hovered */
+.editor-widget.suggest-widget .monaco-list-rows .monaco-list-row.focused,
+.editor-widget.suggest-widget .monaco-list-rows .monaco-list-row:hover {
+  background-color: #dbf2 !important;
+  text-shadow: 1px 1px 1px #fff;
+  box-shadow: inset 0 0 0 1px #0006, inset 0 0 0 2px #fff !important;
+}
+
+/* Suggest Widget List Item Focused - Dark Mode */
+/* Suggest Widget List Item Hovered - Dark Mode */
+.vs-dark .editor-widget.suggest-widget .monaco-list-rows .monaco-list-row.focused,
+.vs-dark .editor-widget.suggest-widget .monaco-list-rows .monaco-list-row:hover {
+  background-color: #8593 !important;
+  text-shadow: 1px 1px 1px #000;
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 0 2px #fff2 !important;
+}
+
+/* Suggest Widget List Item Custom Color Icon */
+.editor-widget.suggest-widget .monaco-list-rows .monaco-list-row .colorspan {
+  margin-left: 2px !important;
+}
+
+.editor-widget.suggest-widget .monaco-list-rows .monaco-list-row .readMore {
+  padding-top: 3px !important;
+
+}
+
+/* Suggest Widget List Item Color Span */
+.editor-widget.suggest-widget .monaco-list-rows .monaco-list-row .colorspan {
+  border-radius: 100px !important;
+  border: none !important;
+  width: 13px !important;
+  height: 13px !important;
+  margin-top: 4px !important;
+}
+
+/* Suggest Widget Scrollbar */
+.editor-widget.suggest-widget .monaco-scrollable-element .scrollbar {
+  border-radius: var(--border-radius) !important;
+}
+
+/* Suggest Widget Scrollbar Thumb */
+.editor-widget.suggest-widget .monaco-scrollable-element .scrollbar .slider {
+  border-radius: calc(var(--border-radius)) !important;
+  background-color: #eee !important;
+  box-shadow: inset 0 0 0 2px #fff7, inset 0 0 0 1px #0006 !important;
+}
+
+/* Suggest Widget Scrollbar Thumb - Dark Mode */
+.vs-dark .editor-widget.suggest-widget .monaco-scrollable-element .scrollbar .slider {
+  background-color: #0006 !important;
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 0 2px #fff2 !important;
+}
+
+/* Suggest Widget Details Container */
+.suggest-details-container {
+  margin: 0 2px !important;
+  color: #0006;
+}
+
+/* Suggest Widget Details Inner Panel */
+.suggest-details-container .suggest-details {
+  background-color: #eef9 !important;
+  text-shadow: 1px 1px #fff;
+  padding: calc(var(--container-padding) * 2) !important;
+  box-sizing: border-box !important;
+  border: none !important;
+  border-radius: var(--border-radius) !important;
+  box-shadow: inset 0 0 0 2px #fff7, inset 0 0 0 1px #0006 !important;
+  backdrop-filter: blur(10px) sepia(10%);
+}
+
+/* Suggest Widget Details Inner - Dark Mode */
+.vs-dark .suggest-details-container .suggest-details {
+  background-color: #0006 !important;
+  text-shadow: 1px 1px #000;
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 0 2px #fff3 !important;
+}
+
+/* Suggest Widget Details Scrollbar Thumb */
+.suggest-details-container .monaco-scrollable-element .scrollbar .slider {
+  border-radius: calc(var(--border-radius)) !important;
+  background-color: #eee !important;
+  box-shadow: inset 0 0 0 2px #fff7, inset 0 0 0 1px #0006 !important;
+}
+
+/* Suggest Widget Details Scrollbar Thumb - Dark Mode */
+.vs-dark .suggest-details-container .monaco-scrollable-element .scrollbar .slider {
+  background-color: #0006 !important;
+  box-shadow: inset 0 0 0 1px #000, inset 0 0 0 2px #fff2 !important;
+}
+
+/* Paramater Hints Widget */
+.editor-widget.parameter-hints-widget {
+  background-color: #eee4 !important;
+  border-radius: var(--border-radius) !important;
+  box-shadow: inset 0 0 0 1px #fff, 2px 2px 10px #0002 !important;
+  border: 1px solid #0006;
+  backdrop-filter: blur(10px) sepia(10%) !important;
+}
+
+/* Paramater Hints Widget - Dark Mode */
+.vs-dark .editor-widget.parameter-hints-widget {
+  background-color: #0002 !important;
+  box-shadow: inset 0 0 0 1px #fff4, 1px 1px 10px #0008 !important;
+  border: 1px solid #0009;
+}
+
+/* Paramater Hints Widget Inner Wrapper */
+.editor-widget.parameter-hints-widget .phwrapper {
+  padding: var(--container-padding) !important;
+  box-sizing: border-box !important;
+}
