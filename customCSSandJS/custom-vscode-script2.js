@@ -6,6 +6,7 @@
  *  - Welcome modal on startup (remember "Don't show again")
  *  - Robust theme detection (VS Code CSS variables -> vs-dark/vscode-dark fallback)
  *  - Liquid Glass visual effect (modal + blur overlay)
+ *  - Top-right music player (local files/folders, playlist, speed, pitch toggle)
  *
  * Requires: "Custom CSS and JS Loader" extension
  */
@@ -128,7 +129,6 @@ document.addEventListener('DOMContentLoaded', () => {
           inset 0 -1px 0 rgba(0,0,0,0.08),
           0 20px 60px rgba(0,0,0,0.25), 0 2px 12px rgba(0,0,0,0.2);
       }
-      /* soft inner highlight ring */
       .lg-glass::before {
         content: "";
         position: absolute; inset: 0;
@@ -140,7 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
             rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.00) 50%);
         mix-blend-mode: screen;
       }
-      /* animated specular sweep */
       .lg-spec {
         position: absolute; inset: -40%;
         background:
@@ -160,8 +159,6 @@ document.addEventListener('DOMContentLoaded', () => {
         50%  { transform: rotate(180deg) scale(1.10); }
         100% { transform: rotate(360deg) scale(1.05); }
       }
-
-      /* subtle moving refraction caustics */
       .lg-caustics {
         position: absolute; inset: -20%;
         pointer-events: none;
@@ -181,8 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
         75%  { transform: translate3d(-2%, -1%, 0) scale(1.04); }
         100% { transform: translate3d(0, 0, 0) scale(1.0); }
       }
-
-      /* fine grain for glass – super subtle */
       .lg-grain {
         position: absolute; inset: 0;
         pointer-events: none;
@@ -213,7 +208,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Match VS Code theme background/border softly
     if (tokens.bg) {
-      // color-mix keeps a hint of the underlying panel color
       el.style.background = 'color-mix(in oklab, ' + tokens.bg + ' 75%, transparent)';
     }
     if (tokens.border) {
@@ -420,4 +414,607 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   })();
+
+  // ===================== Editor Music Player (robust mount + local playlist + speed + pitch toggle) =====================
+  (function editorMusicPlayer() {
+    const ID = 'editor-music-player';
+    if (document.getElementById(ID)) return;
+
+    const STORAGE = {
+      vol: 'vscodeAudioPlayer.volume',
+      idx: 'vscodeAudioPlayer.trackIndex',
+      collapsed: 'vscodeAudioPlayer.collapsed',
+      listOpen: 'vscodeAudioPlayer.listOpen',
+      rate: 'vscodeAudioPlayer.playbackRate',
+      pitch: 'vscodeAudioPlayer.pitchPreserve', // true=피치 고정, false=해제(기본)
+    };
+
+    const REMOTE_PRESETS = [
+    ];
+
+    // 1) 에디터 컨테이너 찾기(여러 후보) + 실패 시 고정(fixed)로 바디/워크벤치에 부착
+    function findEditorContainer() {
+      return (
+        document.querySelector('.monaco-workbench .part.editor > .content') ||
+        document.querySelector('.monaco-workbench .part.editor .content') ||
+        document.querySelector('.monaco-workbench .part.editor') ||
+        null
+      );
+    }
+
+    let tries = 0;
+    const maxTriesBeforeFallback = 20; // 약 10초
+    const t = setInterval(tryMount, 500);
+    tryMount();
+
+    function tryMount() {
+      if (document.getElementById(ID)) {
+        clearInterval(t);
+        return;
+      }
+      const container = findEditorContainer();
+      if (container) {
+        try {
+          createMusicPlayer(container, /*useFixed*/ false);
+          console.info('[MusicPlayer] mounted on', describe(container));
+          clearInterval(t);
+        } catch (e) {
+          console.error('[MusicPlayer] init error (will retry):', e);
+          // 재시도 유지
+        }
+      } else {
+        tries++;
+        if (tries >= maxTriesBeforeFallback) {
+          // fallback: workbench/body에 고정 위치로
+          const wb = document.querySelector('.monaco-workbench') || document.body;
+          try {
+            createMusicPlayer(wb, /*useFixed*/ true);
+            console.warn('[MusicPlayer] fallback: mounted fixed on workbench/body');
+          } catch (e) {
+            console.error('[MusicPlayer] fallback init error:', e);
+          } finally {
+            clearInterval(t);
+          }
+        }
+      }
+    }
+
+    function describe(el) {
+      return el.id ? `#${el.id}` : el.className ? `.${String(el.className).split(' ').join('.')}` : el.tagName;
+    }
+
+    function createMusicPlayer(root, useFixed) {
+      const { tokens, isDark } = pickThemeTokens();
+
+      // 테마 기반 공통 스타일 주입
+      function injectPlayerStyles(tokens, isDark) {
+        const id = 'editor-music-player-theme';
+        let style = document.getElementById(id);
+        const accent = tokens.btnBg || '#0e639c';
+        const fg = tokens.fg || (isDark ? '#e6e6e6' : '#1e1e1e');
+        const bg = tokens.bg || (isDark ? '#252526' : '#ffffff');
+        const border = tokens.border || (isDark ? '#3c3c3c' : '#e5e5e5');
+        const hover = tokens.hoverBg || (isDark ? '#2a2a2a' : '#f3f3f3');
+        const caretFill = encodeURIComponent(isDark ? '#cfd3d7' : '#4a4d50');
+
+        const css = `
+          #editor-music-player button,
+          #editor-music-player select {
+            background: color-mix(in oklab, ${bg} 88%, transparent);
+            color: ${fg};
+            border: 1px solid ${border};
+            outline: none;
+          }
+          #editor-music-player button:hover,
+          #editor-music-player select:hover {
+            background: ${hover};
+          }
+          #editor-music-player button:focus-visible,
+          #editor-music-player select:focus-visible,
+          #editor-music-player input[type="range"]:focus-visible {
+            outline: none;
+            border-color: ${accent};
+            box-shadow: 0 0 0 2px ${accent}55;
+          }
+          #editor-music-player select {
+            -webkit-appearance: none;
+            appearance: none;
+            padding: 5px 26px 5px 8px;
+            border-radius: 8px;
+            background-color: ${bg};
+            color: ${fg};
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path fill='${caretFill}' d='M1 1l5 5 5-5'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 12px 8px;
+          }
+          #editor-music-player button {
+            border-radius: 8px;
+            color: ${fg};
+          }
+          #editor-music-player input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 18px;
+            background: transparent;
+          }
+          #editor-music-player input[type="range"]::-webkit-slider-runnable-track {
+            height: 4px;
+            border-radius: 999px;
+            background: color-mix(in oklab, ${bg} 72%, transparent);
+          }
+          #editor-music-player input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px; height: 12px;
+            margin-top: -4px;
+            border-radius: 50%;
+            background: ${accent};
+            border: 1px solid ${border};
+            box-shadow: 0 0 0 2px color-mix(in oklab, ${bg} 60%, transparent);
+            cursor: pointer;
+          }
+          #editor-music-player input[type="range"]::-moz-range-track {
+            height: 4px;
+            border-radius: 999px;
+            background: color-mix(in oklab, ${bg} 72%, transparent);
+          }
+          #editor-music-player input[type="range"]::-moz-range-thumb {
+            width: 12px; height: 12px;
+            border-radius: 50%;
+            background: ${accent};
+            border: 1px solid ${border};
+            cursor: pointer;
+          }
+          #editor-music-player input[type="range"]::-moz-range-progress {
+            height: 4px;
+            border-radius: 999px;
+            background: color-mix(in oklab, ${accent} 40%, transparent);
+          }
+        `;
+        if (!style) {
+          style = document.createElement('style');
+          style.id = id;
+          document.head.appendChild(style);
+        }
+        style.textContent = css;
+      }
+      injectPlayerStyles(tokens, isDark);
+
+      // Wrapper
+      const wrap = document.createElement('div');
+      wrap.id = ID;
+      Object.assign(wrap.style, {
+        position: useFixed ? 'fixed' : 'absolute',
+        top: '40px',
+        right: '20px',
+        zIndex: '30',
+        pointerEvents: 'auto',
+        userSelect: 'none',
+        maxWidth: 'min(500px, calc(100% - 40px))',
+      });
+
+      // Panel (glass)
+      const panel = document.createElement('div');
+      Object.assign(panel.style, {
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '8px',
+        padding: '6px 8px',
+        borderRadius: '10px',
+        color: tokens.fg || '#e6e6e6',
+        position: 'relative',
+        maxWidth: '100%',
+      });
+      applyLiquidGlass(panel, tokens);
+
+      const row = document.createElement('div');
+      Object.assign(row.style, {
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: '8px',
+        position: 'relative',
+        zIndex: '1',
+        maxWidth: '100%',
+      });
+
+      const title = document.createElement('span');
+      title.title = '현재 트랙';
+      Object.assign(title.style, {
+        fontSize: '12px',
+        opacity: '0.9',
+        maxWidth: '260px',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+      });
+
+      const audio = document.createElement('audio');
+      audio.preload = 'metadata';
+      audio.style.display = 'none';
+
+      const mkBtn = (text, aria, titleText) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = text;
+        b.setAttribute('aria-label', aria || text);
+        if (titleText) b.title = titleText;
+        Object.assign(b.style, {
+          fontSize: '13px',
+          padding: '6px 8px',
+          borderRadius: '8px',
+          border: '1px solid ' + (tokens.border || 'rgba(255,255,255,0.18)'),
+          background: 'transparent',
+          color: tokens.fg || '#e6e6e6',
+          cursor: 'pointer',
+          lineHeight: '1',
+        });
+        b.onmouseenter = () => {
+          b.style.background = tokens.hoverBg || (isDark ? '#2a2a2a' : '#f3f3f3');
+        };
+        b.onmouseleave = () => {
+          b.style.background = 'transparent';
+        };
+        return b;
+      };
+
+      const prevBtn = mkBtn('⏮', '이전 곡', '이전 트랙');
+      const playBtn = mkBtn('▶', '재생/일시정지', '재생/일시정지');
+      const nextBtn = mkBtn('⏭', '다음 곡', '다음 트랙');
+      const addBtn = mkBtn('＋', '파일 추가', '오디오 파일 추가');
+      const addDirBtn = mkBtn('📁', '폴더 추가', '폴더에서 오디오 추가');
+      const listBtn = mkBtn('♪', '재생목록 열기/닫기', '재생목록 열기/닫기');
+      const collapseBtn = mkBtn('–', '접기/펼치기', '접기/펼치기');
+
+      const vol = document.createElement('input');
+      vol.type = 'range';
+      vol.min = '0'; vol.max = '1'; vol.step = '0.01';
+      vol.value = localStorage.getItem(STORAGE.vol) || '0.7';
+      Object.assign(vol.style, {
+        width: '90px',
+        cursor: 'pointer',
+      });
+      vol.style.setProperty('accent-color', tokens.btnBg || '#0e639c');
+
+      // === Playback Speed (0.5×~2.0×) ===
+      const RATES = [0.5, 0.75, 1, 1.25, 1.5, 2];
+      const speedSel = document.createElement('select');
+      speedSel.title = '재생 속도';
+      Object.assign(speedSel.style, {
+        fontSize: '12px',
+        padding: '5px 6px',
+        borderRadius: '8px',
+        border: '1px solid ' + (tokens.border || 'rgba(255,255,255,0.18)'),
+        background: tokens.bg || '#252525',
+        color: tokens.fg || '#e6e6e6',
+        cursor: 'pointer',
+      });
+      const savedRate = parseFloat(localStorage.getItem(STORAGE.rate) || '1');
+      RATES.forEach((r) => {
+        const opt = document.createElement('option');
+        opt.value = String(r);
+        opt.textContent = (r % 1 === 0 ? r.toFixed(0) : r.toFixed(2).replace(/0$/, '')) + '×';
+        speedSel.appendChild(opt);
+      });
+      speedSel.value = String(RATES.includes(savedRate) ? savedRate : 1);
+      function applyRateFromUI() {
+        const r = parseFloat(speedSel.value || '1');
+        const rate = RATES.includes(r) ? r : 1;
+        audio.playbackRate = rate;
+        audio.defaultPlaybackRate = rate;
+        localStorage.setItem(STORAGE.rate, String(rate));
+      }
+      speedSel.addEventListener('change', applyRateFromUI);
+      speedSel.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        const dir = e.deltaY > 0 ? 1 : -1;
+        let i = RATES.indexOf(parseFloat(speedSel.value));
+        i = Math.max(0, Math.min(RATES.length - 1, i + dir));
+        speedSel.value = String(RATES[i]);
+        applyRateFromUI();
+      }, { passive: false });
+      speedSel.addEventListener('dblclick', () => {
+        speedSel.value = '1';
+        applyRateFromUI();
+      });
+
+      // === Pitch preserve toggle (기본: 꺼짐) ===
+      let pitchPreserve = JSON.parse(localStorage.getItem(STORAGE.pitch) || 'false');
+      function setPitchPreserve(preserve) {
+        ['preservesPitch','mozPreservesPitch','webkitPreservesPitch'].forEach((p)=>{
+          if (p in audio) { try { audio[p] = preserve; } catch {} }
+        });
+        localStorage.setItem(STORAGE.pitch, String(!!preserve));
+      }
+      setPitchPreserve(pitchPreserve);
+      const pitchBtn = mkBtn(pitchPreserve ? '🔒' : '🔓', '피치 보정 토글', '피치 보정(🔒=고정, 🔓=해제)');
+      function updatePitchBtn(){ pitchBtn.textContent = pitchPreserve ? '🔒' : '🔓'; }
+      pitchBtn.addEventListener('click', () => {
+        pitchPreserve = !pitchPreserve;
+        setPitchPreserve(pitchPreserve);
+        updatePitchBtn();
+      });
+
+      // 순서: 이전/재생/다음/제목/볼륨/속도/피치/파일/폴더/목록/접기
+      row.appendChild(prevBtn);
+      row.appendChild(playBtn);
+      row.appendChild(nextBtn);
+      row.appendChild(title);
+      row.appendChild(vol);
+      row.appendChild(speedSel);
+      row.appendChild(pitchBtn);
+      row.appendChild(addBtn);
+      row.appendChild(addDirBtn);
+      row.appendChild(listBtn);
+      row.appendChild(collapseBtn);
+
+      panel.appendChild(row);
+      wrap.appendChild(panel);
+      wrap.appendChild(audio);
+      root.appendChild(wrap);
+
+      // Playlist panel
+      const listWrap = document.createElement('div');
+      Object.assign(listWrap.style, {
+        position: useFixed ? 'fixed' : 'absolute',
+        top: useFixed ? '58px' : 'calc(100% + 8px)',
+        right: '0',
+        minWidth: '320px',
+        maxWidth: '420px',
+        maxHeight: '260px',
+        overflowY: 'auto',
+        overflowX: 'hidden',
+        padding: '6px',
+        display: 'none',
+        zIndex: '31',
+      });
+      applyLiquidGlass(listWrap, tokens);
+
+      const listHeader = document.createElement('div');
+      listHeader.textContent = '재생목록';
+      Object.assign(listHeader.style, { fontSize: '12px', opacity: '0.8', margin: '2px 4px 6px' });
+
+      const list = document.createElement('div');
+      list.id = 'editor-music-player-list';
+      listWrap.appendChild(listHeader);
+      listWrap.appendChild(list);
+      wrap.appendChild(listWrap);
+
+      // Hidden inputs
+      const filePicker = document.createElement('input');
+      filePicker.type = 'file'; filePicker.accept = 'audio/*'; filePicker.multiple = true; filePicker.style.display = 'none';
+
+      const dirPicker = document.createElement('input');
+      dirPicker.type = 'file'; dirPicker.multiple = true; dirPicker.style.display = 'none';
+      dirPicker.setAttribute('webkitdirectory', '');
+
+      wrap.appendChild(filePicker);
+      wrap.appendChild(dirPicker);
+
+      // State
+      let playlist = [...REMOTE_PRESETS];
+      let idx = clampIndex(parseInt(localStorage.getItem(STORAGE.idx) || '0', 10));
+      let collapsed = localStorage.getItem(STORAGE.collapsed) === 'true';
+      let listOpen = localStorage.getItem(STORAGE.listOpen) === 'true';
+      const localObjectURLs = new Set();
+
+      // Utils
+      function clampIndex(i) {
+        if (!playlist.length) return 0;
+        return (i % playlist.length + playlist.length) % playlist.length;
+      }
+      function updatePlayIcon() {
+        playBtn.textContent = audio.paused ? '▶' : '⏸';
+      }
+      function setCollapsed(v) {
+        collapsed = !!v;
+        localStorage.setItem(STORAGE.collapsed, String(collapsed));
+        title.style.display = collapsed ? 'none' : '';
+        vol.style.display = collapsed ? 'none' : '';
+        speedSel.style.display = collapsed ? 'none' : '';
+        pitchBtn.style.display = collapsed ? 'none' : '';
+        addBtn.style.display = collapsed ? 'none' : '';
+        addDirBtn.style.display = collapsed ? 'none' : '';
+        listBtn.style.display = collapsed ? 'none' : '';
+        collapseBtn.textContent = collapsed ? '▣' : '–';
+        collapseBtn.title = collapsed ? '펼치기' : '접기';
+        if (collapsed) hideList();
+      }
+      function setListOpen(v) {
+        listOpen = !!v;
+        localStorage.setItem(STORAGE.listOpen, String(listOpen));
+        listWrap.style.display = listOpen ? 'block' : 'none';
+      }
+      function toggleList() { setListOpen(!listOpen); }
+      function hideList() { setListOpen(false); }
+
+      function humanTitleFromFile(file) {
+        return file.name.replace(/\.[^.]+$/, '');
+      }
+      function isAudioFile(file) {
+        if (file.type && file.type.startsWith('audio/')) return true;
+        return /\.(mp3|m4a|aac|flac|wav|ogg|oga|opus|webm)$/i.test(file.name);
+      }
+      function genId() {
+        return 't_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
+      }
+
+      function addFiles(filesLike) {
+        const files = Array.from(filesLike || []).filter(isAudioFile);
+        if (!files.length) return;
+        const wasEmpty = playlist.length === 0;
+        files.forEach((f) => {
+          const url = URL.createObjectURL(f);
+          localObjectURLs.add(url);
+          playlist.push({ id: genId(), title: humanTitleFromFile(f), url, file: f, source: 'local' });
+        });
+        renderPlaylist();
+        if (wasEmpty) setCurrent(0, false);
+      }
+
+      function removeTrackById(id) {
+        const removeIdx = playlist.findIndex((t) => t.id === id);
+        if (removeIdx === -1) return;
+        const wasCurrent = removeIdx === idx;
+        const t = playlist[removeIdx];
+        if (t.source === 'local' && t.url && localObjectURLs.has(t.url)) {
+          try { URL.revokeObjectURL(t.url); } catch {}
+          localObjectURLs.delete(t.url);
+        }
+        playlist.splice(removeIdx, 1);
+        if (!playlist.length) {
+          audio.pause();
+          audio.removeAttribute('src');
+          audio.load();
+          idx = 0;
+          title.textContent = '재생목록이 비었습니다';
+        } else {
+          if (removeIdx < idx) idx -= 1;
+          else if (wasCurrent) idx = clampIndex(idx);
+          setCurrent(idx, false);
+        }
+        renderPlaylist();
+      }
+
+      function setCurrent(i, autoplay) {
+        if (!playlist.length) return;
+        idx = clampIndex(i);
+        localStorage.setItem(STORAGE.idx, String(idx));
+        const t = playlist[idx];
+        title.textContent = t.title || 'Untitled';
+        audio.src = t.url || '';
+        // 속도/피치 보정 상태 재적용
+        applyRateFromUI();
+        setPitchPreserve(pitchPreserve);
+        if (autoplay) audio.play().catch(() => updatePlayIcon()); else updatePlayIcon();
+        highlightCurrent();
+      }
+      function nextTrack(autoplay) { if (playlist.length) setCurrent(idx + 1, autoplay ?? !audio.paused); }
+      function prevTrack() { if (playlist.length) setCurrent(idx - 1, !audio.paused); }
+
+      function highlightCurrent() {
+        const rows = list.querySelectorAll('[data-track-id]');
+        rows.forEach((row) => {
+          const active = playlist[idx] && row.getAttribute('data-track-id') === playlist[idx].id;
+          row.style.background = active ? (tokens.hoverBg || (isDark ? '#2a2a2a' : '#f0f0f0')) : 'transparent';
+        });
+      }
+
+      function renderPlaylist() {
+        list.innerHTML = '';
+        playlist.forEach((t, i) => {
+          const row = document.createElement('div');
+          row.setAttribute('data-track-id', t.id);
+          Object.assign(row.style, {
+            display: 'grid',
+            gridTemplateColumns: 'auto 1fr auto',
+            alignItems: 'center',
+            gap: '8px',
+            padding: '6px',
+            borderRadius: '8px',
+            cursor: 'pointer',
+          });
+
+          const indexBadge = document.createElement('span');
+          indexBadge.textContent = String(i + 1).padStart(2, '0');
+          Object.assign(indexBadge.style, { fontSize: '11px', opacity: '0.7', width: '24px', textAlign: 'right' });
+
+          const name = document.createElement('div');
+          name.textContent = t.title || 'Untitled';
+          Object.assign(name.style, { fontSize: '12px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' });
+
+          const del = document.createElement('button');
+          del.type = 'button';
+          del.textContent = '✕';
+          del.title = '이 트랙 제거';
+          Object.assign(del.style, {
+            fontSize: '12px',
+            padding: '2px 6px',
+            borderRadius: '6px',
+            border: '1px solid ' + (tokens.border || 'rgba(255,255,255,0.18)'),
+            background: 'transparent',
+            color: tokens.fg || '#e6e6e6',
+            cursor: 'pointer',
+          });
+          del.onmouseenter = () => { del.style.background = tokens.hoverBg || (isDark ? '#2a2a2a' : '#f3f3f3'); };
+          del.onmouseleave = () => { del.style.background = 'transparent'; };
+
+          del.addEventListener('click', (e) => { e.stopPropagation(); removeTrackById(t.id); });
+          row.addEventListener('click', () => {
+            const goIndex = playlist.findIndex((x) => x.id === t.id);
+            if (goIndex !== -1) setCurrent(goIndex, true);
+          });
+
+          row.appendChild(indexBadge);
+          row.appendChild(name);
+          row.appendChild(del);
+          list.appendChild(row);
+        });
+        highlightCurrent();
+      }
+
+      // Init
+      audio.volume = parseFloat(vol.value);
+      applyRateFromUI();
+      setPitchPreserve(pitchPreserve);
+      setCollapsed(localStorage.getItem(STORAGE.collapsed) === 'true');
+      setListOpen(localStorage.getItem(STORAGE.listOpen) === 'true');
+      if (playlist.length) setCurrent(idx, false);
+      renderPlaylist();
+      updatePlayIcon();
+
+      // Events
+      playBtn.addEventListener('click', () => {
+        if (!playlist.length) return filePicker.click();
+        if (audio.paused) audio.play().catch(() => {}); else audio.pause();
+      });
+      nextBtn.addEventListener('click', () => nextTrack(true));
+      prevBtn.addEventListener('click', () => prevTrack());
+      collapseBtn.addEventListener('click', () => setCollapsed(!collapsed));
+      listBtn.addEventListener('click', () => toggleList());
+
+      vol.addEventListener('input', () => {
+        audio.volume = parseFloat(vol.value);
+        localStorage.setItem(STORAGE.vol, vol.value);
+      });
+
+      audio.addEventListener('play', updatePlayIcon);
+      audio.addEventListener('pause', updatePlayIcon);
+      audio.addEventListener('ended', () => nextTrack(true));
+      audio.addEventListener('error', () => {
+        title.textContent = '재생 오류: 다음 트랙으로 이동';
+        setTimeout(() => nextTrack(true), 800);
+      });
+
+      // 파일/폴더 추가
+      addBtn.addEventListener('click', () => filePicker.click());
+      filePicker.addEventListener('change', () => { addFiles(filePicker.files); filePicker.value = ''; });
+
+      addDirBtn.addEventListener('click', () => dirPicker.click());
+      dirPicker.addEventListener('change', () => { addFiles(dirPicker.files); dirPicker.value = ''; });
+
+      // 드래그&드롭
+      const dragHighlightOn = () => { panel.style.outline = `2px dashed ${tokens.border || (isDark ? '#3c3c3c' : '#cfcfcf')}`; };
+      const dragHighlightOff = () => { panel.style.outline = 'none'; };
+      panel.addEventListener('dragover', (e) => {
+        if (e.dataTransfer && Array.from(e.dataTransfer.items || []).some(it => it.kind === 'file')) {
+          e.preventDefault(); e.stopPropagation(); dragHighlightOn();
+        }
+      });
+      panel.addEventListener('dragleave', dragHighlightOff);
+      panel.addEventListener('drop', (e) => {
+        e.preventDefault(); e.stopPropagation(); dragHighlightOff();
+        if (e.dataTransfer && e.dataTransfer.files) addFiles(e.dataTransfer.files);
+      });
+
+      // unload 시 ObjectURL 정리
+      function revokeAllLocalUrls() {
+        localObjectURLs.forEach((u) => { try { URL.revokeObjectURL(u); } catch {} });
+        localObjectURLs.clear();
+      }
+      window.addEventListener('unload', revokeAllLocalUrls);
+    }
+  })();
+
+  // TODO VSCode 에디터 영역 안의 오른쪽 위에 음악을 재생할 수 있는 기능 추가 (완료)
 });
