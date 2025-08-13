@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
       isDark,
       tokens: {
         fg: tokens.fg || (isDark ? '#e6e6e6' : '#1e1e1e'),
-        bg: tokens.bg || (isDark ? '#252526' : '#ffffff'),
+        bg: tokens.bg || (isDark ? 'rgba(0, 0, 0, 0.37)' : 'rgba(255,255,255,0.77)'),
         border: tokens.border || (isDark ? '#3c3c3c' : '#e5e5e5'),
         subtle: tokens.subtle || (isDark ? '#9da0a2' : '#6b6f73'),
         btnBg: tokens.btnBg || '#0e639c',
@@ -118,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
       /* Base glass panel */
       .lg-glass {
         position: relative;
-        background: rgba(255, 255, 255, 0.06);
         border: 1px solid rgba(255, 255, 255, 0.18);
         border-radius: 12px;
         backdrop-filter: blur(14px) saturate(1.2);
@@ -133,24 +132,11 @@ document.addEventListener('DOMContentLoaded', () => {
         content: "";
         position: absolute; inset: 0;
         pointer-events: none;
-        background:
-          radial-gradient(120% 160% at 10% 0%,
-            rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.02) 36%, transparent 60%),
-          radial-gradient(120% 160% at 90% 100%,
-            rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.00) 50%);
         mix-blend-mode: screen;
       }
       .lg-spec {
-        position: absolute; inset: -40%;
-        background:
-          conic-gradient(from 0deg at 50% 50%,
-            rgba(255,255,255,0.00) 0%,
-            rgba(255,255,255,0.07) 10%,
-            rgba(255,255,255,0.15) 15%,
-            rgba(255,255,255,0.00) 25%,
-            rgba(255,255,255,0.00) 100%);
+        position: absolute;
         filter: blur(18px);
-        animation: lgSweep 8s linear infinite;
         pointer-events: none;
         opacity: .7;
       }
@@ -160,16 +146,10 @@ document.addEventListener('DOMContentLoaded', () => {
         100% { transform: rotate(360deg) scale(1.05); }
       }
       .lg-caustics {
-        position: absolute; inset: -20%;
+        position: absolute;
         pointer-events: none;
         opacity: .22;
         filter: blur(10px) contrast(1.05) saturate(1.1);
-        background:
-          radial-gradient(45% 35% at 20% 30%, rgba(255,255,255,.45), transparent 60%),
-          radial-gradient(40% 30% at 80% 70%, rgba(255,255,255,.35), transparent 60%),
-          radial-gradient(35% 25% at 30% 80%, rgba(255,255,255,.25), transparent 60%),
-          radial-gradient(30% 20% at 70% 25%, rgba(255,255,255,.30), transparent 60%);
-        animation: lgFloat 18s ease-in-out infinite;
       }
       @keyframes lgFloat {
         0%   { transform: translate3d(0, 0, 0) scale(1.0); }
@@ -183,10 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
         pointer-events: none;
         mix-blend-mode: soft-light;
         opacity: .07;
-        background-image: repeating-linear-gradient(
-          0deg, rgba(255,255,255,.25) 0, rgba(255,255,255,.25) 1px, transparent 1px, transparent 2px
-        );
-        animation: lgGrainShift 3s steps(60) infinite;
       }
       @keyframes lgGrainShift {
         0%   { transform: translate3d(0,0,0); }
@@ -207,8 +183,11 @@ document.addEventListener('DOMContentLoaded', () => {
     el.classList.add('lg-glass');
 
     // Match VS Code theme background/border softly
+    //if (tokens.bg) {
+    //  el.style.background = 'color-mix(in oklab, ' + tokens.bg + ' 75%, transparent)';
+    //}
     if (tokens.bg) {
-      el.style.background = 'color-mix(in oklab, ' + tokens.bg + ' 75%, transparent)';
+      el.style.background = tokens.bg;
     }
     if (tokens.border) {
       el.style.border = '1px solid ' + tokens.border;
@@ -265,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
         maxWidth: '560px',
         padding: '20px 22px',
         borderRadius: '12px',
-        background: tokens.bg || 'rgba(255,255,255,0.06)',
+        background: tokens.bg || (isDark ? 'rgba(0, 0, 0, 0.37)' : 'rgba(255,255,255,0.06)'),
         color: tokens.fg || '#e6e6e6',
         boxShadow:
           '0 20px 60px rgba(0,0,0,0.25), 0 2px 12px rgba(0,0,0,0.2)',
@@ -427,6 +406,8 @@ document.addEventListener('DOMContentLoaded', () => {
       listOpen: 'vscodeAudioPlayer.listOpen',
       rate: 'vscodeAudioPlayer.playbackRate',
       pitch: 'vscodeAudioPlayer.pitchPreserve', // true=피치 고정, false=해제(기본)
+      playflow: 'vscodeAudioPlayer.playflow',
+      highlight: 'vscodeAudioPlayer.highlight',
     };
 
     const REMOTE_PRESETS = [
@@ -495,6 +476,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const bg = tokens.bg || (isDark ? '#252526' : '#ffffff');
         const border = tokens.border || (isDark ? '#3c3c3c' : '#e5e5e5');
         const hover = tokens.hoverBg || (isDark ? '#2a2a2a' : '#f3f3f3');
+        const subtle = tokens.subtle || (isDark ? '#9da0a2' : '#6b6f73');
         const caretFill = encodeURIComponent(isDark ? '#cfd3d7' : '#4a4d50');
 
         const css = `
@@ -537,39 +519,168 @@ document.addEventListener('DOMContentLoaded', () => {
             appearance: none;
             height: 18px;
             background: transparent;
+            position: relative;
           }
           #editor-music-player input[type="range"]::-webkit-slider-runnable-track {
-            height: 4px;
+            height: 6px;
             border-radius: 999px;
-            background: color-mix(in oklab, ${bg} 72%, transparent);
+            background: linear-gradient(
+              to bottom,
+              rgba(255,255,255,0.08) 0%,
+              rgba(255,255,255,0.03) 40%,
+              rgba(0,0,0,0.05) 100%
+            );
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.1),
+                        inset 0 -1px 0 rgba(0,0,0,0.1),
+                        0 2px 4px rgba(0,0,0,0.15);
+            position: relative;
           }
           #editor-music-player input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 12px; height: 12px;
-            margin-top: -4px;
+            width: 16px; height: 16px;
+            margin-top: -6px;
             border-radius: 50%;
-            background: ${accent};
-            border: 1px solid ${border};
-            box-shadow: 0 0 0 2px color-mix(in oklab, ${bg} 60%, transparent);
+            background: radial-gradient(
+              circle at 30% 30%,
+              rgba(255,255,255,0.3) 0%,
+              rgba(255,255,255,0.1) 30%,
+              ${accent}88 60%,
+              ${accent} 100%
+            );
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 
+              inset 0 -2px 4px rgba(0,0,0,0.2),
+              inset 0 1px 0 rgba(255,255,255,0.4),
+              0 2px 8px rgba(0,0,0,0.3),
+              0 0 0 1px rgba(0,0,0,0.1);
             cursor: pointer;
+            transition: all 0.15s ease;
+            backdrop-filter: blur(10px);
+          }
+          #editor-music-player input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow:
+              inset 0 -2px 4px rgba(0,0,0,0.2),
+              inset 0 1px 0 rgba(255,255,255,0.5),
+              0 4px 12px rgba(0,0,0,0.4),
+              0 0 20px ${accent}44;
+          }
+          #editor-music-player input[type="range"]::-webkit-slider-thumb:active {
+            transform: scale(0.95);
           }
           #editor-music-player input[type="range"]::-moz-range-track {
-            height: 4px;
+            height: 6px;
             border-radius: 999px;
-            background: color-mix(in oklab, ${bg} 72%, transparent);
+            background: linear-gradient(
+              to bottom,
+              rgba(255,255,255,0.08) 0%,
+              rgba(255,255,255,0.03) 40%,
+              rgba(0,0,0,0.05) 100%
+            );
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow:
+              inset 0 1px 0 rgba(255,255,255,0.1),
+              inset 0 -1px 0 rgba(0,0,0,0.1);
           }
           #editor-music-player input[type="range"]::-moz-range-thumb {
-            width: 12px; height: 12px;
+            width: 16px; height: 16px;
             border-radius: 50%;
-            background: ${accent};
-            border: 1px solid ${border};
+            background: radial-gradient(
+              circle at 30% 30%,
+              rgba(255,255,255,0.3) 0%,
+              rgba(255,255,255,0.1) 30%,
+              ${accent}88 60%,
+              ${accent} 100%
+            );
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow:
+              inset 0 -2px 4px rgba(0,0,0,0.2),
+              inset 0 1px 0 rgba(255,255,255,0.4),
+              0 2px 8px rgba(0,0,0,0.3);
             cursor: pointer;
           }
           #editor-music-player input[type="range"]::-moz-range-progress {
-            height: 4px;
+            height: 6px;
             border-radius: 999px;
-            background: color-mix(in oklab, ${accent} 40%, transparent);
+            background: linear-gradient(
+              to right,
+              ${accent}66,
+              ${accent}44
+            );
+            box-shadow:
+              inset 0 0 3px ${accent}88,
+              0 0 6px ${accent}33;
+          }
+
+          @keyframes sliderShimmer {
+            0% { background-position: -200% center; }
+            100% { backgrond-position: 200% center; }
+          }
+
+          #editor-music-player input[type="range"]:hover::-webkit-slider-runnable-track {
+            background:
+              linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255,255,255,0.1) 50%,
+                transparent 100%
+              ),
+              linear-gradient(
+                to bottom,
+                rgba(255,255,255,0.08) 0%,
+                rgba(255,255,255,0.03) 40%,
+                rgba(0,0,0,0.05) 100%
+              );
+              background-size: 200% 100%, 100% 100%;
+              animation: sliderShimmer 3s ease-in-out infinite;
+          }
+          input[role="switch"] {
+            appearance: none;
+            -webkit-appearance: none;
+            position: relative;
+            width: 38px; height: 22px;
+            border: 1px solid ${border};
+            border-radius: 999px;
+            background-color: color-mix(in oklab, ${bg} 60%, black);
+            transition: background-color .2s ease-in-out;
+            cursor: pointer;
+          }
+          input[role="switch"]::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: ${fg};
+            transition: transform .2s ease-in-out;
+          }
+          input[role="switch"]:checked {
+            background-color: ${accent};
+            border-color: ${accent};
+          }
+          input[role="switch"]:checked::before {
+            transform: translateX(16px);
+          }
+          #editor-music-player-list-wrapper::-webkit-scrollbar {
+            width: 8px;
+          }
+          #editor-music-player-list-wrapper::-webkit-scrollbar-track {
+            background: transparent;
+          }
+          #editor-music-player-list-wrapper::-webkit-scrollbar-thumb {
+            background-color: color-mix(in oklab, ${subtle} 50%, transparent);
+            border-radius: 4px;  
+          }
+          #editor-music-player-list-wrapper::-webkit-scrollbar-thumb:hover {
+            background-color: color-mix(in oklab, ${subtle} 70%, transparent);
+          }
+          #editor-music-player-list-wrapper::-webkit-scrollbar-button {
+            display: none;
           }
         `;
         if (!style) {
@@ -665,6 +776,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const addDirBtn = mkBtn('📁', '폴더 추가', '폴더에서 오디오 추가');
       const listBtn = mkBtn('♪', '재생목록 열기/닫기', '재생목록 열기/닫기');
       const collapseBtn = mkBtn('–', '접기/펼치기', '접기/펼치기');
+      const settingsBtn = mkBtn('⚙️', '설정', '플레이어 설정');
 
       const vol = document.createElement('input');
       vol.type = 'range';
@@ -676,6 +788,69 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       vol.style.setProperty('accent-color', tokens.btnBg || '#0e639c');
 
+      setupVolumeTooltip(vol, wrap, tokens);
+
+      function setupVolumeTooltip(vol, anchor, tokens) {
+        const TIP_ID = 'emp-vol-tooltip';
+        let tip = document.getElementById(TIP_ID);
+        if (!tip) {
+          tip = document.createElement('div');
+          tip.id = TIP_ID;
+          Object.assign(tip.style, {
+            position: 'absolute',
+            left: '0', top: '0',
+            transform: 'translate(-50%, -100%)',
+            padding: '4px 8px',
+            borderRadius: '6px',
+            fontSize: '11px',
+            pointerEvents: 'none',
+            opacity: '0',
+            transition: 'opacity .15s ease',
+            whiteSpace: 'nowrap',
+            zIndex: '9999',
+            background: tokens.bg ? `color-mix(in oklab, ${tokens.bg} 88%, transparent)` : 'rgba(0,0,0,0.8)',
+            color: tokens.fg || '#fff',
+            border: `1px solid ${tokens.border || 'rgba(255,255,255,0.15)'}`,
+            backdropFilter: 'blur(8px)',
+            boxShadow: '0 6px 20px rgba(0,0,0,0.25)',
+          });
+          anchor.appendChild(tip);
+        }
+
+        const THUMB = 16;
+        const show = () => { tip.style.opacity = '1'; };
+        const hide = () => { tip.style.opacity = '0'; };
+        const update = () => {
+          const v = parseFloat(vol.value);
+          const min = parseFloat(vol.min || '0');
+          const max = parseFloat(vol.max || '1');
+          const p = Math.min(1, Math.max(0, (v - min) / (max - min || 1)));
+
+          const inRect = vol.getBoundingClientRect();
+          const aRect = anchor.getBoundingClientRect();
+
+          const xInInput = THUMB / 2 + p * (inRect.width - THUMB);
+          const x = (inRect.left - aRect.left) + xInInput;
+
+          const y = (inRect.top - aRect.top) - 14;
+
+          tip.style.transform = `translate(${x}px, ${y}px) translate(-50%, -4px)`;
+          tip.textContent = `${Math.round(v * 100)}%`;
+        };
+
+        const onEnter = () => { update(); show(); };
+        const onLeave = () => { hide(); };
+
+        
+        row.appendChild(vol);
+        vol.addEventListener('input', () => { update(); show(); });
+        vol.addEventListener('mouseenter', onEnter);
+        vol.addEventListener('mouseleave', onLeave);
+        vol.addEventListener('focus', onEnter);
+        vol.addEventListener('blur', onLeave);
+        window.addEventListener('resize', update);
+      }
+        
       // === Playback Speed (0.5×~2.0×) ===
       const RATES = [0.5, 0.75, 1, 1.25, 1.5, 2];
       const speedSel = document.createElement('select');
@@ -685,7 +860,7 @@ document.addEventListener('DOMContentLoaded', () => {
         padding: '5px 6px',
         borderRadius: '8px',
         border: '1px solid ' + (tokens.border || 'rgba(255,255,255,0.18)'),
-        background: tokens.bg || '#252525',
+        background: (isDark ? '#252526' : '#e0e0e0'),
         color: tokens.fg || '#e6e6e6',
         cursor: 'pointer',
       });
@@ -735,6 +910,200 @@ document.addEventListener('DOMContentLoaded', () => {
         updatePitchBtn();
       });
 
+      
+      settingsBtn.addEventListener('click', () => {
+        showSettingsModal();
+      });
+
+      function showSettingsModal() {
+        if (document.getElementById('custom-settings-overlay')) return;
+        const overlay = document.createElement('div');
+        overlay.id = 'custom-settings-overlay';
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        Object.assign(overlay.style, {
+          position: 'fixed',
+          inset: '0',
+          background: 'rgba(0,0,0,0.35)',
+          backdropFilter: 'blur(2px)',
+          zIndex: '10000',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        });
+
+        const modal = document.createElement('div');
+        Object.assign(modal.style, {
+          minWidth: '420px',
+          maxWidth: '560px',
+          padding: '20px 22px',
+          borderRadius: '12px',
+          background: tokens.bg || 'rgba(255,255,255,0.06)',
+          color: tokens.fg || '#e6e6e6',
+          boxShadow:
+            '0 20px 60px rgba(0,0,0,0.25), 0 2px 12px rgba(0,0,0,0.2)',
+          border: `1px solid ${tokens.border || 'rgba(255,255,255,0.18)'}`,
+          fontFamily: 'var(--vscode-font-family, system-ui, -apple-system, Segoe UI, Roboto, sans-serif)',
+        });
+
+        applyLiquidGlass(modal, tokens);
+
+        const h = document.createElement('div');
+        h.textContent = '플레이어 설정';
+        Object.assign(h.style, {
+          fontSize: '18px',
+          fontWeight: '600',
+          marginBottom: '16px',
+        });
+
+        const content = document.createElement('div');
+        Object.assign(content.style, {
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '16px',
+        });
+
+        const playflowFieldset = document.createElement('fieldset');
+        Object.assign(playflowFieldset.style, {
+          border: `1px solid ${tokens.border || 'rgba(255,255,255,0.18)'}`,
+          borderRadius: '8px',
+          padding: '12px',
+        });
+        const playflowLegend = document.createElement('legend');
+        playflowLegend.textContent = '재생 순서';
+        Object.assign(playflowLegend.style, {
+          padding: '0 8px',
+          fontSize: '13px',
+          color: tokens.subtle || '#9da0a2',
+        });
+        playflowFieldset.appendChild(playflowLegend);
+
+        const radioContainer = document.createElement('div');
+        Object.assign(radioContainer.style, {
+          display: 'flex',
+          gap: '16px',
+          justifyContent: 'space-around',
+        });
+
+        const playflowOptions = {
+          allRepeat: '순서대로 반복',
+          oneRepeat: '한 곡 반복',
+          random: '랜덤 재생',
+        };
+
+        const focusable = [];
+        Object.entries(playflowOptions).forEach(([value, labelText]) => {
+          const label = document.createElement('label');
+          Object.assign(label.style, {
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            cursor: 'pointer',
+            fontSize: '13px',
+          });
+          const radio = document.createElement('input');
+          radio.type = 'radio';
+          radio.name = 'playflow';
+          radio.value = value;
+          if (playflow === value) radio.checked = true;
+
+          radio.addEventListener('change', (e) => {
+            playflow = e.target.value;
+            localStorage.setItem(STORAGE.playflow, playflow);
+          });
+
+          label.appendChild(radio);
+          label.appendChild(document.createTextNode(labelText));
+          radioContainer.appendChild(label);
+          focusable.push(radio);
+        });
+        playflowFieldset.appendChild(radioContainer);
+        content.appendChild(playflowFieldset);
+
+        const highlightFieldset = document.createElement('fieldset');
+        Object.assign(highlightFieldset.style, { border: `1px solid ${tokens.border || 'rgba(255,255,255,0.18)'}`, borderRadius: '8px', padding: '12px' });
+        const highlightLegend = document.createElement('legend');
+        highlightLegend.textContent = 'UI';
+        Object.assign(highlightLegend.style, { padding: '0 8px', fontSize: '13px', color: tokens.subtle || '#9da0a2' });
+        highlightFieldset.appendChild(highlightLegend);
+        const highlightOption = document.createElement('label');
+        Object.assign(highlightOption.style, { display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', fontSize: '13px' });
+        const highlightLabel = document.createElement('span');
+        highlightLabel.textContent = '현재 재생 트랙 하이라이트';
+        const highlightSwitch = document.createElement('input');
+        highlightSwitch.role = 'switch';
+        highlightSwitch.type = 'checkbox';
+        highlightSwitch.name = 'highlightToggle';
+        highlightSwitch.checked = highlightActive;
+        highlightSwitch.addEventListener('change', () => {
+          highlightActive = highlightSwitch.checked;
+          localStorage.setItem(STORAGE.highlight, highlightActive);
+          updatePlaylistHighlightsAndProgress(); // Apply change immediately
+        });
+
+        highlightOption.appendChild(highlightLabel);
+        highlightOption.appendChild(highlightSwitch);
+        highlightFieldset.appendChild(highlightOption);
+        content.appendChild(highlightFieldset);
+        focusable.push(highlightSwitch);
+
+        const footer = document.createElement('div');
+        Object.assign(footer.style, {
+          display: 'flex',
+          justifyContent: 'flex-end',
+          marginTop: '20px',
+        });
+
+        const btnClose = document.createElement('button');
+        btnClose.type = 'button';
+        btnClose.textContent = '닫기';
+        Object.assign(btnClose.style, {
+          fontSize: '13px',
+          padding: '8px 12px',
+          borderRadius: '8px',
+          border: 'none',
+          cursor: 'pointer',
+          background: tokens.btnBg || '#0e639c',
+          color: tokens.btnFg || '#ffffff',
+        });
+        focusable.push(btnClose);
+        footer.appendChild(btnClose);
+
+        modal.appendChild(h);
+        modal.appendChild(content);
+        modal.appendChild(footer);
+        overlay.appendChild(modal);
+        document.body.appendChild(overlay);
+
+        let lastFocused = document.activeElement;
+        focusable[0].focus();
+        const close = () => {
+          overlay.remove();
+          if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+        };
+
+        btnClose.addEventListener('click', close);
+        overlay.addEventListener('click', (e) => { if (e.target === overlay ) close(); });
+        overlay.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') close();
+          if (e.key === 'Tab') {
+            const idx = focusable.indexOf(document.activeElement);
+            if (e.shiftKey) {
+              if (idx <= 0) {
+                focusable[focusable.length - 1].focus();
+                e.preventDefault();
+              }
+            } else {
+              if (idx === focusable.length - 1) {
+                focusable[0].focus();
+                e.preventDefault();
+              }
+            }
+          }
+        });
+
+      }
+
       // 순서: 이전/재생/다음/제목/볼륨/속도/피치/파일/폴더/목록/접기
       row.appendChild(prevBtn);
       row.appendChild(playBtn);
@@ -743,6 +1112,7 @@ document.addEventListener('DOMContentLoaded', () => {
       row.appendChild(vol);
       row.appendChild(speedSel);
       row.appendChild(pitchBtn);
+      row.appendChild(settingsBtn);
       row.appendChild(addBtn);
       row.appendChild(addDirBtn);
       row.appendChild(listBtn);
@@ -755,13 +1125,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Playlist panel
       const listWrap = document.createElement('div');
+      listWrap.id = 'editor-music-player-list-wrapper';
       Object.assign(listWrap.style, {
         position: useFixed ? 'fixed' : 'absolute',
         top: useFixed ? '58px' : 'calc(100% + 8px)',
         right: '0',
         minWidth: '320px',
         maxWidth: '420px',
-        maxHeight: '260px',
+        maxHeight: '100px',
         overflowY: 'auto',
         overflowX: 'hidden',
         padding: '6px',
@@ -796,6 +1167,8 @@ document.addEventListener('DOMContentLoaded', () => {
       let idx = clampIndex(parseInt(localStorage.getItem(STORAGE.idx) || '0', 10));
       let collapsed = localStorage.getItem(STORAGE.collapsed) === 'true';
       let listOpen = localStorage.getItem(STORAGE.listOpen) === 'true';
+      let playflow = localStorage.getItem(STORAGE.playflow) || 'allRepeat';
+      let highlightActive = JSON.parse(localStorage.getItem(STORAGE.highlight) ?? 'true');
       const localObjectURLs = new Set();
 
       // Utils
@@ -887,10 +1260,52 @@ document.addEventListener('DOMContentLoaded', () => {
         applyRateFromUI();
         setPitchPreserve(pitchPreserve);
         if (autoplay) audio.play().catch(() => updatePlayIcon()); else updatePlayIcon();
-        highlightCurrent();
+        updatePlaylistHighlightsAndProgress();
       }
       function nextTrack(autoplay) { if (playlist.length) setCurrent(idx + 1, autoplay ?? !audio.paused); }
       function prevTrack() { if (playlist.length) setCurrent(idx - 1, !audio.paused); }
+      function randomNextTrack(autoplay) {
+        if (playlist.length <= 1) {
+          if (playlist.length === 1) setCurrent(0, autoplay);
+          return;
+        }
+        let newIndex;
+        do {
+          newIndex = Math.floor(Math.random() * playlist.length);
+        } while (newIndex === idx);
+        setCurrent(newIndex, autoplay);
+      }
+
+      function updatePlaylistHighlightsAndProgress() {
+        const rows = list.querySelectorAll('[data-track-id]');
+        
+        if(!highlightActive) {
+          rows.forEach(row => {
+            row.style.backgroundColor = 'transparent';
+            row.style.backgroundImage = 'none';
+          });
+          return;
+        }
+        const currentTrackId = playlist[idx]?.id;
+        let progress = 0;
+        if (audio.duration > 0) {
+          progress = (audio.currentTime / audio.duration) * 100;
+        }
+
+        const highlightColor = tokens.hoverBg || (isDark ? '#2a2a2a' : '#f0f0f0');
+        const progressFillColor = tokens.btnBg ? `color-mix(in oklab, ${tokens.btnBg} 40%, transparent)` : (isDark ? 'rgba(58, 122, 181, 0.4)' : 'rgba(14, 99, 156, 0.3)');
+
+        rows.forEach((row) => {
+          const isActive = row.getAttribute('data-track-id') === currentTrackId;
+          if (isActive) {
+            row.style.backgroundColor = highlightColor;
+            row.style.backgroundImage = `linear-gradient(to right, ${progressFillColor} ${progress}%, transparent ${progress}%)`;
+          } else {
+            row.style.backgroundColor = 'transparent';
+            row.style.backgroundImage = 'none';
+          }
+        });
+      }
 
       function highlightCurrent() {
         const rows = list.querySelectorAll('[data-track-id]');
@@ -950,7 +1365,7 @@ document.addEventListener('DOMContentLoaded', () => {
           row.appendChild(del);
           list.appendChild(row);
         });
-        highlightCurrent();
+        updatePlaylistHighlightsAndProgress();
       }
 
       // Init
@@ -978,9 +1393,24 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem(STORAGE.vol, vol.value);
       });
 
-      audio.addEventListener('play', updatePlayIcon);
-      audio.addEventListener('pause', updatePlayIcon);
-      audio.addEventListener('ended', () => nextTrack(true));
+      audio.addEventListener('play', () => {updatePlayIcon(); updatePlaylistHighlightsAndProgress(); });
+      audio.addEventListener('pause', () => {updatePlayIcon(); updatePlaylistHighlightsAndProgress(); });
+      audio.addEventListener('timeupdate', updatePlaylistHighlightsAndProgress);
+      audio.addEventListener('ended', () => {
+        switch (playflow) {
+          case 'oneRepeat':
+            audio.currentTime = 0;
+            audio.play();
+            break;
+          case 'random':
+            randomNextTrack(true);
+            break;
+          case 'allRepeat':
+          default:
+            nextTrack(true);
+            break;
+        }
+      });
       audio.addEventListener('error', () => {
         title.textContent = '재생 오류: 다음 트랙으로 이동';
         setTimeout(() => nextTrack(true), 800);
