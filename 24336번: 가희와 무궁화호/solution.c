@@ -132,7 +132,7 @@ int main(void) {
         int idx1 = find_stop_index(stops, n, s1);
         int idx2 = find_stop_index(stops, n, s2);
         if (idx1 < 0 || idx2 < 0) {
-            printf("0.0000000000\n");
+            printf("0.0\n");
             continue;
         }
 

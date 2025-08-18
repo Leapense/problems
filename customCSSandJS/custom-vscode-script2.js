@@ -1,16 +1,3 @@
-/*
- * Custom JavaScript for Visual Studio Code (Fedora 42)
- *
- * Features:
- *  - Blur overlay on editor when Command Palette/Quick Input shows
- *  - Welcome modal on startup (remember "Don't show again")
- *  - Robust theme detection (VS Code CSS variables -> vs-dark/vscode-dark fallback)
- *  - Liquid Glass visual effect (modal + blur overlay)
- *  - Top-right music player (local files/folders, playlist, speed, pitch toggle)
- *
- * Requires: "Custom CSS and JS Loader" extension
- */
-
 document.addEventListener('DOMContentLoaded', () => {
     // ===================== Blur Overlay Logic =====================
     function addBlurOverlay() {
@@ -408,7 +395,13 @@ document.addEventListener('DOMContentLoaded', () => {
             pitch: 'vscodeAudioPlayer.pitchPreserve', // true=피치 고정, false=해제(기본)
             playflow: 'vscodeAudioPlayer.playflow',
             highlight: 'vscodeAudioPlayer.highlight',
+            eqGains: 'vscodeAudioPlayer.eqGains',
         };
+
+        let audioContext = null;
+        let audioSourceNode = null;
+        let eqFilters = [];
+        let isAudioGraphSetup = false;
 
         const REMOTE_PRESETS = [
         ];
@@ -524,12 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
           #editor-music-player input[type="range"]::-webkit-slider-runnable-track {
             height: 6px;
             border-radius: 999px;
-            background: linear-gradient(
-              to bottom,
-              rgba(255,255,255,0.08) 0%,
-              rgba(255,255,255,0.03) 40%,
-              rgba(0,0,0,0.05) 100%
-            );
+            background: ${bg};
             backdrop-filter: blur(8px);
             border: 1px solid rgba(255,255,255,0.12);
             box-shadow: inset 0 1px 0 rgba(255,255,255,0.1),
@@ -537,106 +525,70 @@ document.addEventListener('DOMContentLoaded', () => {
                         0 2px 4px rgba(0,0,0,0.15);
             position: relative;
           }
-          #editor-music-player input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 16px; height: 16px;
-            margin-top: -6px;
-            border-radius: 50%;
-            background: radial-gradient(
-              circle at 30% 30%,
-              rgba(255,255,255,0.3) 0%,
-              rgba(255,255,255,0.1) 30%,
-              ${accent}88 60%,
-              ${accent} 100%
-            );
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 
-              inset 0 -2px 4px rgba(0,0,0,0.2),
-              inset 0 1px 0 rgba(255,255,255,0.4),
-              0 2px 8px rgba(0,0,0,0.3),
-              0 0 0 1px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: all 0.15s ease;
-            backdrop-filter: blur(10px);
-          }
-          #editor-music-player input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.1);
-            box-shadow:
-              inset 0 -2px 4px rgba(0,0,0,0.2),
-              inset 0 1px 0 rgba(255,255,255,0.5),
-              0 4px 12px rgba(0,0,0,0.4),
-              0 0 20px ${accent}44;
-          }
-          #editor-music-player input[type="range"]::-webkit-slider-thumb:active {
-            transform: scale(0.95);
-          }
-          #editor-music-player input[type="range"]::-moz-range-track {
-            height: 6px;
-            border-radius: 999px;
-            background: linear-gradient(
-              to bottom,
-              rgba(255,255,255,0.08) 0%,
-              rgba(255,255,255,0.03) 40%,
-              rgba(0,0,0,0.05) 100%
-            );
-            border: 1px solid rgba(255,255,255,0.12);
-            box-shadow:
-              inset 0 1px 0 rgba(255,255,255,0.1),
-              inset 0 -1px 0 rgba(0,0,0,0.1);
-          }
-          #editor-music-player input[type="range"]::-moz-range-thumb {
-            width: 16px; height: 16px;
-            border-radius: 50%;
-            background: radial-gradient(
-              circle at 30% 30%,
-              rgba(255,255,255,0.3) 0%,
-              rgba(255,255,255,0.1) 30%,
-              ${accent}88 60%,
-              ${accent} 100%
-            );
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow:
-              inset 0 -2px 4px rgba(0,0,0,0.2),
-              inset 0 1px 0 rgba(255,255,255,0.4),
-              0 2px 8px rgba(0,0,0,0.3);
-            cursor: pointer;
-          }
-          #editor-music-player input[type="range"]::-moz-range-progress {
-            height: 6px;
-            border-radius: 999px;
-            background: linear-gradient(
-              to right,
-              ${accent}66,
-              ${accent}44
-            );
-            box-shadow:
-              inset 0 0 3px ${accent}88,
-              0 0 6px ${accent}33;
-          }
+          /* macOS 스타일 슬라이더 */
+        #editor-music-player input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        margin-top: -6px;
+        border-radius: 50%;
+        background: ${accent};
+        cursor: pointer;
+        transition: all 0.15s ease;
+        }
 
-          @keyframes sliderShimmer {
-            0% { background-position: -200% center; }
-            100% { backgrond-position: 200% center; }
-          }
+        #editor-music-player input[type="range"]::-webkit-slider-thumb:hover {
+        transform: scale(1.2);
+        }
 
-          #editor-music-player input[type="range"]:hover::-webkit-slider-runnable-track {
-            background:
-              linear-gradient(
-                90deg,
-                transparent 0%,
-                rgba(255,255,255,0.1) 50%,
-                transparent 100%
-              ),
-              linear-gradient(
-                to bottom,
-                rgba(255,255,255,0.08) 0%,
-                rgba(255,255,255,0.03) 40%,
-                rgba(0,0,0,0.05) 100%
-              );
-              background-size: 200% 100%, 100% 100%;
-              animation: sliderShimmer 3s ease-in-out infinite;
-          }
+        #editor-music-player input[type="range"]::-webkit-slider-runnable-track {
+            height: 6px;
+            border-radius: 2px;
+            background: ${bg};
+        }
+
+        /* Firefox 지원 */
+        #editor-music-player input[type="range"]::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        border: none;
+        background: ${accent};
+        cursor: pointer;
+        }
+
+        #editor-music-player input[type="range"]::-moz-range-track {
+        height: 6px;
+        border-radius: 2px;
+        background: ${bg};
+        }
+
+        /* 진행 표시 (webkit) */
+        #editor-music-player input[type="range"]::-webkit-slider-runnable-track {
+        background-image: linear-gradient(
+            to right,
+            ${accent} 0%,
+            ${accent} var(--progress, 0%),
+            #d1d1d6 var(--progress, 0%),
+            #d1d1d6 100%
+        );
+        }
+
+        /* 진행 표시 (Firefox) */
+        #editor-music-player input[type="range"]::-moz-range-progress {
+        height: 4px;
+        border-radius: 2px;
+        background: ${accent};
+        box-shadow: 
+            inset 0 1px 2px rgba(0, 0, 0, 0.1),
+            0 1px 0 rgba(255, 255, 255, 0.5);
+        }
+
+        /* 포커스 상태 */
+        #editor-music-player input[type="range"]:focus {
+        outline: none;
+        }
           input[role="switch"] {
             appearance: none;
             -webkit-appearance: none;
@@ -718,6 +670,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             injectPlayerStyles(tokens, isDark);
 
+            injectProgressStyles(tokens, isDark);
+
             // Wrapper
             const wrap = document.createElement('div');
             wrap.id = ID;
@@ -770,8 +724,58 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             const audio = document.createElement('audio');
+            audio.id = 'myAudio';
             audio.preload = 'metadata';
             audio.style.display = 'none';
+            audio.crossOrigin = 'anonymous';
+
+            function setupEqualizerGraph(mediaElement) {
+                if (isAudioGraphSetup) return;
+
+                try {
+                    const context = new (window.AudioContext || window.webkitAudioContext)();
+                    const sourceNode = context.createMediaElementSource(mediaElement);
+
+                    const frequencies = [
+                        25, 31, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500, 630, 800,
+                        1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000, 10000, 12500,
+                        16000, 20000
+                    ];
+
+                    const savedGains = JSON.parse(localStorage.getItem(STORAGE.eqGains)) || [];
+
+                    const filters = frequencies.map((frequency, index) => {
+                        const filterNode = context.createBiquadFilter();
+                        if (index === 0) {
+                            filterNode.type = 'lowshelf';
+                        } else if (index === frequencies.length - 1) {
+                            filterNode.type = 'highshelf';
+                        } else {
+                            filterNode.type = 'peaking';
+                            filterNode.Q.value = 1.41;
+                        }
+                        filterNode.frequency.value = frequency;
+                        filterNode.gain.value = savedGains[index] || 0;
+                        return filterNode;
+                    });
+
+                    sourceNode.connect(filters[0]);
+                    for (let i = 0; i < filters.length - 1; i++) {
+                        filters[i].connect(filters[i + 1]);
+                    }
+                    filters[filters.length - 1].connect(context.destination);
+
+                    audioContext = context;
+                    audioSourceNode = sourceNode;
+                    eqFilters = filters;
+                    isAudioGraphSetup = true;
+
+                    console.info('[MusicPlayer] Equalizer audio graph initialized.');
+                } catch (e) {
+                    console.error('[MusicPlayer] Failed to initialize equalizer audio graph:', e);
+                }
+            }
+            setupEqualizerGraph(audio);
 
             const mkBtn = (text, aria, titleText) => {
                 const b = document.createElement('button');
@@ -812,7 +816,7 @@ document.addEventListener('DOMContentLoaded', () => {
             vol.min = '0'; vol.max = '1'; vol.step = '0.01';
             vol.value = localStorage.getItem(STORAGE.vol) || '0.7';
             Object.assign(vol.style, {
-                width: '90px',
+                width: '50px',
                 cursor: 'pointer',
             });
             vol.style.setProperty('accent-color', tokens.btnBg || '#0e639c');
@@ -881,46 +885,53 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             // === Playback Speed (0.5×~2.0×) ===
-            const RATES = [0.5, 0.75, 1, 1.25, 1.5, 2];
-            const speedSel = document.createElement('select');
-            speedSel.title = '재생 속도';
-            Object.assign(speedSel.style, {
-                fontSize: '12px',
-                padding: '5px 6px',
-                borderRadius: '8px',
-                border: '1px solid ' + (tokens.border || 'rgba(255,255,255,0.18)'),
-                background: (isDark ? '#252526' : '#e0e0e0'),
-                color: tokens.fg || '#e6e6e6',
+            const speedContainer = document.createElement('div');
+            Object.assign(speedContainer.style, {
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+            });
+            speedContainer.title = '재생 속도 (더블클릭으로 초기화)';
+
+            const speedSlider = document.createElement('input');
+            speedSlider.type = 'range';
+            speedSlider.min = '0.5';
+            speedSlider.max = '2.0';
+            speedSlider.step = '0.01';
+
+            const savedRate = parseFloat(localStorage.getItem(STORAGE.rate) || '1.0');
+            speedSlider.value = String(savedRate);
+            Object.assign(speedSlider.style, {
+                width: '80px',
                 cursor: 'pointer',
             });
-            const savedRate = parseFloat(localStorage.getItem(STORAGE.rate) || '1');
-            RATES.forEach((r) => {
-                const opt = document.createElement('option');
-                opt.value = String(r);
-                opt.textContent = (r % 1 === 0 ? r.toFixed(0) : r.toFixed(2).replace(/0$/, '')) + '×';
-                speedSel.appendChild(opt);
+
+            const speedValueDisplay = document.createElement('span');
+            Object.assign(speedValueDisplay.style, {
+                fontSize: '11px',
+                fontVariantNumeric: 'tabular-nums',
+                width: '38px',
+                textAlign: 'center',
+                opacity: '0.9',
+                cursor: 'pointer',
             });
-            speedSel.value = String(RATES.includes(savedRate) ? savedRate : 1);
-            function applyRateFromUI() {
-                const r = parseFloat(speedSel.value || '1');
-                const rate = RATES.includes(r) ? r : 1;
+
+            function updateSpeedUIAndAudio() {
+                const rate = parseFloat(speedSlider.value);
+                speedValueDisplay.textContent = rate.toFixed(2) + 'x';
                 audio.playbackRate = rate;
                 audio.defaultPlaybackRate = rate;
                 localStorage.setItem(STORAGE.rate, String(rate));
             }
-            speedSel.addEventListener('change', applyRateFromUI);
-            speedSel.addEventListener('wheel', (e) => {
-                e.preventDefault();
-                const dir = e.deltaY > 0 ? 1 : -1;
-                let i = RATES.indexOf(parseFloat(speedSel.value));
-                i = Math.max(0, Math.min(RATES.length - 1, i + dir));
-                speedSel.value = String(RATES[i]);
-                applyRateFromUI();
-            }, { passive: false });
-            speedSel.addEventListener('dblclick', () => {
-                speedSel.value = '1';
-                applyRateFromUI();
+
+            speedSlider.addEventListener('input', updateSpeedUIAndAudio);
+            speedContainer.addEventListener('dblclick', () => {
+                speedSlider.value = '1.0';
+                updateSpeedUIAndAudio();
             });
+
+            speedContainer.appendChild(speedSlider);
+            speedContainer.appendChild(speedValueDisplay);
 
             // === Pitch preserve toggle (기본: 꺼짐) ===
             let pitchPreserve = JSON.parse(localStorage.getItem(STORAGE.pitch) || 'false');
@@ -964,7 +975,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const modal = document.createElement('div');
                 Object.assign(modal.style, {
                     minWidth: '420px',
-                    maxWidth: '560px',
+                    maxWidth: '960px',
                     padding: '20px 22px',
                     borderRadius: '12px',
                     background: tokens.bg || 'rgba(255,255,255,0.06)',
@@ -973,6 +984,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         '0 20px 60px rgba(0,0,0,0.25), 0 2px 12px rgba(0,0,0,0.2)',
                     border: `1px solid ${tokens.border || 'rgba(255,255,255,0.18)'}`,
                     fontFamily: 'var(--vscode-font-family, system-ui, -apple-system, Segoe UI, Roboto, sans-serif)',
+                    overflowX: 'auto',
                 });
 
                 applyLiquidGlass(modal, tokens);
@@ -1076,6 +1088,118 @@ document.addEventListener('DOMContentLoaded', () => {
                 content.appendChild(highlightFieldset);
                 focusable.push(highlightSwitch);
 
+                const styleSelect = createProgressStyleSelectorWithPreview(content, tokens, isDark);
+                focusable.push(styleSelect);
+
+                // Equalizer 설정
+                const eqFieldset = document.createElement('fieldset');
+                Object.assign(eqFieldset.style, {
+                    border: `1px solid ${tokens.border || 'rgba(255,255,255,0.18)'}`,
+                    borderRadius: '8px',
+                    padding: '12px',
+                    marginTop: '16px',
+                    overflowX: 'auto',
+                    maxWidth: '550px',
+                });
+
+                const eqLegend = document.createElement('legend');
+                eqLegend.textContent = '30-Band Equalizer';
+                Object.assign(eqLegend.style, {
+                    padding: '0 8px',
+                    fontSize: '13px',
+                    color: tokens.subtle | '#9da0a2',
+                });
+
+                const eqHeader = document.createElement('div');
+                Object.assign(eqHeader.style, {
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    marginBottom: '12px'
+                });
+                eqHeader.appendChild(eqLegend);
+
+                const eqResetBtn = mkBtn('Reset', false);
+                eqResetBtn.style.padding = '4px 8px';
+                eqResetBtn.style.fontSize = '11px';
+                eqResetBtn.addEventListener('click',  () => {
+                    const sliders = eqContainer.querySelectorAll('input[type="range"]');
+                    sliders.forEach((slider, index) => {
+                        slider.value = 0;
+                        if (eqFilters[index]) {
+                            eqFilters[index].gain.value = 0;
+                        }
+                    });
+                    localStorage.removeItem(STORAGE.eqGains);
+                });
+                eqHeader.appendChild(eqResetBtn);
+                eqFieldset.appendChild(eqHeader);
+
+                const eqContainer = document.createElement('div');
+                Object.assign(eqContainer.style, {
+                    display: 'flex',
+                    gap: '4px',
+                    justifyContent: 'center',
+                    padding: '10px 0',
+                });
+
+                const eqStyleId = 'custom-eq-styles';
+                if (!document.getElementById(eqStyleId)) {
+                    const style = document.createElement('style');
+                    style.id = eqStyleId;
+                    style.textContent = `
+                        .eq-band { display: flex; flex-direction: column; align-items: center; width: 22px; }
+                        .eq-band label { font-size: 10px; margin-top: 4px; color: ${tokens.subtle}; writing-mode: vertical-rl; text-orientation: mixed; height: 35px; }
+                        .eq-band input[type="range"] {
+                            writing-mode: bt-lr;
+                            -webkit-appearance: slider-vertical;
+                            width: 8px;
+                            height: 100px;
+                            padding: 0 5px;
+                            cursor: pointer;
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+
+                if (isAudioGraphSetup) {
+                    eqFilters.forEach((filter, index) => {
+                        const freq = filter.frequency.value;
+                        const bandDiv = document.createElement('div');
+                        bandDiv.className = 'eq-band';
+
+                        const slider = document.createElement('input');
+                        slider.type = 'range';
+                        slider.min = -12;
+                        slider.max = 12;
+                        slider.step = 0.1;
+                        slider.value = filter.gain.value;
+                        slider.title = `${freq < 1000 ? freq : (freq / 1000).toFixed(1) + 'k'} Hz`;
+
+                        slider.addEventListener('input', (event) => {
+                            const newValue = parseFloat(event.target.value);
+                            filter.gain.value = newValue;
+
+                            const allGains = eqFilters.map(f => f.gain.value);
+                            localStorage.setItem(STORAGE.eqGains, JSON.stringify(allGains));
+                        });
+
+                        const label = document.createElement('label');
+                        label.textContent = `${freq < 1000 ? freq : (freq / 1000) + 'k'}`;
+
+                        bandDiv.appendChild(slider);
+                        bandDiv.appendChild(label);
+                        eqContainer.appendChild(bandDiv);
+                    });
+                } else {
+                    eqContainer.textContent = 'Audio not started. Play a track to enable the equalizer.';
+                    eqContainer.style.fontSize = '12px';
+                    eqContainer.style.color = tokens.subtle;
+                }
+
+                eqFieldset.appendChild(eqContainer);
+                content.appendChild(eqFieldset);
+                
                 const footer = document.createElement('div');
                 Object.assign(footer.style, {
                     display: 'flex',
@@ -1138,7 +1262,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             collapsible.appendChild(title);
             collapsible.appendChild(vol);
-            collapsible.appendChild(speedSel);
+            collapsible.appendChild(speedContainer);
             collapsible.appendChild(pitchBtn);
             collapsible.appendChild(addBtn);
             collapsible.appendChild(listBtn);
@@ -1358,7 +1482,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     audio.src = sourceUrl || '';
-                    applyRateFromUI();
+                    //applyRateFromUI();
+                    updateSpeedUIAndAudio();
                     setPitchPreserve(pitchPreserve);
 
                     if (autoplay) {
@@ -1395,6 +1520,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     rows.forEach(row => {
                         row.style.backgroundColor = 'transparent';
                         row.style.backgroundImage = 'none';
+                        row.classNAme = row.className.replace(/progress-\w+/g, '');
                     });
                     return;
                 }
@@ -1409,12 +1535,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 rows.forEach((row) => {
                     const isActive = row.getAttribute('data-track-id') === currentTrackId;
+                    row.className = row.className.replace(/progress-\w+/g, '');
                     if (isActive) {
                         row.style.backgroundColor = highlightColor;
-                        row.style.backgroundImage = `linear-gradient(to right, ${progressFillColor} ${progress}%, transparent ${progress}%)`;
+                        row.style.setProperty('--progress-percent', `${progress}%`);
+                        row.style.setProperty('--progress-color', progressFillColor);
+
+                        row.classList.add(`progress-${currentProgressStyle}`);
                     } else {
                         row.style.backgroundColor = 'transparent';
                         row.style.backgroundImage = 'none';
+                        row.style.removeProperty('--progress-percent');
+                        row.style.removeProperty('--progress-color');
                     }
                 });
             }
@@ -1474,7 +1606,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Init
             audio.volume = parseFloat(vol.value);
-            applyRateFromUI();
+            //applyRateFromUI();
+            updateSpeedUIAndAudio();
             setPitchPreserve(pitchPreserve);
             setCollapsed(localStorage.getItem(STORAGE.collapsed) === 'true');
             setListOpen(localStorage.getItem(STORAGE.listOpen) === 'true');
@@ -1484,6 +1617,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Events
             playBtn.addEventListener('click', () => {
+                if (audioContext && audioContext.state === 'suspended') {
+                    audioContext.resume();
+                }
                 if (!playlist.length) return filePicker.click();
                 if (audio.paused) audio.play().catch(() => { }); else audio.pause();
             });
@@ -1621,6 +1757,489 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     }
                 });
+            }
+
+            // 프로그래스 스타일 설정
+
+            const PROGRESS_STYLES = {
+                linear: 'Linear Fill',
+                gradient: 'Gradient Wave',
+                pulse: 'Pulse Beat',
+                wave: 'Wave Motion',
+                glow: 'Glow Effect',
+                particles: 'Particle Flow',
+                spectrum: 'Spectrum Bars',
+                liquid: 'Liquid Flow'
+            };
+
+            let currentProgressStyle = localStorage.getItem('vscodeAudioPlayer.progressStyle') || 'linear';
+
+            function injectProgressStyles(tokens, isDark) {
+                const styleId = 'enhanced-select-styles';
+                let style = document.getElementById(styleId);
+                
+                if (!style) {
+                    style = document.createElement('style');
+                    style.id = styleId;
+                    document.head.appendChild(style);
+                }
+
+                const accent = tokens.btnBg || '#0e639c';
+                const fg = tokens.fg || (isDark ? '#e6e6e6' : '#1e1e1e');
+                const bg = tokens.bg || (isDark ? '#252526' : '#ffffff');
+                const border = tokens.border || (isDark ? '#3c3c3c' : '#e5e5e5');
+                const hover = tokens.hoverBg || (isDark ? '#2a2a2a' : '#f3f3f3');
+                const subtle = tokens.subtle || (isDark ? '#9da0a2' : '#6b6f73');
+
+                style.textContent = `
+                    /* Linear Fill (기본) */
+                    .progress-linear {
+                        background-image: linear-gradient(to right, var(--progress-color) var(--progress-percent), transparent var(--progress-percent)) !important;
+                    }
+                    
+                    /* Gradient Wave */
+                    .progress-gradient {
+                        background: linear-gradient(45deg, 
+                            transparent 0%, 
+                            var(--progress-color) var(--progress-percent), 
+                            transparent calc(var(--progress-percent) + 5%)) !important;
+                        background-size: 200% 100%;
+                        animation: gradientShift 3s ease-in-out infinite;
+                    }
+                    
+                    /* Pulse Beat */
+                    .progress-pulse {
+                        background: linear-gradient(to right, var(--progress-color) var(--progress-percent), transparent var(--progress-percent)) !important;
+                        animation: pulseGlow 0.8s ease-in-out infinite alternate;
+                    }
+                    
+                    /* Wave Motion */
+                    .progress-wave {
+                        background: 
+                            linear-gradient(to right, var(--progress-color) var(--progress-percent), transparent var(--progress-percent)),
+                            repeating-linear-gradient(90deg, 
+                                transparent 0px, 
+                                rgba(255,255,255,0.1) 2px, 
+                                transparent 4px, 
+                                transparent 8px);
+                        animation: waveMove 2s linear infinite;
+                    }
+                    
+                    /* Glow Effect */
+                    .progress-glow {
+                        background: linear-gradient(to right, var(--progress-color) var(--progress-percent), transparent var(--progress-percent)) !important;
+                        position: relative;
+                    }
+                    .progress-glow::before {
+                        content: '';
+                        position: absolute;
+                        top: 0; left: 0; right: 0; bottom: 0;
+                        background: radial-gradient(ellipse at var(--progress-percent) center, 
+                            rgba(255,255,255,0.3) 0%, 
+                            transparent 70%);
+                        animation: glowPulse 1.5s ease-in-out infinite;
+                        pointer-events: none;
+                    }
+                    
+                    /* Particle Flow */
+                    .progress-particles {
+                        background: linear-gradient(to right, var(--progress-color) var(--progress-percent), transparent var(--progress-percent)) !important;
+                        position: relative;
+                        overflow: hidden;
+                    }
+                    .progress-particles::after {
+                        content: '';
+                        position: absolute;
+                        width: 100%; height: 100%;
+                        background: 
+                            radial-gradient(circle at 20% 50%, rgba(255,255,255,0.4) 1px, transparent 1px),
+                            radial-gradient(circle at 60% 30%, rgba(255,255,255,0.3) 1px, transparent 1px),
+                            radial-gradient(circle at 80% 70%, rgba(255,255,255,0.4) 1px, transparent 1px);
+                        background-size: 40px 40px, 30px 30px, 35px 35px;
+                        animation: particleFlow 4s linear infinite;
+                        opacity: 0.6;
+                    }
+                    
+                    /* Spectrum Bars */
+                    .progress-spectrum {
+                        background: var(--progress-color) !important;
+                        position: relative;
+                        overflow: hidden;
+                    }
+                    .progress-spectrum::before {
+                        content: '';
+                        position: absolute;
+                        width: var(--progress-percent);
+                        height: 100%;
+                        background: repeating-linear-gradient(to right,
+                            rgba(255,255,255,0.3) 0px,
+                            rgba(255,255,255,0.3) 2px,
+                            transparent 2px,
+                            transparent 6px);
+                        animation: spectrumBeat 0.5s ease-in-out infinite alternate;
+                    }
+                    
+                    /* Liquid Flow */
+                    .progress-liquid {
+                        background: var(--progress-color) !important;
+                        position: relative;
+                        overflow: hidden;
+                    }
+                    .progress-liquid::after {
+                        content: '';
+                        position: absolute;
+                        top: -50%; left: 0;
+                        width: var(--progress-percent);
+                        height: 200%;
+                        background: linear-gradient(45deg, 
+                            transparent 30%, 
+                            rgba(255,255,255,0.2) 50%, 
+                            transparent 70%);
+                        animation: liquidWave 3s ease-in-out infinite;
+                        transform: skewX(-20deg);
+                    }
+                    
+                    /* 애니메이션 키프레임들 */
+                    @keyframes gradientShift {
+                        0% { background-position: 0% center; }
+                        50% { background-position: 100% center; }
+                        100% { background-position: 0% center; }
+                    }
+                    
+                    @keyframes pulseGlow {
+                        0% { filter: brightness(1) drop-shadow(0 0 2px var(--progress-color)); }
+                        100% { filter: brightness(1.3) drop-shadow(0 0 8px var(--progress-color)); }
+                    }
+                    
+                    @keyframes waveMove {
+                        0% { background-position: 0 0, 0 0; }
+                        100% { background-position: 0 0, 20px 0; }
+                    }
+                    
+                    @keyframes glowPulse {
+                        0%, 100% { opacity: 0.3; transform: scale(0.8); }
+                        50% { opacity: 0.8; transform: scale(1.2); }
+                    }
+                    
+                    @keyframes particleFlow {
+                        0% { transform: translateX(-100%); }
+                        100% { transform: translateX(100%); }
+                    }
+                    
+                    @keyframes spectrumBeat {
+                        0% { transform: scaleY(0.8); }
+                        100% { transform: scaleY(1.2); }
+                    }
+                    
+                    @keyframes liquidWave {
+                        0%, 100% { transform: skewX(-20deg) translateY(0%); }
+                        50% { transform: skewX(-20deg) translateY(-10%); }
+                    }
+                    
+                    /* 접근성 고려 */
+                    @media (prefers-reduced-motion: reduce) {
+                        .progress-gradient, .progress-pulse, .progress-wave, 
+                        .progress-glow::before, .progress-particles::after,
+                        .progress-spectrum::before, .progress-liquid::after {
+                            animation: none !important;
+                        }
+                    }
+
+                    /* Enhanced Select with Liquid Glass Effect */
+                    .lg-select {
+                        position: relative;
+                        display: inline-block;
+                        width: 100%;
+                    }
+                    
+                    .lg-select select {
+                        -webkit-appearance: none;
+                        -moz-appearance: none;
+                        appearance: none;
+                        width: 100%;
+                        padding: 12px 40px 12px 16px;
+                        font-size: 13px;
+                        line-height: 1.4;
+                        color: ${fg};
+                        background: linear-gradient(145deg, 
+                            color-mix(in oklab, ${bg} 85%, white 15%) 0%,
+                            color-mix(in oklab, ${bg} 92%, transparent 8%) 100%);
+                        border: 1px solid color-mix(in oklab, ${border} 70%, transparent 30%);
+                        border-radius: 10px;
+                        cursor: pointer;
+                        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                        backdrop-filter: blur(8px);
+                        box-shadow: 
+                            inset 0 1px 0 rgba(255,255,255,0.1),
+                            inset 0 -1px 0 rgba(0,0,0,0.05),
+                            0 2px 8px rgba(0,0,0,0.1);
+                        position: relative;
+                        z-index: 1;
+                    }
+                    
+                    .lg-select select:hover {
+                        background: linear-gradient(145deg, 
+                            color-mix(in oklab, ${hover} 90%, white 10%) 0%,
+                            color-mix(in oklab, ${hover} 95%, transparent 5%) 100%);
+                        border-color: color-mix(in oklab, ${accent} 60%, transparent 40%);
+                        box-shadow: 
+                            inset 0 1px 0 rgba(255,255,255,0.15),
+                            inset 0 -1px 0 rgba(0,0,0,0.05),
+                            0 4px 12px rgba(0,0,0,0.15),
+                            0 0 0 1px color-mix(in oklab, ${accent} 30%, transparent 70%);
+                    }
+                    
+                    .lg-select select:focus {
+                        outline: none;
+                        border-color: ${accent};
+                        box-shadow: 
+                            inset 0 1px 0 rgba(255,255,255,0.2),
+                            inset 0 -1px 0 rgba(0,0,0,0.05),
+                            0 0 0 3px color-mix(in oklab, ${accent} 25%, transparent 75%),
+                            0 8px 20px rgba(0,0,0,0.2);
+                    }
+                    
+                    .lg-select select:active {
+                        transform: translateY(0px);
+                        box-shadow: 
+                            inset 0 2px 4px rgba(0,0,0,0.1),
+                            0 2px 4px rgba(0,0,0,0.1);
+                    }
+                    
+                    /* Custom Dropdown Arrow with Liquid Glass Effect */
+                    .lg-select::after {
+                        content: '';
+                        position: absolute;
+                        top: 50%;
+                        right: 12px;
+                        width: 0;
+                        height: 0;
+                        border-left: 6px solid transparent;
+                        border-right: 6px solid transparent;
+                        border-top: 6px solid ${fg};
+                        opacity: 0.7;
+                        transition: all 0.3s ease;
+                        pointer-events: none;
+                        z-index: 2;
+                    }
+                    
+                    /* Animated Background Shimmer */
+                    .lg-select::before {
+                        content: '';
+                        position: absolute;
+                        top: 0; left: 0; right: 0; bottom: 0;
+                        background: linear-gradient(45deg, 
+                            transparent 30%, 
+                            rgba(255,255,255,0.1) 50%, 
+                            transparent 70%);
+                        background-size: 200% 200%;
+                        border-radius: 10px;
+                        opacity: 0;
+                        transition: opacity 0.3s ease;
+                        pointer-events: none;
+                        z-index: 0;
+                    }
+                    
+                    .lg-select:hover::before {
+                        opacity: 1;
+                    }
+                    
+                    /* Option Styling (for supported browsers) */
+                    .lg-select select option {
+                        background: ${bg};
+                        color: ${fg};
+                        padding: 8px 12px;
+                        border: none;
+                    }
+                    
+                    .lg-select select option:hover {
+                        background: ${hover};
+                    }
+                    
+                    .lg-select select option:checked {
+                        background: color-mix(in oklab, ${accent} 20%, ${bg} 80%);
+                        color: ${fg};
+                    }
+                    
+                    /* Preview Styles */
+                    .style-preview {
+                        display: flex;
+                        align-items: center;
+                        gap: 12px;
+                        padding: 8px 12px;
+                        margin-top: 8px;
+                        border-radius: 8px;
+                        background: color-mix(in oklab, ${bg} 95%, transparent 5%);
+                        border: 1px solid color-mix(in oklab, ${border} 50%, transparent 50%);
+                    }
+                    
+                    .style-preview-bar {
+                        flex: 1;
+                        height: 6px;
+                        border-radius: 3px;
+                        background: color-mix(in oklab, ${border} 30%, transparent 70%);
+                        position: relative;
+                        overflow: hidden;
+                    }
+                    
+                    .style-preview-progress {
+                        height: 100%;
+                        width: 65%;
+                        background: ${accent};
+                        border-radius: 3px;
+                        transition: all 0.3s ease;
+                    }
+                    
+                    .style-preview-label {
+                        font-size: 11px;
+                        color: ${subtle};
+                        min-width: 60px;
+                        text-align: right;
+                    }
+                    
+                    /* Animation Keyframes */
+                    @keyframes selectShimmer {
+                        0% { background-position: -200% -200%; }
+                        50% { background-position: 200% 200%; }
+                        100% { background-position: -200% -200%; }
+                    }
+                    
+                    /* Dark/Light Theme Adjustments */
+                    ${isDark ? `
+                        .lg-select select {
+                            background: linear-gradient(145deg, 
+                                rgba(255,255,255,0.05) 0%,
+                                rgba(255,255,255,0.02) 100%);
+                        }
+                        .lg-select select:hover {
+                            background: linear-gradient(145deg, 
+                                rgba(255,255,255,0.08) 0%,
+                                rgba(255,255,255,0.04) 100%);
+                        }
+                    ` : `
+                        .lg-select select {
+                            background: linear-gradient(145deg, 
+                                rgba(255,255,255,0.9) 0%,
+                                rgba(255,255,255,0.7) 100%);
+                        }
+                        .lg-select select:hover {
+                            background: linear-gradient(145deg, 
+                                rgba(255,255,255,0.95) 0%,
+                                rgba(255,255,255,0.85) 100%);
+                        }
+                    `}
+                    
+                    /* Reduce Motion Support */
+                    @media (prefers-reduced-motion: reduce) {
+                        .lg-select select,
+                        .lg-select::after,
+                        .lg-select::before,
+                        .style-preview-progress {
+                            transition: none !important;
+                            animation: none !important;
+                        }
+                    }
+                    
+                    /* Mobile Responsive */
+                    @media (max-width: 480px) {
+                        .lg-select select {
+                            padding: 10px 36px 10px 14px;
+                            font-size: 14px;
+                        }
+                    }
+                `;
+            }
+            
+            function createLiquidGlassSelect(options, selectedValue, changeCallback) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'lg-select';
+                
+                const select = document.createElement('select');
+                
+                // Add options
+                Object.entries(options).forEach(([value, label]) => {
+                    const option = document.createElement('option');
+                    option.value = value;
+                    option.textContent = label;
+                    if (value === selectedValue) option.selected = true;
+                    select.appendChild(option);
+                });
+                
+                // Add change event
+                select.addEventListener('change', changeCallback);
+                
+                wrapper.appendChild(select);
+                return { wrapper, select };
+            }
+
+            // Enhanced style selector with preview
+            function createProgressStyleSelectorWithPreview(content, tokens, isDark) {
+                const container = document.createElement('div');
+                
+                const label = document.createElement('label');
+                label.textContent = '진행률 표시 스타일';
+                Object.assign(label.style, {
+                    display: 'block',
+                    fontSize: '13px',
+                    fontWeight: '500',
+                    color: tokens.fg || '#e6e6e6',
+                    marginBottom: '8px'
+                });
+                
+                const { wrapper: selectWrapper, select } = createLiquidGlassSelect(
+                    PROGRESS_STYLES, 
+                    currentProgressStyle, 
+                    (e) => {
+                        currentProgressStyle = e.target.value;
+                        localStorage.setItem('vscodeAudioPlayer.progressStyle', currentProgressStyle);
+                        updatePreview(e.target.value);
+                        updatePlaylistHighlightsAndProgress(); // 즉시 적용
+                    }
+                );
+                
+                // Preview container
+                const preview = document.createElement('div');
+                preview.className = 'style-preview';
+                
+                const previewBar = document.createElement('div');
+                previewBar.className = 'style-preview-bar';
+                
+                const previewProgress = document.createElement('div');
+                previewProgress.className = 'style-preview-progress';
+                
+                const previewLabel = document.createElement('div');
+                previewLabel.className = 'style-preview-label';
+                previewLabel.textContent = 'Preview';
+                
+                previewBar.appendChild(previewProgress);
+                preview.appendChild(previewBar);
+                preview.appendChild(previewLabel);
+                
+                // Update preview function
+                function updatePreview(style) {
+                    // Reset classes
+                    previewProgress.className = 'style-preview-progress';
+                    
+                    // Add style class
+                    previewProgress.classList.add(`progress-${style}`);
+                    
+                    // Set CSS variables for preview
+                    previewProgress.style.setProperty('--progress-percent', '65%');
+                    previewProgress.style.setProperty('--progress-color', tokens.btnBg || '#0e639c');
+                    
+                    // Update label
+                    previewLabel.textContent = PROGRESS_STYLES[style];
+                }
+                
+                container.appendChild(label);
+                container.appendChild(selectWrapper);
+                container.appendChild(preview);
+                
+                // Initialize preview
+                updatePreview(currentProgressStyle);
+                
+                content.appendChild(container);
+                return select;
             }
 
             // 파일/폴더 추가
