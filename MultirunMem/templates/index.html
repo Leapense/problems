@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>백준 온라인 코딩 테스트</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+        <style>
+            body {
+                background-size: cover;
+            }
+            .theme-toggle {
+                position: fixed;
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 1030;
+                padding: 0.8rem 1.2rem;
+                background-color: rgba(255,255,255,0.3);
+                -webkit-backdrop-filter: blur(5px) url(#distortion) brightness(1.1) saturate(1.2);
+                backdrop-filter: blur(5px) url(#distortion) brightness(1.1) saturate(1.2);
+                border-radius: 10px;
+                border: 0.5px solid rgba(255,255,255,0.18);
+                box-shadow: 0px 0px 10px rgba(0,0,0,0.25);
+            }
+            .theme-toggle.darknight {
+                background-color: rgba(0,0,0,0.5);
+                border: 0.5px solid rgba(255,255,255,0.25);
+            }
+            #resultTabContent {
+                -webkit-backdrop-filter: blur(15px) url(#distortion) brightness(1.1) saturate(1.2);
+                backdrop-filter: blur(15px) url(#distortion) brightness(1.1) saturate(1.2);
+                border-bottom-left-radius: 0.375rem;
+                border-bottom-right-radius: 0.375rem;
+            }
+            #resultTabs {
+                -webkit-backdrop-filter: blur(15px) url(#distortion) brightness(1.1) saturate(1.2);
+                backdrop-filter: blur(15px) url(#distortion) brightness(1.1) saturate(1.2);
+                border-top-left-radius: 0.375rem;
+                border-top-right-radius: 0.375rem;
+                padding: 0.25rem;
+            }
+
+            .card {
+                -webkit-backdrop-filter: blur(15px) url(#distortion) brightness(1.1) saturate(1.2);
+                backdrop-filter: blur(15px) url(#distortion) brightness(1.1) saturate(1.2);
+            }
+        </style>
+    </head>
+    <body data-bs-theme="light">
+        <svg style="display: none;">
+            <defs>
+                <filter id="distortion" color-interpolation-filters="sRGB">
+                    <!-- 1. feTurbulence로 왜곡의 기반이 될 노이즈 맵을 생성합니다. (추가) -->
+                    <feTurbulence type="fractalNoise" baseFrequency="0.01 0.03" numOctaves="3" result="noise" seed="0"/>
+
+                    <!-- 2. feDisplacementMap의 in2를 'noise'로 바꾸고, scale 값을 지정합니다. (수정) -->
+                    <!-- RED 채널: 가장 강하게 왜곡 -->
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="50" xChannelSelector="R" yChannelSelector="G" result="dispRed"/>
+                    <feColorMatrix
+                        in="dispRed" type="matrix"
+                        values="1 0 0 0 0
+                                0 0 0 0 0
+                                0 0 0 0 0
+                                0 0 0 1 0"
+                        result="red"
+                    />
+                    <!-- GREEN 채널: 왜곡 없음 (기준점) -->
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="0" xChannelSelector="R" yChannelSelector="G" result="dispGreen"/>
+                    <feColorMatrix
+                        in="dispGreen" type="matrix"
+                        values="0 0 0 0 0
+                                0 1 0 0 0
+                                0 0 0 0 0
+                                0 0 0 1 0"
+                        result="green"
+                    />
+                    <!-- BLUE 채널: 중간 정도로 왜곡 -->
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="25" xChannelSelector="R" yChannelSelector="G" result="dispBlue"/>
+                    <feColorMatrix
+                        in="dispBlue" type="matrix"
+                        values="0 0 0 0 0
+                                0 0 0 0 0
+                                0 0 1 0 0
+                                0 0 0 1 0"
+                        result="blue"
+                    />
+                    <!-- 분리된 채널들을 다시 합칩니다. -->
+                    <feBlend in="red" in2="green" mode="screen" result="rg" />
+                    <feBlend in="rg" in2="blue" mode="screen" result="output" />
+                </filter>
+            </defs>
+        </svg>
+        <!--라이트/다크/시스템 테마를 바꿔주는 인디케이터-->
+        <div class="theme-toggle">
+            <div class="btn-group" role="group" aria-label="Theme toggle">
+                <input type="radio" class="btn-check" name="theme" id="themeLight" autocomplete="off">
+                <label class="btn btn-outline-primary" for="themeLight">Light</label>
+                <input type="radio" class="btn-check" name="theme" id="themeDark" autocomplete="off">
+                <label class="btn btn-outline-primary" for="themeDark">Dark</label>
+                <input type="radio" class="btn-check" name="theme" id="themeSystem" autocomplete="off" checked>
+                <label class="btn btn-outline-primary" for="themeSystem">System</label>
+            </div>
+        </div>
+        
+        <!--메인 컨테이너-->
+        <div class="container py-5 mt-4">
+            <h1 class="text-center mb-4">백준 온라인 코딩 테스트</h1>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form id="uploadForm" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="file" class="form-label">소스 코드 업로드</label>
+                            <input class="form-control" type="file" id="file" name="file" required>
+                            <div class="form-text">*.c, *.cpp, *.java, *.py 파일을 업로드하세요.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="folder" class="form-label">실행 경로(옵션)</label>
+                            <input class="form-control" type="text" id="folder" name="folder" placeholder="/workspace/tmp/">
+                            <div class="form-text">비워두면 기본 임시 디렉토리를 사용합니다.</div>
+                        </div>
+                        
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#stdinModal">
+                                Run Single
+                            </button>
+                            <button type="button" id="runBatchBtn" class="btn btn-success">Run Batch</button>
+                            <button type="button" id="reloadBtn" class="btn btn-secondary">Reload Source Code</button>
+                            <button type="button" id="analysisBtn" class="btn btn-secondary">Analysis Source Code</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!--코드 에디터-->
+            <div class="card shadow-sm mt-4">
+                <div class="card-body">
+                    <h4>소스 코드 에디터</h4>
+                    <div id="editor" style="height: 500px; border: 1px solid #ccc;"></div>
+                </div>
+            </div>
+        
+
+            <!--탭 바-->
+            <div class="mt-4">
+                <ul class="nav nav-pills border border-bottom-0" id="resultTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="output-tab" data-bs-toggle="tab" data-bs-target="#output-pane" type="button" role="tab">
+                            <i class="bi bi-terminal"></i> Output
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="error-tab" data-bs-toggle="tab" data-bs-target="#error-pane" type="button" role="tab">
+                            <i class="bi bi-exclamation-triangle"></i> Error
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="compare-tab" data-bs-toggle="tab" data-bs-target="#compare-pane" type="button" role="tab">
+                            <i class="bi bi-file-diff"></i> Compare
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="analysis-tab" data-bs-toggle="tab" data-bs-target="#analysis-pane" type="button" role="tab">
+                            <i class="bi bi-graph-up"></i> Analysis
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content border border-top-0 p-3" id="resultTabContent" style="min-height: 250px;">
+                    <div class="tab-pane fade show active" id="output-pane" role="tabpanel">
+                        <pre id="outputContent" class="mb-0" style="white-space:pre-wrap;">실행 결과가 여기에 표시됩니다.</pre>
+                    </div>
+                    <div class="tab-pane fade" id="error-pane" role="tabpanel">
+                        <pre id="errorContent" class="mb-0 text-danger" style="white-space: pre-wrap;">에러 메시지가 여기에 표시됩니다.</pre>
+                    </div>
+                    <div class="tab-pane fade" id="compare-pane" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="text-success"><i class="bi bi-check2-circle"></i> Expected Output</h6>
+                                <pre id="expectedOutput" class="p-2 rounded">예상 출력</pre>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-primary"><i class="bi bi-arrow-right-square-fill"></i> Actual Output</h6>
+                                <pre id="actualOutput" class="p-2 rounded">실제 출력</pre>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="analysis-pane" role="tabpanel">
+                        <div id="analysisContent">
+                            분석 결과가 여기에 표시됩니다.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--stdin 모달-->
+        <div class="modal fade" id="stdinModal" tabindex="-1" aria-labelledby="stdinModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="stdinModalLabel">표준 입력값 설정</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+                    </div>
+                    <div class="modal-body">
+                        <textarea id="stdinInput" class="form-control" rows="6" placeholder="프로그램에 전달할 표준 입력 내용을 여기에 작성하세요."></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-primary" id="runSingleBtn">실행</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+        
+        <script>
+            // Monaco Editor 초기화
+            require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' }});
+            require(['vs/editor/editor.main'], function() {
+                window.editor = monaco.editor.create(document.getElementById('editor'), {
+                    value: '// 여기에 소스 코드가 표시됩니다.\n',
+                    language: 'cpp',
+                    theme: 'vs-light', // 초기 테마는 잠시 후 시스템 설정에 따라 변경됩니다.
+                    automaticLayout: true
+                });
+                // 에디터가 로드된 후 즉시 시스템 테마를 적용합니다.
+                applySystemTheme();
+            });
+
+            // --- 테마 토글 기능 수정 ---
+            const body = document.body;
+            const themeToggle = document.querySelector(".theme-toggle");
+            const resultTab = document.getElementById("resultTabContent");
+            const resultTabs = document.getElementById("resultTabs");
+            let card = document.querySelectorAll(".card");
+
+            // 1. 테마 적용 로직을 함수로 분리
+            function applyLightTheme() {
+                body.setAttribute("data-bs-theme", "light");
+                body.style.background = 'url(https://512pixels.net/downloads/macos-wallpapers-6k/26-Tahoe-Beach-Dawn.png) no-repeat center center fixed';
+                resultTab.style.backgroundColor = "rgba(255,255,255,0.5)";
+                resultTabs.style.backgroundColor = "rgba(255,255,255,0.75)";
+                card.forEach(c => {
+                    c.setAttribute('style', 'background-color: rgba(255,255,255,0.35) !important');
+                });
+                themeToggle.classList.remove('darknight');
+                if (window.editor) monaco.editor.setTheme("vs-light");
+            }
+
+            function applyDarkTheme() {
+                body.setAttribute("data-bs-theme", "dark");
+                body.style.background = 'url(https://512pixels.net/downloads/macos-wallpapers-6k/26-Tahoe-Beach-Night.png) no-repeat center center fixed';
+                resultTab.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+                resultTabs.style.backgroundColor = "rgba(0, 0, 0, 0.75)";
+                card.forEach(c => {
+                    c.setAttribute('style', 'background-color: rgba(0,0,0,0.35) !important');
+                });
+                themeToggle.classList.add('darknight');
+                if (window.editor) monaco.editor.setTheme("vs-dark");
+            }
+
+            function applySystemTheme() {
+                const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                if (prefersDark) {
+                    applyDarkTheme();
+                } else {
+                    applyLightTheme();
+                }
+            }
+
+            // 2. 각 버튼의 이벤트 리스너가 해당 함수를 호출하도록 변경
+            document.getElementById("themeLight").addEventListener("change", applyLightTheme);
+            document.getElementById("themeDark").addEventListener("change", applyDarkTheme);
+            document.getElementById("themeSystem").addEventListener("change", applySystemTheme);
+
+            // 3. 페이지 로드 시 "System" 테마 적용 함수를 즉시 호출
+            // DOM이 준비되면 바로 실행합니다.
+            document.addEventListener('DOMContentLoaded', () => {
+                // "System" 라디오 버튼이 기본으로 체크되어 있으므로, 시스템 테마 적용 로직을 실행합니다.
+                if (document.getElementById('themeSystem').checked) {
+                    applySystemTheme();
+                }
+
+                // (보너스) 사용자가 OS 테마를 변경할 때 실시간으로 반영
+                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+                    // "System" 모드가 활성화되어 있을 때만 자동 변경
+                    if (document.getElementById('themeSystem').checked) {
+                        applySystemTheme();
+                    }
+                });
+            });
+        </script>
+        
+        <!-- Flask를 사용하는 경우 -->
+        <script src="{{ url_for('static', filename='index.js') }}"></script>
+        <!-- 직접 경로를 사용하는 경우 -->
+        <!-- <script src="/static/index.js"></script> -->
+    </body>
+</html>
