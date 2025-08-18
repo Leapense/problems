@@ -127,7 +127,7 @@ int main()
         auto it1 = idx.find(s1);
         auto it2 = idx.find(s2);
         if (it1 == idx.end() || it2 == idx.end()) {
-            cout << "0.0000000000\n";
+            cout << "0.0\n";
             continue;
         }
         int i1 = it1->second;
@@ -136,7 +136,7 @@ int main()
         auto d1it = dist.find(s1);
         auto d2it = dist.find(s2);
         if (d1it == dist.end() || d2it == dist.end()) {
-            cout << "0.0000000000\n";
+            cout << "0.0\n";
             continue;
         }
         double distanceKm = fabs(d2it->second - d1it->second);
