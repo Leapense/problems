@@ -265,13 +265,126 @@ function displayBatchResults(data) {
         }
     }
 }
+class Squircle {
+  static createPath(width, height, cornerRadius, offsetX = 0, offsetY = 0) {
+    // 안전 클램프
+    const w = Math.max(0, width);
+    const h = Math.max(0, height);
+    const r = Math.max(0, Math.min(cornerRadius, Math.min(w, h) / 2));
 
+    // iOS Continuous Corner의 근사치가 아니라 원형 베지어 근사 매직넘버
+    const c = r * 0.552284749831;
+
+    const x0 = offsetX;
+    const y0 = offsetY;
+
+    return `
+      M ${x0 + r}, ${y0}
+      H ${x0 + w - r}
+      C ${x0 + w - r + c}, ${y0}, ${x0 + w}, ${y0 + c}, ${x0 + w}, ${y0 + r}
+      V ${y0 + h - r}
+      C ${x0 + w}, ${y0 + h - r + c}, ${x0 + w - c}, ${y0 + h}, ${x0 + w - r}, ${y0 + h}
+      H ${x0 + r}
+      C ${x0 + r - c}, ${y0 + h}, ${x0}, ${y0 + h - c}, ${x0}, ${y0 + h - r}
+      V ${y0 + r}
+      C ${x0}, ${y0 + r - c}, ${x0 + c}, ${y0}, ${x0 + r}, ${y0}
+      Z
+    `;
+  }
+
+  // 안쪽(borderWidth만큼 안으로 들어간) 링 path 생성
+  static createRingPath(width, height, radius, borderWidth) {
+    const bw = Math.max(0, borderWidth);
+
+    // 바깥 squircle
+    const outer = this.createPath(width, height, radius);
+
+    // 안쪽 squircle (크기 줄이고, bw 만큼 평행이동)
+    const innerW = Math.max(0, width - 2 * bw);
+    const innerH = Math.max(0, height - 2 * bw);
+    const innerR = Math.max(0, radius - bw);
+    const inner = this.createPath(innerW, innerH, innerR, bw, bw);
+
+    // evenodd로 outer - inner = 링
+    return `${outer} ${inner}`;
+  }
+
+  static createMaskSvg(width, height, radius) {
+    return `
+      <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+        <path d="${this.createPath(width, height, radius)}" fill="black"/>
+      </svg>
+    `;
+  }
+
+  static createBorderSvg(width, height, radius, borderWidth, color) {
+    return `
+      <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+        <path d="${this.createRingPath(width, height, radius, borderWidth)}"
+              fill="${color}" fill-rule="evenodd"/>
+      </svg>
+    `;
+  }
+
+  static apply(element, radius = 40, border) {
+    const width = element.offsetWidth;
+    const height = element.offsetHeight;
+
+    // 1) 마스크 적용 (모양 만들기)
+    const svgMask = this.createMaskSvg(width, height, radius);
+    const maskUri = `data:image/svg+xml;utf8,${encodeURIComponent(svgMask)}`;
+
+    element.style.webkitMaskImage = `url("${maskUri}")`;
+    element.style.maskImage = `url("${maskUri}")`;
+    element.style.webkitMaskSize = '100% 100%';
+    element.style.maskSize = '100% 100%';
+
+    // 2) 테두리(안쪽) 오버레이
+    // border: { width: number, color: string }
+    const hasBorder = border && border.width > 0;
+    if (hasBorder) {
+      element.style.position = element.style.position || 'fixed';
+
+      let overlay = element.querySelector(':scope > .squircle-border');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'squircle-border';
+        overlay.style.position = 'absolute';
+        overlay.style.inset = '0';
+        overlay.style.pointerEvents = 'none';
+        overlay.style.zIndex = '1';
+        element.appendChild(overlay);
+      }
+
+      const svgBorder = this.createBorderSvg(
+        width,
+        height,
+        radius,
+        border.width,
+        border.color || 'rgba(0,0,0,0.2)'
+      );
+      const borderUri = `data:image/svg+xml;utf8,${encodeURIComponent(svgBorder)}`;
+
+      overlay.style.backgroundImage = `url("${borderUri}")`;
+      overlay.style.backgroundRepeat = 'no-repeat';
+      overlay.style.backgroundSize = '100% 100%';
+      overlay.style.backgroundPosition = '0 0';
+    } else {
+      const overlay = element.querySelector(':scope > .squircle-border');
+      if (overlay) overlay.remove();
+    }
+  }
+}
 // DOM이 로드되면 실행
 document.addEventListener("DOMContentLoaded", () => {
     console.log("index.js loaded!");
 
     // 파일 업로드 설정
     setupFileUpload();
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    document.querySelectorAll('.theme-toggle').forEach(el => {
+        Squircle.apply(el, 16, {width: 2.5, color: prefersDark ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.58)'});
+    });
 
     // Run Single 버튼 이벤트
     const runSingleBtn = document.getElementById('runSingleBtn');
@@ -334,45 +447,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const reloadBtn = document.getElementById('reloadBtn');
     if (reloadBtn) {
         reloadBtn.addEventListener('click', async () => {
-            try {
-                const fileInput = document.getElementById('file');
-                const file = fileInput?.files?.[0];
-                if (!file) {
-                    alert('먼저 파일을 선택하세요.');
-                    return;
-                }
-
-                reloadBtn.disabled = true;
-                const originalText = reloadBtn.textContent;
-                reloadBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>불러오는 중...';
-
-                const formData = new FormData();
-                formData.append('file', file);
-                const res = await fetch('/reload', { method: 'POST', body: formData });
-                const data = await res.json();
-
-                if (!res.ok) {
-                    throw new Error(data.error || '파일 다시 불러오기 오류');
-                }
-
-                const ext = (data.language || '').toLowerCase();
-                const monacoLang = extensionToLang[ext] || 'plaintext';
-
-                await waitForEditor();
-                window.editor.setValue(data.content || '');
-                monaco.editor.setModelLanguage(window.editor.getModel, monacoLang);
-
-                const outputPre = document.getElementById('outputContent');
-                outputPre.textContent = `Reloaded: ${data.filename}\nLanguage: ${monacoLang}\n\n` +
-                    (data.content ? data.content.slice(0, 500) : '(빈 파일)');
-                new bootstrap.Tab(document.getElementById('output-tab')).show();
-            } catch (err) {
-                console.error('Reload error: ', err);
-                alert(`Reload 중 오류: ${err.message}`);
-            } finally {
-                reloadBtn.disabled = false;
-                reloadBtn.textContent = 'Reload Source Code';
-            }
+            const fileInput = document.getElementById("file");
+            fileInput.click();
         });
     }
 });

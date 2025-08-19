@@ -286,8 +286,13 @@ def reload_source():
         if not allowed_file(file.filename):
             return jsonify({"error": "Invalid file type"}), 400
         
-        # 파일 내용 읽기
-        content = file.read().decode('utf-8')
+        # Totally... BULLSHIT...
+        with tempfile.NamedTemporaryFile(delete=False) as tmp:
+            file.save(tmp)
+            tmp_path = tmp.name # FUCK YOU
+        
+        with open(tmp_path, "r", encoding="utf-8") as f:
+            content = f.read()
         
         return jsonify({
             "success": True,
