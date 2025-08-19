@@ -448,6 +448,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (reloadBtn) {
         reloadBtn.addEventListener('click', async () => {
             const fileInput = document.getElementById("file");
+            fileInput.value = ""; // BRUH
             fileInput.click();
         });
     }
