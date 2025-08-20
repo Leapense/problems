@@ -379,6 +379,12 @@ class Squircle {
 document.addEventListener("DOMContentLoaded", () => {
     console.log("index.js loaded!");
 
+    const file = document.getElementById("file");
+    let filePath = "";
+    file.addEventListener("change", function(event) {
+        filePath = URL.createObjectURL(event.target.files[0]);
+    });
+
     // 파일 업로드 설정
     setupFileUpload();
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -406,6 +412,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 await waitForEditor();
 
                 const folder = (document.getElementById('folder')?.value || '').trim();
+                
+                
                 if (!folder) {
                     alert('배치 실행할 폴더 경로를 입력하세요.');
                     return;
@@ -413,7 +421,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const language = window.editor.getModel().getLanguageId();
                 const code = window.editor.getValue();
-                const filename = `temp_batch${langIdToExt[language] || '.txt'}`;
+                const filename = `${filePath}${langIdToExt[language] || '.txt'}`;
 
                 runBatchBtn.disabled = true;
                 const originalText = runBatchBtn.textContent;
