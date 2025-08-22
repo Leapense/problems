@@ -1,4 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const STORAGE = {
+        vol: 'vscodeAudioPlayer.volume',
+        idx: 'vscodeAudioPlayer.trackIndex',
+        collapsed: 'vscodeAudioPlayer.collapsed',
+        listOpen: 'vscodeAudioPlayer.listOpen',
+        rate: 'vscodeAudioPlayer.playbackRate',
+        pitch: 'vscodeAudioPlayer.pitchPreserve', // true=피치 고정, false=해제(기본)
+        playflow: 'vscodeAudioPlayer.playflow',
+        highlight: 'vscodeAudioPlayer.highlight',
+        eqGains: 'vscodeAudioPlayer.eqGains',
+        bgColorType: 'vscodeAudioPlayer.bgColorType',
+        bgColorSolid: 'vscodeAudioPlayer.bgColorSolid',
+        bgColorGradientStart: 'vscodeAudioPlayer.bgColorGradientStart',
+        bgColorGradientEnd: 'vscodeAudioPlayer.bgColorGradientEnd',
+        bgColorGradientAngle: 'vscodeAudioPlayer.bgColorGradientAngle',
+    };
     // ===================== Blur Overlay Logic =====================
     function addBlurOverlay() {
         const editorContent = document.querySelector(
@@ -105,21 +121,10 @@ document.addEventListener('DOMContentLoaded', () => {
       /* Base glass panel */
       .lg-glass {
         position: relative;
-        border: 1px solid rgba(255, 255, 255, 0.18);
         border-radius: 12px;
-        backdrop-filter: blur(14px) saturate(1.2);
-        -webkit-backdrop-filter: blur(14px) saturate(1.2);
+        backdrop-filter: blur(5px) saturate(1.2) url(#distrotion) brightness(1.1);
+        -webkit-backdrop-filter: blur(5px) saturate(1.2) url(#distrotion) brightness(1.1);
         overflow: hidden;
-        box-shadow:
-          inset 0 1px 0 rgba(255,255,255,0.15),
-          inset 0 -1px 0 rgba(0,0,0,0.08),
-          0 20px 60px rgba(0,0,0,0.25), 0 2px 12px rgba(0,0,0,0.2);
-      }
-      .lg-glass::before {
-        content: "";
-        position: absolute; inset: 0;
-        pointer-events: none;
-        mix-blend-mode: screen;
       }
       .lg-spec {
         position: absolute;
@@ -159,6 +164,28 @@ document.addEventListener('DOMContentLoaded', () => {
         document.head.appendChild(style);
     }
 
+    function applyCustomBackground(el, tokens) {
+        const type = localStorage.getItem(STORAGE.bgColorType) || 'theme';
+        switch(type) {
+            case 'solid':
+                const solidColor = localStorage.getItem(STORAGE.bgColorSolid) || tokens.bg;
+                el.style.background = solidColor;
+                break;
+            case 'gradient':
+                const start = localStorage.getItem(STORAGE.bgColorGradientStart) || tokens.bg;
+                const end = localStorage.getItem(STORAGE.bgColorGradientEnd) || '#000000';
+                const angle = localStorage.getItem(STORAGE.bgColorGradientAngle) || '145';
+                el.style.background = `linear-gradient(${angle}deg, ${start}, ${end})`;
+                break;
+            case 'theme':
+            default:
+                if (tokens.bg) {
+                    el.style.background = tokens.bg;
+                }
+                break;
+        }
+    }
+
     /**
      * Apply liquid glass layers to an element.
      * Respects VS Code theme tokens if available.
@@ -173,11 +200,11 @@ document.addEventListener('DOMContentLoaded', () => {
         //if (tokens.bg) {
         //  el.style.background = 'color-mix(in oklab, ' + tokens.bg + ' 75%, transparent)';
         //}
-        if (tokens.bg) {
-            el.style.background = tokens.bg;
-        }
+        
+        applyCustomBackground(el, tokens);
+
         if (tokens.border) {
-            el.style.border = '1px solid ' + tokens.border;
+            el.style.border = `1px solid ${tokens.border}`;
         }
 
         // Add animated light layers
@@ -217,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 position: 'fixed',
                 inset: '0',
                 background: 'rgba(0,0,0,0.35)',
-                backdropFilter: 'blur(2px)',
+                backdropFilter: 'blur(2px) brightness(1.1) saturate(1.2)',
                 zIndex: '10000',
                 display: 'flex',
                 alignItems: 'center',
@@ -233,9 +260,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 borderRadius: '12px',
                 background: tokens.bg || (isDark ? 'rgba(0, 0, 0, 0.37)' : 'rgba(255,255,255,0.06)'),
                 color: tokens.fg || '#e6e6e6',
+                backdropFilter: 'blur(14px) brightness(1.1) saturate(1.2)',
                 boxShadow:
                     '0 20px 60px rgba(0,0,0,0.25), 0 2px 12px rgba(0,0,0,0.2)',
-                border: `1px solid ${tokens.border || 'rgba(255,255,255,0.18)'}`,
                 fontFamily:
                     'var(--vscode-font-family, system-ui, -apple-system, Segoe UI, Roboto, sans-serif)',
             });
@@ -386,17 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ID = 'editor-music-player';
         if (document.getElementById(ID)) return;
 
-        const STORAGE = {
-            vol: 'vscodeAudioPlayer.volume',
-            idx: 'vscodeAudioPlayer.trackIndex',
-            collapsed: 'vscodeAudioPlayer.collapsed',
-            listOpen: 'vscodeAudioPlayer.listOpen',
-            rate: 'vscodeAudioPlayer.playbackRate',
-            pitch: 'vscodeAudioPlayer.pitchPreserve', // true=피치 고정, false=해제(기본)
-            playflow: 'vscodeAudioPlayer.playflow',
-            highlight: 'vscodeAudioPlayer.highlight',
-            eqGains: 'vscodeAudioPlayer.eqGains',
-        };
+        
 
         let audioContext = null;
         let audioSourceNode = null;
@@ -775,7 +792,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.error('[MusicPlayer] Failed to initialize equalizer audio graph:', e);
                 }
             }
-            setupEqualizerGraph(audio);
+            //setupEqualizerGraph(audio);
 
             const mkBtn = (text, aria, titleText) => {
                 const b = document.createElement('button');
@@ -952,10 +969,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
             settingsBtn.addEventListener('click', () => {
-                showSettingsModal();
+                const playerPanel = document.querySelector(`#${ID} > div`);
+                if (playerPanel) {
+                    showSettingsModal(playerPanel);
+                }
             });
 
-            function showSettingsModal() {
+            function showSettingsModal(playerPanel) {
                 if (document.getElementById('custom-settings-overlay')) return;
                 const overlay = document.createElement('div');
                 overlay.id = 'custom-settings-overlay';
@@ -1122,7 +1142,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const eqResetBtn = mkBtn('Reset', false);
                 eqResetBtn.style.padding = '4px 8px';
                 eqResetBtn.style.fontSize = '11px';
-                eqResetBtn.addEventListener('click',  () => {
+                eqResetBtn.addEventListener('click', () => {
                     const sliders = eqContainer.querySelectorAll('input[type="range"]');
                     sliders.forEach((slider, index) => {
                         slider.value = 0;
@@ -1199,7 +1219,169 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 eqFieldset.appendChild(eqContainer);
                 content.appendChild(eqFieldset);
-                
+
+                // TODO "#editor-music-player" 를 색상을 지정해주는 설정 (단색, 그라데이션 효과)
+                const bgFieldset = document.createElement('fieldset');
+                Object.assign(bgFieldset.style, {
+                    border: `1px solid ${tokens.border || 'rgba(255,255,255,0.18)'}`,
+                    borderRadius: '8px',
+                    padding: '12px',
+                });
+                const bgLegend = document.createElement('legend');
+                bgLegend.textContent = '배경 스타일';
+                Object.assign(bgLegend.style, {padding: '0 8px', fontSize: '13px', color: tokens.subtle || '#9da0a2'});
+                bgFieldset.appendChild(bgLegend);
+                content.appendChild(bgFieldset);
+
+                const bgTypeContainer = document.createElement('div');
+                Object.assign(bgTypeContainer.style, {display: 'flex', gap: '16px', marginBottom: '12px'});
+                const bgTypes = {theme: '테마 기본', solid: '단색', gradient: '그라데이션'};
+                const currentBgType = localStorage.getItem(STORAGE.bgColorType) || 'theme';
+
+                Object.entries(bgTypes).forEach(([value, labelText]) => {
+                    const label = document.createElement('label');
+                    Object.assign(label.style, {display: 'inline-flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '13px'});
+
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = 'bgType';
+                    radio.value = value;
+                    if (currentBgType === value) radio.checked = true;
+                    label.appendChild(radio);
+                    label.appendChild(document.createTextNode(labelText));
+                    bgTypeContainer.appendChild(label);
+                    focusable.push(radio);
+                });
+
+                bgFieldset.appendChild(bgTypeContainer);
+
+                const solidControls = document.createElement('div');
+                solidControls.style.display = currentBgType === 'solid' ? 'flex' : 'none';
+                solidControls.style.alignItems = 'center';
+                solidControls.style.gap = '8px';
+
+                const solidLabel = document.createElement('label');
+                solidLabel.textContent = '색상:';
+                solidLabel.style.fontSize = '12px';
+                const solidColorPicker = document.createElement('input');
+                solidColorPicker.type = 'color';
+                solidColorPicker.value = localStorage.getItem(STORAGE.bgColorSolid) || tokens.bg;
+                solidControls.appendChild(solidLabel);
+                solidControls.appendChild(solidColorPicker);
+                bgFieldset.appendChild(solidControls);
+                focusable.push(solidColorPicker);
+
+                const gradientControls = document.createElement('div');
+                gradientControls.style.display = currentBgType === 'gradient' ? 'flex' : 'none';
+                gradientControls.style.flexDirection = 'column';
+                gradientControls.style.gap = '8px';
+
+                const gradientColors = document.createElement('div');
+                gradientColors.style.display = 'flex';
+                gradientColors.style.alignItems = 'center';
+                gradientColors.style.gap = '8px';
+                const gradStartLabel = document.createElement('label');
+                gradStartLabel.textContent = '시작:';
+                gradStartLabel.style.fontSize = '12px';
+                const gradStartPicker = document.createElement('input');
+                gradStartPicker.type = 'color';
+                gradStartPicker.value = localStorage.getItem(STORAGE.bgColorGradientStart) || tokens.bg;
+                const gradEndLabel = document.createElement('label');
+                gradEndLabel.textContent = '종료:';
+                gradEndLabel.style.fontSize = '12px';
+                const gradEndPicker = document.createElement('input');
+                gradEndPicker.type = 'color';
+                gradEndPicker.value = localStorage.getItem(STORAGE.bgColorGradientEnd) || '#000000';
+
+                gradientColors.appendChild(gradStartLabel);
+                gradientColors.appendChild(gradStartPicker);
+                gradientColors.appendChild(gradEndLabel);
+                gradientColors.appendChild(gradEndPicker);
+
+                const gradientAngle = document.createElement('div');
+                gradientAngle.style.display = 'flex';
+                gradientAngle.style.alignItems = 'center';
+                gradientAngle.style.gap = '8px';
+                const angleLabel = document.createElement('label');
+                angleLabel.textContent = '각도:';
+                angleLabel.style.fontSize = '12px';
+                const angleSlider = document.createElement('input');
+                angleSlider.type = 'range';
+                angleSlider.min = '0';
+                angleSlider.max = '360';
+                angleSlider.value = localStorage.getItem(STORAGE.bgColorGradientAngle) || '145';
+                angleSlider.style.flex = '1';
+                const angleValue = document.createElement('span');
+                angleValue.textContent = `${angleSlider.value}°`;
+                angleValue.style.fontSize = '11px';
+                angleValue.style.minWidth = '30px';
+
+                gradientAngle.appendChild(angleLabel);
+                gradientAngle.appendChild(angleSlider);
+                gradientAngle.appendChild(angleValue);
+
+                gradientControls.appendChild(gradientColors);
+                gradientControls.appendChild(gradientAngle);
+                bgFieldset.appendChild(gradientControls);
+                focusable.push(gradStartPicker, gradEndPicker, angleSlider);
+
+                const resetBtn = mkBtn('기본값으로 되돌리기', false);
+                resetBtn.style.fontSize = '11px';
+                resetBtn.style.padding = '4px 8px';
+                resetBtn.style.marginTop = '10px';
+                bgFieldset.appendChild(resetBtn);
+                focusable.push(resetBtn);
+
+                const updateBg = () => {
+                    applyCustomBackground(document.getElementById('editor-music-player'), tokens);
+                };
+
+                bgTypeContainer.addEventListener('change', (e) => {
+                    const type = e.target.value;
+                    localStorage.setItem(STORAGE.bgColorType, type);
+                    solidControls.style.display = type === 'solid' ? 'flex' : 'none';
+                    gradientControls.style.display = type === 'gradient' ? 'flex' : 'none';
+                    updateBg();
+                });
+
+                solidColorPicker.addEventListener('input', () => {
+                    localStorage.setItem(STORAGE.bgColorSolid, solidColorPicker.value);
+                    updateBg();
+                });
+                gradStartPicker.addEventListener('input', () => {
+                    localStorage.setItem(STORAGE.bgColorGradientStart, gradStartPicker.value);
+                    updateBg();
+                });
+                gradEndPicker.addEventListener('input', () => {
+                    localStorage.setItem(STORAGE.bgColorGradientEnd, gradEndPicker.value);
+                    updateBg();
+                });
+                angleSlider.addEventListener('input', () => {
+                    angleValue.textContent = `${angleSlider.value}°`;
+                    localStorage.setItem(STORAGE.bgColorGradientAngle, angleSlider.value);
+                    updateBg();
+                });
+
+                resetBtn.addEventListener('click', () => {
+                    localStorage.removeItem(STORAGE.bgColorType);
+                    localStorage.removeItem(STORAGE.bgColorSolid);
+                    localStorage.removeItem(STORAGE.bgColorGradientStart);
+                    localStorage.removeItem(STORAGE.bgColorGradientEnd);
+                    localStorage.removeItem(STORAGE.bgColorGradientAngle);
+
+                    // UI 초기화
+                    bgTypeContainer.querySelector('input[value="theme"]').checked = true;
+                    solidControls.style.display = 'none';
+                    gradientControls.style.display = 'none';
+                    solidColorPicker.value = tokens.bg;
+                    gradStartPicker.value = tokens.bg;
+                    gradEndPicker.value = '#000000';
+                    angleSlider.value = '145';
+                    angleValue.textContent = '145°';
+
+                    updateBg(); // 즉시 반영
+                });
+
                 const footer = document.createElement('div');
                 Object.assign(footer.style, {
                     display: 'flex',
@@ -1227,6 +1409,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 modal.appendChild(footer);
                 overlay.appendChild(modal);
                 document.body.appendChild(overlay);
+
+                
 
                 let lastFocused = document.activeElement;
                 focusable[0].focus();
@@ -1325,6 +1509,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const list = document.createElement('div');
             list.id = 'editor-music-player-list';
+            
             listWrap.appendChild(listHeader);
             listWrap.appendChild(list);
             wrap.appendChild(listWrap);
@@ -1473,7 +1658,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else {
                     standardControls.style.display = 'inline-flex';
                     playerContainer.appendChild(audio);
-                    
+
                     let sourceUrl = t.url;
                     if (t.source === 'local' && t.file && !t.url) {
                         sourceUrl = URL.createObjectURL(t.file);
@@ -1617,6 +1802,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Events
             playBtn.addEventListener('click', () => {
+                if (!isAudioGraphSetup) {
+                    setupEqualizerGraph(audio);
+                }
                 if (audioContext && audioContext.state === 'suspended') {
                     audioContext.resume();
                 }
@@ -1658,7 +1846,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             function showAddModal() {
                 if (document.getElementById('custom-add-source-overlay')) return;
-                
+
                 const overlay = document.createElement('div');
                 overlay.id = 'custom-add-source-overlay';
                 overlay.setAttribute('role', 'dialog');
@@ -1777,7 +1965,7 @@ document.addEventListener('DOMContentLoaded', () => {
             function injectProgressStyles(tokens, isDark) {
                 const styleId = 'enhanced-select-styles';
                 let style = document.getElementById(styleId);
-                
+
                 if (!style) {
                     style = document.createElement('style');
                     style.id = styleId;
@@ -2149,13 +2337,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 `;
             }
+
             
+
             function createLiquidGlassSelect(options, selectedValue, changeCallback) {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'lg-select';
-                
+
                 const select = document.createElement('select');
-                
+
                 // Add options
                 Object.entries(options).forEach(([value, label]) => {
                     const option = document.createElement('option');
@@ -2164,10 +2354,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (value === selectedValue) option.selected = true;
                     select.appendChild(option);
                 });
-                
+
                 // Add change event
                 select.addEventListener('change', changeCallback);
-                
+
                 wrapper.appendChild(select);
                 return { wrapper, select };
             }
@@ -2175,7 +2365,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Enhanced style selector with preview
             function createProgressStyleSelectorWithPreview(content, tokens, isDark) {
                 const container = document.createElement('div');
-                
+
                 const label = document.createElement('label');
                 label.textContent = '진행률 표시 스타일';
                 Object.assign(label.style, {
@@ -2185,10 +2375,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     color: tokens.fg || '#e6e6e6',
                     marginBottom: '8px'
                 });
-                
+
                 const { wrapper: selectWrapper, select } = createLiquidGlassSelect(
-                    PROGRESS_STYLES, 
-                    currentProgressStyle, 
+                    PROGRESS_STYLES,
+                    currentProgressStyle,
                     (e) => {
                         currentProgressStyle = e.target.value;
                         localStorage.setItem('vscodeAudioPlayer.progressStyle', currentProgressStyle);
@@ -2196,48 +2386,48 @@ document.addEventListener('DOMContentLoaded', () => {
                         updatePlaylistHighlightsAndProgress(); // 즉시 적용
                     }
                 );
-                
+
                 // Preview container
                 const preview = document.createElement('div');
                 preview.className = 'style-preview';
-                
+
                 const previewBar = document.createElement('div');
                 previewBar.className = 'style-preview-bar';
-                
+
                 const previewProgress = document.createElement('div');
                 previewProgress.className = 'style-preview-progress';
-                
+
                 const previewLabel = document.createElement('div');
                 previewLabel.className = 'style-preview-label';
                 previewLabel.textContent = 'Preview';
-                
+
                 previewBar.appendChild(previewProgress);
                 preview.appendChild(previewBar);
                 preview.appendChild(previewLabel);
-                
+
                 // Update preview function
                 function updatePreview(style) {
                     // Reset classes
                     previewProgress.className = 'style-preview-progress';
-                    
+
                     // Add style class
                     previewProgress.classList.add(`progress-${style}`);
-                    
+
                     // Set CSS variables for preview
                     previewProgress.style.setProperty('--progress-percent', '65%');
                     previewProgress.style.setProperty('--progress-color', tokens.btnBg || '#0e639c');
-                    
+
                     // Update label
                     previewLabel.textContent = PROGRESS_STYLES[style];
                 }
-                
+
                 container.appendChild(label);
                 container.appendChild(selectWrapper);
                 container.appendChild(preview);
-                
+
                 // Initialize preview
                 updatePreview(currentProgressStyle);
-                
+
                 content.appendChild(container);
                 return select;
             }
@@ -2273,6 +2463,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 localObjectURLs.clear();
             }
             window.addEventListener('unload', revokeAllLocalUrls);
+
+            
         }
     })();
 
