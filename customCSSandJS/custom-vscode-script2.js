@@ -9,11 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
         playflow: 'vscodeAudioPlayer.playflow',
         highlight: 'vscodeAudioPlayer.highlight',
         eqGains: 'vscodeAudioPlayer.eqGains',
-        bgColorType: 'vscodeAudioPlayer.bgColorType',
-        bgColorSolid: 'vscodeAudioPlayer.bgColorSolid',
-        bgColorGradientStart: 'vscodeAudioPlayer.bgColorGradientStart',
-        bgColorGradientEnd: 'vscodeAudioPlayer.bgColorGradientEnd',
-        bgColorGradientAngle: 'vscodeAudioPlayer.bgColorGradientAngle',
     };
     // ===================== Blur Overlay Logic =====================
     function addBlurOverlay() {
@@ -122,8 +117,12 @@ document.addEventListener('DOMContentLoaded', () => {
       .lg-glass {
         position: relative;
         border-radius: 12px;
-        backdrop-filter: blur(5px) saturate(1.2) url(#distrotion) brightness(1.1);
-        -webkit-backdrop-filter: blur(5px) saturate(1.2) url(#distrotion) brightness(1.1);
+        box-shadow:
+            0 4px 8px rgba(0, 0, 0, 0.25),
+            0 -10px 25px inset rgba(0, 0, 0, 0.15),
+            0 -1px 4px 1px inset rgba(255,255,255,0.24);
+        backdrop-filter: blur(5px) saturate(1.2) brightness(1.1);
+        -webkit-backdrop-filter: blur(5px) saturate(1.2) brightness(1.1);
         overflow: hidden;
       }
       .lg-spec {
@@ -164,28 +163,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.head.appendChild(style);
     }
 
-    function applyCustomBackground(el, tokens) {
-        const type = localStorage.getItem(STORAGE.bgColorType) || 'theme';
-        switch(type) {
-            case 'solid':
-                const solidColor = localStorage.getItem(STORAGE.bgColorSolid) || tokens.bg;
-                el.style.background = solidColor;
-                break;
-            case 'gradient':
-                const start = localStorage.getItem(STORAGE.bgColorGradientStart) || tokens.bg;
-                const end = localStorage.getItem(STORAGE.bgColorGradientEnd) || '#000000';
-                const angle = localStorage.getItem(STORAGE.bgColorGradientAngle) || '145';
-                el.style.background = `linear-gradient(${angle}deg, ${start}, ${end})`;
-                break;
-            case 'theme':
-            default:
-                if (tokens.bg) {
-                    el.style.background = tokens.bg;
-                }
-                break;
-        }
-    }
-
     /**
      * Apply liquid glass layers to an element.
      * Respects VS Code theme tokens if available.
@@ -201,7 +178,9 @@ document.addEventListener('DOMContentLoaded', () => {
         //  el.style.background = 'color-mix(in oklab, ' + tokens.bg + ' 75%, transparent)';
         //}
         
-        applyCustomBackground(el, tokens);
+        if (tokens.bg) {
+            el.style.background = tokens.bg;
+        }
 
         if (tokens.border) {
             el.style.border = `1px solid ${tokens.border}`;
@@ -262,7 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 color: tokens.fg || '#e6e6e6',
                 backdropFilter: 'blur(14px) brightness(1.1) saturate(1.2)',
                 boxShadow:
-                    '0 20px 60px rgba(0,0,0,0.25), 0 2px 12px rgba(0,0,0,0.2)',
+                    '0 4px 8px rgba(0, 0, 0, 0.25), 0 -10px 25px inset rgba(0, 0, 0, 0.15), 0 -1px 4px 1px inset rgba(255,255,255,0.24)',
                 fontFamily:
                     'var(--vscode-font-family, system-ui, -apple-system, Segoe UI, Roboto, sans-serif)',
             });
@@ -1001,7 +980,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     background: tokens.bg || 'rgba(255,255,255,0.06)',
                     color: tokens.fg || '#e6e6e6',
                     boxShadow:
-                        '0 20px 60px rgba(0,0,0,0.25), 0 2px 12px rgba(0,0,0,0.2)',
+                        '0 4px 8px rgba(0, 0, 0, 0.25), 0 -10px 25px inset rgba(0, 0, 0, 0.15), 0 -1px 4px 1px inset rgba(255, 255, 255, 0.24)',
                     border: `1px solid ${tokens.border || 'rgba(255,255,255,0.18)'}`,
                     fontFamily: 'var(--vscode-font-family, system-ui, -apple-system, Segoe UI, Roboto, sans-serif)',
                     overflowX: 'auto',
@@ -1219,168 +1198,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 eqFieldset.appendChild(eqContainer);
                 content.appendChild(eqFieldset);
-
-                // TODO "#editor-music-player" 를 색상을 지정해주는 설정 (단색, 그라데이션 효과)
-                const bgFieldset = document.createElement('fieldset');
-                Object.assign(bgFieldset.style, {
-                    border: `1px solid ${tokens.border || 'rgba(255,255,255,0.18)'}`,
-                    borderRadius: '8px',
-                    padding: '12px',
-                });
-                const bgLegend = document.createElement('legend');
-                bgLegend.textContent = '배경 스타일';
-                Object.assign(bgLegend.style, {padding: '0 8px', fontSize: '13px', color: tokens.subtle || '#9da0a2'});
-                bgFieldset.appendChild(bgLegend);
-                content.appendChild(bgFieldset);
-
-                const bgTypeContainer = document.createElement('div');
-                Object.assign(bgTypeContainer.style, {display: 'flex', gap: '16px', marginBottom: '12px'});
-                const bgTypes = {theme: '테마 기본', solid: '단색', gradient: '그라데이션'};
-                const currentBgType = localStorage.getItem(STORAGE.bgColorType) || 'theme';
-
-                Object.entries(bgTypes).forEach(([value, labelText]) => {
-                    const label = document.createElement('label');
-                    Object.assign(label.style, {display: 'inline-flex', alignItems: 'center', gap: '6px', cursor: 'pointer', fontSize: '13px'});
-
-                    const radio = document.createElement('input');
-                    radio.type = 'radio';
-                    radio.name = 'bgType';
-                    radio.value = value;
-                    if (currentBgType === value) radio.checked = true;
-                    label.appendChild(radio);
-                    label.appendChild(document.createTextNode(labelText));
-                    bgTypeContainer.appendChild(label);
-                    focusable.push(radio);
-                });
-
-                bgFieldset.appendChild(bgTypeContainer);
-
-                const solidControls = document.createElement('div');
-                solidControls.style.display = currentBgType === 'solid' ? 'flex' : 'none';
-                solidControls.style.alignItems = 'center';
-                solidControls.style.gap = '8px';
-
-                const solidLabel = document.createElement('label');
-                solidLabel.textContent = '색상:';
-                solidLabel.style.fontSize = '12px';
-                const solidColorPicker = document.createElement('input');
-                solidColorPicker.type = 'color';
-                solidColorPicker.value = localStorage.getItem(STORAGE.bgColorSolid) || tokens.bg;
-                solidControls.appendChild(solidLabel);
-                solidControls.appendChild(solidColorPicker);
-                bgFieldset.appendChild(solidControls);
-                focusable.push(solidColorPicker);
-
-                const gradientControls = document.createElement('div');
-                gradientControls.style.display = currentBgType === 'gradient' ? 'flex' : 'none';
-                gradientControls.style.flexDirection = 'column';
-                gradientControls.style.gap = '8px';
-
-                const gradientColors = document.createElement('div');
-                gradientColors.style.display = 'flex';
-                gradientColors.style.alignItems = 'center';
-                gradientColors.style.gap = '8px';
-                const gradStartLabel = document.createElement('label');
-                gradStartLabel.textContent = '시작:';
-                gradStartLabel.style.fontSize = '12px';
-                const gradStartPicker = document.createElement('input');
-                gradStartPicker.type = 'color';
-                gradStartPicker.value = localStorage.getItem(STORAGE.bgColorGradientStart) || tokens.bg;
-                const gradEndLabel = document.createElement('label');
-                gradEndLabel.textContent = '종료:';
-                gradEndLabel.style.fontSize = '12px';
-                const gradEndPicker = document.createElement('input');
-                gradEndPicker.type = 'color';
-                gradEndPicker.value = localStorage.getItem(STORAGE.bgColorGradientEnd) || '#000000';
-
-                gradientColors.appendChild(gradStartLabel);
-                gradientColors.appendChild(gradStartPicker);
-                gradientColors.appendChild(gradEndLabel);
-                gradientColors.appendChild(gradEndPicker);
-
-                const gradientAngle = document.createElement('div');
-                gradientAngle.style.display = 'flex';
-                gradientAngle.style.alignItems = 'center';
-                gradientAngle.style.gap = '8px';
-                const angleLabel = document.createElement('label');
-                angleLabel.textContent = '각도:';
-                angleLabel.style.fontSize = '12px';
-                const angleSlider = document.createElement('input');
-                angleSlider.type = 'range';
-                angleSlider.min = '0';
-                angleSlider.max = '360';
-                angleSlider.value = localStorage.getItem(STORAGE.bgColorGradientAngle) || '145';
-                angleSlider.style.flex = '1';
-                const angleValue = document.createElement('span');
-                angleValue.textContent = `${angleSlider.value}°`;
-                angleValue.style.fontSize = '11px';
-                angleValue.style.minWidth = '30px';
-
-                gradientAngle.appendChild(angleLabel);
-                gradientAngle.appendChild(angleSlider);
-                gradientAngle.appendChild(angleValue);
-
-                gradientControls.appendChild(gradientColors);
-                gradientControls.appendChild(gradientAngle);
-                bgFieldset.appendChild(gradientControls);
-                focusable.push(gradStartPicker, gradEndPicker, angleSlider);
-
-                const resetBtn = mkBtn('기본값으로 되돌리기', false);
-                resetBtn.style.fontSize = '11px';
-                resetBtn.style.padding = '4px 8px';
-                resetBtn.style.marginTop = '10px';
-                bgFieldset.appendChild(resetBtn);
-                focusable.push(resetBtn);
-
-                const updateBg = () => {
-                    applyCustomBackground(document.getElementById('editor-music-player'), tokens);
-                };
-
-                bgTypeContainer.addEventListener('change', (e) => {
-                    const type = e.target.value;
-                    localStorage.setItem(STORAGE.bgColorType, type);
-                    solidControls.style.display = type === 'solid' ? 'flex' : 'none';
-                    gradientControls.style.display = type === 'gradient' ? 'flex' : 'none';
-                    updateBg();
-                });
-
-                solidColorPicker.addEventListener('input', () => {
-                    localStorage.setItem(STORAGE.bgColorSolid, solidColorPicker.value);
-                    updateBg();
-                });
-                gradStartPicker.addEventListener('input', () => {
-                    localStorage.setItem(STORAGE.bgColorGradientStart, gradStartPicker.value);
-                    updateBg();
-                });
-                gradEndPicker.addEventListener('input', () => {
-                    localStorage.setItem(STORAGE.bgColorGradientEnd, gradEndPicker.value);
-                    updateBg();
-                });
-                angleSlider.addEventListener('input', () => {
-                    angleValue.textContent = `${angleSlider.value}°`;
-                    localStorage.setItem(STORAGE.bgColorGradientAngle, angleSlider.value);
-                    updateBg();
-                });
-
-                resetBtn.addEventListener('click', () => {
-                    localStorage.removeItem(STORAGE.bgColorType);
-                    localStorage.removeItem(STORAGE.bgColorSolid);
-                    localStorage.removeItem(STORAGE.bgColorGradientStart);
-                    localStorage.removeItem(STORAGE.bgColorGradientEnd);
-                    localStorage.removeItem(STORAGE.bgColorGradientAngle);
-
-                    // UI 초기화
-                    bgTypeContainer.querySelector('input[value="theme"]').checked = true;
-                    solidControls.style.display = 'none';
-                    gradientControls.style.display = 'none';
-                    solidColorPicker.value = tokens.bg;
-                    gradStartPicker.value = tokens.bg;
-                    gradEndPicker.value = '#000000';
-                    angleSlider.value = '145';
-                    angleValue.textContent = '145°';
-
-                    updateBg(); // 즉시 반영
-                });
 
                 const footer = document.createElement('div');
                 Object.assign(footer.style, {
@@ -1870,7 +1687,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     borderRadius: '12px',
                     background: tokens.bg || 'rgba(255,255,255,0.06)',
                     color: tokens.fg || '#e6e6e6',
-                    boxShadow: '0 20px 60px rgba(0,0,0,0.25), 0 2px 12px rgba(0,0,0,0.2)',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.25), 0 -10px 25px inset rgba(0, 0, 0, 0.15), 0 -1px 4px 1px inset rgba(255,255,255,0.24)',
                     border: `1px solid ${tokens.border || 'rgba(255,255,255,0.18)'}`,
                     fontFamily: 'var(--vscode-font-family, system-ui, -apple-system, Segoe UI, Roboto, sans-serif)',
                 });
