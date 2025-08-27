@@ -486,7 +486,7 @@ class MainWindow(Gtk.Window):
 
     # ── 실제 실행 + 결과 비교 ─────────────────────────────────
     def _run_single_case(self, src_path: str, stdin_text: str,
-                         expected_path: str, is_batch: bool) -> bool:
+                         expected_path: str, is_batch: bool) -> tuple[bool, str]:
         try:
             lang, target, cwd = compile_source(src_path)
             cmd = get_run_cmd(lang, target)
@@ -501,8 +501,9 @@ class MainWindow(Gtk.Window):
                     pass
 
         except Exception as e:
-            GLib.idle_add(self.err_buf.set_text, str(e))
-            return False
+            err_msg = str(e)
+            GLib.idle_add(self.err_buf.set_text, err_msg)
+            return False, f"Compile/Runtime Error:\n{err_msg}"
 
         def ui():
             self.out_buf.set_text(out)
@@ -512,42 +513,59 @@ class MainWindow(Gtk.Window):
 
         GLib.idle_add(ui)
 
-        if expected_path:
-            return self.compare_output(expected_path, out, is_batch)
-        return True
+        if not expected_path:
+            return True, ""
+        ok, compare_text = self.compare_output(expected_path, out)
+        if not is_batch:
+            def ui_update_compare():
+                self.compare_buf.set_text(compare_text)
+                if not ok:
+                    self.nb.set_current_page(self.nb.page_num(self.cmp_scrolled_win))
+                return False
+            GLib.idle_add(ui_update_compare)
+        return ok, compare_text
 
     # ── 배치 워커 ───────────────────────────────────────────
     def _batch_worker(self, src_path: str, cases: list[tuple[str, str]]):
         total = len(cases); passed = 0
+        first_fail_info = None
         for idx, (in_path, out_path) in enumerate(cases, 1):
             with open(in_path, 'r', encoding='utf-8') as f:
                 stdin = f.read()
-            ok = self._run_single_case(src_path, stdin, out_path, True)
+            ok, compare_text = self._run_single_case(src_path, stdin, out_path, True)
             if ok: passed += 1
+            elif first_fail_info is None:
+                case_num = pathlib.Path(in_path).name
+                first_fail_info = f"First failure on: {case_num}\n\n{compare_text}"
             else:
                 pass
             GLib.idle_add(
                 self.status_lbl.set_text,
                 f'Batch {idx}/{total} - Passed {passed}'
             )
-        GLib.idle_add(self._batch_finished, passed, total)
+        GLib.idle_add(self._batch_finished, passed, total, first_fail_info)
 
-    def _batch_finished(self, passed: int, total: int):
+    def _batch_finished(self, passed: int, total: int, first_fail_info: str | None):
         self._toast('Done', f'Batch finished: {passed}/{total} passed.',
                     'success' if passed == total else 'warning')
+        
+        if first_fail_info:
+            self.compare_buf.set_text(first_fail_info)
+            self.nb.set_current_page(self.nb.page_num(self.cmp_scrolled_win))
+        else:
+            self.compare_buf.set_text(f"✅ All {total} test cases passed!")
         
         self.status_lbl.set_text('Ready')
         self.run_btn.set_sensitive(True); self.batch_btn.set_sensitive(True)
 
     # ── 결과 비교 ────────────────────────────────────────────
-    def compare_output(self, expected_path: str, actual: str, is_batch: bool) -> bool:
-        self.compare_buf.set_text('')
+    def compare_output(self, expected_path: str, actual: str) -> tuple[bool, str]:
         try:
             with open(expected_path, 'r', encoding='utf-8') as f:
                 expected = [ln.rstrip('\n\r') for ln in f.readlines()]
         except Exception as e:
             GLib.idle_add(self._toast, 'Error', f'Cannot read expected file: {e}', 'danger')
-            return False
+            return False, f"Error reading expected file: {e}"
 
         actual_lines = [ln.rstrip('\n\r') for ln in actual.splitlines()]
         diff_info = None
@@ -566,16 +584,11 @@ class MainWindow(Gtk.Window):
                 diff_info = ('Content mismatch.', expected, actual_lines, idx)
                 break
 
-        def ui_update():
-            self.compare_buf.set_text(
-                '✅ PASS – output matches expected.' if ok else
-                self._build_diff_text(diff_info)
-            )
-            if not ok and not is_batch:
-                self.nb.set_current_page(self.nb.page_num(self.cmp_scrolled_win))
-            return False
-        GLib.idle_add(ui_update)
-        return ok
+        if ok:
+            return True, '✅ PASS – output matches expected.'
+        else:
+            message = self._build_diff_text(diff_info)
+            return False, message
     
     def _build_diff_text(self, diff_info):
         why, exp, act, line_no = diff_info
