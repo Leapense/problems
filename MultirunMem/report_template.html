@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>Lizard Report – Liquid Glass</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <script src="https://berkaytumal.github.io/FxFilterJS/FxFilter.js"></script>
+    <script src="FxFilter.js"></script>
     <style>
         /* ========== Base ========== */
         * {
@@ -74,14 +74,10 @@
             bottom: 0;
             width: 280px;
             padding: 24px;
-            background: var(--glass-bg);
             border: 1px solid var(--glass-bd);
             border-radius: 16px;
             margin: 16px;
             overflow: auto;
-            --fx-filter: blur(var(--blur)) liquid-glass(var(--lg-r), var(--lg-off), var(--lg-ch));
-            backdrop-filter: blur(var(--blur));
-            -webkit-backdrop-filter: blur(var(--blur));
         }
 
         .sidebar h1 {
@@ -117,12 +113,10 @@
 
         /* ─── 파일 카드 ─────────────────────────────────── */
         .file {
-            background: var(--glass-bg);
             border: 1px solid var(--glass-bd);
             border-radius: 14px;
             padding: 16px;
             transition: transform .2s ease, box-shadow .2s ease;
-            --fx-filter: blur(var(--blur));
         }
 
         .file h2 {
@@ -177,7 +171,7 @@
 </head>
 
 <body class="wallpaper">
-    <aside class="sidebar glass-panel">
+    <aside class="sidebar glass-panel" style="--fx-filter: blur(4px) liquid-glass(2, 10) saturate(1.25) color-overlay(black,.3) contrast(1.25);">
         <h1>Lizard Report</h1>
         <ul class="stats">
             <li><b>Files</b> {{ total.files }}</li>

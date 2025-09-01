@@ -202,13 +202,13 @@ var noise = {
         // Get element dimensions and validate them
         const width = Math.max(1, element.clientWidth || element.offsetWidth || 1);
         const height = Math.max(1, element.clientHeight || element.offsetHeight || 1);
-        
+
         // If dimensions are still invalid, return empty filter
         if (width <= 1 || height <= 1) {
             console.warn('🚨 Noise effect skipped: element has zero or invalid dimensions', { width, height, element });
             return `<!-- Noise effect skipped: invalid dimensions -->`;
         }
-        
+
         // Create canvas for noise texture
         const canvas = document.createElement('canvas');
         canvas.width = width;
@@ -397,7 +397,7 @@ class FxFilter {
         if (!this.running) {
             fxConsole$1.log('🚀 Starting FxFilter with MutationObserver');
             this.running = true;
-            
+
             // Wait for DOM to be ready before initial scan
             this.waitForDOMReady(() => {
                 this.setupMutationObserver();
@@ -431,13 +431,13 @@ class FxFilter {
         this.styleCheckInterval = setInterval(() => {
             this.checkStyleChanges();
         }, 100); // Check every 100ms, much less frequent than 60fps RAF
-        
+
         fxConsole$1.log('⏰ Style watcher setup complete (checking every 100ms)');
     }
 
     static checkStyleChanges() {
         const elementsToCheck = [];
-        
+
         // Only check elements that have effects with updatesOn properties
         document.querySelectorAll('*:not(.fx-container):not(svg)').forEach(element => {
             const storedState = this.elements.get(element);
@@ -445,7 +445,7 @@ class FxFilter {
                 elementsToCheck.push(element);
             }
         });
-        
+
         if (elementsToCheck.length > 0) {
             this.scanSpecificElements(elementsToCheck);
         }
@@ -455,10 +455,10 @@ class FxFilter {
         if ('ResizeObserver' in window) {
             this.resizeObserver = new ResizeObserver((entries) => {
                 const elementsToCheck = new Set();
-                
+
                 entries.forEach(entry => {
                     const element = entry.target;
-                    
+
                     // Check if this element had zero dimensions before and now has dimensions
                     if (this.pendingElements.has(element)) {
                         const rect = element.getBoundingClientRect();
@@ -466,33 +466,33 @@ class FxFilter {
                         const clientHeight = element.clientHeight || 0;
                         const offsetWidth = element.offsetWidth || 0;
                         const offsetHeight = element.offsetHeight || 0;
-                        
+
                         // Element now has valid dimensions if all methods report positive values
                         const hasValidDimensions = (
                             rect.width > 0 && rect.height > 0 &&
                             (clientWidth > 0 || offsetWidth > 0) &&
                             (clientHeight > 0 || offsetHeight > 0)
                         );
-                        
+
                         if (hasValidDimensions) {
                             fxConsole$1.log('📏 Element now has valid dimensions, processing:', element);
                             this.pendingElements.delete(element);
                             elementsToCheck.add(element);
                         }
                     }
-                    
+
                     // Also check if this element needs updates based on size changes
                     const storedState = this.elements.get(element);
                     if (storedState && storedState.filter) {
                         elementsToCheck.add(element);
                     }
                 });
-                
+
                 if (elementsToCheck.size > 0) {
                     this.scanSpecificElements(Array.from(elementsToCheck));
                 }
             });
-            
+
             fxConsole$1.log('📏 ResizeObserver setup complete');
         } else {
             fxConsole$1.log('⚠️ ResizeObserver not supported');
@@ -564,7 +564,7 @@ class FxFilter {
             this.elements.delete(element);
             fxConsole$1.log('🧹 Cleaned up removed element from tracking');
         }
-        
+
         // Remove from pending and stop observing
         this.pendingElements.delete(element);
         if (this.resizeObserver) {
@@ -578,17 +578,17 @@ class FxFilter {
             this.observer.disconnect();
             this.observer = null;
         }
-        
+
         if (this.resizeObserver) {
             this.resizeObserver.disconnect();
             this.resizeObserver = null;
         }
-        
+
         if (this.styleCheckInterval) {
             clearInterval(this.styleCheckInterval);
             this.styleCheckInterval = null;
         }
-        
+
         this.running = false;
         fxConsole$1.log('🧹 FxFilter cleanup completed');
     }
@@ -617,14 +617,14 @@ class FxFilter {
                 const clientHeight = element.clientHeight || 0;
                 const offsetWidth = element.offsetWidth || 0;
                 const offsetHeight = element.offsetHeight || 0;
-                
+
                 // Element has zero dimensions if any of these are true
                 const hasZeroDimensions = (
                     rect.width <= 0 || rect.height <= 0 ||
                     (clientWidth <= 0 && offsetWidth <= 0) ||
                     (clientHeight <= 0 && offsetHeight <= 0)
                 );
-                
+
                 if (hasZeroDimensions) {
                     // Element has zero dimensions, add to pending and observe for resize
                     fxConsole$1.log('⏳ Element has zero dimensions, adding to pending list:', element, {
@@ -633,16 +633,16 @@ class FxFilter {
                         offset: { width: offsetWidth, height: offsetHeight }
                     });
                     this.pendingElements.add(element);
-                    
+
                     // Start observing this element for size changes
                     if (this.resizeObserver) {
                         this.resizeObserver.observe(element);
                     }
-                    
+
                     // Skip processing for now
                     return;
                 }
-                
+
                 // Remove from pending if it was there (element now has dimensions)
                 if (this.pendingElements.has(element)) {
                     this.pendingElements.delete(element);
@@ -668,7 +668,7 @@ class FxFilter {
                         parsedFilter: parsedFilter,
                         filterId
                     });
-                    
+
                     // Start observing for size changes if supported
                     if (this.resizeObserver) {
                         this.resizeObserver.observe(element);
@@ -689,13 +689,13 @@ class FxFilter {
                 if (storedState && storedState.hasContainer) {
                     this.removeFxContainer(element);
                     this.elements.delete(element);
-                    
+
                     // Stop observing this element
                     if (this.resizeObserver) {
                         this.resizeObserver.unobserve(element);
                     }
                 }
-                
+
                 // Remove from pending if it was there
                 this.pendingElements.delete(element);
             }
@@ -735,7 +735,7 @@ class FxFilter {
                     const filterContent = callback(element, ...filter.params);
                     const uniqueFilterId = `${filterId}-${customFilterIndex++}`;
                     svgContent += `<filter id="${uniqueFilterId}"
-                     x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB"
+                     x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB" filterUnits="objectBoundingBox"
                      >${filterContent}</filter>`;
                     filterParts.push(`url(#${uniqueFilterId})`);
                 }
@@ -748,7 +748,7 @@ class FxFilter {
 
         if (backdropFilter.trim()) {
             element.insertAdjacentHTML('beforeend', `
-                <div class="fx-container" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; backdrop-filter: ${backdropFilter}; background: transparent; pointer-events: none; z-index: -1; overflow: hidden; border-radius: inherit;">
+                <div class="fx-container" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; backdrop-filter: ${backdropFilter}; -webkit-backdrop-filter: ${backdropFilter}; background: transparent; pointer-events: none; z-index: -1; overflow: hidden; border-radius: inherit;">
                     <svg style="position: absolute; width: 0; height: 0;">
                         ${svgContent}
                     </svg>

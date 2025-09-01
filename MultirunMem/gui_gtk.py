@@ -584,6 +584,11 @@ class MainWindow(Gtk.Window):
 
         if WebKit2:
             web = WebKit2.WebView()
+            webSetting = web.get_settings()
+            webSetting.set_property('hardware-acceleration-policy', WebKit2.HardwareAccelerationPolicy.ALWAYS)
+            webSetting.set_property('enable_javascript', True)
+            webSetting.set_enable_developer_extras(True)
+            web = WebKit2.WebView.new_with_settings(webSetting)
             self.analysis_box.pack_start(web, True, True, 0)
             web.load_uri(pathlib.Path(tmp_html.name).as_uri())
         else:
