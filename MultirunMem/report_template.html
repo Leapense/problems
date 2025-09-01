@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="ko" class="theme-vivid">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Lizard Report – Liquid Glass</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <script src="https://berkaytumal.github.io/FxFilterJS/FxFilter.js"></script>
+    <style>
+        /* ========== Base ========== */
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            color: #e6e6e6;
+            font: 14px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI,
+                Apple SD Gothic Neo, Malgun Gothic, Roboto, Arial, "Noto Sans CJK KR";
+        }
+
+        /* 배경 */
+        .wallpaper {
+            min-height: 100vh;
+            background: url(Untitled.png);
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        /* ─── 글래스 토큰 / 테마 ─────────────────────────── */
+        :root {
+            --blur: 10px;
+            --lg-r: 1.8;
+            --lg-off: 12;
+            --lg-ch: .35;
+            --glass-bg: rgba(255, 255, 255, .08);
+            --glass-bd: rgba(255, 255, 255, .16);
+        }
+
+        :root.theme-vivid {
+            /* 클래스만 바꿔 톤 변경 */
+            --blur: 4px;
+            --lg-r: 2;
+            --lg-off: 10;
+            --lg-ch: 0;
+            --glass-bg: rgba(255, 255, 255, .06);
+            --glass-bd: rgba(255, 255, 255, .18);
+        }
+
+        /* ─── 리셋/기본 ─────────────────────────────────── */
+        * {
+            box-sizing: border-box
+        }
+
+        html,
+        body {
+            margin: 0;
+            color: #e6e6e6;
+            font: 14px/1.5 'Segoe UI', Apple SD Gothic Neo, Malgun Gothic, Arial, ui-sans-serif
+        }
+
+        a {
+            color: #6aa6ff;
+            text-decoration: none
+        }
+
+        /* ─── 사이드바 ──────────────────────────────────── */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 280px;
+            padding: 24px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-bd);
+            border-radius: 16px;
+            margin: 16px;
+            overflow: auto;
+            --fx-filter: blur(var(--blur)) liquid-glass(var(--lg-r), var(--lg-off), var(--lg-ch));
+            backdrop-filter: blur(var(--blur));
+            -webkit-backdrop-filter: blur(var(--blur));
+        }
+
+        .sidebar h1 {
+            margin-top: 0;
+            font-size: 18px
+        }
+
+        .stats {
+            list-style: none;
+            margin: 0 0 8px;
+            padding: 0
+        }
+
+        .stats li {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px dashed #202636
+        }
+
+        .thresholds {
+            color: #9aa4b2;
+            font-size: 12px
+        }
+
+        /* ─── 콘텐츠 영역 ───────────────────────────────── */
+        .content {
+            margin-left: 328px;
+            padding: 24px;
+            display: grid;
+            gap: 24px;
+        }
+
+        /* ─── 파일 카드 ─────────────────────────────────── */
+        .file {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-bd);
+            border-radius: 14px;
+            padding: 16px;
+            transition: transform .2s ease, box-shadow .2s ease;
+            --fx-filter: blur(var(--blur));
+        }
+
+        .file h2 {
+            margin: 0 0 6px;
+            font-size: 16px;
+            color: #6aa6ff;
+            word-break: break-all
+        }
+
+        .file-meta {
+            display: flex;
+            gap: 16px;
+            color: #9aa4b2;
+            margin-bottom: 8px;
+            font-size: 12px
+        }
+
+        /* ─── 함수 테이블 ───────────────────────────────── */
+        .func-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #202636;
+            border-radius: 8px;
+            overflow: hidden
+        }
+
+        .func-table th,
+        .func-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #202636;
+            text-align: left;
+            font-size: 13px
+        }
+
+        .func-table thead th {
+            background: #12192a
+        }
+
+        .func-table tr.warn {
+            background: #3b1f22
+        }
+
+        .func-table tr.warn td:nth-child(2) {
+            color: #ff6b6b;
+            font-weight: 700
+        }
+
+        .muted {
+            color: #9aa4b2
+        }
+    </style>
+</head>
+
+<body class="wallpaper">
+    <aside class="sidebar glass-panel">
+        <h1>Lizard Report</h1>
+        <ul class="stats">
+            <li><b>Files</b> {{ total.files }}</li>
+            <li><b>Functions</b> {{ total.funcs }}</li>
+            <li><b>Total NLOC</b> {{ total.nloc }}</li>
+            <li><b>Avg CCN</b> {{ total.avg_ccn }}</li>
+            <li><b>Max CCN</b> {{ total.max_ccn }}</li>
+            <li><b>Warnings</b> {{ total.warnings }}</li>
+        </ul>
+        <p class="thresholds">
+            ⚠ CCN ≥ {{ thresholds.CCN_RED }} 또는<br />
+            NLOC ≥ {{ thresholds.NLOC_RED }} 하이라이트
+        </p>
+    </aside>
+
+    <main class="content">
+        {% for f in files %}
+        <section class="file glass-card">
+            <h2>{{ f.filename }}</h2>
+            <div class="file-meta">
+                <span>NLOC: {{ f.nloc }}</span>
+                <span>Tokens: {{ f.token_count }}</span>
+            </div>
+
+            {% if f.function_list %}
+            <table class="func-table">
+                <thead>
+                    <tr>
+                        <th>Function</th>
+                        <th>CCN</th>
+                        <th>NLOC</th>
+                        <th>Line</th>
+                        <th>Params</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for fn in f.function_list %}
+                    <tr class="{% if fn.warn %}warn{% endif %}">
+                        <td title="{{ fn.long_name }}">{{ fn.name }}</td>
+                        <td>{{ fn.ccn }}</td>
+                        <td>{{ fn.nloc }}</td>
+                        <td>{{ fn.start_line }}</td>
+                        <td>{{ (fn.parameters)|length }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p class="muted">함수 없음</p>
+            {% endif %}
+        </section>
+        {% endfor %}
+    </main>
+</body>
+
+</html>
