@@ -15,7 +15,7 @@ import gi
 gi.require_version('Gtk', '3.0')
 gi.require_version('GtkSource', '4')
 gi.require_version('WebKit2', '4.1')
-from gi.repository import Gtk, Gdk, GdkPixbuf, GLib, GtkSource, Pango, WebKit2
+from gi.repository import Gtk, Gdk, GdkPixbuf, GLib, GtkSource, Pango, WebKit2, Gio
 
 try:
     from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -125,7 +125,8 @@ class MainWindow(Gtk.Window):
             'font_size'   : 10,
             'style_scheme': 'vsdark',   # GtkSourceView
             'timeout'     : 10,
-            'mem_limit_mb': 0
+            'mem_limit_mb': 0,
+            'open_report_external': False,
         }
         self.mem_limit_bytes = self.app_cfg['mem_limit_mb'] * 1024**2
         self.timeout_sec     = self.app_cfg['timeout']
@@ -577,10 +578,32 @@ class MainWindow(Gtk.Window):
         for child in self.analysis_box.get_children():
             self.analysis_box.remove(child)
 
+        asset_dir = pathlib.Path("/home/monika/Documents/problems/MultirunMem").resolve()
+        base_uri = asset_dir.as_uri() + "/"
+
+        html_str = html_str.replace(
+            '<base href="file:///home/monika/Documents/problems/MultirunMem/">>',
+            '<base href="file:///home/monika/Documents/problems/MultirunMem/">'
+        )
+
         tmp_html = tempfile.NamedTemporaryFile(delete=False, suffix='.html'); tmp_html.close()
-        html_str = html_str.replace(">>", "/>")
         pathlib.Path(tmp_html.name).write_text(html_str, encoding='utf-8')
         self._last_lizard_html = tmp_html.name
+
+        report_uri = pathlib.Path(tmp_html.name).as_uri()
+        if bool(self.app_cfg.get('open_report_external', False)):
+            try:
+                Gio.AppInfo.launch_default_for_uri(report_uri, None)
+                info = Gtk.Label(label='Report opend in your default browser.')
+                info.get_style_context().add_class('secondary')
+                info.set_halign(Gtk.Align.START); info.set_margin_top(6)
+                self.analysis_box.pack_start(info, False, False, 0)
+                self.analysis_box.show_all()
+                self.nb.set_current_page(self.nb.page_num(self.analysis_box))
+                self._toast('Done', 'Opend report in external broswer', 'info')
+                return
+            except Exception as e:
+                self._toast('Browser launch failed', str(e), 'warning')
 
         if WebKit2:
             web = WebKit2.WebView()
@@ -590,7 +613,7 @@ class MainWindow(Gtk.Window):
             webSetting.set_enable_developer_extras(True)
             web = WebKit2.WebView.new_with_settings(webSetting)
             self.analysis_box.pack_start(web, True, True, 0)
-            web.load_uri(pathlib.Path(tmp_html.name).as_uri())
+            web.load_html(html_str, base_uri)
         else:
             buf = Gtk.TextBuffer()
             view = Gtk.TextView(buffer=buf, monospace=True); view.set_wrap_mode(Gtk.WrapMode.NONE)
@@ -1020,6 +1043,10 @@ class PreferencesDialog(Gtk.Dialog):
         self.spin_mem.set_value(cfg['mem_limit_mb'])
         g2.attach(self.spin_mem, 1, 1, 1, 1)
 
+        self.chk_open_external = Gtk.CheckButton(label='Open analysis report in external browser (instead of embedded)')
+        self.chk_open_external.set_active(bool(cfg.get('open_report_external', False)))
+        g2.attach(self.chk_open_external, 0, 2, 2, 1)
+
         self.show_all()
 
     def get_result(self):
@@ -1034,7 +1061,8 @@ class PreferencesDialog(Gtk.Dialog):
             'font_size'   : self.spin_size.get_value_as_int(),
             'style_scheme': scheme,
             'timeout'     : self.spin_timeout.get_value_as_int(),
-            'mem_limit_mb': self.spin_mem.get_value_as_int()
+            'mem_limit_mb': self.spin_mem.get_value_as_int(),
+            'open_report_external': self.chk_open_external.get_active(),
         }
 
 # ─── 실행 ───────────────────────────────────────────────────────

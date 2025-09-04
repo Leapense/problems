@@ -64,3 +64,35 @@ a{color:#6aa6ff;text-decoration:none}
 .func-table tr.warn{background:#3b1f22}
 .func-table tr.warn td:nth-child(2){color:#ff6b6b;font-weight:700}
 .muted{color:#9aa4b2}
+
+body.layout-toptabs {
+  padding: 16px;
+  display: grid;
+  gap: 16px;
+}
+.tabs {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  border: 1px solid var(--glass-bd);
+  border-radius: 14px;
+}
+.tab {
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+}
+.tab.is-active {
+  border-color: var(--glass-bd);
+  background: var(--glass-bg);
+}
+.tabs .flex {flex: 1;}
+
+.doc {
+  display: grid;
+  gap: 16px;
+}
+.stack {
+  display: grid;
+  gap: 16px;
+}

@@ -3,44 +3,43 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>Lizard Report – Liquid Glass</title>
+    <title>Liquid Glass – Layout Variants</title>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <script src="FxFilter.js"></script>
     <style>
-        /* ========== Base ========== */
-        * {
-            box-sizing: border-box;
-        }
-
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            color: #e6e6e6;
-            font: 14px/1.6 ui-sans-serif, system-ui, -apple-system, Segoe UI,
-                Apple SD Gothic Neo, Malgun Gothic, Roboto, Arial, "Noto Sans CJK KR";
-        }
-
-        /* 배경 */
-        .wallpaper {
-            min-height: 100vh;
-            background: url(Untitled.png);
-            background-size: cover;
-            background-attachment: fixed;
-        }
-
-        /* ─── 글래스 토큰 / 테마 ─────────────────────────── */
+        /* ===== Design Tokens ===== */
         :root {
             --blur: 10px;
             --lg-r: 1.8;
+            /* liquid-glass radius */
             --lg-off: 12;
+            /* offset */
             --lg-ch: .35;
+            /* chroma */
             --glass-bg: rgba(255, 255, 255, .08);
             --glass-bd: rgba(255, 255, 255, .16);
+            --ink: #e6e6e6;
+            --muted: #9aa4b2;
+            --accent: #6aa6ff;
+            --panel: #0c1220;
+            --line: #202636;
+            --warn-bg: #3b1f22;
+            --warn-ink: #ff6b6b;
+            --radius: 16px;
+            --tip-bg: color-mix(in oklab, #fff 10%, transparent);
+            --tip-bd: color-mix(in oklab, #fff 16%, transparent);
+            --tip-ink: var(--ink, #e6e6e6);
+            --tip-muted: var(--muted, #9aa4b2);
+            --tip-radius: 12px;
+            --tip-shadow: 0 2px 10px rgba(0,0,0,.25), 0 6px 20px rgba(0,0,0,.18);
+            --tip-pad: 10px 12px;
+            --tip-maxw: 500px;
+            --tip-gap: 8px;
+            --tip-border: 1px;
+            --tip-anim: .14s cubic-bezier(.2,.9,.2,1);
         }
 
         :root.theme-vivid {
-            /* 클래스만 바꿔 톤 변경 */
             --blur: 4px;
             --lg-r: 2;
             --lg-off: 10;
@@ -49,72 +48,40 @@
             --glass-bd: rgba(255, 255, 255, .18);
         }
 
-        /* ─── 리셋/기본 ─────────────────────────────────── */
+        /* ===== Base ===== */
         * {
             box-sizing: border-box
         }
 
         html,
         body {
+            height: 100%;
+        }
+
+        html,
+        body {
             margin: 0;
-            color: #e6e6e6;
-            font: 14px/1.5 'Segoe UI', Apple SD Gothic Neo, Malgun Gothic, Arial, ui-sans-serif
+            color: var(--ink);
+            font: 14px/1.55 ui-sans-serif, system-ui, -apple-system, Segoe UI,
+                Apple SD Gothic Neo, Malgun Gothic, Roboto, Arial, "Noto Sans CJK KR";
+            background: #0a0f1b;
         }
 
         a {
-            color: #6aa6ff;
-            text-decoration: none
+            color: var(--accent);
+            text-decoration: none;
         }
 
-        /* ─── 사이드바 ──────────────────────────────────── */
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 280px;
-            padding: 24px;
+        /* Generic glass helpers (look decent even without FxFilter.js) */
+        .glass-card,
+        .glass-panel {
+            background: var(--glass-bg);
             border: 1px solid var(--glass-bd);
-            border-radius: 16px;
-            margin: 16px;
-            overflow: auto;
+            border-radius: var(--radius);
         }
 
-        .sidebar h1 {
-            margin-top: 0;
-            font-size: 18px
-        }
-
-        .stats {
-            list-style: none;
-            margin: 0 0 8px;
-            padding: 0
-        }
-
-        .stats li {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 0;
-            border-bottom: 1px dashed #202636
-        }
-
-        .thresholds {
-            color: #9aa4b2;
-            font-size: 12px
-        }
-
-        /* ─── 콘텐츠 영역 ───────────────────────────────── */
-        .content {
-            margin-left: 328px;
-            padding: 24px;
-            display: grid;
-            gap: 24px;
-        }
-
-        /* ─── 파일 카드 ─────────────────────────────────── */
+        /* Shared components */
         .file {
-            border: 1px solid var(--glass-bd);
-            border-radius: 14px;
             padding: 16px;
             transition: transform .2s ease, box-shadow .2s ease;
         }
@@ -122,109 +89,1348 @@
         .file h2 {
             margin: 0 0 6px;
             font-size: 16px;
-            color: #6aa6ff;
-            word-break: break-all
+            color: var(--accent);
+            word-break: break-all;
         }
 
         .file-meta {
             display: flex;
             gap: 16px;
-            color: #9aa4b2;
+            color: var(--muted);
             margin-bottom: 8px;
-            font-size: 12px
+            font-size: 12px;
         }
 
-        /* ─── 함수 테이블 ───────────────────────────────── */
+        .muted {
+            color: var(--muted);
+        }
+
         .func-table {
             width: 100%;
             border-collapse: collapse;
-            border: 1px solid #202636;
-            border-radius: 8px;
-            overflow: hidden
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            overflow: hidden;
         }
 
         .func-table th,
         .func-table td {
             padding: 8px 10px;
-            border-bottom: 1px solid #202636;
+            border-bottom: 1px solid var(--line);
             text-align: left;
-            font-size: 13px
+            font-size: 13px;
         }
 
         .func-table thead th {
-            background: #12192a
+            background: #12192a;
         }
 
         .func-table tr.warn {
-            background: #3b1f22
+            background: var(--warn-bg);
         }
 
         .func-table tr.warn td:nth-child(2) {
-            color: #ff6b6b;
-            font-weight: 700
+            color: var(--warn-ink);
+            font-weight: 700;
         }
 
-        .muted {
-            color: #9aa4b2
+        /* ====== LAYOUT A: Header + Content (no sidebar) ====== */
+        .layout-header {
+            width: 25%;
+            display: grid;
+            grid-template-rows: auto 1fr;
+            position: sticky;
+            left: 50%;
+            transform: translateX(-50%);
         }
+
+        .app-header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            margin: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .app-header h1 {
+            font-size: 16px;
+            margin: 12px;
+        }
+
+        .app-header .spacer {
+            flex: 1;
+        }
+
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(6, minmax(120px, 1fr));
+            gap: 12px;
+        }
+
+        .metric {
+            padding: 12px;
+            text-align: center;
+        }
+
+        .metric b {
+            display: block;
+            font-size: 20px;
+            margin-top: 4px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+        }
+
+        /* ====== LAYOUT B: Rails (Left icons / Center content / Right stats) ====== */
+        .layout-rails {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 72px 1fr 340px;
+            gap: 12px;
+            padding: 12px;
+            background: none;
+        }
+
+        .rail-left {
+            position: sticky;
+            top: 12px;
+            height: calc(100vh - 24px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+        }
+
+        .rail-left .icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            border: 1px solid var(--glass-bd);
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+        }
+
+        .center {
+            min-height: 100%;
+            display: grid;
+            gap: 16px;
+        }
+
+        .center .filters {
+            display: flex;
+            gap: 8px;
+        }
+
+        .center .files-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+        }
+
+        .rail-right {
+            position: sticky;
+            top: 12px;
+            height: calc(100vh - 24px);
+            padding: 14px;
+            overflow: auto;
+        }
+
+        .stats {
+            list-style: none;
+            margin: 0 0 8px;
+            padding: 0;
+        }
+
+        .stats li {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px dashed var(--line);
+        }
+
+        /* ====== LAYOUT C: Tabs (Single column w/ tabbed panes) ====== */
+        .layout-tabs {
+            min-height: 100vh;
+            padding: 16px;
+            display: grid;
+            gap: 16px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            position: relative;
+        }
+
+        .tab>input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .tab>label {
+            display: inline-block;
+            padding: 10px 14px;
+            border: 1px solid var(--glass-bd);
+            border-radius: 12px;
+            background: var(--glass-bg);
+            cursor: pointer;
+        }
+
+        .tab>input:checked+label {
+            outline: 2px solid var(--accent);
+        }
+
+        .panes {
+            border: 1px solid var(--glass-bd);
+            border-radius: var(--radius);
+            padding: 16px;
+        }
+
+        .pane {
+            display: none;
+        }
+
+        /* Utilities */
+        .wallpaper {
+            min-height: 100vh;
+            background: url(Untitled.png);
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            display: none;
+            place-items: center;
+            background: rgba(0, 0, 0, .45);
+            z-index: 1000;
+        }
+
+        .modal-backdrop.open {
+            display: grid;
+        }
+
+        .modal {
+            width: min(680px, 92vw);
+            max-height: 86vh;
+            overflow: auto;
+            padding: 16px;
+        }
+
+        .modal header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .modal header h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .modal .row {
+            display: grid;
+            gap: 10px;
+            margin: 12px 0;
+        }
+
+        .modal .grid-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .modal .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .modal label {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .modal .ctrl {
+            display: grid;
+            gap: 6px;
+        }
+
+        .modal .actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 12px;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid var(--glass-bd);
+            background: var(--glass-bg);
+            color: var(--ink);
+            cursor: pointer;
+        }
+
+        .btn.primary {
+            outline: 2px solid var(--accent);
+        }
+
+        /* ===== iOS 26 Slider ===== */
+        .ios26-range {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            background: transparent;
+            margin: 0;
+            padding: 10px 0;
+            cursor: pointer;
+            touch-action: pan-x;
+
+            /* 튜닝 가능한 토큰 */
+            --ios-blue: #0A84FF;
+            /* iOS 파랑 (대체: #007AFF) */
+            --ios-gray: #D1D1D6;
+            /* iOS systemGray5 (라이트) */
+            --ios-gray-dark: #3A3A3C;
+            /* 다크에서의 회색 */
+            --track-height: 6px;
+            --thumb-w: 36px;
+            /* 스샷처럼 가로가 더 긴 '캡슐' */
+            --thumb-h: 24px;
+            --thumb-shadow: 0 1px 2px rgba(0, 0, 0, .18), 0 3px 8px rgba(0, 0, 0, .14);
+            --thumb-inner: 0 0 0 1px rgba(0, 0, 0, .06) inset, 0 1px 0 rgba(255, 255, 255, .85) inset;
+            --focus-ring: color-mix(in oklab, var(--ios-blue) 0%, transparent);
+            /* 진행 채움(%) – JS에서 갱신 */
+            --p: 0%;
+        }
+
+        /* WebKit (Chrome/Safari/WebKitGTK) */
+        .ios26-range::-webkit-slider-runnable-track {
+            height: var(--track-height);
+            border-radius: 9999px;
+            background:
+                linear-gradient(var(--ios-blue), var(--ios-blue)) left/var(--p) 100% no-repeat,
+                var(--ios-gray);
+        }
+
+        @media (prefers-color-scheme:dark) {
+            .ios26-range::-webkit-slider-runnable-track {
+                background:
+                    linear-gradient(var(--ios-blue), var(--ios-blue)) left/var(--p) 100% no-repeat,
+                    var(--ios-gray-dark);
+            }
+        }
+
+        .ios26-range:disabled::-webkit-slider-runnable-track {
+            filter: grayscale(.4) opacity(.7);
+        }
+
+        .ios26-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: var(--thumb-w);
+            height: var(--thumb-h);
+            border-radius: 9999px;
+            background: #fff;
+            box-shadow: var(--thumb-shadow), var(--thumb-inner);
+            margin-top: calc((var(--track-height) - var(--thumb-h)) / 2);
+            /* 트랙 중앙 정렬 */
+            transition: transform .12s ease, box-shadow .12s ease, background-color .12s ease, backdrop-filter .12s ease;
+        }
+
+        .ios26-range:active::-webkit-slider-thumb {
+            transform: translateY(.5px) scaleY(0.95) scaleX(1.04);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .28), 0 6px 14px rgba(0, 0, 0, .18), var(--thumb-inner);
+            backdrop-filter: blur(10px) url(#filter);
+            -webkit-backdrop-filter: blur(10px) url(#filter);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .ios26-range:focus-visible {
+            outline: 0;
+        }
+
+        .ios26-range:focus-visible::-webkit-slider-thumb {
+            box-shadow: 0 0 0 5px var(--focus-ring), var(--thumb-shadow), var(--thumb-inner);
+        }
+
+        /* Firefox */
+        .ios26-range::-moz-range-track {
+            height: var(--track-height);
+            border-radius: 9999px;
+            background: var(--ios-gray);
+        }
+
+        @media (prefers-color-scheme:dark) {
+            .ios26-range::-moz-range-track {
+                background: var(--ios-gray-dark);
+            }
+        }
+
+        .ios26-range::-moz-range-progress {
+            height: var(--track-height);
+            border-radius: 9999px;
+            background: var(--ios-blue);
+        }
+
+        .ios26-range::-moz-range-thumb {
+            width: var(--thumb-w);
+            height: var(--thumb-h);
+            border: 0;
+            border-radius: 9999px;
+            background: #fff;
+            box-shadow: var(--thumb-shadow), var(--thumb-inner);
+            transition: transform .12s ease, box-shadow .12s ease;
+        }
+
+        .ios26-range:active::-moz-range-thumb {
+            transform: translateY(.5px) scale(1.01);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, .28), 0 6px 14px rgba(0, 0, 0, .18), var(--thumb-inner);
+        }
+
+        .ios26-range:focus-visible {
+            outline: 0;
+        }
+
+        .ios26-range:focus-visible::-moz-range-thumb {
+            box-shadow: 0 0 0 5px var(--focus-ring), var(--thumb-shadow), var(--thumb-inner);
+        }
+
+        /* Disabled */
+        .ios26-range:disabled {
+            cursor: not-allowed;
+            opacity: .9;
+        }
+
+        .m-radio {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .m-radio input:disabled+span {
+            color: var(--muted);
+            cursor: not-allowed;
+        }
+
+        .radio-tahoe {
+            -webkit-appearance: none;
+            appearance: none;
+            --size: 18px;
+            --dot: 8px;
+            --accent: var(--accent, #0a84ff);
+            --ring: rgba(10, 132, 255, .35);
+            --bg: #f2f2f7;
+            --stroke: rgba(0, 0, 0, .18);
+            --inner-hi: rgba(255, 255, 255, .85);
+            --shadow: 0 1px 2px rgba(0, 0, 0, .14);
+
+            width: var(--size);
+            height: var(--size);
+            border-radius: 50%;
+            margin: 0;
+            display: inline-grid;
+            place-content: center;
+            background: linear-gradient(#ffffff, var(--bg));
+            border: 1px solid var(--stroke);
+            box-shadow: inset 0 1px 0 var(--inner-hi), var(--shadow);
+            transition: box-shadow .15s ease, transform .05s ease, background-color .15s ease, border-color .15s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .radio-tahoe {
+                --bg: #2c2c2e;
+                --stroke: rgba(255, 255, 255, .18);
+                --inner-hi: rgba(255, 255, 255, .15);
+                background: linear-gradient(#1e1e20, var(--bg));
+            }
+        }
+
+        .radio-tahoe:hover:not(:disabled) {
+            filter: brightness(1.03);
+        }
+
+        .radio-tahoe:active:not(:disabled) {
+            transform: scale(.96);
+        }
+
+        .radio-tahoe::after {
+            content: "";
+            width: var(--dot);
+            height: var(--dot);
+            border-radius: 50%;
+            background: #fff;
+            transform: scale(0);
+            transition: transform .12s cubic-bezier(.2, .9, .2, 1);
+            box-shadow: 0 0 0 8px var(--accent) inset;
+        }
+
+        .radio-tahoe:checked {
+            background: linear-gradient(#0a84ff, #0a84ff);
+            border-color: #0a84ff;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), 0 1px 2px rgba(0, 0, 0, .18);
+        }
+
+        .radio-tahoe:checked::after {
+            transform: scale(1);
+        }
+
+        .radio-tahoe:focus-visible {
+            outline: 0;
+            box-shadow: 0 0 0 5px var(--ring), inset 0 1px 0 var(--inner-hi), var(--shadow);
+        }
+
+        .radio-tahoe:disabled {
+            opacity: .65;
+            cursor: not-allowed;
+            filter: grayscale(.2);
+        }
+
+        .radio-tahoe.size-lg {
+            --size: 20px;
+            --dot: 10px;
+        }
+
+        .radio-tahoe.size-sm {
+            --size: 16px;
+            --dot: 7px;
+        }
+
+        .btn.btn-default {
+            display: inline-flex;
+            flex-direction: column;
+            height: 24px;
+            align-items: center;
+            justify-content: center;
+            padding: 0px 16px;
+            position: relative;
+            border-radius: 6px;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            font: inherit;
+            background: #e5e5ea;
+            transition: all .15s ease;
+            user-select: none;
+        }
+        .btn.btn-reset {
+            display: inline-flex;
+            flex-direction: column;
+            height: 32px;
+            align-items: center;
+            justify-content: center;
+            padding: 0px 16px;
+            position: relative;
+            border-radius: 6px;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            font: inherit;
+            background: rgb(255,59,48);
+            transition: all .15s ease;
+            user-select: none;
+        }
+        .btn.btn-red {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            padding: 0px 16px;
+            position: relative;
+            border-radius: 6px;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            background: rgb(255,59,48);
+            transition: all .15s ease;
+            font: inherit;
+            user-select: none;
+        }
+        .btn.primary {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 32px;
+            padding: 0px 16px;
+            position: relative;
+            border-radius: 6px;
+            overflow: hidden;
+            border: none !important;
+            cursor: pointer;
+            background: rgb(10, 132, 255);
+            transition: all .15s ease;
+            font: inherit;
+            outline: none !important;
+            user-select:none;
+        }
+        .btn:hover {
+            opacity: 0.8;
+        }
+        .btn:active {
+            transform: translateY(1px);
+        }
+        .btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        .btn.btn-default .BG {
+            position: absolute;
+            width: 78px;
+            height: 24px;
+            top: 0;
+            left: 0;
+            background-color: #00000026;
+            pointer-events: none;
+        }
+        .btn.btn-red .BG {
+            position: absolute;
+            width: 78px;
+            height: 32px;
+            top: 0;
+            left: 0;
+            background-color: #00000026;
+            pointer-events: none;
+        }
+        .btn.btn-reset .BG {
+            position: absolute;
+            width: 78px;
+            height: 32px;
+            top: 0;
+            left: 0;
+            background-color: #00000026;
+            pointer-events: none;
+        }
+        .btn.primary .BG {
+            position: absolute;
+            width: 78px;
+            height: 32px;
+            top: 0;
+            left: 0;
+            background-color: #00000026;
+            pointer-events: none;
+        }
+        .btn.btn-default .label {
+            position: relative;
+            width: fit-content;
+            color: #4c4c4c;
+            font-size: 13px;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: 16px;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        .btn.btn-red .label {
+            position: relative;
+            width: fit-content;
+            color: #f2f2f7;
+            font-size: 13px;
+            font-weight: 700;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: 16px;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        .btn.btn-reset .label {
+            position: relative;
+            width: fit-content;
+            color: #f2f2f7;
+            font-size: 13px !important;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: 16px;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+        .btn.primary .label {
+            position: relative;
+            width: fit-content;
+            color: #f2f2f7;
+            font-size: 13px !important;
+            text-align: center;
+            letter-spacing: 0;
+            line-height: 16px;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .tg-tooltip {
+            position: fixed;
+            z-index: 9999;
+            max-width: var(--tip-maxw);
+            height: 36px;
+            padding: var(--tip-pad);
+            border-radius: var(--tip-radius);
+            background: var(--glass-bg, var(--tip-bg));
+            border: var(--tip-border) solid var(--glass-bd, var(--tip-bd));
+            color: var(--tip-ink);
+            box-shadow: var(--tip-shadow);
+            backdrop-filter: blur(var(--blur, 10px)) saturate(1.1);
+            -webkit-backdrop-filter: blur(var(--blur, 10px)) saturate(1.1);
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0.98);
+            transform-origin: 50% 50%;
+            transition: opacity var(--tip-anim), transform var(--tip-anim);
+            font-size: 13px;
+            line-height: 1.45;
+        }
+
+        .tg-tooltip[data-state="open"] {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .tg-tooltip::after {
+            content: "";
+            position: absolute;
+            width: 12px; height: 12px;
+            transform: rotate(45deg);
+            background: var(--glass-bg, var(--tip-bg));
+            border-left: var(--tip-border) solid var(--glass-bd, var(--tip-bd));
+            border-top: var(--tip-border) solid var(--glass-bd, var(--tip-bd));
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,.18));
+        }
+
+        .tg-tooltip[data-side="top"]::after {
+            bottom: -6px;
+            left: calc(50% - 6px);
+        }
+        .tg-tooltip[data-side="bottom"]::after {
+            top: -6px;
+            left: calc(50% - 6px);
+            transform: rotate(225deg);
+        }
+        .tg-tooltip[data-side="left"]::after {
+            right: -6px; top: calc(50% - 6px);
+            transform: rotate(315deg);
+        }
+        .tg-tooltip[data-side="right"]::after {
+            left: -6px; top: calc(50% - 6px);
+            transform: rotate(135deg);
+        }
+
+        .tg-tooltip b { color: var(--accent, #6aa6ff); }
+        .tg-tooltip .muted { color: var(--tip-muted); }
+
+        .has-tip { cursor: help; text-decoration: dotted underline 1px color-mix(in oklab, currentColor 40%, transparent); }
+
     </style>
 </head>
 
 <body class="wallpaper">
-    <aside class="sidebar glass-panel" style="--fx-filter: blur(4px) liquid-glass(2, 10) saturate(1.25) color-overlay(black,.3) contrast(1.25);">
-        <h1>Lizard Report</h1>
-        <ul class="stats">
-            <li><b>Files</b> {{ total.files }}</li>
-            <li><b>Functions</b> {{ total.funcs }}</li>
-            <li><b>Total NLOC</b> {{ total.nloc }}</li>
-            <li><b>Avg CCN</b> {{ total.avg_ccn }}</li>
-            <li><b>Max CCN</b> {{ total.max_ccn }}</li>
-            <li><b>Warnings</b> {{ total.warnings }}</li>
-        </ul>
-        <p class="thresholds">
-            ⚠ CCN ≥ {{ thresholds.CCN_RED }} 또는<br />
-            NLOC ≥ {{ thresholds.NLOC_RED }} 하이라이트
-        </p>
-    </aside>
+    <svg class="filter" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <defs>
+            <filter id="filter" color-interpolation-filters="sRGB">
+                <!-- the input displacement image -->
+                <feImage x="0" y="0" width="100%" height="100%" result="map"></feImage>
+                <!-- the displacement map to use -->
+                <!-- <feDisplacementMap in2="map" in="SourceGraphic" /> -->
+                <!-- the chromatic aberration for the people -->
+                <!-- RED channel with strongest displacement -->
+                <feDisplacementMap in="SourceGraphic" in2="map" id="redchannel" xChannelSelector="R"
+                    yChannelSelector="G" result="dispRed" />
+                <feColorMatrix in="dispRed" type="matrix" values="1 0 0 0 0
+                      0 0 0 0 0
+                      0 0 0 0 0
+                      0 0 0 1 0" result="red" />
+                <!-- GREEN channel (reference / least displaced) -->
+                <feDisplacementMap in="SourceGraphic" in2="map" id="greenchannel" xChannelSelector="R"
+                    yChannelSelector="G" result="dispGreen" />
+                <feColorMatrix in="dispGreen" type="matrix" values="0 0 0 0 0
+                      0 1 0 0 0
+                      0 0 0 0 0
+                      0 0 0 1 0" result="green" />
+                <!-- BLUE channel with medium displacement -->
+                <feDisplacementMap in="SourceGraphic" in2="map" id="bluechannel" xChannelSelector="R"
+                    yChannelSelector="G" result="dispBlue" />
+                <feColorMatrix in="dispBlue" type="matrix" values="0 0 0 0 0
+                      0 0 0 0 0
+                      0 0 1 0 0
+                      0 0 0 1 0" result="blue" />
+                <!-- Blend channels back together -->
+                <feBlend in="red" in2="green" mode="screen" result="rg" />
+                <feBlend in="rg" in2="blue" mode="screen" result="output" />
+                <!-- output blend -->
+                <feGaussianBlur in="output" stdDeviation="0.7" />
+            </filter>
+        </defs>
+    </svg>
+    <!-- ==================== LAYOUT A: Header + Content (no sidebar) ==================== -->
+    <section class="layout-header" id="layout-a">
+        <header class="app-header glass-panel" style="--fx-filter: blur(4px) liquid-glass(2, 10) saturate(1.25);">
+            <h1>Lizard Report</h1>
+        </header>
+    </section>
 
-    <main class="content">
-        {% for f in files %}
-        <section class="file glass-card">
-            <h2>{{ f.filename }}</h2>
-            <div class="file-meta">
-                <span>NLOC: {{ f.nloc }}</span>
-                <span>Tokens: {{ f.token_count }}</span>
+    <!-- ==================== LAYOUT B: Rails ==================== -->
+    <section class="layout-rails" id="layout-b"
+        style="background: url(Untitled.png); background-size: cover; background-attachment: fixed;">
+        <aside class="rail-left glass-panel" aria-label="Quick Nav"
+            style="--fx-filter: blur(4px) liquid-glass(2,10) saturate(1.2) color-overlay(black,.25) contrast(1.15);">
+            <div class="icon" id="open-settings" aria-haspopup="dialog" aria-controls="settings-dialog"
+                title="Settings (s)">⚙️</div>
+        </aside>
+
+        <div class="modal-backdrop" id="settings-backdrop" aria-hidden="true">
+            <div class="modal glass-panel" role="dialog" aria-modal="true" aria-labelledby="settings-title"
+                id="settings-dialog" tabindex="-1" style="backdrop-filter: blur(10px) saturate(1.25) contrast(1.15);">
+                <header>
+                    <h3 id="settings-title">Settings</h3>
+                    <span class="spacer" style="flex:1"></span>
+                    <button class="btn btn-red" id="close-settings" aria-label="Close (Esc)">
+                        <span class="BG" aria-hidden="true"></span>
+                        <span class="label">×</span>
+                    </button>
+                </header>
+
+                <section class="row">
+                    <div class="ctrl">
+                        <label>Theme</label>
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <label class="m-radio"><input type="radio" name="theme" class="radio-tahoe"
+                                    value="default">Default</label>
+                            <label class="m-radio"><input type="radio" name="theme" class="radio-tahoe"
+                                    value="vivid">Vivid</label>
+                            <button class="btn btn-default" id="toggle-theme">
+                                <span class="BG" aria-hidden="true"></span>
+                                <span class="label">Toggle</span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+                <section class="row grid-3">
+                    <div class="ctrl">
+                        <label>Blur (<code>--blur</code>)</label>
+                        <input type="range" id="inp-blur" class="ios26-range" min="0" max="30" step="1">
+                        <output id="out-blur"></output>
+                    </div>
+                    <div class="ctrl">
+                        <label>Liquid radius (<code>--lg-r</code>)</label>
+                        <input type="range" id="inp-lgr" class="ios26-range" min="0" max="8" step="0.1">
+                        <output id="out-lgr"></output>
+                    </div>
+                    <div class="ctrl">
+                        <label>Liquid offset (<code>--lg-off</code>)</label>
+                        <input type="range" id="inp-lgoff" class="ios26-range" min="0" max="40" step="1">
+                        <output id="out-lgoff"></output>
+                    </div>
+                    <div class="ctrl">
+                        <label>Liquid chroma (<code>--lg-ch</code>)</label>
+                        <input type="range" id="inp-lgch" class="ios26-range" min="0" max="1" step="0.01">
+                        <output id="out-lgch"></output>
+                    </div>
+                    <div class="ctrl">
+                        <label>Glass BG (<code>--glass-bg</code>)</label>
+                        <input type="color" id="inp-glass-bg" value="#0ffffff">
+                        <small class="muted">알파는 아래 슬라이더로 조절</small>
+                        <input type="range" id="inp-glass-bg-a" class="ios26-range" min="0" max="1" step="0.01">
+                    </div>
+                    <div class="ctrl">
+                        <label>Glass BD (<code>--glass-bd</code>)</label>
+                        <input type="color" id="inp-glass-bd" value="#ffffff">
+                        <small class="muted">알파는 아래 슬라이더로 조절</small>
+                        <input type="range" id="inp-glass-bd-a" class="ios26-range" min="0" max="1" step="0.01">
+                    </div>
+                </section>
+
+                <div class="actions">
+                    <button class="btn btn-reset" id="reset-settings">
+                        <span class="BG" aria-hidden="true"></span>
+                        <span class="label">Reset</span>
+                    </button>
+                    <button class="btn primary" id="save-settings">
+                        <span class="BG" aria-hidden="true"></span>
+                        <span class="label">Save</span>
+                    </button>
+                </div>
             </div>
+        </div>
 
-            {% if f.function_list %}
-            <table class="func-table">
-                <thead>
-                    <tr>
-                        <th>Function</th>
-                        <th>CCN</th>
-                        <th>NLOC</th>
-                        <th>Line</th>
-                        <th>Params</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for fn in f.function_list %}
-                    <tr class="{% if fn.warn %}warn{% endif %}">
-                        <td title="{{ fn.long_name }}">{{ fn.name }}</td>
-                        <td>{{ fn.ccn }}</td>
-                        <td>{{ fn.nloc }}</td>
-                        <td>{{ fn.start_line }}</td>
-                        <td>{{ (fn.parameters)|length }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            {% else %}
-            <p class="muted">함수 없음</p>
-            {% endif %}
-        </section>
-        {% endfor %}
-    </main>
+        <main class="center">
+
+            <div class="files-grid">
+                {% for f in files %}
+                <section class="file glass-card"
+                    style="backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); --fx-filter: blur(4px) liquid-glass(5,10) saturate(1.25) contrast(1.25);">
+                    <h2>{{ f.filename }}</h2>
+                    <div class="file-meta">
+                        <span>NLOC: {{ f.nloc }}</span>
+                        <span>Tokens: {{ f.token_count }}</span>
+                    </div>
+                    {% if f.function_list %}
+                    <table class="func-table">
+                        <thead>
+                            <tr>
+                                <th>Function</th>
+                                <th>CCN</th>
+                                <th>NLOC</th>
+                                <th>Line</th>
+                                <th>Params</th>
+                                <th>Warning</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for fn in f.function_list %}
+                            <tr class="{% if fn.warn %}warn{% endif %}">
+                                <td title="{{ fn.long_name }}">{{ fn.name }}</td>
+                                <td>{{ fn.ccn }}</td>
+                                <td>{{ fn.nloc }}</td>
+                                <td>{{ fn.start_line }}</td>
+                                <td>{{ (fn.parameters)|length }}</td>
+                                <td>
+                                    {% if fn.warn %}
+                                    ⚠ {{ fn.warn }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p class="muted">함수 없음</p>
+                    {% endif %}
+                </section>
+                {% endfor %}
+            </div>
+        </main>
+
+        <aside class="rail-right glass-panel" aria-label="Stats"
+            style="--fx-filter: blur(4px) liquid-glass(2,10) saturate(1.2) color-overlay(black,.25) contrast(1.15);">
+            <h3 style="margin:0 0 8px">Lizard Report</h3>
+            <ul class="stats">
+                <li><b>Files</b> {{ total.files }}</li>
+                <li><b>Functions</b> {{ total.funcs }}</li>
+                <li><b>Total NLOC</b> {{ total.nloc }}</li>
+                <li><b>Avg CCN</b> {{ total.avg_ccn }}</li>
+                <li><b>Max CCN</b> {{ total.max_ccn }}</li>
+                <li><b>Warnings</b> {{ total.warnings }}</li>
+            </ul>
+            <p class="muted">⚠ CCN ≥ {{ thresholds.CCN_RED }} 또는<br>NLOC ≥ {{ thresholds.NLOC_RED }} 하이라이트</p>
+        </aside>
+    </section>
+
+    <script>
+        (function () {
+            const $ = sel => document.querySelector(sel);
+            const $$ = sel => [...document.querySelectorAll(sel)];
+            const root = document.documentElement;
+            const htmlEl = document.querySelector('html');
+
+            const DEFAULTS = {
+                theme: htmlEl.classList.contains('theme-vivid') ? 'vivid' : 'default',
+                '--blur': getComputedStyle(root).getPropertyValue('--blur').trim() || '10px',
+                '--lg-r': getComputedStyle(root).getPropertyValue('--lg-r').trim() || '1.8',
+                '--lg-off': getComputedStyle(root).getPropertyValue('--lg-off').trim() || '12',
+                '--lg-ch': getComputedStyle(root).getPropertyValue('--lg-ch').trim() || '.35',
+                '--glass-bg': getComputedStyle(root).getPropertyValue('--glass-bg').trim() || 'rgba(255,255,255,.08)',
+                '--glass-bd': getComputedStyle(root).getPropertyValue('--glass-bd').trim() || 'rgba(255,255,255,.16)',
+            };
+
+            const openBtn = $('#open-settings');
+            const closeBtn = $('#close-settings');
+            const backdrop = $('#settings-backdrop');
+            const dialog = $('#settings-dialog');
+
+            function openModal() {
+                backdrop.classList.add('open');
+                backdrop.setAttribute('aria-hidden', 'false');
+                dialog.focus();
+                trapFocus(dialog);
+                populateUI();
+            }
+
+            function closeModal() {
+                backdrop.classList.remove('open');
+                backdrop.setAttribute('aria-hidden', 'true');
+                openBtn && openBtn.focus();
+                releaseTrap();
+            }
+
+            openBtn?.addEventListener('click', openModal);
+            closeBtn?.addEventListener('click', closeModal);
+            backdrop.addEventListener('click', (e) => {
+                if (e.target === backdrop) closeModal();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && backdrop.classList.contains('open')) closeModal();
+                if (e.key.toLowerCase() === 's' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    saveSettings();
+                }
+                if (e.key.toLowerCase() === 's' && !e.ctrlKey && !e.metaKey && !backdrop.classList.contains('open')) {
+                    openModal();
+                }
+            });
+
+            let untrap = null;
+            function trapFocus(node) {
+                const focusables = () => [...node.querySelectorAll('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])')].filter(el => !el.disabled);
+                function onKey(e) {
+                    if (e.key !== 'Tab') return;
+                    const list = focusables();
+
+                    if (!list.length) return;
+                    const first = list[0], last = list[list.length - 1];
+                    if (e.shiftKey && document.activeElement === first) { last.focus(); e.preventDefault(); }
+                    else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.preventDefault(); }
+                }
+                node.addEventListener('keydown', onKey);
+                untrap = () => node.removeEventListener('keydown', onKey);
+            }
+
+            function releaseTrap() {
+                untrap && untrap();
+                untrap = null;
+            }
+
+            function setTheme(mode) {
+                if (mode === 'vivid') htmlEl.classList.add('theme-vivid');
+                else htmlEl.classList.remove('theme-vivid');
+                $$('input[name="theme"]').forEach(r => r.checked = (r.value === mode));
+            }
+            $('#toggle-theme')?.addEventListener('click', () => {
+                const isVivid = htmlEl.classList.toggle('theme-vivid');
+                $$('input[name="theme"]').forEach(r => r.checked = (r.value === (isVivid ? 'vivid' : 'default')));
+            });
+            $$('input[name="theme"]').forEach(r => {
+                r.addEventListener('change', () => setTheme(r.value));
+            });
+
+            const sliders = {
+                '--blur': { inp: '#inp-blur', out: '#out-blur', format: v => `${v}px`, parse: css => parseFloat(css) },
+                '--lg-r': { inp: '#inp-lgr', out: '#out-lgr', format: v => `${v}`, parse: css => parseFloat(css) },
+                '--lg-off': { inp: '#inp-lgoff', out: '#out-lgoff', format: v => `${v}`, parse: css => parseFloat(css) },
+                '--lg-ch': { inp: '#inp-lgch', out: '#out-lgch', format: v => `${v}`, parse: css => parseFloat(css) },
+            };
+
+            function setVar(name, cssValue) {
+                root.style.setProperty(name, cssValue);
+            }
+
+            function bindSlider(name) {
+                const { inp, out, format } = sliders[name];
+                const el = $(inp), oo = $(out);
+                el.addEventListener('input', () => {
+                    const val = el.value;
+                    const css = format(val);
+                    setVar(name, css);
+                    oo.textContent = css;
+                });
+            }
+            Object.keys(sliders).forEach(bindSlider);
+
+            function parseRgba(str) {
+                const m = str.replace(/\s+/g, '').match(/^rgba?\((\d+),(\d+),(\d+)(?:,([.\d]+))?\)$/i);
+                if (!m) return { r: 255, g: 255, b: 255, a: .1 };
+                return { r: +m[1], g: +m[2], b: +m[3], a: m[4] !== undefined ? +m[4] : 1 };
+            }
+
+            function hexToRgb(hex) {
+                let h = hex.replace('#', '');
+                if (h.length === 3) h = h.split('').map(c => c + c).join('');
+                const n = parseInt(h, 16);
+                return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+            }
+
+            function rgbaString({ r, g, b, a }) {
+                return `rgba(${r}, ${g}, ${b}, ${a})`;
+            }
+
+            function wireColor(varName, colorSel, alphaSel) {
+                const color = $(colorSel), alpha = $(alphaSel);
+                function sync() {
+                    const rgb = hexToRgb(color.value);
+                    const a = +alpha.value;
+                    setVar(varName, rgbaString({ ...rgb, a }));
+                }
+                color.addEventListener('input', sync);
+                alpha.addEventListener('input', sync);
+            }
+            wireColor('--glass-bg', '#inp-glass-bg', '#inp-glass-bg-a');
+            wireColor('--glass-bd', '#inp-glass-bd', '#inp-glass-bd-a');
+
+            function getCurrentVars() {
+                const bg = getComputedStyle(root).getPropertyValue('--glass-bg').trim();
+                const bd = getComputedStyle(root).getPropertyValue('--glass-bd').trim();
+
+                return {
+                    theme: htmlEl.classList.contains('theme-vivid') ? 'vivid' : 'default',
+                    '--blur': getComputedStyle(root).getPropertyValue('--blur').trim(),
+                    '--lg-r': getComputedStyle(root).getPropertyValue('--lg-r').trim(),
+                    '--lg-off': getComputedStyle(root).getPropertyValue('--lg-off').trim(),
+                    '--lg-ch': getComputedStyle(root).getPropertyValue('--lg-ch').trim(),
+                    '--glass-bg': bg,
+                    '--glass-bd': bd,
+                };
+            }
+
+            function populateUI() {
+                const vars = getCurrentVars();
+                setTheme(vars.theme);
+
+                const updateFill = el => {
+                    const min = +el.min || 0, max = +el.max || 100, val = +el.value || 0;
+                    el.style.setProperty('--p', ((val - min) / (max - min) * 100) + '%');
+                };
+
+
+                $('#inp-blur').value = parseFloat(vars['--blur']);
+                $('#out-blur').textContent = vars['--blur'];
+
+                $('#inp-lgr').value = parseFloat(vars['--lg-r']);
+                $('#out-lgr').textContent = vars['--lg-r'];
+
+                $('#inp-lgoff').value = parseFloat(vars['--lg-off']);
+                $('#out-lgoff').textContent = vars['--lg-off'];
+
+                $('#inp-lgch').value = parseFloat(vars['--lg-ch']);
+                $('#out-lgch').textContent = vars['--lg-ch'];
+
+                const bg = parseRgba(vars['--glass-bg']);
+                const bd = parseRgba(vars['--glass-bd']);
+                // to hex (drop alpha)
+                const bgHex = `#${((1 << 24) + (bg.r << 16) + (bg.g << 8) + bg.b).toString(16).slice(1)}`;
+                const bdHex = `#${((1 << 24) + (bd.r << 16) + (bd.g << 8) + bd.b).toString(16).slice(1)}`;
+                $('#inp-glass-bg').value = bgHex;
+                $('#inp-glass-bg-a').value = bg.a;
+                $('#inp-glass-bd').value = bdHex;
+                $('#inp-glass-bd-a').value = bd.a;
+
+                document.querySelectorAll('input[type="range"].ios26-range').forEach(el => {
+                    updateFill(el);
+                    el.addEventListener('input', () => updateFill(el));
+                    el.addEventListener('change', () => updateFill(el));
+                });
+            }
+
+            const KEY = 'lg-settings-v1';
+            function saveSettings() {
+                const data = getCurrentVars();
+                localStorage.setItem(KEY, JSON.stringify(data));
+            }
+            function loadSettings() {
+                const raw = localStorage.getItem(KEY);
+                if (!raw) return;
+                try {
+                    const d = JSON.parse(raw);
+                    setTheme(d.theme || DEFAULTS.theme);
+                    ['--blur', '--lg-r', '--lg-off', '--lg-ch', '--glass-bg', '--glass-bd'].forEach(k => {
+                        if (d[k]) setVar(k, d[k]);
+                    });
+                } catch (e) { }
+            }
+
+            function resetSettings() {
+                setTheme(DEFAULTS.theme);
+                Object.keys(DEFAULTS).forEach(k => {
+                    if (k === 'theme') return;
+                    setVar(k, DEFAULTS[k]);
+                });
+                localStorage.removeItem(KEY);
+                populateUI();
+            }
+
+            $('#save-settings')?.addEventListener('click', () => { saveSettings(); closeModal(); });
+            $('#reset-settings')?.addEventListener('click', resetSettings);
+
+
+
+            loadSettings();
+        })();
+    </script>
+    <script>
+        (() => {
+            const GAP = 8;
+            const PADDING = 8;
+            let tipEl = null;
+            let openAnchor = null;
+            let hideTimer = null;
+
+            if (window.__tg_tooltip_init__) return;
+            window.__tg_tooltip_init__ = true;
+
+            document.querySelectorAll('[title]').forEach(el => {
+                if (!el.getAttribute('data-tip')) {
+                    el.setAttribute('data-tip', el.getAttribute('title'));
+                }
+                el.removeAttribute('title');
+            });
+
+            document.addEventListener('pointerenter', e => {
+                const t = findAnchor(e.target);
+                if (t) showTip(t);
+            }, true);
+
+            document.addEventListener('pointerleave', e => {
+                const t = findAnchor(e.target);
+                if (t) scheduleHide(t);
+            }, true);
+
+            document.addEventListener('focusin', e => {
+                const t = findAnchor(e.target);
+                if (t) showTip(t);
+            });
+
+            document.addEventListener('focusout', e => {
+                const t = findAnchor(e.target);
+                if (t) scheduleHide(t);
+            });
+
+            document.addEventListener('click', e => {
+                const t = findAnchor(e.target);
+                if (!t) {
+                    if (tipEl) hideTip(true);
+                    return;
+                }
+
+                if (matchTouch()) {
+                    if (openAnchor === t) hideTip(true);
+                    else showTip(t, {sticky: true});
+                    e.stopPropagation();
+                    e.preventDefault();
+                }
+            });
+
+            ['scroll', 'resize'].forEach(ev => window.addEventListener(ev, () => {
+                if (openAnchor && tipEl) place(openAnchor, tipEl);
+            }, {passive: true}));
+
+            function findAnchor(node) {
+                return node?.closest?.('[data-tip]');
+            }
+
+            function ensureTip() {
+                if (tipEl) return tipEl;
+                const el = document.createElement('div');
+                el.className = 'tg-tooltip glass-panel';
+                el.setAttribute('role', 'tooltip');
+                el.style.setProperty('--fx-filter', 'blur(4px) liquid-glass(var(--lg-r,1.8), var(--lg-off,12)) saturate(1.15) contrast(1.1)');
+                document.body.appendChild(el);
+                tipEl = el;
+                return el;
+            }
+
+            function showTip(anchor, opts = {}) {
+                clearTimeout(hideTimer);
+                const content = anchor.getAttribute('data-tip');
+                if (!content) return;
+
+                const tip = ensureTip();
+                tip.innerHTML = content; // HTML 허용; 필요시 escape 처리로 바꿔도 됨
+                tip.dataset.state = 'open';
+                openAnchor = anchor;
+
+                // aria 연결
+                let id = anchor.getAttribute('aria-describedby');
+                if (!id) {
+                id = 'tg-tip-' + Math.random().toString(36).slice(2);
+                tip.id = id;
+                anchor.setAttribute('aria-describedby', id);
+                } else {
+                tip.id = id;
+                }
+
+                place(anchor, tip);
+
+                if (!opts.sticky) {
+                // 마우스가 툴팁 위로 올라갔을 때 사라지지 않게
+                tip.addEventListener('pointerenter', cancelHideOnce, {once:true});
+                }
+            }
+
+            function scheduleHide(anchor) {
+                // 포커스/마우스가 둘 다 빠져나갔는지 확인
+                hideTimer = setTimeout(() => {
+                if (!tipEl) return;
+                const aInside = anchor.contains(document.activeElement) ||
+                                anchor.matches(':hover');
+                const tipInside = tipEl.matches(':hover');
+                if (!aInside && !tipInside) hideTip();
+                }, 60);
+            }
+
+            function cancelHideOnce() {
+                clearTimeout(hideTimer);
+                tipEl.addEventListener('pointerleave', () => hideTip(), {once:true});
+            }
+
+            function hideTip(force = false) {
+                if (!tipEl) return;
+                if (force) { tipEl.remove(); tipEl = null; openAnchor = null; return; }
+                tipEl.dataset.state = 'closing';
+                // 간단한 페이드아웃
+                tipEl.style.opacity = '0';
+                tipEl.style.transform = 'scale(.98)';
+                setTimeout(() => {
+                tipEl?.remove();
+                tipEl = null;
+                openAnchor = null;
+                }, 140);
+            }
+
+            function place(anchor, tip) {
+                const a = anchor.getBoundingClientRect();
+                const t = tip.getBoundingClientRect();
+                const vw = window.innerWidth, vh = window.innerHeight;
+
+                // 우선순위: 위 -> 아래 -> 오른쪽 -> 왼쪽 (뷰포트 충돌 회피)
+                const fitsTop = a.top - GAP - t.height > PADDING;
+                const fitsBottom = a.bottom + GAP + t.height < vh - PADDING;
+                const fitsRight = a.right + GAP + t.width < vw - PADDING;
+                const fitsLeft = a.left - GAP - t.width > PADDING;
+
+                let side = 'top';
+                if (fitsTop) side = 'top';
+                else if (fitsBottom) side = 'bottom';
+                else if (fitsRight) side = 'right';
+                else if (fitsLeft) side = 'left';
+                else side = 'bottom'; // 최후의 수단
+
+                let x = 0, y = 0;
+
+                if (side === 'top' || side === 'bottom') {
+                const cx = clamp(a.left + a.width / 2 - t.width / 2, PADDING, vw - t.width - PADDING);
+                x = cx;
+                y = (side === 'top') ? a.top - t.height - GAP : a.bottom + GAP;
+                tip.style.transformOrigin = `${((a.left + a.width / 2) - cx) / t.width * 100}% ${side === 'top' ? '100%' : '0%'}`;
+                } else {
+                const cy = clamp(a.top + a.height / 2 - t.height / 2, PADDING, vh - t.height - PADDING);
+                y = cy;
+                x = (side === 'right') ? a.right + GAP : a.left - t.width - GAP;
+                tip.style.transformOrigin = `${side === 'right' ? '0%' : '100%'} ${((a.top + a.height / 2) - cy) / t.height * 100}%`;
+                }
+
+                tip.style.left = `${Math.round(x)}px`;
+                tip.style.top  = `${Math.round(y)}px`;
+                tip.dataset.side = side;
+            }
+
+            function clamp(v,min,max){ return Math.max(min, Math.min(max, v)); }
+            function matchTouch(){ return window.matchMedia('(pointer: coarse)').matches; }
+        })();
+    </script>
 </body>
 
 </html>

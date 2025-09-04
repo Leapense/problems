@@ -117,12 +117,11 @@ document.addEventListener('DOMContentLoaded', () => {
       .lg-glass {
         position: relative;
         border-radius: 12px;
+        --fx-filter: blur(4px) liquid-glass(2, 10) saturate(1.25);
         box-shadow:
             0 4px 8px rgba(0, 0, 0, 0.25),
             0 -10px 25px inset rgba(0, 0, 0, 0.15),
             0 -1px 4px 1px inset rgba(255,255,255,0.24);
-        backdrop-filter: blur(5px) saturate(1.2) brightness(1.1);
-        -webkit-backdrop-filter: blur(5px) saturate(1.2) brightness(1.1);
         overflow: hidden;
       }
       .lg-spec {
@@ -177,7 +176,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //if (tokens.bg) {
         //  el.style.background = 'color-mix(in oklab, ' + tokens.bg + ' 75%, transparent)';
         //}
-        
+
         if (tokens.bg) {
             el.style.background = tokens.bg;
         }
@@ -392,7 +391,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const ID = 'editor-music-player';
         if (document.getElementById(ID)) return;
 
-        
+
 
         let audioContext = null;
         let audioSourceNode = null;
@@ -1227,7 +1226,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 overlay.appendChild(modal);
                 document.body.appendChild(overlay);
 
-                
+
 
                 let lastFocused = document.activeElement;
                 focusable[0].focus();
@@ -1326,7 +1325,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const list = document.createElement('div');
             list.id = 'editor-music-player-list';
-            
+
             listWrap.appendChild(listHeader);
             listWrap.appendChild(list);
             wrap.appendChild(listWrap);
@@ -2155,7 +2154,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }
 
-            
+
 
             function createLiquidGlassSelect(options, selectedValue, changeCallback) {
                 const wrapper = document.createElement('div');
@@ -2281,7 +2280,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             window.addEventListener('unload', revokeAllLocalUrls);
 
-            
+
         }
     })();
 
