@@ -1,4 +1,183 @@
+
+
 document.addEventListener('DOMContentLoaded', () => {
+    class TahoeStatusSVG {
+        constructor() {
+            this.id = "tahoeLiquidFilter";
+            this.ns = "http://www.w3.org/2000/svg";
+
+            this.opts = {
+                mapSize: 256,
+                intensity: 12,
+                blur: 4,
+                noiseScale: 2.5,
+                seed: Date.now() & 0xffff
+            };
+
+            this._svg = null;
+            this._filter = null;
+            this._feImage = null;
+            this._targets = [];
+        }
+        invoke() {
+            this._ensureDefs();
+        }
+
+        deconstructor() {
+            try { this._svg?.remove(); } catch { }
+            this._svg = null;
+            for (const el of this._targets) el.style.filter = "";
+            this._targets = [];
+        }
+
+        setIntensity(px) {
+            const v = Math.max(0, Number(px));
+            this.opts.intensity = v;
+            this._updateDisplacementScales(v);
+        }
+
+        setBlur(stdDev) {
+            const v = Math.max(0, Number(stdDev));
+            this.opts.blur = v;
+            if (this._filter) {
+                const gb = this._filter.querySelector("feGaussianBlur");
+                if (gb) gb.setAttribute("stdDeviation", String(v));
+            }
+        }
+
+        reapply() {
+            this._applyToEditorMusicPlayer(true);
+        }
+
+        _ensureDefs() {
+            if (this._svg && document.getElementById(this.id)) return;
+
+            const svg = document.createElementNS(this.ns, "svg");
+            svg.setAttribute("class", "tahoe-liquid-defs");
+            svg.setAttribute("xmlns", this.ns);
+            svg.setAttribute("width", "0");
+            svg.setAttribute("height", "0");
+            svg.style.position = "absolute";
+            svg.style.zIndex = "-1";
+
+            const defs = document.createElementNS(this.ns, "defs");
+            const filter = document.createElementNS(this.ns, "filter");
+            filter.setAttribute("id", this.id);
+            filter.setAttribute("color-interpolation-filters", "sRGB");
+            filter.setAttribute("filterUnits", "objectBoundingBox");
+            filter.setAttribute("x", "0%");
+            filter.setAttribute("y", "0%");
+            filter.setAttribute("width", "100%");
+            filter.setAttribute("height", "100%");
+
+            const feImg = document.createElementNS(this.ns, "feImage");
+            feImg.setAttribute("x", "0");
+            feImg.setAttribute("y", "0");
+            feImg.setAttribute("width", "100%");
+            feImg.setAttribute("height", "100%");
+            feImg.setAttribute("preserveAspectRatio", "none");
+            feImg.setAttribute("result", "map");
+
+            const feDispR = document.createElementNS(this.ns, "feDisplacementMap");
+            feDispR.setAttribute("in", "SourceGraphic");
+            feDispR.setAttribute("in2", "map");
+            feDispR.setAttribute("xChannelSelector", "R");
+            feDispR.setAttribute("yChannelSelector", "G");
+            feDispR.setAttribute("result", "dispRed");
+
+            const feCR = document.createElementNS(this.ns, "feColorMatrix");
+            feCR.setAttribute("in", "dispRed");
+            feCR.setAttribute("type", "matrix");
+            feCR.setAttribute("values",
+                "1 0 0 0 0 " +
+                "0 0 0 0 0 " +
+                "0 0 0 0 0 " +
+                "0 0 0 1 0");
+            feCR.setAttribute("result", "red");
+
+            const feDispG = document.createElementNS(this.ns, "feDisplacementMap");
+            feDispG.setAttribute("in", "SourceGraphic");
+            feDispG.setAttribute("in2", "map");
+            feDispG.setAttribute("xChannelSelector", "R");
+            feDispG.setAttribute("yChannelSelector", "G");
+            feDispG.setAttribute("result", "dispGreen");
+
+            const feCG = document.createElementNS(this.ns, "feColorMatrix");
+            feCG.setAttribute("in", "dispGreen");
+            feCG.setAttribute("type", "matrix");
+            feCG.setAttribute("values",
+                "0 0 0 0 0 " +
+                "0 1 0 0 0 " +
+                "0 0 0 0 0 " +
+                "0 0 0 1 0");
+            feCG.setAttribute("result", "green");
+
+            const feDispB = document.createElementNS(this.ns, "feDisplacementMap");
+            feDispB.setAttribute("in", "SourceGraphic");
+            feDispB.setAttribute("in2", "map");
+            feDispB.setAttribute("xChannelSelector", "R");
+            feDispB.setAttribute("yChannelSelector", "G");
+            feDispB.setAttribute("result", "dispBlue");
+
+            const feCB = document.createElementNS(this.ns, "feColorMatrix");
+            feCB.setAttribute("in", "dispBlue");
+            feCB.setAttribute("type", "matrix");
+            feCB.setAttribute("values",
+                "0 0 0 0 0 " +
+                "0 0 0 0 0 " +
+                "0 0 1 0 0 " +
+                "0 0 0 1 0");
+            feCB.setAttribute("result", "blue");
+
+            const feBlendRG = document.createElementNS(this.ns, "feBlend");
+            feBlendRG.setAttribute("in", "red");
+            feBlendRG.setAttribute("in2", "green");
+            feBlendRG.setAttribute("mode", "screen");
+            feBlendRG.setAttribute("result", "rg");
+
+            const feBlendRGB = document.createElementNS(this.ns, "feBlend");
+            feBlendRGB.setAttribute("in", "rg");
+            feBlendRGB.setAttribute("in2", "blue");
+            feBlendRGB.setAttribute("mode", "screen");
+            feBlendRGB.setAttribute("result", "output");
+
+            const feGB = document.createElementNS(this.ns, "feGaussianBlur");
+            feGB.setAttribute("in", "output");
+            feGB.setAttribute("stdDeviation", String(this.opts.blur));
+
+            filter.appendChild(feImg);
+            filter.appendChild(feDispR);
+            filter.appendChild(feCR);
+            filter.appendChild(feDispG);
+            filter.appendChild(feCG);
+            filter.appendChild(feDispB);
+            filter.appendChild(feCB);
+            filter.appendChild(feBlendRG);
+            filter.appendChild(feBlendRGB);
+            filter.appendChild(feGB);
+
+            defs.appendChild(filter);
+            svg.appendChild(defs);
+            document.body.appendChild(svg);
+
+            this._svg = svg;
+            this._filter = filter;
+            this._feImage = feImg;
+
+            this._updateDisplacementScales(this.opts.intensity);
+        }
+
+        _updateDisplacementScales(px) {
+            if (!this._filter) return; // nothing to do
+            const setScale = (node) => node?.setAttribute("scale", String(px));
+            const q = (sel) => this._filter.querySelector(sel);
+            setScale(q('feDisplacementMap[in="SourceGraphic"][result="dispRed"]'));
+            setScale(q('feDisplacementMap[in="SourceGraphic"][result="dispGreen"]'));
+            setScale(q('feDisplacementMap[in="SourceGraphic"][result="dispBlue"]'));
+        }
+    }
+    
+
     const STORAGE = {
         vol: 'vscodeAudioPlayer.volume',
         idx: 'vscodeAudioPlayer.trackIndex',
@@ -97,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
             isDark,
             tokens: {
                 fg: tokens.fg || (isDark ? '#e6e6e6' : '#1e1e1e'),
-                bg: tokens.bg || (isDark ? 'rgba(0, 0, 0, 0.37)' : 'rgba(255,255,255,0.77)'),
+                bg: tokens.bg || (isDark ? 'rgba(0,0,0,0.35)' : 'rgba(255,255,255,0.77)'),
                 border: tokens.border || (isDark ? '#3c3c3c' : '#e5e5e5'),
                 subtle: tokens.subtle || (isDark ? '#9da0a2' : '#6b6f73'),
                 btnBg: tokens.btnBg || '#0e639c',
@@ -117,11 +296,6 @@ document.addEventListener('DOMContentLoaded', () => {
       .lg-glass {
         position: relative;
         border-radius: 12px;
-        --fx-filter: blur(4px) liquid-glass(2, 10) saturate(1.25);
-        box-shadow:
-            0 4px 8px rgba(0, 0, 0, 0.25),
-            0 -10px 25px inset rgba(0, 0, 0, 0.15),
-            0 -1px 4px 1px inset rgba(255,255,255,0.24);
         overflow: hidden;
       }
       .lg-spec {
@@ -222,7 +396,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 position: 'fixed',
                 inset: '0',
                 background: 'rgba(0,0,0,0.35)',
-                backdropFilter: 'blur(2px) brightness(1.1) saturate(1.2)',
                 zIndex: '10000',
                 display: 'flex',
                 alignItems: 'center',
@@ -236,18 +409,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 maxWidth: '560px',
                 padding: '20px 22px',
                 borderRadius: '12px',
-                background: tokens.bg || (isDark ? 'rgba(0, 0, 0, 0.37)' : 'rgba(255,255,255,0.06)'),
+                background: tokens.bg || (isDark ? 'rgba(0, 0, 0, 0.08)' : 'rgba(255,255,255,0.06)'),
                 color: tokens.fg || '#e6e6e6',
-                backdropFilter: 'blur(14px) brightness(1.1) saturate(1.2)',
-                boxShadow:
-                    '0 4px 8px rgba(0, 0, 0, 0.25), 0 -10px 25px inset rgba(0, 0, 0, 0.15), 0 -1px 4px 1px inset rgba(255,255,255,0.24)',
+                border: "1px solid rgba(255,255,255,.18)",
                 fontFamily:
                     'var(--vscode-font-family, system-ui, -apple-system, Segoe UI, Roboto, sans-serif)',
+                backgroundBlendMode: "color-burn",
             });
 
             // Apply Liquid Glass to modal
-            applyLiquidGlass(modal, tokens);
-
+            //applyLiquidGlass(modal, tokens);
+            modal.classList.add('lg-pane');
             // Title
             const h = document.createElement('div');
             h.textContent = 'Welcome 👋';
@@ -310,9 +482,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     cursor: 'pointer',
                 });
                 if (primary) {
+                    b.className = 'lg-btn primary';
                     b.style.background = tokens.btnBg || '#0e639c';
                     b.style.color = tokens.btnFg || '#ffffff';
                 } else {
+                    b.className = 'lg-btn';
                     b.style.background = 'transparent';
                     b.style.color = tokens.fg || '#e6e6e6';
                     b.onmouseenter = () => {
@@ -689,11 +863,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 padding: '6px 8px',
                 borderRadius: '10px',
                 color: tokens.fg || '#e6e6e6',
+                border: "1px solid rgba(255,255,255,.16)",
                 position: 'relative',
                 maxWidth: '100%',
             });
-            applyLiquidGlass(panel, tokens);
-
+            //applyLiquidGlass(panel, tokens);
+            panel.classList.add('lg-pane');
             const playerContainer = document.createElement('div');
             playerContainer.id = 'player-container';
             panel.appendChild(playerContainer);
@@ -985,7 +1160,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     overflowX: 'auto',
                 });
 
-                applyLiquidGlass(modal, tokens);
+                //applyLiquidGlass(modal, tokens);
+                modal.classList.add('lg-pane');
 
                 const h = document.createElement('div');
                 h.textContent = '플레이어 설정';
@@ -1033,6 +1209,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const focusable = [];
                 Object.entries(playflowOptions).forEach(([value, labelText]) => {
                     const label = document.createElement('label');
+                    label.classList.add('m-radio');
                     Object.assign(label.style, {
                         display: 'inline-flex',
                         alignItems: 'center',
@@ -1044,6 +1221,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     radio.type = 'radio';
                     radio.name = 'playflow';
                     radio.value = value;
+                    radio.classList.add('radio-tahoe');
                     if (playflow === value) radio.checked = true;
 
                     radio.addEventListener('change', (e) => {
@@ -1066,22 +1244,63 @@ document.addEventListener('DOMContentLoaded', () => {
                 Object.assign(highlightLegend.style, { padding: '0 8px', fontSize: '13px', color: tokens.subtle || '#9da0a2' });
                 highlightFieldset.appendChild(highlightLegend);
                 const highlightOption = document.createElement('label');
-                Object.assign(highlightOption.style, { display: 'flex', alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', fontSize: '13px' });
-                const highlightLabel = document.createElement('span');
-                highlightLabel.textContent = '현재 재생 트랙 하이라이트';
+                Object.assign(highlightOption.style, { alignItems: 'center', justifyContent: 'space-between', cursor: 'pointer', fontSize: '13px' });
+
+                function wrapAsMacSwitch(input, { labelText } = {}) {
+                    if (!(input instanceof HTMLInputElement)) {
+                        throw new TypeError('wrapAsMacSwitch: input must be an <input>.');
+                    }
+                    // 스위치 접근성 속성
+                    input.type = 'checkbox';
+                    input.setAttribute('role', 'switch');                 // 선택 사항(원한다면 유지)
+                    input.setAttribute('aria-label', labelText || '');
+                    input.setAttribute('aria-checked', String(input.checked));
+                    input.addEventListener('change', () => {
+                        input.setAttribute('aria-checked', String(input.checked));
+                    });
+
+                    // 구조: <label.switch><input ...><span.track><span.thumb></span></span></label>
+                    const track = document.createElement('span');
+                    track.className = 'track';
+                    const thumb = document.createElement('span');
+                    thumb.className = 'thumb';
+                    track.appendChild(thumb);
+
+                    const label = document.createElement('label');
+                    label.className = 'switch';
+                    label.appendChild(input);
+                    label.appendChild(track);
+
+                    // 옵션: 텍스트 포함한 행으로 반환
+                    if (labelText) {
+                        const row = document.createElement('div');
+                        row.className = 'pref-row';
+                        const text = document.createElement('span');
+                        text.className = 'label';
+                        text.textContent = labelText;
+                        text.style.fontSize = '14px';
+                        row.appendChild(text);
+                        row.appendChild(label);
+                        return row;
+                    }
+                    return label;
+                }
+
+                const highlightLabelText = '현재 재생 트랙 하이라이트';
                 const highlightSwitch = document.createElement('input');
-                highlightSwitch.role = 'switch';
                 highlightSwitch.type = 'checkbox';
                 highlightSwitch.name = 'highlightToggle';
                 highlightSwitch.checked = highlightActive;
+                highlightSwitch.setAttribute('role', 'switch');
                 highlightSwitch.addEventListener('change', () => {
                     highlightActive = highlightSwitch.checked;
                     localStorage.setItem(STORAGE.highlight, highlightActive);
-                    updatePlaylistHighlightsAndProgress(); // Apply change immediately
+                    updatePlaylistHighlightsAndProgress();
                 });
 
-                highlightOption.appendChild(highlightLabel);
-                highlightOption.appendChild(highlightSwitch);
+                const highlightRow = wrapAsMacSwitch(highlightSwitch, { labelText: highlightLabelText });
+
+                highlightOption.appendChild(highlightRow);
                 highlightFieldset.appendChild(highlightOption);
                 content.appendChild(highlightFieldset);
                 focusable.push(highlightSwitch);
@@ -1317,8 +1536,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 display: 'none',
                 zIndex: '31',
             });
-            applyLiquidGlass(listWrap, tokens);
-
+            //applyLiquidGlass(listWrap, tokens);
+            listWrap.classList.add('lg-pane');
             const listHeader = document.createElement('div');
             listHeader.textContent = '재생목록';
             Object.assign(listHeader.style, { fontSize: '12px', opacity: '0.8', margin: '2px 4px 6px' });
@@ -1686,11 +1905,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     borderRadius: '12px',
                     background: tokens.bg || 'rgba(255,255,255,0.06)',
                     color: tokens.fg || '#e6e6e6',
-                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.25), 0 -10px 25px inset rgba(0, 0, 0, 0.15), 0 -1px 4px 1px inset rgba(255,255,255,0.24)',
-                    border: `1px solid ${tokens.border || 'rgba(255,255,255,0.18)'}`,
+                    border: `0.5px solid ${tokens.border || 'rgba(255,255,255,0.18)'}`,
                     fontFamily: 'var(--vscode-font-family, system-ui, -apple-system, Segoe UI, Roboto, sans-serif)',
                 });
-                applyLiquidGlass(modal, tokens);
+                //applyLiquidGlass(modal, tokens);
+                modal.classList.add('lg-pane');
                 const h = document.createElement('div');
                 h.textContent = '항목 추가';
                 Object.assign(h.style, { fontSize: '18px', fontWeight: '600', marginBottom: '12px' });
@@ -1737,7 +1956,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.body.appendChild(overlay);
 
                 const focusable = [btnFile, btnFolder, btnClose];
-                setTimeout(() => urlInput.focus(), 0);
+                //setTimeout(() => urlInput.focus(), 0);
 
                 function close() {
                     overlay.remove();
@@ -2154,7 +2373,154 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
             }
 
+            function supportsCustomizableSelect() {
+                try {
+                    return !!(window.CSS && CSS.supports && CSS.supports('appearance: base-select'));
+                } catch { return false; }
+            }
 
+            function createNativeCustomSelect(items, current, onChange, { ariaLabel = '선택', name } = {}) {
+                let data = [];
+                if (Array.isArray(items)) {
+                    data = items.map(it => typeof it === 'string' ? ({ value: it, label: it }) : (it.value ? it : { value: it[0], label: it[1] }));
+                } else if (items && typeof items === 'object') {
+                    data = Object.entries(items).map(([value, label]) => ({ value, label }));
+                }
+
+                const select = document.createElement('select');
+                select.className = 'm-native-select';
+                if (name) select.name = name;
+                select.setAttribute('aria-label', ariaLabel);
+
+                const btn = document.createElement('button');
+                const sc = document.createElement('selectedcontent');
+                btn.appendChild(sc);
+                select.appendChild(btn);
+
+                let initial = String(current ?? (data[0]?.value ?? ''));
+                for (const d of data) {
+                    const opt = document.createElement('option');
+                    opt.value = String(d.value);
+                    const icon = document.createElement('span'); icon.className = 'opt-icon'; icon.textContent = d.icon ? '' : '•';
+                    if (d.icon) icon.innerHTML = d.icon;
+                    const title = document.createElement('span'); title.className = 'opt-title'; title.textContent = d.label;
+                    const hint = document.createElement('span'); hint.className = 'opt-hint'; if (d.hint) hint.textContent = d.hint;
+                    opt.append(icon, title, hint);
+                    if (String(d.value) === initial) opt.selected = true;
+                    select.appendChild(opt);
+                }
+
+                if (onChange) select.addEventListener('change', onChange);
+
+                return { wrapper: select, select };
+            }
+
+            function createLGCombobox(items, current, onChange, { ariaLabel = '선택', name } = {}) {
+                // normalize
+                let data = [];
+                if (Array.isArray(items)) {
+                    data = items.map(it => typeof it === 'string'
+                        ? ({ value: it, label: it })
+                        : (it.value ? it : { value: it[0], label: it[1] }));
+                } else if (items && typeof items === 'object') {
+                    data = Object.entries(items).map(([value, label]) => ({ value, label }));
+                }
+
+                const root = document.createElement('div');
+                root.className = 'lgc-select';
+                root.setAttribute('role', 'combobox');
+                root.setAttribute('aria-haspopup', 'listbox');
+                root.setAttribute('aria-expanded', 'false');
+
+                const trigger = document.createElement('button');
+                trigger.type = 'button';
+                trigger.className = 'lgc-trigger';
+                trigger.setAttribute('aria-label', ariaLabel);
+
+                const valueSpan = document.createElement('span'); valueSpan.className = 'lgc-value';
+                const chev = document.createElement('span'); chev.className = 'lgc-chev';
+                trigger.append(valueSpan, chev);
+
+                const list = document.createElement('ul');
+                list.className = 'lgc-list';
+                list.setAttribute('role', 'listbox');
+                list.tabIndex = -1;
+
+                const native = document.createElement('select');
+                native.hidden = true; if (name) native.name = name;
+                if (onChange) native.addEventListener('change', onChange);
+
+                // render items
+                let selectedIndex = Math.max(0, data.findIndex(d => String(d.value) === String(current)));
+                if (selectedIndex < 0) selectedIndex = 0;
+
+                data.forEach((d, i) => {
+                    const li = document.createElement('li');
+                    li.className = 'lgc-option';
+                    li.setAttribute('role', 'option');
+                    if (i === selectedIndex) li.setAttribute('aria-selected', 'true');
+                    li.dataset.value = d.value;
+
+                    const icon = document.createElement('span'); icon.className = 'icon';
+                    if (d.icon) icon.innerHTML = d.icon; else icon.textContent = '•';
+
+                    const main = document.createElement('div');
+                    const title = document.createElement('div'); title.className = 'title'; title.textContent = d.label;
+                    main.appendChild(title);
+                    if (d.hint) { const hint = document.createElement('div'); hint.className = 'hint'; hint.textContent = d.hint; main.appendChild(hint); }
+
+                    const right = document.createElement('div'); right.className = 'right';
+                    li.append(icon, main, right);
+                    list.appendChild(li);
+
+                    const opt = document.createElement('option'); opt.value = d.value; opt.textContent = d.label;
+                    if (i === selectedIndex) opt.selected = true;
+                    native.appendChild(opt);
+                });
+
+                valueSpan.textContent = data[selectedIndex]?.label ?? '';
+
+                // behavior
+                const setActive = (i) => {
+                    [...list.children].forEach((el, idx) => el.toggleAttribute('aria-current', idx === i));
+                    const el = list.children[i]; if (!el) return;
+                    const r = el.getBoundingClientRect(), R = list.getBoundingClientRect();
+                    if (r.top < R.top) list.scrollTop -= (R.top - r.top);
+                    if (r.bottom > R.bottom) list.scrollTop += (r.bottom - R.bottom);
+                };
+                const open = () => { root.setAttribute('aria-expanded', 'true'); list.focus(); setActive(selectedIndex); docDownOn(); };
+                const close = () => { root.setAttribute('aria-expanded', 'false'); trigger.focus(); docDownOff(); };
+                const commit = (i) => {
+                    if (!data[i]) return;
+                    [...list.children].forEach(el => el.removeAttribute('aria-selected'));
+                    list.children[i].setAttribute('aria-selected', 'true');
+                    selectedIndex = i;
+                    valueSpan.textContent = data[i].label;
+                    native.value = data[i].value;
+                    native.dispatchEvent(new Event('change', { bubbles: true }));
+                    close();
+                };
+
+                trigger.addEventListener('click', () => (root.getAttribute('aria-expanded') === 'true' ? close() : open()));
+                list.addEventListener('click', (e) => {
+                    const li = e.target.closest('.lgc-option'); if (!li) return;
+                    commit([...list.children].indexOf(li));
+                });
+                list.addEventListener('keydown', (e) => {
+                    const idx = [...list.children].findIndex(el => el.hasAttribute('aria-current'));
+                    if (e.key === 'ArrowDown') { e.preventDefault(); setActive(Math.min(data.length - 1, idx + 1)); }
+                    else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(Math.max(0, idx - 1)); }
+                    else if (e.key === 'Enter') { e.preventDefault(); commit(Math.max(0, idx)); }
+                    else if (e.key === 'Escape') { e.preventDefault(); close(); }
+                });
+
+                function onDocDown(e) { if (!root.contains(e.target)) close(); }
+                function docDownOn() { document.addEventListener('pointerdown', onDocDown, true); }
+                function docDownOff() { document.removeEventListener('pointerdown', onDocDown, true); }
+
+                root.append(trigger, list, native);
+                return { wrapper: root, select: native };
+            }
 
             function createLiquidGlassSelect(options, selectedValue, changeCallback) {
                 const wrapper = document.createElement('div');
@@ -2176,6 +2542,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 wrapper.appendChild(select);
                 return { wrapper, select };
+            }
+
+            function createLiquidGlassSelect(items, current, onChange, opts = {}) {
+                return supportsCustomizableSelect()
+                    ? createNativeCustomSelect(items, current, onChange, opts)
+                    : createLGCombobox(items, current, onChange, opts);
             }
 
             // Enhanced style selector with preview
@@ -2200,7 +2572,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         localStorage.setItem('vscodeAudioPlayer.progressStyle', currentProgressStyle);
                         updatePreview(e.target.value);
                         updatePlaylistHighlightsAndProgress(); // 즉시 적용
-                    }
+                    }, { ariaLabel: '진행률 표시 스타일', name: 'progressStyle' }
                 );
 
                 // Preview container
@@ -2285,4 +2657,9 @@ document.addEventListener('DOMContentLoaded', () => {
     })();
 
     // TODO VSCode 에디터 영역 안의 오른쪽 위에 음악을 재생할 수 있는 기능 추가 (완료)
+
+    const tahoe = new TahoeStatusSVG();
+    tahoe.setIntensity(12);
+    tahoe.setBlur(4);
+    tahoe.invoke();
 });

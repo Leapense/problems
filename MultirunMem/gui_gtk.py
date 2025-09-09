@@ -506,7 +506,7 @@ class MainWindow(Gtk.Window):
             autoescape=select_autoescape(['html'])
         )
         tpl = env.get_template(tpl_path.name)
-        html_str = tpl.render(files=files, total=total, thresholds=thresholds)
+        html_str = tpl.render(files=files, total=total, thresholds=thresholds, CCN_RED=CCN_RED, NLOC_RED=NLOC_RED)
 
         # 템플릿이 report.css 같은 상대 경로를 쓸 때를 대비해 <base> 주입
         base_uri = tpl_path.parent.as_uri() + '/'
