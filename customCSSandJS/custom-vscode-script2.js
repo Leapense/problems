@@ -1,35 +1,52 @@
-
-
 document.addEventListener('DOMContentLoaded', () => {
+
     class TahoeStatusSVG {
         constructor() {
             this.id = "tahoeLiquidFilter";
             this.ns = "http://www.w3.org/2000/svg";
+            this.xlink = "http://www.w3.org/1999/xlink";
 
             this.opts = {
-                mapSize: 256,
-                intensity: 12,
-                blur: 4,
-                noiseScale: 2.5,
+                mapSize: 256,     // 성능/품질 트레이드오프 (64~512)
+                intensity: 12,    // 채널 디스플레이스 강도(px)
+                blur: 4,          // 최종 블렌드 후 블러
+                noiseScale: 2.5,  // 노이즈 공간 스케일(값 작을수록 굵은 패턴)
                 seed: Date.now() & 0xffff
             };
 
             this._svg = null;
             this._filter = null;
             this._feImage = null;
-            this._targets = [];
+            this._feDispR = null;
+            this._feDispG = null;
+            this._feDispB = null;
+            this._gb = null;
+
+            this._targets = new Map(); // el -> {prevFilter, prevWebkitFilter}
+            this._mo = null;
         }
+
         invoke() {
             this._ensureDefs();
+            this._refreshMap();
         }
 
         deconstructor() {
+            try { this._mo?.disconnect(); } catch { }
+            for (const [el, rec] of this._targets) {
+                if (!el || !el.style) continue;
+                el.style.backdropFilter = rec.prevFilter || "";
+                try { el.style.webkitBackdropFilter = rec.prevWebkitFilter || ""; } catch { }
+            }
+            this._targets.clear();
+
             try { this._svg?.remove(); } catch { }
             this._svg = null;
-            for (const el of this._targets) el.style.filter = "";
-            this._targets = [];
+            this._filter = null;
+            this._feImage = null;
         }
 
+        // ---------- public API ----------
         setIntensity(px) {
             const v = Math.max(0, Number(px));
             this.opts.intensity = v;
@@ -39,14 +56,72 @@ document.addEventListener('DOMContentLoaded', () => {
         setBlur(stdDev) {
             const v = Math.max(0, Number(stdDev));
             this.opts.blur = v;
-            if (this._filter) {
-                const gb = this._filter.querySelector("feGaussianBlur");
-                if (gb) gb.setAttribute("stdDeviation", String(v));
+            if (this._gb) this._gb.setAttribute("stdDeviation", String(v));
+        }
+
+        setNoiseScale(scale) {
+            const v = Math.max(0.25, Number(scale));
+            this.opts.noiseScale = v;
+            this._refreshMap();
+        }
+
+        setSeed(seed) {
+            this.opts.seed = seed >>> 0;
+            this._refreshMap();
+        }
+
+        applyTo(targets) {
+            this._ensureDefs();
+            const list = this._toElements(targets);
+            for (const el of list) {
+                if (!el || !el.style) continue;
+                if (this._targets.has(el)) continue; // already applied
+
+                const prev = {
+                    prevFilter: el.style.backdropFilter || "",
+                    prevWebkitFilter: el.style.webkitBackdropFilter || ""
+                };
+
+                el.style.backdropFilter = `url(#${this.id})`;
+                try { el.style.webkitBackdropFilter = `url(#${this.id})`; } catch { }
+                el.style.willChange = (el.style.willChange || "").includes("backdrop-filter")
+                    ? el.style.willChange
+                    : (el.style.willChange ? el.style.willChange + ", backdrop-filter" : "backdrop-filter");
+
+                this._targets.set(el, prev);
             }
         }
 
-        reapply() {
-            this._applyToEditorMusicPlayer(true);
+        observe(selector) {
+            // 자동으로 새로 생긴 요소에도 적용
+            const sel = String(selector || ".lg-pane, .lg-glass");
+            this._mo?.disconnect();
+            const mo = new MutationObserver((muts) => {
+                for (const m of muts) {
+                    m.addedNodes.forEach((n) => {
+                        if (!(n instanceof Element)) return;
+                        if (n.matches && n.matches(sel)) this.applyTo(n);
+                        if (n.querySelectorAll) {
+                            const found = n.querySelectorAll(sel);
+                            if (found.length) this.applyTo(found);
+                        }
+                    });
+                }
+            });
+            mo.observe(document.body, { childList: true, subtree: true });
+            this._mo = mo;
+
+            // 즉시 1회 적용
+            this.applyTo(sel);
+        }
+
+        // ---------- internals ----------
+        _toElements(targets) {
+            if (!targets) return [];
+            if (typeof targets === "string") return Array.from(document.querySelectorAll(targets));
+            if (targets instanceof Element) return [targets];
+            if (targets instanceof NodeList || Array.isArray(targets)) return Array.from(targets);
+            return [];
         }
 
         _ensureDefs() {
@@ -64,12 +139,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const filter = document.createElementNS(this.ns, "filter");
             filter.setAttribute("id", this.id);
             filter.setAttribute("color-interpolation-filters", "sRGB");
-            filter.setAttribute("filterUnits", "objectBoundingBox");
-            filter.setAttribute("x", "0%");
-            filter.setAttribute("y", "0%");
-            filter.setAttribute("width", "100%");
-            filter.setAttribute("height", "100%");
 
+            // 디스플레이스 시 바깥으로 밀려나는 픽셀 안 잘리게 여유 영역
+            filter.setAttribute("filterUnits", "objectBoundingBox");
+            filter.setAttribute("x", "-12%");
+            filter.setAttribute("y", "-12%");
+            filter.setAttribute("width", "124%");
+            filter.setAttribute("height", "124%");
+
+            // displacement map (feImage로 주입)
             const feImg = document.createElementNS(this.ns, "feImage");
             feImg.setAttribute("x", "0");
             feImg.setAttribute("y", "0");
@@ -78,6 +156,7 @@ document.addEventListener('DOMContentLoaded', () => {
             feImg.setAttribute("preserveAspectRatio", "none");
             feImg.setAttribute("result", "map");
 
+            // R 채널
             const feDispR = document.createElementNS(this.ns, "feDisplacementMap");
             feDispR.setAttribute("in", "SourceGraphic");
             feDispR.setAttribute("in2", "map");
@@ -88,13 +167,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const feCR = document.createElementNS(this.ns, "feColorMatrix");
             feCR.setAttribute("in", "dispRed");
             feCR.setAttribute("type", "matrix");
-            feCR.setAttribute("values",
-                "1 0 0 0 0 " +
-                "0 0 0 0 0 " +
-                "0 0 0 0 0 " +
-                "0 0 0 1 0");
+            feCR.setAttribute(
+                "values",
+                "1 0 0 0 0 " + // R
+                "0 0 0 0 0 " + // G
+                "0 0 0 0 0 " + // B
+                "0 0 0 1 0"    // A
+            );
             feCR.setAttribute("result", "red");
 
+            // G 채널
             const feDispG = document.createElementNS(this.ns, "feDisplacementMap");
             feDispG.setAttribute("in", "SourceGraphic");
             feDispG.setAttribute("in2", "map");
@@ -105,13 +187,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const feCG = document.createElementNS(this.ns, "feColorMatrix");
             feCG.setAttribute("in", "dispGreen");
             feCG.setAttribute("type", "matrix");
-            feCG.setAttribute("values",
-                "0 0 0 0 0 " +
-                "0 1 0 0 0 " +
-                "0 0 0 0 0 " +
-                "0 0 0 1 0");
+            feCG.setAttribute(
+                "values",
+                "0 0 0 0 0 " + // R
+                "0 1 0 0 0 " + // G
+                "0 0 0 0 0 " + // B
+                "0 0 0 1 0"    // A
+            );
             feCG.setAttribute("result", "green");
 
+            // B 채널
             const feDispB = document.createElementNS(this.ns, "feDisplacementMap");
             feDispB.setAttribute("in", "SourceGraphic");
             feDispB.setAttribute("in2", "map");
@@ -122,13 +207,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const feCB = document.createElementNS(this.ns, "feColorMatrix");
             feCB.setAttribute("in", "dispBlue");
             feCB.setAttribute("type", "matrix");
-            feCB.setAttribute("values",
-                "0 0 0 0 0 " +
-                "0 0 0 0 0 " +
-                "0 0 1 0 0 " +
-                "0 0 0 1 0");
+            feCB.setAttribute(
+                "values",
+                "0 0 0 0 0 " + // R
+                "0 0 0 0 0 " + // G
+                "0 0 1 0 0 " + // B
+                "0 0 0 1 0"    // A
+            );
             feCB.setAttribute("result", "blue");
 
+            // Blend 채널 합치기
             const feBlendRG = document.createElementNS(this.ns, "feBlend");
             feBlendRG.setAttribute("in", "red");
             feBlendRG.setAttribute("in2", "green");
@@ -163,20 +251,70 @@ document.addEventListener('DOMContentLoaded', () => {
             this._svg = svg;
             this._filter = filter;
             this._feImage = feImg;
+            this._feDispR = feDispR;
+            this._feDispG = feDispG;
+            this._feDispB = feDispB;
+            this._gb = feGB;
 
             this._updateDisplacementScales(this.opts.intensity);
         }
 
         _updateDisplacementScales(px) {
-            if (!this._filter) return; // nothing to do
-            const setScale = (node) => node?.setAttribute("scale", String(px));
-            const q = (sel) => this._filter.querySelector(sel);
-            setScale(q('feDisplacementMap[in="SourceGraphic"][result="dispRed"]'));
-            setScale(q('feDisplacementMap[in="SourceGraphic"][result="dispGreen"]'));
-            setScale(q('feDisplacementMap[in="SourceGraphic"][result="dispBlue"]'));
+            [this._feDispR, this._feDispG, this._feDispB].forEach(n => n?.setAttribute("scale", String(px)));
+        }
+
+        _refreshMap() {
+            if (!this._feImage) return;
+            const url = this._makeMapDataURL();
+            // Safari 호환을 위해 둘 다 셋
+            try { this._feImage.setAttributeNS(this.xlink, "xlink:href", url); } catch { }
+            this._feImage.setAttribute("href", url);
+        }
+
+        _makeMapDataURL() {
+            const size = Math.max(32, this.opts.mapSize | 0);
+            const canvas = document.createElement("canvas");
+            canvas.width = canvas.height = size;
+            const ctx = canvas.getContext("2d", { willReadFrequently: true });
+
+            const img = ctx.createImageData(size, size);
+            const data = img.data;
+
+            // 빠르고 간단한 시드 랜덤 + 사인파 합성으로 부드러운 2D 노이즈 생성
+            let s = (this.opts.seed >>> 0) || 1;
+            const rand = () => (s = (s * 1664525 + 1013904223) >>> 0) / 0xffffffff;
+
+            const layers = 4; // 3~5 권장
+            const base = (2 * Math.PI) / (this.opts.noiseScale * size || size);
+
+            const paramsR = [], paramsG = [];
+            for (let i = 0; i < layers; i++) {
+                paramsR.push({ ang: rand() * Math.PI * 2, phase: rand() * Math.PI * 2, freq: base * Math.pow(2, i), amp: Math.pow(0.5, i) });
+                paramsG.push({ ang: rand() * Math.PI * 2, phase: rand() * Math.PI * 2, freq: base * Math.pow(2, i), amp: Math.pow(0.5, i) });
+            }
+            const maxAmp = (1 - Math.pow(0.5, layers)) / (1 - 0.5); // 기하급수 합
+
+            let p = 0;
+            for (let y = 0; y < size; y++) {
+                for (let x = 0; x < size; x++, p += 4) {
+                    let vr = 0, vg = 0;
+                    for (let j = 0; j < layers; j++) {
+                        const pr = paramsR[j], pg = paramsG[j];
+                        vr += Math.sin((x * Math.cos(pr.ang) + y * Math.sin(pr.ang)) * pr.freq + pr.phase) * pr.amp;
+                        vg += Math.cos((x * Math.cos(pg.ang) + y * Math.sin(pg.ang)) * pg.freq + pg.phase) * pg.amp;
+                    }
+                    vr /= maxAmp; vg /= maxAmp; // [-1..1]
+
+                    data[p] = (vr * 127) + 128; // R -> X displacement
+                    data[p + 1] = (vg * 127) + 128; // G -> Y displacement
+                    data[p + 2] = 128;              // B (unused)
+                    data[p + 3] = 255;              // A
+                }
+            }
+            ctx.putImageData(img, 0, 0);
+            return canvas.toDataURL("image/png");
         }
     }
-    
 
     const STORAGE = {
         vol: 'vscodeAudioPlayer.volume',
@@ -2659,7 +2797,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // TODO VSCode 에디터 영역 안의 오른쪽 위에 음악을 재생할 수 있는 기능 추가 (완료)
 
     const tahoe = new TahoeStatusSVG();
-    tahoe.setIntensity(12);
-    tahoe.setBlur(4);
+    tahoe.setIntensity(6);
+    tahoe.setBlur(2);
     tahoe.invoke();
+    tahoe.applyTo('.lg-pane, .lg-glass, #custom-blur-overlay, #editor-music-player-list-wrapper');
+    tahoe.observe('.lg-pane, .lg-glass, #custom-blur-overlay, #editor-music-player-list-wrapper');
 });
