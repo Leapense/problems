@@ -1,0 +1,7 @@
+6
+mov 3 $cmp
+jeq 3 3
+jeq $cmp 5
+mov 42 $out
+jeq $cmp 7
+mov 50 $out

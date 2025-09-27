@@ -780,6 +780,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const caretFill = encodeURIComponent(isDark ? '#cfd3d7' : '#4a4d50');
 
                 const css = `
+          #editor-music-player {font-family:'SF Pro Display', 'Apple SD Gothic Neo';}
           #editor-music-player button,
           #editor-music-player select {
             background: color-mix(in oklab, ${bg} 88%, transparent);

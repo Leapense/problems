@@ -28,7 +28,7 @@
 /* ========== Variables ========== */
 /* Fallback font family. Nerd fonts include icon glyphs used by many themes. */
 :root {
-	--vscode-custom-font: "MesloLGS NF", "Fira Code Nerd Font", "Fira Code", monospace;
+	--vscode-custom-font: "SF Pro Display", "Apple SD Gothic Neo", "MesloLGS NF", "Fira Code Nerd Font", "Fira Code", monospace;
 	/* Neon accent colours */
 	--accent-green: #03edf9;
 	--accent-pink: #fc28a8;
@@ -97,6 +97,7 @@
 /* ========== Title bar adjustments ========== */
 .monaco-workbench .part.titlebar {
 	border-bottom: 1px solid var(--vscode-contrastBorder) !important;
+	font-family: 'Apple SD Gothic Neo';
 }
 
 .monaco-workbench .part.titlebar .window-title {
@@ -528,6 +529,7 @@
 	color: var(--ink, #e6e6e6);
 	backdrop-filter: url(#tahoeLiquidFilter);
 	isolation: isolate;
+	font-family: var(--vscode-custom-font) !important;
 }
 
 .lg-pane::before {
